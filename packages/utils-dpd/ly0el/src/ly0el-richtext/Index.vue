@@ -12,7 +12,7 @@
 </template>
 <script setup>
 import {ref, computed, reactive} from "vue";
-import {request} from '@heartbeat-ly0/libs-js-depend'
+import {request} from '@yoooloo42/blindboxes-depend'
 // 引入quill富文本组件
 import { QuillEditor as compRichtext } from '@vueup/vue-quill'
 /* 以下quill富文本组件的样式库需要在宿主项目的main.js中引入

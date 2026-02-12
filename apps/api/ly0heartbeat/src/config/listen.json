@@ -1,0 +1,7 @@
+{
+    "port": 443,
+    "https_ssl": {
+        "key_path": "./https.ssl/20250701.stuffs.top.key",
+        "cert_path": "./https.ssl/20250701.stuffs.top.pem"
+    }
+}

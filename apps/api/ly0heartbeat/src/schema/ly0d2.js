@@ -1,0 +1,37 @@
+export default {
+    "ly0d2payment": {
+        "_id": {"note": "支付记录", "type": "mongodb.id", "required": "true"},
+        "time_create": {"note": "创建时间", "type": "date", "required": "true"},
+        "time_update": {"note": "更新时间", "type": "date", "required": "true"},
+        "id_dataunit": {"note": "", "type": "mongodb.id", "ref_tblName": "ly0d0dataunit", "ref_fldName": "_id", "required": "true"},
+        "dataunit_name": {"note": "", "type": "string", "required": "true"},
+        "id_business": {"note": "订单ID", "type": "mongodb.id", "required": "true"},
+        "businesstype_code": {"note": "订单类型", "type": "string"},
+        "businesstype_text": {"note": "", "type": "string"},
+        "amount": {"note": "金额", "type": "float", "required": "true"},
+        "process_code": {"note": "系统内置支付流程", "type": "string", "required": "true"},
+        "process_text": {"note": "", "type": "string", "required": "true"},
+        "method_code": {"note": "用户自主支付方式", "type": "string"},
+        "method_text": {"note": "", "type": "string"},
+        "status_code": {"note": "支付状态", "type": "string", "required": "true"},
+        "status_text": {"note": "", "type": "string", "required": "true"},
+        "time": {"note": "支付发起时间", "type": "date", "required": "true"},
+        "end": {"note": "支付结束时间", "type": "date"},
+        "note": {"note": "备注", "type": "string"},
+        "rec": {"note": "记录", "type": "string"},
+        
+        "wxzf": {"note": "微信支付"},
+        "wxzf_appid": {"note": "应用 ID", "type": "string"},
+        "wxzf_mchid": {"note": "商户号", "type": "string"},
+        "wxzf_code_url": {"note": "", "type": "string"},
+        "wxzf_out_trade_no": {"note": "商户订单号", "type": "string"},
+        "wxzf_transaction_id": {"note": "微信支付订单号", "type": "string"},
+        "wxzf_trade_type": {"note": "交易类型", "type": "string"},
+        "wxzf_trade_state": {"note": "交易状态", "type": "string"},
+        "wxzf_trade_state_desc": {"note": "交易状态描述", "type": "string"},
+        "wxzf_bank_type": {"note": "付款银行", "type": "string"},
+        "wxzf_success_time": {"note": "支付完成时间 rfc3339 标准格式: YYYY-MM-DDTHH:mm:ss+TIMEZONE, 示例: 2015-05-20T13:29:35+08:00", "type": "string"},
+        "wxzf_payer_openid": {"note": "支付者 openid", "type": "string"},
+        "wxzf_amount_total": {"note": "金额", "type": "float"}
+    }
+}

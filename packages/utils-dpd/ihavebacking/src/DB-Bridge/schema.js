@@ -2,7 +2,7 @@
 // Data Type Consistency Enforcement
 
 import {ObjectId} from 'mongodb'
-import {unclassified as LibsJsUnclass} from '@heartbeat-ly0/libs-js/src/index.js'
+import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes/src/index.js'
 /**
  * @return {null}
  */

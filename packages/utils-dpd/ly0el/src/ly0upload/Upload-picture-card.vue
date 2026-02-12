@@ -28,7 +28,7 @@
 import {reactive, ref} from "vue";
 import { ElMessage } from 'element-plus';
 import ly0default from './default.js'
-import {unclassified as LibsJsUnclass} from '@heartbeat-ly0/libs-js'
+import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes'
 
 // 遵循 Vue 3 v-model 规范，使用 modelValue
 const props = defineProps({

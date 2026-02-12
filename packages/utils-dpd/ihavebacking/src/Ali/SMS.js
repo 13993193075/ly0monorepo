@@ -1,4 +1,4 @@
-import {unclassified as LibsJsUnclass} from '@heartbeat-ly0/libs-js/src/index.js';
+import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes/src/index.js';
 // 从 Node.js 内置模块导入工具
 import { createRequire } from 'node:module';
 const random = LibsJsUnclass.random

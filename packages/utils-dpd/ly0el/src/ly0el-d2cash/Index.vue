@@ -17,7 +17,7 @@
 
 <script setup>
 import { reactive, onMounted } from 'vue'
-import {unclassified as LibsJsUnclass} from '@heartbeat-ly0/libs-js'
+import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes'
 import formData from './form-data.js'
 import formProps from './form-props.js'
 import qrcode from './qrcode/myProps.js'

@@ -48,8 +48,8 @@
 // scopeThis.doc.formProps 表单属性
 
 import { ElMessageBox, ElMessage } from 'element-plus'
-import { request } from '@heartbeat-ly0/libs-js-depend'
-import {unclassified as LibsJsUnclass} from '@heartbeat-ly0/libs-js'
+import { request } from '@yoooloo42/blindboxes-depend'
+import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes'
 const ly0request = request.ly0
 
 // 数据刷新

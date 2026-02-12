@@ -1,0 +1,19 @@
+{
+  "name": "@yoooloo42/ly0heartbeat",
+  "version": "1.0.0",
+  "description": "心跳 - ly0后台",
+  "main": "src/index.js",
+  "type": "module",
+  "files": [
+    "src/index.js",
+    "src"
+  ],
+  "dependencies": {
+    "@yoooloo42/blindboxes": "workspace:*",
+    "@yoooloo42/ihavebacking": "workspace:*",
+    "express": "^5.2.1"
+  },
+  "scripts": {
+    "dev": "dotenv -e .env node src/index.js"
+  }
+}

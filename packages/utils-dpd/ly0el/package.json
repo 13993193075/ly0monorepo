@@ -17,5 +17,10 @@
     "@vueup/vue-quill": "^1.2.0",
     "element-plus": "^2.13.2",
     "vue": "^3.5.28"
+  },
+  "peerDependencies": {
+    "@vueup/vue-quill": "^1.2.0",
+    "element-plus": "^2.13.2",
+    "vue": "^3.5.28"
   }
 }

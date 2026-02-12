@@ -1,7 +1,7 @@
 // v3客户微信号付款
 // 获取prepay_id(预支付交易会话标识)
 
-import {unclassified as LibsJsUnclass} from '@heartbeat-ly0/libs-js/src/index.js'
+import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes/src/index.js'
 import RSA from '../crypto/RSA.js'
 import v3sign from "./v3sign.js"
 const random = LibsJsUnclass.random

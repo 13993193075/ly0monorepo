@@ -1,4 +1,4 @@
-import {unclassified as LibsJsUnclass} from '@heartbeat-ly0/libs-js'
+import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes'
 
 function box(item){
     let result = {'text-align': 'left'}

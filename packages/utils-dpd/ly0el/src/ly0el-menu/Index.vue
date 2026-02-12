@@ -158,7 +158,7 @@
 <script setup>
 import {reactive} from "vue";
 import ly0default from './default.js'
-import {unclassified as LibsJsUnclass} from '@heartbeat-ly0/libs-js'
+import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes'
 
 const props = defineProps({
     myProps: {

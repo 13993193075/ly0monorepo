@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import {unclassified as LibsJsUnclass} from '@heartbeat-ly0/libs-js/src/index.js';
+import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes/src/index.js';
 const random = LibsJsUnclass.random
 
 /**

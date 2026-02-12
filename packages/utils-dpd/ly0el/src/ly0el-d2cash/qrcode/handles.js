@@ -1,5 +1,5 @@
 import {ElMessage, ElMessageBox} from 'element-plus'
-import {request} from '@heartbeat-ly0/libs-js-depend'
+import {request} from '@yoooloo42/blindboxes-depend'
 import QRCode from 'qrcode'
 const ly0request = request.ly0
 

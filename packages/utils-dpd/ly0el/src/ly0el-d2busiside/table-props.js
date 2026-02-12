@@ -1,7 +1,7 @@
 import ly0withTable from '../ly0with-table/index.js'
-import {request} from '@heartbeat-ly0/libs-js-depend'
+import {request} from '@yoooloo42/blindboxes-depend'
 import {ElMessage, ElMessageBox} from 'element-plus'
-import {unclassified as LibsJsUnclass} from '@heartbeat-ly0/libs-js'
+import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes'
 const ly0request = request.ly0
 
 export default {

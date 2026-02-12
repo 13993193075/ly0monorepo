@@ -3,7 +3,7 @@
 import axios from 'axios'
 import xml2js from 'xml2js'
 import Hash from '../crypto/Hash.js'
-import {unclassified as LibsJsUnclass} from '@heartbeat-ly0/libs-js/src/index.js';
+import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes/src/index.js';
 const random = LibsJsUnclass.random
 const xmlToJson = (new xml2js.Parser()).parseString // xml to json
 const para_global = {

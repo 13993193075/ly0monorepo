@@ -1,4 +1,4 @@
-import { request } from '@heartbeat-ly0/libs-js-depend'
+import { request } from '@yoooloo42/blindboxes-depend'
 const ly0request = request.ly0
 
 export default {
