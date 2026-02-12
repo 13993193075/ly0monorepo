@@ -1,0 +1,8 @@
+packages:
+  - 'apps/web/*' # web端
+  - 'apps/mobile/*' # 移动端
+  - 'apps/api/*' # 后端
+  - 'packages/libs/*' # 公共组件库
+  - 'packages/libs-dpd/*' # 公共组件库 - 有第三方依赖
+  - 'packages/utils/*' # 仓内工具库
+  - 'packages/utils-dpd/*' # 仓内工具库 - 有第三方依赖

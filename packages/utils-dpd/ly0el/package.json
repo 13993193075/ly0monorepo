@@ -1,0 +1,21 @@
+{
+  "name": "@yoooloo42/ly0el",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "type": "module",
+  "files": [
+    "src/index.js",
+    "src"
+  ],
+  "dependencies": {
+    "@yoooloo42/blindboxes": "workspace:*",
+    "@yoooloo42/ihavebacking": "workspace:*",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@vueup/vue-quill": "^1.2.0",
+    "element-plus": "^2.13.2",
+    "vue": "^3.5.28"
+  }
+}
