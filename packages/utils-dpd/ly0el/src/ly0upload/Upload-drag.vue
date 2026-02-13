@@ -27,7 +27,7 @@
 import {reactive, ref} from "vue";
 import { ElMessage } from 'element-plus';
 import ly0default from './default.js'
-import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes'
+import {blindboxes} from '@yoooloo42/blindboxes'
 
 // 遵循 Vue 3 v-model 规范，使用 modelValue
 const props = defineProps({
@@ -44,8 +44,8 @@ const props = defineProps({
 // 遵循 Vue 3 v-model 规范，使用 update:modelValue 事件
 const emit = defineEmits(['update:modelValue', 'change'])
 
-const myProps_box = reactive(LibsJsUnclass.deepClone.deepMerge(
-    LibsJsUnclass.deepClone.deepClone(ly0default.myProps),
+const myProps_box = reactive(blindboxes.deepClone.deepMerge(
+    blindboxes.deepClone.deepClone(ly0default.myProps),
     props.myProps
 ))
 const fileList_box = ref([])

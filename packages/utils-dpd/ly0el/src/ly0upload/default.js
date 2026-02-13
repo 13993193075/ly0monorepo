@@ -1,4 +1,4 @@
-import { request } from '@yoooloo42/blindboxes-depend'
+import { request } from '@yoooloo42/ihavebacking'
 const ly0request = request.ly0
 
 export default {

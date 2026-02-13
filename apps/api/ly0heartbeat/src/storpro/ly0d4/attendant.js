@@ -1,5 +1,5 @@
 import {GQuery} from '../../main/GQuery.js'
-import {unclassified as blindboxesUnclass} from '@yoooloo42/blindboxes'
+import {blindboxes} from '@yoooloo42/blindboxes'
 
 // 内部模块：查询修正
 async function queryRevise (data) {
@@ -84,7 +84,7 @@ async function dataRule (data, branch) {
     if (!data.name) {
         return {code: 1, message: '姓名：必填项'}
     }
-    let result = blindboxesUnclass.regexp.cellphone(data.cellphone)
+    let result = blindboxes.regexp.cellphone(data.cellphone)
     if (!result) {
         return {code: 1, message: '手机号为空或错误'}
     }

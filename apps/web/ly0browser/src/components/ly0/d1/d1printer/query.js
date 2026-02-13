@@ -1,0 +1,22 @@
+export default {
+    formData: {
+        _id: null,
+        id_ukey: '',
+        id_ukey_note: '',
+        sn: '',
+        key: '',
+        note: '',
+        carnum: '',
+        id_dataunit: '',
+        dataunit_name: '',
+        busiunit_tblname: '',
+        id_busiunit: '',
+        busiunit_name: '',
+        printername: '',
+        scene: '',
+        sceneNote: '',
+    },
+    sort: null,
+    pageSize: 10,
+    currentPage: 1,
+}

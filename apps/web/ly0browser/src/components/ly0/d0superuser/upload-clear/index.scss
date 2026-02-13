@@ -1,0 +1,17 @@
+.container {
+    text-align: center;
+
+    .title-line {
+        margin-bottom: 35px;
+
+        .font {
+            font-size : large;
+            color : #828282;
+        }
+    }
+
+    .button {
+        background-color : #009f95;
+        color : #ffffff;
+    }
+}

@@ -1,7 +1,7 @@
 import ly0withTable from '../ly0with-table/index.js'
-import {request} from '@yoooloo42/blindboxes-depend'
+import {request} from '@yoooloo42/ihavebacking'
 import {ElMessage, ElMessageBox} from 'element-plus'
-import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes'
+import {blindboxes} from '@yoooloo42/blindboxes'
 const ly0request = request.ly0
 
 export default {
@@ -96,7 +96,7 @@ export default {
                 label: '支付状态',
                 show: 'expression',
                 hdlExpression({scopeThis, row}){
-                    return row.status_text + "\n" + LibsJsUnclass.dateFormat.dateFormat(row.time, 'yyyy/MM/dd hh:mm:ss')
+                    return row.status_text + "\n" + blindboxes.dateFormat.dateFormat(row.time, 'yyyy/MM/dd hh:mm:ss')
                 }
             },
             {

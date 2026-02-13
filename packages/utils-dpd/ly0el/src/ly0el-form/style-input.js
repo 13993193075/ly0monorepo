@@ -1,4 +1,4 @@
-import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes'
+import {blindboxes} from '@yoooloo42/blindboxes'
 
 function box(item){
     let result = {'text-align': 'left'}
@@ -19,7 +19,7 @@ function text(item){
     if(item.cover){
         return item.style
     }
-    return LibsJsUnclass.deepClone.deepMerge({
+    return blindboxes.deepClone.deepMerge({
         'white-space': 'pre-line', // 保留换行符
         'border-left': '#ababab solid 1px',
         'border-top': '#ababab solid 1px',
@@ -32,7 +32,7 @@ function text0(item){
     if(item.cover){
         return item.style
     }
-    return LibsJsUnclass.deepClone.deepMerge({
+    return blindboxes.deepClone.deepMerge({
         'white-space': 'pre-line', // 保留换行符
         color: 'blue'
     }, item.style)

@@ -48,8 +48,8 @@
 // scopeThis.doc.formProps 表单属性
 
 import { ElMessageBox, ElMessage } from 'element-plus'
-import { request } from '@yoooloo42/blindboxes-depend'
-import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes'
+import { request } from '@yoooloo42/ihavebacking'
+import {blindboxes} from '@yoooloo42/blindboxes'
 const ly0request = request.ly0
 
 // 数据刷新
@@ -67,7 +67,7 @@ const refresh = async ({scopeThis, noMessage}) => {
     })
     scopeThis.tableProps.table.loading.visible = false
     if(result.code === 0){
-        LibsJsUnclass.deepClone.deepMerge(scopeThis.tableData, {
+        blindboxes.deepClone.deepMerge(scopeThis.tableData, {
             data: result.data,
             total: result.total,
             sort: scopeThis.query.sort,
@@ -87,7 +87,7 @@ const refresh = async ({scopeThis, noMessage}) => {
 
 // 数据重载
 const reload = async ({scopeThis}) => {
-    LibsJsUnclass.deepClone.replaceObject(
+    blindboxes.deepClone.replaceObject(
         scopeThis.query,
         JSON.parse(JSON.stringify(scopeThis.queryInit))
     )
@@ -115,7 +115,7 @@ const getPgData = async ({scopeThis}) => {
         data: scopeThis.pgData && scopeThis.pgData.query ? scopeThis.pgData.query : null,
     })
     if(result.code === 0){
-        LibsJsUnclass.deepClone.deepMerge(scopeThis.pgData, {data: result.data})
+        blindboxes.deepClone.deepMerge(scopeThis.pgData, {data: result.data})
         ElMessage('已获取页面数据')
         return
     }
@@ -135,13 +135,13 @@ const init = async ({scopeThis}) => {
 
 // 弹出 - 查询
 const popupFind = async ({scopeThis}) => {
-    LibsJsUnclass.deepClone.replaceObject(scopeThis.formData, scopeThis.query.formData)
+    blindboxes.deepClone.replaceObject(scopeThis.formData, scopeThis.query.formData)
     scopeThis.tableData.sort = JSON.parse(JSON.stringify(scopeThis.query.sort))
     scopeThis.tableData.pageSize = scopeThis.query.pageSize
     scopeThis.tableData.currentPage = scopeThis.query.currentPage
-    LibsJsUnclass.deepClone.replaceObject(scopeThis.formProps, scopeThis.find.formProps)
+    blindboxes.deepClone.replaceObject(scopeThis.formProps, scopeThis.find.formProps)
     // 弹出窗口
-    LibsJsUnclass.deepClone.deepMerge(
+    blindboxes.deepClone.deepMerge(
         scopeThis.formProps.popup,
         {visible: true}
     )
@@ -149,10 +149,10 @@ const popupFind = async ({scopeThis}) => {
 
 // 弹出 - 新增一条记录
 const popupInsertOne = async ({scopeThis}) => {
-    LibsJsUnclass.deepClone.replaceObject(scopeThis.formData, scopeThis.insertOne.formData)
-    LibsJsUnclass.deepClone.replaceObject(scopeThis.formProps, scopeThis.insertOne.formProps)
+    blindboxes.deepClone.replaceObject(scopeThis.formData, scopeThis.insertOne.formData)
+    blindboxes.deepClone.replaceObject(scopeThis.formProps, scopeThis.insertOne.formProps)
     // 弹出窗口
-    LibsJsUnclass.deepClone.deepMerge(
+    blindboxes.deepClone.deepMerge(
         scopeThis.formProps.popup,
         {visible: true}
     )
@@ -160,10 +160,10 @@ const popupInsertOne = async ({scopeThis}) => {
 
 // 弹出 - 修改一条记录
 const popupUpdateOne = async ({scopeThis, row}) => {
-    LibsJsUnclass.deepClone.replaceObject(scopeThis.formData, row) // 继承行记录的值
-    LibsJsUnclass.deepClone.replaceObject(scopeThis.formProps, scopeThis.updateOne.formProps)
+    blindboxes.deepClone.replaceObject(scopeThis.formData, row) // 继承行记录的值
+    blindboxes.deepClone.replaceObject(scopeThis.formProps, scopeThis.updateOne.formProps)
     // 弹出窗口
-    LibsJsUnclass.deepClone.deepMerge(
+    blindboxes.deepClone.deepMerge(
         scopeThis.formProps.popup,
         {visible: true}
     )
@@ -171,10 +171,10 @@ const popupUpdateOne = async ({scopeThis, row}) => {
 
 // 弹出 - 详细信息
 const popupDoc = async ({scopeThis, row}) => {
-    LibsJsUnclass.deepClone.replaceObject(scopeThis.formData, row) // 继承行记录的值
-    LibsJsUnclass.deepClone.replaceObject(scopeThis.formProps, scopeThis.doc.formProps)
+    blindboxes.deepClone.replaceObject(scopeThis.formData, row) // 继承行记录的值
+    blindboxes.deepClone.replaceObject(scopeThis.formProps, scopeThis.doc.formProps)
     // 弹出窗口
-    LibsJsUnclass.deepClone.deepMerge(
+    blindboxes.deepClone.deepMerge(
         scopeThis.formProps.popup,
         {visible: true}
     )
@@ -182,7 +182,7 @@ const popupDoc = async ({scopeThis, row}) => {
 
 // 提交 - 查询
 const submitFind = async ({scopeThis}) => {
-    LibsJsUnclass.deepClone.replaceObject(scopeThis.query.formData, scopeThis.formData)
+    blindboxes.deepClone.replaceObject(scopeThis.query.formData, scopeThis.formData)
     scopeThis.query.sort = JSON.parse(JSON.stringify(scopeThis.tableData.sort))
     scopeThis.query.pageSize = scopeThis.tableData.pageSize
     scopeThis.query.currentPage = scopeThis.tableData.currentPage

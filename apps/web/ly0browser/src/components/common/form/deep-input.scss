@@ -1,0 +1,11 @@
+.deep-input {
+  :deep(.el-input__wrapper) {
+    height: 40px;
+    line-height: 40px;
+  }
+  :deep(.el-select__wrapper) {
+    height: 40px;
+    line-height: 40px;
+  }
+}
+

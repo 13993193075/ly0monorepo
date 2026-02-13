@@ -20,7 +20,7 @@
 <script setup>
 import { reactive } from 'vue'
 import compMain from './main.vue'
-import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes'
+import {blindboxes} from '@yoooloo42/blindboxes'
 
 const props = defineProps({
     myProps: {
@@ -30,7 +30,7 @@ const props = defineProps({
 })
 
 const scopeThis = reactive({
-    props_box: LibsJsUnclass.deepClone.deepDefaults(props.myProps, {
+    props_box: blindboxes.deepClone.deepDefaults(props.myProps, {
         popup: {
             switch: false,
             visible: false,

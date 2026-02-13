@@ -1,9 +1,9 @@
 // v3签名：所有的v3请求都由这里向微信支付接口的后台发出
 
-import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes/src/index.js';
+import {blindboxes} from '@yoooloo42/blindboxes/src/index.js';
 import axios from 'axios'
 import RSA from '../crypto/RSA.js'
-const random = LibsJsUnclass.random
+const random = blindboxes.random
 const para_global = {
     nonce_str32: random.random(32, '0123456789abcdefghijklmnopqrstuvwxyz') // 32位的随机字符串
 }

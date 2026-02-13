@@ -1,0 +1,89 @@
+// 房态颜色
+.status0 { // 停用
+    background-color: grey;
+    color: white;
+}
+.status1 { // 空位
+    background-color: green;
+    color: white;
+}
+.status2 { // 用餐
+    background-color: #f37b1d;
+    color: black;
+}
+
+// 标题
+.title-box {
+    text-align: center;
+
+    .title {
+        color: #148282;
+    }
+}
+// 副标题
+.title0-box {
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    
+    .label {
+        margin-left: 20px;
+    }
+    .label0 {
+        color: #66030b;
+        font-weight: bold;
+    }
+    .refresh {
+        margin-left: 40px;
+        color: blue;
+        text-decoration: underline solid blue;
+        cursor: pointer;
+    }
+    .refresh0 {
+        margin-left: 20px;
+        color: blue;
+        text-decoration: underline solid blue;
+        cursor: pointer;
+    }
+}
+
+// 餐位状态示意
+.status-show-box {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    .label {
+        display: inline-block;
+        height: 30px;
+        line-height: 30px;
+    }
+    .show {
+        display: inline-block;
+        width: 60px;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 20%;
+        text-align: center;
+        margin-right: 10px;
+    }
+}
+
+// 餐位节点
+.tableno-box {
+    display: inline-block;
+
+    .tableno {
+        margin: 2px;
+        padding: 5px 10px;
+        text-align: center;
+        width: 200px;
+        height: 100px;
+    }
+    .tableno-border { // 边框
+        border: solid 2px #999999;
+    }
+    .tableno-border-focus { // 边框 - 焦点
+        border: solid 2px yellow;
+    }
+}

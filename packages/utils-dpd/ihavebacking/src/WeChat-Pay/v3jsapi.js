@@ -1,10 +1,10 @@
 // v3客户微信号付款
 // 获取prepay_id(预支付交易会话标识)
 
-import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes/src/index.js'
+import {blindboxes} from '@yoooloo42/blindboxes/src/index.js'
 import RSA from '../crypto/RSA.js'
 import v3sign from "./v3sign.js"
-const random = LibsJsUnclass.random
+const random = blindboxes.random
 
 function v3jsapi(para){
     // para.appid 微信开放平台或微信公众平台应用id（APPID）

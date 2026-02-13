@@ -1,7 +1,7 @@
-import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes/src/index.js';
+import {blindboxes} from '@yoooloo42/blindboxes/src/index.js';
 // 从 Node.js 内置模块导入工具
 import { createRequire } from 'node:module';
-const random = LibsJsUnclass.random
+const random = blindboxes.random
 // 创建一个 require 函数
 const require = createRequire(import.meta.url);
 // 引入阿里云 SDK 核心依赖

@@ -1,0 +1,36 @@
+.button-box {
+    text-align: right;
+
+    .button {
+        border-color: #009688;
+        color: #009688;
+    }
+}
+
+.line {
+     height: 1px;
+     background-color: #bdbdbd;
+     margin-top: 10px;
+     margin-bottom: 10px;
+ }
+
+.print-content {
+    .qrcode-item {
+        display:inline-block;
+        margin-right: 20px;
+        margin-top: 20px;
+
+        .qrcode {
+            width: 120px;
+            height: 120px;
+        }
+
+        .label{
+            height: 30px;
+            line-height: 30px;
+            background-color: #eeeeee;
+            color: black;
+            text-align: center;
+        }
+    }
+}

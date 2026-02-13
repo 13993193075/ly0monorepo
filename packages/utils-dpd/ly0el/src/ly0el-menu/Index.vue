@@ -158,7 +158,7 @@
 <script setup>
 import {reactive} from "vue";
 import ly0default from './default.js'
-import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes'
+import {blindboxes} from '@yoooloo42/blindboxes'
 
 const props = defineProps({
     myProps: {
@@ -170,7 +170,7 @@ const props = defineProps({
         default: () => ({})
     }
 })
-const myProps_box = reactive(LibsJsUnclass.deepClone.deepDefaults(props.myProps, ly0default.myProps))
+const myProps_box = reactive(blindboxes.deepClone.deepDefaults(props.myProps, ly0default.myProps))
 const scopeThis_box = reactive(props.scopeThis)
 
 const handleRun = ({

@@ -1,0 +1,54 @@
+.from-to-box {
+    .item {
+        margin-bottom: 10px;
+
+        .field-input {
+            width: 200px;
+        }
+    }
+    .button-group {
+        .button {
+            background-color: #009f95;
+            color: #ffffff;
+        }
+    }
+}
+
+.position-row {
+    margin-bottom: 10px;
+
+    .field-label-col {
+        text-align: right;
+        padding-right: 20px;
+
+        .field-label {
+            height: 40px;
+            line-height: 40px;
+        }
+    }
+    .field-input-col {
+        text-align: left;
+
+        .field-input {
+            width: 200px;
+        }
+    }
+}
+
+.room-row {
+    .transfer {
+        text-align: left;
+    }
+}
+
+.submit-row {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.line {
+    height : 1px;
+    background-color : #bdbdbd;
+    margin-top : 10px;
+    margin-bottom : 10px;
+}

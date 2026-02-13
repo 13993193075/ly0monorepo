@@ -1,0 +1,38 @@
+.body {
+    text-align: center;
+
+    .title-line {
+        margin-bottom: 35px;
+
+        .font {
+            font-size: large;
+            color: #828282;
+        }
+    }
+
+    .container {
+        width: 800px;
+        margin: auto;
+
+        .item {
+            .content {
+                //text-align: left;
+            }
+            .line {
+                height: 1px;
+                width: 100%;
+                background-color: #bdbdbd;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+            .appendix-box {
+                text-align: right;
+
+                .appendix {
+                    text-decoration: underline;
+                    color: #0000ff;
+                }
+            }
+        }
+    }
+}

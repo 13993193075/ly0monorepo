@@ -17,7 +17,7 @@
 
 <script setup>
 import { reactive, onMounted } from 'vue'
-import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes'
+import {blindboxes} from '@yoooloo42/blindboxes'
 import formData from './form-data.js'
 import formProps from './form-props.js'
 import qrcode from './qrcode/myProps.js'
@@ -36,8 +36,8 @@ const props = defineProps({
 })
 
 const scopeThis = reactive({
-    formData: LibsJsUnclass.deepClone.deepDefaults(props.modelValue, formData),
-    formProps: LibsJsUnclass.deepClone.deepDefaults(props.myProps, formProps),
+    formData: blindboxes.deepClone.deepDefaults(props.modelValue, formData),
+    formProps: blindboxes.deepClone.deepDefaults(props.myProps, formProps),
     handles,
     pgData: {
         arrBusinessType: [],

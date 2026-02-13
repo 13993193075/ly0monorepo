@@ -1,0 +1,10 @@
+.main-box {
+    display: flex;
+    justify-content: space-around;
+    .left-box {
+        width: 45%;
+    }
+    .right-box {
+        width: 45%;
+    }
+}

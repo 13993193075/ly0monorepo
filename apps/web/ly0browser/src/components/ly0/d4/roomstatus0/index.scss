@@ -1,0 +1,56 @@
+// 标题
+.title-box {
+    text-align: center;
+
+    .title {
+        color: #148282;
+    }
+}
+
+// 副标题
+.title0-box {
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+    .label {
+        margin-left: 20px;
+    }
+    .label0 {
+        color: #66030b;
+        font-weight: bold;
+    }
+    .refresh {
+        margin-left: 40px;
+        color: blue;
+        text-decoration: underline solid blue;
+        cursor: pointer;
+    }
+    .refresh0 {
+        margin-left: 20px;
+        color: blue;
+        text-decoration: underline solid blue;
+        cursor: pointer;
+    }
+}
+
+// 房号节点
+.roomno-box {
+    display: inline-block;
+
+    .roomno {
+        margin: 2px;
+        padding: 5px 10px;
+        text-align: center;
+        background-color: #009E94;
+        color: #FFFFFF;
+        width: 200px;
+        height: 100px;
+    }
+    .roomno-border { // 边框
+        border: solid 2px #999999;
+    }
+    .roomno-border-focus { // 边框 - 焦点
+        border: solid 2px yellow;
+    }
+}

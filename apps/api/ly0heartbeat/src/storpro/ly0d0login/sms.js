@@ -1,4 +1,4 @@
-import {unclassified as blindboxesUnclass} from '@yoooloo42/blindboxes'
+import {blindboxes} from '@yoooloo42/blindboxes'
 import {crypto, Ali} from '@yoooloo42/ihavebacking'
 import {GQuery} from '../../main/GQuery.js'
 
@@ -21,7 +21,7 @@ function getVercode (data) {
         if(!data.cellphone){
             return resolve({code: 1, message: "没有手机号"})
         }
-        if (!blindboxesUnclass.regexp.cellphone(data.cellphone)) {
+        if (!blindboxes.regexp.cellphone(data.cellphone)) {
             return resolve({code: 1, message: "手机号格式错误"})
         }
 
@@ -116,7 +116,7 @@ function login(data){
         if(!data.cellphone){
             return resolve({code: 1, message: "没有手机号"})
         }
-        if (!blindboxesUnclass.regexp.cellphone(data.cellphone)){
+        if (!blindboxes.regexp.cellphone(data.cellphone)){
             return resolve({code: 1, message: "手机号格式错误"})
         }
         if(!data.vercode){
@@ -159,7 +159,7 @@ function getVercodeBind (data) {
         if(!data.cellphone){
             return resolve({code: 1, message: "没有手机号"})
         }
-        if (!blindboxesUnclass.regexp.cellphone(data.cellphone)) {
+        if (!blindboxes.regexp.cellphone(data.cellphone)) {
             return resolve({code: 1, message: "手机号格式错误"})
         }
 
@@ -230,7 +230,7 @@ function bind (data) {
         if(!data.cellphone){
             return resolve({code: 1, message: "没有手机号"})
         }
-        if (!blindboxesUnclass.regexp.cellphone(data.cellphone)) {
+        if (!blindboxes.regexp.cellphone(data.cellphone)) {
             return resolve({code: 1, message: "手机号格式错误"})
         }
 
@@ -243,7 +243,7 @@ function bind (data) {
         if(!data.password){
             return resolve({code: 1, message: "没有登录密码"})
         }
-        if (!blindboxesUnclass.regexp.password(data.password)) {
+        if (!blindboxes.regexp.password(data.password)) {
             return resolve({code: 1, message: '登录密码格式错误'})
         }
         // 登录密码加密

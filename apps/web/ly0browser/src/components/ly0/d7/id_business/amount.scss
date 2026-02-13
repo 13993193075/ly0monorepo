@@ -1,0 +1,19 @@
+.field-row {
+    margin-top: 10px;
+    .field-label-amount {
+        color: gray;
+        font-size: large;
+        font-weight: bold;
+    }
+    .field-value-amount {
+        color: red;
+        font-size: x-large;
+        font-weight: bold;
+    }
+    .field-label {
+        color: gray;
+    }
+    .field-value {
+        color: blue;
+    }
+}

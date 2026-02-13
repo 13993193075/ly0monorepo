@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  background-color: #323232;
+  color: #00ac9c;
+  height: 60px;
+  line-height: 60px;
+  padding: 0 20px;
+
+  .left {
+    font-size: medium;
+  }
+
+  .right {
+  }
+}
+
+.group-image {
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.user-image {
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.user-menu-item {
+  text-align: center;
+}

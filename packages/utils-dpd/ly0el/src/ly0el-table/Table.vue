@@ -226,7 +226,7 @@
 
 <script setup>
 import compPickCol from './PickCol.vue' // 列选择
-import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes'
+import {blindboxes} from '@yoooloo42/blindboxes'
 
 const props = defineProps({
     modelValue: {
@@ -248,7 +248,7 @@ let tableData_box = props.modelValue
 const tableProps_box = props.myProps
 const scopeThis_box = props.scopeThis
 // 设置列选择初始化参数
-tableProps_box.table.pickCol.colsInit = LibsJsUnclass.deepClone.deepClone(tableProps_box.table.cols)
+tableProps_box.table.pickCol.colsInit = blindboxes.deepClone.deepClone(tableProps_box.table.cols)
 
 const hdl = {
     cellMouseEnter(row, column, cell, event) {

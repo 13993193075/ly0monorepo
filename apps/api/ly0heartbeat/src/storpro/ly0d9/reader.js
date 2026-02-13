@@ -1,5 +1,5 @@
-import {unclassified as blindboxesUnclass} from "@yoooloo42/blindboxes"
-const regexp = blindboxesUnclass.regexp
+import {blindboxes} from "@yoooloo42/blindboxes"
+const regexp = blindboxes.regexp
 
 // 内部模块：查询修正
 function queryRevise(data) {

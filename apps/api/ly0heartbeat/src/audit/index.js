@@ -1,5 +1,5 @@
 import {exec as storproExec} from "../storpro/index.js"
-import {unclassified as blindBoxesUnclass} from '@yoooloo42/blindboxes'
+import {blindboxes} from '@yoooloo42/blindboxes'
 import {DB_Bridge} from '@yoooloo42/ihavebacking'
 const GQuery = DB_Bridge.MongoDB_GQuery.GQuery
 
@@ -84,7 +84,7 @@ function audit(request, response){
                 query: {_id: request.body.ly0session.session._id},
                 update: {expires: new Date((thisTime - 0) + (1000 * 60 * 60))}
             }).then(result => {
-                console.log('session延期1小时', blindBoxesUnclass.dateFormat.dateFormat(thisTime));
+                console.log('session延期1小时', blindboxes.dateFormat.dateFormat(thisTime));
                 resolve({
                     session: {code: 0, message: "安全审计通过"}
                 })

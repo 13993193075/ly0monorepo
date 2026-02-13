@@ -1,5 +1,5 @@
 import {ElMessage, ElMessageBox} from 'element-plus'
-import {request} from '@yoooloo42/blindboxes-depend'
+import {request} from '@yoooloo42/ihavebacking'
 const ly0request = request.ly0
 const ly0session = ly0request.ly0sessionLoad()
 

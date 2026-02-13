@@ -3,8 +3,8 @@
 import axios from 'axios'
 import xml2js from 'xml2js'
 import Hash from '../crypto/Hash.js'
-import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes/src/index.js';
-const random = LibsJsUnclass.random
+import {blindboxes} from '@yoooloo42/blindboxes/src/index.js';
+const random = blindboxes.random
 const xmlToJson = (new xml2js.Parser()).parseString // xml to json
 const para_global = {
     nonce_str32: random.random(32, '0123456789abcdefghijklmnopqrstuvwxyz') // 32位的随机字符串

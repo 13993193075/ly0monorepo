@@ -1,5 +1,5 @@
 import {GQuery} from '../../main/GQuery.js'
-import {unclassified as blindboxesUnclass} from '@yoooloo42/blindboxes'
+import {blindboxes} from '@yoooloo42/blindboxes'
 
 // 内部模块：查询修正
 function queryRevise (data) {
@@ -120,7 +120,7 @@ function dataRule (data) {
         */
 
         if (data.owner_cellphone) { // 选填项
-            if (blindboxesUnclass.regexp.cellphone(data.owner_cellphone)) {
+            if (blindboxes.regexp.cellphone(data.owner_cellphone)) {
                 return resolve({code: 1, message: '手机号：格式错误'})
             }
         }

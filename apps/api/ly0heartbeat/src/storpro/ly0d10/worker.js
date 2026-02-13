@@ -1,5 +1,5 @@
 import {GQuery} from '../../main/GQuery.js'
-import {GBT, unclassified as blindboxesUnclass} from '@yoooloo42/blindboxes'
+import {GBT, blindboxes} from '@yoooloo42/blindboxes'
 import {imageDomain} from "../../main/config.js";
 import ImageSave from '../../main/image-save.js'
 
@@ -110,7 +110,7 @@ function dataRuleInsertOne(data) {
         if (!data.birthyear) {
             return resolve({code: 1, message: "出生年份：必填项"})
         }
-        if (!blindboxesUnclass.regexp.cellphone(data.cellphone)) {
+        if (!blindboxes.regexp.cellphone(data.cellphone)) {
             return resolve({code: 1, message: '手机号：格式错误'})
         }
 
@@ -152,7 +152,7 @@ function dataRuleUpdateOne(data) {
         if (!data.birthyear) {
             return resolve({code: 1, message: "出生年份：必填项"})
         }
-        if (!blindboxesUnclass.regexp.cellphone(data.cellphone)) {
+        if (!blindboxes.regexp.cellphone(data.cellphone)) {
             return resolve({code: 1, message: '手机号：格式错误'})
         }
 

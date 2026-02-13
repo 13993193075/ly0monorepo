@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
-import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes/src/index.js';
-const random = LibsJsUnclass.random
+import {blindboxes} from '@yoooloo42/blindboxes/src/index.js';
+const random = blindboxes.random
 
 /**
  * Node.js 项目中发送电子邮件的函数

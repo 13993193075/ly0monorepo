@@ -115,7 +115,7 @@
 
 <script setup>
 import {reactive, ref, watch, computed} from "vue";
-import {request} from '@yoooloo42/blindboxes-depend'
+import {request} from '@yoooloo42/ihavebacking'
 const ly0request = request.ly0
 
 // 遵循 Vue 3 v-model 规范，使用 modelValue

@@ -1,5 +1,5 @@
 import {crypto, Email} from '@yoooloo42/ihavebacking'
-import {unclassified as blindboxesUnclass} from '@yoooloo42/blindboxes'
+import {blindboxes} from '@yoooloo42/blindboxes'
 import {GQuery} from '../../main/GQuery.js'
 
 // 获取验证码
@@ -13,7 +13,7 @@ function getVercode (data) {
         if(!data.email){
             return resolve({code: 1, message: "没有Email"})
         }
-        if (!blindboxesUnclass.regexp.email(data.email)) {
+        if (!blindboxes.regexp.email(data.email)) {
             return resolve({code: 1, message: "Email格式错误"})
         }
 
@@ -87,7 +87,7 @@ function login(data){
             return resolve({code: 1, message: "没有Email"})
         }
         // Email格式
-        if (!blindboxesUnclass.regexp.email(data.email)) {
+        if (!blindboxes.regexp.email(data.email)) {
             return resolve({code: 1, message: "Email格式错误"})
         }
         if(!data.vercode){
@@ -131,7 +131,7 @@ function getVercodeBind (data) {
             return resolve({code: 1, message: "没有Email"})
         }
         // Email格式
-        if (!blindboxesUnclass.regexp.email(data.email)) {
+        if (!blindboxes.regexp.email(data.email)) {
             return resolve({code: 1, message: "Email格式错误"})
         }
 
@@ -190,7 +190,7 @@ function bind (data) {
         if(!data.email){
             return resolve({code: 1, message: "没有Email"})
         }
-        if (!blindboxesUnclass.regexp.email(data.email)) {
+        if (!blindboxes.regexp.email(data.email)) {
             return resolve({code: 1, message: "Email格式错误"})
         }
 
@@ -204,7 +204,7 @@ function bind (data) {
             return resolve({code: 1, message: "没有登录密码"})
         }
         // 登录密码格式验证
-        if (!blindboxesUnclass.regexp.password(data.password)) {
+        if (!blindboxes.regexp.password(data.password)) {
             return resolve({code: 1, message: '登录密码格式错误'})
         }
         // 登录密码加密

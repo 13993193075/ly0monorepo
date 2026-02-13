@@ -1,0 +1,61 @@
+import {request} from '@yoooloo42/ihavebacking'
+const ly0session = request.ly0.ly0sessionLoad()
+
+export default{
+    _id: null,
+    id_dataunit: ly0session.dataunit._id,
+    dataunit_name: "",
+    f0name: "",
+    f0birthdate: null,
+    f0idnumber: "",
+    f0nation: "",
+    f0nation_code: "",
+    f0nativeplace: "",
+    f0nativeplace_code: "",
+    f0education: "",
+    f0education_code: "",
+    f0occupation: "",
+    f0occupation_code: "",
+    f0insurance: "",
+    f0insurance_code: "",
+    f0income: "",
+    f0income_code: "",
+    f0address: "",
+    f0address_code: "",
+    f0cellphone: "",
+
+    f1name: "",
+    f1birthdate: null,
+    f1education: "",
+    f1education_code: "",
+    f1occupation: "",
+    f1occupation_code: "",
+    f1cellphone: "",
+
+    f2height: 0,
+    f2weight: 0,
+    f2pregnancies: 0,
+    f2births: 0,
+    f2menstruation_last: null,
+    f2menstruation_first: 0,
+    f2menstruation_cycle: "",
+    f2menstruation_cycle_code: "",
+    f2abnormal: false,
+    f2abnormal0: "",
+    f2abnormal1: 0,
+    f2abnormal2: 0,
+
+    appendix: {
+        d0: {},
+        d1: [],
+        d2: [],
+        d3: [],
+        d4: {},
+        d5: {},
+        d6: [],
+        d7: {} ,
+        d8: [],
+        d9: [],
+        d10: {}
+    }
+}

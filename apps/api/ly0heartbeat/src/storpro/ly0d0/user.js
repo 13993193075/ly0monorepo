@@ -1,5 +1,5 @@
 import {crypto} from '@yoooloo42/ihavebacking'
-import {unclassified as blindboxesUnclass} from '@yoooloo42/blindboxes'
+import {blindboxes} from '@yoooloo42/blindboxes'
 import {GQuery} from '../../main/GQuery.js'
 import {imageDomain} from '../../main/config.js'
 import ImageSave from '../../main/image-save.js'
@@ -280,7 +280,7 @@ async function newLogin(data){
         return {code: 1, message: "没有登录密码"}
     }
     // 登录密码格式
-    if (!blindboxesUnclass.regexp.password(data.password)) {
+    if (!blindboxes.regexp.password(data.password)) {
         return {code: 1, message: '登录密码格式错误'}
     }
     // 登录密码加密
@@ -344,7 +344,7 @@ async function oldLogin(data){
         return {code: 1, message: "没有登录密码"}
     }
     // 登录密码格式
-    if (!blindboxesUnclass.regexp.password(data.password)) {
+    if (!blindboxes.regexp.password(data.password)) {
         return {code: 1, message: '登录密码格式错误'}
     }
     // 登录密码加密

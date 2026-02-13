@@ -1,0 +1,21 @@
+.container {
+    padding-bottom: 20px;
+
+    .title-line {
+        margin-bottom: 40px;
+
+        .label {
+            font-size: large;
+            color: #828282;
+        }
+    }
+
+    .para-box {
+        display: flex;
+        justify-content: center;
+
+        .para {
+            width: 800px;
+        }
+    }
+}

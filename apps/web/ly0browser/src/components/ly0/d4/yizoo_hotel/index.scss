@@ -1,0 +1,52 @@
+.title-line {
+    margin-bottom: 35px;
+
+    .text {
+        font-size: large;
+        color: #828282;
+    }
+}
+
+.top-button-group {
+    .button {
+        background-color: #009f95;
+        color: #ffffff;
+    }
+}
+
+.root-table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+
+    .item {
+        border-top: solid 1px #6a6a6a;
+
+        .left {
+            text-align: center;
+
+            .table {
+                width: 100%;
+
+                .label {
+                    text-align: right;
+                    padding-right: 20px;
+                }
+
+                .value {
+                    text-align: left;
+                    color: blue;
+                }
+            }
+        }
+
+        .right {
+            text-align: center;
+
+            .button {
+                background-color: #009f95;
+                color: #ffffff;
+            }
+        }
+    }
+}

@@ -1,0 +1,47 @@
+.title-line {
+    margin-bottom: 35px;
+
+    .title-line-text {
+        font-size: large;
+        color: #828282;
+    }
+}
+
+.top-button-box {
+    display: flex;
+    justify-content: space-between;
+
+    .button-group {
+        margin-bottom: 10px;
+
+        .button {
+            background-color: #009f95;
+            color: #ffffff;
+        }
+
+        .button-warning {
+            background-color: #ff640a;
+            color: #ffffff;
+        }
+    }
+}
+
+.image-list {
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    .item-box {
+        display: inline-block;
+        margin: 10px;
+
+        .label-item {
+            line-height : 20px;
+            font-size : smaller;
+            color: #6a6a6a;
+        }
+    }
+}
+
+.pagination {
+    margin-top: 10px;
+}

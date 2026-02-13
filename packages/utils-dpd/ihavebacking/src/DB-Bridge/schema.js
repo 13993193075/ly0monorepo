@@ -2,12 +2,12 @@
 // Data Type Consistency Enforcement
 
 import {ObjectId} from 'mongodb'
-import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes/src/index.js'
+import {blindboxes} from '@yoooloo42/blindboxes/src/index.js'
 /**
  * @return {null}
  */
 function DTCE({data, TypeFromSchema, schema}){
-    if(LibsJsUnclass.deepClone.typeOfValue(data) === 'array'){
+    if(blindboxes.deepClone.typeOfValue(data) === 'array'){
         let arr = []
         for (let i=0; i<data.length; i++) {
             arr.push(DTCE({data: data[i], TypeFromSchema, schema}))
@@ -15,7 +15,7 @@ function DTCE({data, TypeFromSchema, schema}){
         return arr
     }
 
-    if(LibsJsUnclass.deepClone.typeOfValue(data) === 'object' && !(data instanceof ObjectId)){
+    if(blindboxes.deepClone.typeOfValue(data) === 'object' && !(data instanceof ObjectId)){
         let obj = {}
         for (let i in data) {
             if (data.hasOwnProperty(i)) {

@@ -19,7 +19,7 @@
 
 <script setup>
 import {reactive} from "vue";
-import {unclassified as LibsJsUnclass} from '@yoooloo42/blindboxes'
+import {blindboxes} from '@yoooloo42/blindboxes'
 import compForm from './Form.vue'
 import ly0default from './default.js'
 
@@ -40,6 +40,6 @@ const props = defineProps({
 
 // 顶层组件的props属性需做响应性包装，页面和js可以使用相同的命名
 let formData_box = reactive(props.modelValue)
-const formProps_box = reactive(LibsJsUnclass.deepClone.deepDefaults(props.myProps, ly0default.myProps))
+const formProps_box = reactive(blindboxes.deepClone.deepDefaults(props.myProps, ly0default.myProps))
 const scopeThis_box = reactive(props.scopeThis)
 </script>

@@ -1,0 +1,22 @@
+.title-line {
+    margin-bottom: 35px;
+
+    .font {
+        font-size: large;
+        color: #828282;
+    }
+}
+
+.container {
+    text-align: center;
+
+    .item {
+        font-size: medium;
+        margin-top: 10px;
+
+        .download {
+            text-decoration: underline;
+            color: #0000ff;
+        }
+    }
+}

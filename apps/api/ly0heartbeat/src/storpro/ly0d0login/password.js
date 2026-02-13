@@ -1,5 +1,5 @@
 import {crypto} from '@yoooloo42/ihavebacking'
-import {unclassified as blindboxesUnclass} from '@yoooloo42/blindboxes'
+import {blindboxes} from '@yoooloo42/blindboxes'
 import {GQuery} from '../../main/GQuery.js'
 
 // 密码登录
@@ -90,7 +90,7 @@ function setPassword(data) {
         }
 
         // 新密码格式
-        let result = blindboxesUnclass.regexp.password(data.password)
+        let result = blindboxes.regexp.password(data.password)
         if (!result) {
             return resolve({code: 1, message: '新密码格式错误或强度不够'})
         }
@@ -151,7 +151,7 @@ function new_number(data){
             return resolve({code: 1, message: "没有登录密码"})
         }
         // 登录密码格式
-        let result = blindboxesUnclass.regexp.password(data.password)
+        let result = blindboxes.regexp.password(data.password)
         if (result.code !== 0) {
             return resolve(result)
         }

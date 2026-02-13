@@ -1,0 +1,71 @@
+.scan-box {
+    display: flex;
+    
+    .left-scan {
+        flex: 35%;
+    
+        .row {
+            height: 60px;
+        }
+        
+        .field-label {
+            text-align: right;
+            padding-right: 10px;
+        }
+    
+        .field-input {
+            width: 200px;
+        }
+    
+        .field-button {
+            border-color: #009688;
+            color: #009688;
+        }
+    }
+    
+    .right-list {
+        flex: 65%;
+        
+        .sum {
+            font-size: large;
+            text-align: center;
+            
+            .label {}
+            .value {
+                color: red;
+                font-size: x-large;
+                font-weight: bold;
+                margin-left: 10px;
+            }
+        }
+        
+        .dashed-line {
+            text-align: center;
+        }
+        
+        .list {
+            width: 100%;
+            text-align: center;
+            
+            .button-delete-td {
+                width: 50px;
+            }
+            
+            .button-delete {
+                border-bottom: solid 1px #ff640a;
+                color: #ff640a;
+            }
+        }
+    }
+}
+
+.line {
+    height: 1px;
+    background-color: #6a6a6a;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.submit-row {
+    text-align: center;
+}
