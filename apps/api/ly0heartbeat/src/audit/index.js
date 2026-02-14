@@ -1,6 +1,6 @@
 import {exec as storproExec} from "../storpro/index.js"
-import {blindboxes} from '@yoooloo42/blindboxes'
-import {DB_Bridge} from '@yoooloo42/ihavebacking'
+import {blindboxes} from 'packages/ly0utils'
+import {DB_Bridge} from 'packages/ly0libs'
 const GQuery = DB_Bridge.MongoDB_GQuery.GQuery
 
 // 内部模块：清除session

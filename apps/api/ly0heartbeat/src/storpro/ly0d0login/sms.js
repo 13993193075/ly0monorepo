@@ -1,5 +1,5 @@
-import {blindboxes} from '@yoooloo42/blindboxes'
-import {crypto, Ali} from '@yoooloo42/ihavebacking'
+import {blindboxes} from 'packages/ly0utils'
+import {crypto, Ali} from 'packages/ly0libs'
 import {GQuery} from '../../main/GQuery.js'
 
 // 阿里云客户端参数集

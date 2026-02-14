@@ -1,6 +1,6 @@
-import {blindboxes} from '@yoooloo42/blindboxes'
+import {blindboxes} from 'packages/ly0utils'
 import {ElMessage} from 'element-plus'
-import { ly0withTable as withTable } from '@yoooloo42/ly0el'
+import { ly0withTable as withTable } from 'packages/ly0el'
 
 export default {
     popup: {

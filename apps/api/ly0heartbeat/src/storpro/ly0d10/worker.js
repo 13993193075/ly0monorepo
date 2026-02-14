@@ -1,5 +1,5 @@
 import {GQuery} from '../../main/GQuery.js'
-import {GBT, blindboxes} from '@yoooloo42/blindboxes'
+import {GBT, blindboxes} from 'packages/ly0utils'
 import {imageDomain} from "../../main/config.js";
 import ImageSave from '../../main/image-save.js'
 

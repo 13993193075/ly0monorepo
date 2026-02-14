@@ -1,4 +1,4 @@
-import {GBT} from '@yoooloo42/blindboxes'
+import {GBT} from 'packages/ly0utils'
 
 // 获取初始代码
 function init(data){

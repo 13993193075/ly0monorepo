@@ -1,5 +1,5 @@
 import {GQuery} from '../../main/GQuery.js'
-import {Feie} from '@yoooloo42/ihavebacking'
+import {Feie} from 'packages/ly0libs'
 
 // 获取当前业务单位小票机列表，以供前端人工选择要使用的打印机
 function getPrinters(data) {

@@ -1,4 +1,4 @@
-import {FileDB} from '@yoooloo42/ihavebacking'
+import {FileDB} from 'packages/ly0libs'
 import {imageDomain, upload} from '../../main/config.js'
 import {GQuery} from '../../main/GQuery.js'
 

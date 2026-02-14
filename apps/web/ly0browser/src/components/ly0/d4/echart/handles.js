@@ -1,5 +1,5 @@
-import {request} from '@yoooloo42/ihavebacking'
-import {blindboxes} from '@yoooloo42/blindboxes'
+import {request} from 'packages/ly0libs'
+import {blindboxes} from 'packages/ly0utils'
 import * as echarts from 'echarts'
 import {ElMessage} from 'element-plus'
 const ly0session = request.ly0.ly0sessionLoad()

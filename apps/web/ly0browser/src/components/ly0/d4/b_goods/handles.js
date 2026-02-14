@@ -1,4 +1,4 @@
-import { ly0withTable as withTable } from '@yoooloo42/ly0el'
+import { ly0withTable as withTable } from 'packages/ly0el'
 async function init ({scopeThis}){
     scopeThis.queryInit.formData.id_business = scopeThis.props_myProps.id_business
     scopeThis.insertOne.formData.id_business = scopeThis.props_myProps.id_business

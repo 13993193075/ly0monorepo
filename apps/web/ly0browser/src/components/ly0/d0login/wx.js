@@ -1,4 +1,4 @@
-import {WeChat, request} from "@yoooloo42/ihavebacking"
+import {WeChat, request} from "packages/ly0libs"
 import { ElMessage, ElMessageBox } from 'element-plus'
 const ly0request = request.ly0
 

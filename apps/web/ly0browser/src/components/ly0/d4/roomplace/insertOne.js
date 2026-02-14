@@ -1,5 +1,5 @@
-import { request } from '@yoooloo42/ihavebacking'
-import {ly0withTable as withTable} from '@yoooloo42/ly0el'
+import { request } from 'packages/ly0libs'
+import {ly0withTable as withTable} from 'packages/ly0el'
 const ly0session = request.ly0.ly0sessionLoad()
 export default {
     formProps: {

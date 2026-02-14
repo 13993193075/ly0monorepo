@@ -1,4 +1,4 @@
-import {request} from '@yoooloo42/ihavebacking'
+import {request} from 'packages/ly0libs'
 import {ElMessage, ElMessageBox} from 'element-plus'
 let ly0session = request.ly0.ly0sessionLoad()
 

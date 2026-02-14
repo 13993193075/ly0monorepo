@@ -1,5 +1,5 @@
 import {GQuery} from '../../main/GQuery.js'
-import {GBT} from '@yoooloo42/blindboxes'
+import {GBT} from 'packages/ly0utils'
 import code from './code/index.js'
 
 // 内部模块：查询修正

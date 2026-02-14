@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 import {imageDomain} from '../../main/config.js'
 import ImageSave from '../../main/image-save.js'
-import {GBT} from '@yoooloo42/blindboxes'
+import {GBT} from 'packages/ly0utils'
 
 // 内部模块：查询修正
 function queryRevise(data) {

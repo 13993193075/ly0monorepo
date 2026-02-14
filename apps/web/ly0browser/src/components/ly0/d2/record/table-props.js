@@ -1,5 +1,5 @@
-import {blindboxes} from '@yoooloo42/blindboxes'
-import {ly0withTable as withTable} from '@yoooloo42/ly0el'
+import {blindboxes} from 'packages/ly0utils'
+import {ly0withTable as withTable} from 'packages/ly0el'
 export default {
     titleLine: { // 标题线
         text: "支付记录（维护）"

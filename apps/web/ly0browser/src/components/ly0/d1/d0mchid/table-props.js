@@ -1,6 +1,6 @@
-import {request} from '@yoooloo42/ihavebacking'
+import {request} from 'packages/ly0libs'
 import { ElMessageBox, ElMessage } from 'element-plus'
-import {ly0withTable as withTable} from '@yoooloo42/ly0el'
+import {ly0withTable as withTable} from 'packages/ly0el'
 const ly0request = request.ly0
 
 export default {

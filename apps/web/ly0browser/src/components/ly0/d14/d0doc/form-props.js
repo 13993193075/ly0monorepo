@@ -1,4 +1,4 @@
-import {blindboxes} from '@yoooloo42/blindboxes'
+import {blindboxes} from 'packages/ly0utils'
 import more from '../d0more/index.js'
 
 function getFormProps({scopeThis}) {

@@ -1,5 +1,5 @@
 import {GQuery} from '../../main/GQuery.js'
-import {GBT} from '@yoooloo42/blindboxes'
+import {GBT} from 'packages/ly0utils'
 
 // 增加1个新的邮寄地址
 function addOne(data){

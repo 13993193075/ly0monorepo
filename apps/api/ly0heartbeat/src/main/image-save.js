@@ -1,4 +1,4 @@
-import {FileDB} from '@yoooloo42/ihavebacking'
+import {FileDB} from 'packages/ly0libs'
 import {upload} from './config.js'
 const pathHead = {
     dbFolder: upload.imageFolder,

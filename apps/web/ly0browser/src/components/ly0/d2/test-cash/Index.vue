@@ -27,7 +27,7 @@
 
 <script setup>
 import { reactive, onMounted } from 'vue'
-import {request} from '@yoooloo42/ihavebacking'
+import {request} from 'packages/ly0libs'
 import para from './para.js'
 import test from './test.js'
 

@@ -1,4 +1,4 @@
-import {blindboxes} from '@yoooloo42/blindboxes'
+import {blindboxes} from 'packages/ly0utils'
 export default {
     formProps: {
         popup: {

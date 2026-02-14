@@ -1,0 +1,11 @@
+{
+  "name": "@yoooloo42/ly0utils",
+  "version": "1.0.0",
+  "description": "通用函数库- 无第三方依赖",
+  "main": "src/index.js",
+  "type": "module",
+  "files": [
+    "src/index.js",
+    "src"
+  ]
+}

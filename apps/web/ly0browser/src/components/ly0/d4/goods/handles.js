@@ -1,4 +1,4 @@
-import {ly0withTable as withTable} from '@yoooloo42/ly0el'
+import {ly0withTable as withTable} from 'packages/ly0el'
 async function init({scopeThis}){
     await withTable.init({scopeThis})
     // 唯一业务单位缺省处理

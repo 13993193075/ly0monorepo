@@ -3,7 +3,7 @@ import http from 'http'
 import https from 'https'
 import path from 'path';
 import { fileURLToPath } from 'url';
-import {DB_Bridge} from '@yoooloo42/ihavebacking'
+import {DB_Bridge} from 'packages/ly0libs'
 import {listen, gsfy, upload} from './config.js'
 import routerUploadReq from '../upload-req/router.js'
 import routerStorpro from '../storpro/router.js'

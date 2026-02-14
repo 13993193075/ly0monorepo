@@ -1,4 +1,4 @@
-import {FileDB, Ali} from '@yoooloo42/ihavebacking'
+import {FileDB, Ali} from 'packages/ly0libs'
 import {upload as configUpload, imageDomain} from '../main/config.js'
 
 // 文件上传

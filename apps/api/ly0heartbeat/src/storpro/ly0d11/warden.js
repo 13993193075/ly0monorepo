@@ -1,5 +1,5 @@
 import {GQuery} from '../../main/GQuery.js'
-import {blindboxes} from '@yoooloo42/blindboxes'
+import {blindboxes} from 'packages/ly0utils'
 
 // 内部模块：查询修正
 function queryRevise (data) {

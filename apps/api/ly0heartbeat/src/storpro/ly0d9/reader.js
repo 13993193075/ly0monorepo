@@ -1,4 +1,4 @@
-import {blindboxes} from "@yoooloo42/blindboxes"
+import {blindboxes} from "packages/ly0utils"
 const regexp = blindboxes.regexp
 
 // 内部模块：查询修正

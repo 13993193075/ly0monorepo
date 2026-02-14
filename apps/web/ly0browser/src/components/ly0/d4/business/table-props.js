@@ -1,6 +1,6 @@
-import { ly0withTable as withTable } from '@yoooloo42/ly0el'
+import { ly0withTable as withTable } from 'packages/ly0el'
 import cascade from './cascade.js'
-import {blindboxes} from '@yoooloo42/blindboxes'
+import {blindboxes} from 'packages/ly0utils'
 
 export default {
     titleLine: { // 标题线

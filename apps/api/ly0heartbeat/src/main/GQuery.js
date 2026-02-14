@@ -1,6 +1,6 @@
-import {DB_Bridge} from '@yoooloo42/ihavebacking'
+import {DB_Bridge} from 'packages/ly0libs'
 import Schema from '../schema/index.js'
-import {unclassified as blindBoxesUnclass} from '@yoooloo42/blindboxes'
+import {unclassified as blindBoxesUnclass} from 'packages/ly0utils'
 
 async function GQuery(para){
     // 自动获取表模型

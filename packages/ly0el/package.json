@@ -1,0 +1,26 @@
+{
+  "name": "@yoooloo42/ly0el",
+  "version": "1.0.0",
+  "description": "vue+element-plus组件库",
+  "main": "src/index.js",
+  "type": "module",
+  "files": [
+    "src/index.js",
+    "src"
+  ],
+  "dependencies": {
+    "@yoooloo42/ly0utils": "workspace:*",
+    "@yoooloo42/ly0browser": "workspace:*",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@vueup/vue-quill": "^1.2.0",
+    "element-plus": "^2.13.2",
+    "vue": "^3.5.28"
+  },
+  "peerDependencies": {
+    "@vueup/vue-quill": "^1.2.0",
+    "element-plus": "^2.13.2",
+    "vue": "^3.5.28"
+  }
+}

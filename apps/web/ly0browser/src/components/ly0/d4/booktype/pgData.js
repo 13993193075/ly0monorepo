@@ -1,4 +1,4 @@
-import { request } from '@yoooloo42/ihavebacking'
+import { request } from 'packages/ly0libs'
 const ly0session = request.ly0.ly0sessionLoad()
 
 export default {

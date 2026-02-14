@@ -5,7 +5,7 @@
 // 用户扫码授权后，微信后台发送临时票据code
 // 小程序前端提供appid以及临时票据js_code
 
-import {WeChat} from '@yoooloo42/ihavebacking'
+import {WeChat} from 'packages/ly0libs'
 import {GQuery} from '../../main/GQuery.js'
 import ly0d1d0appid from '../ly0d1/d0appid.js'
 

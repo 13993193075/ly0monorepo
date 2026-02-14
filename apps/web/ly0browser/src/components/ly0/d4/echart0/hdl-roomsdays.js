@@ -1,7 +1,7 @@
 // 统计：房*天数资源
 // 统计：房*天数销售
 
-import {blindboxes} from '@yoooloo42/blindboxes'
+import {blindboxes} from 'packages/ly0utils'
 const dateFormat = blindboxes.dateFormat
 
 // 房*天数资源 统计口径：旅店

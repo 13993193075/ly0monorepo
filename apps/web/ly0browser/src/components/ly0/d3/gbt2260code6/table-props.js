@@ -1,6 +1,6 @@
-import {request} from '@yoooloo42/ihavebacking'
+import {request} from 'packages/ly0libs'
 import {ElMessage, ElMessageBox} from 'element-plus'
-import {ly0withTable as withTable} from '@yoooloo42/ly0el'
+import {ly0withTable as withTable} from 'packages/ly0el'
 export default {
     titleLine: { // 标题线
         text: "行政区划编码 - 县级"

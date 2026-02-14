@@ -1,4 +1,4 @@
-import {request, FileSaver} from '@yoooloo42/ihavebacking'
+import {request, FileSaver} from 'packages/ly0libs'
 import {ElMessage} from 'element-plus'
 
 // 获取报表数据

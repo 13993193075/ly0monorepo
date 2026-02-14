@@ -1,5 +1,5 @@
-import {crypto} from '@yoooloo42/ihavebacking'
-import {blindboxes} from '@yoooloo42/blindboxes'
+import {crypto} from 'packages/ly0libs'
+import {blindboxes} from 'packages/ly0utils'
 import {GQuery} from '../../main/GQuery.js'
 
 // 密码登录

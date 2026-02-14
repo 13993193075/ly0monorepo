@@ -1,6 +1,6 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
-import {FileDB} from '@yoooloo42/ihavebacking'
+import {FileDB} from 'packages/ly0libs'
 
 // 获取当前文件的目录路径 (相当于 CommonJS 的 __dirname)
 const __filename = fileURLToPath(import.meta.url);

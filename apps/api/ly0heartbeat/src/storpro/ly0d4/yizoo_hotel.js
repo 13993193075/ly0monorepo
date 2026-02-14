@@ -1,5 +1,5 @@
 import {GQuery} from '../../main/GQuery.js'
-import {Yizoo} from '@yoooloo42/ihavebacking'
+import {Yizoo} from 'packages/ly0libs'
 
 //内部模块：数据约束
 function dataRule (data) {

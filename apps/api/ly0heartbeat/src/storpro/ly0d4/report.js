@@ -1,5 +1,5 @@
 import {GQuery} from '../../main/GQuery.js'
-import {ly0d4 as beanLy0d4, blindboxes} from '@yoooloo42/blindboxes'
+import {ly0d4 as beanLy0d4, blindboxes} from 'packages/ly0utils'
 
 // 月报表
 async function month (data) {

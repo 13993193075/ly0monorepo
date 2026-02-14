@@ -1,5 +1,5 @@
 import {GQuery} from '../../main/GQuery.js'
-import {ly0d4 as beanLy0d4} from '@yoooloo42/blindboxes'
+import {ly0d4 as beanLy0d4} from 'packages/ly0utils'
 import utils from "./utils/index.js"
 import ly0d4business from './business.js'
 import ly0d4b_goods from './b_goods.js'

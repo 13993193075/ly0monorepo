@@ -1,7 +1,7 @@
-import {request} from '@yoooloo42/ihavebacking'
-import {blindboxes} from '@yoooloo42/blindboxes'
+import {request} from 'packages/ly0libs'
+import {blindboxes} from 'packages/ly0utils'
 const ly0session = request.ly0sessionLoad()
-import {ly0withTable as withTable} from '@yoooloo42/ly0el'
+import {ly0withTable as withTable} from 'packages/ly0el'
 
 export default {
     titleLine: { // 标题线

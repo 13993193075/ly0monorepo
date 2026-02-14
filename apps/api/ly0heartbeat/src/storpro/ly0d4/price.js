@@ -1,4 +1,4 @@
-import {ly0d4 as beanLy0d4} from '@yoooloo42/blindboxes'
+import {ly0d4 as beanLy0d4} from 'packages/ly0utils'
 import {GQuery} from '../../main/GQuery.js'
 
 // 内部模块：查询修正

@@ -1,4 +1,4 @@
-import {ly0withTable} from '@yoooloo42/ly0el'
+import {ly0withTable} from 'packages/ly0el'
 export default {
     titleLine: { // 标题线
         text: "开发者账号"

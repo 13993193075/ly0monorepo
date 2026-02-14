@@ -1,5 +1,5 @@
 <script setup>
-import {blindboxes} from '@yoooloo42/blindboxes'
+import {blindboxes} from 'packages/ly0utils'
 const props = defineProps(['scopeThis'])
 </script>
 

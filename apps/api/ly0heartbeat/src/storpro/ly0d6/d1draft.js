@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 import {imageDomain} from '../../main/config.js'
 import ImageSave from '../../main/image-save.js'
-import {FileDB} from '@yoooloo42/ihavebacking'
+import {FileDB} from 'packages/ly0libs'
 
 // 内部模块：查询修正
 function queryRevise(data) {

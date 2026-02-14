@@ -1,6 +1,6 @@
 import {GQuery} from '../../main/GQuery.js'
 import code from "./code.js"
-import {WeChat} from '@yoooloo42/ihavebacking'
+import {WeChat} from 'packages/ly0libs'
 
 // 内部模块：查询修正
 function queryRevise (data) {

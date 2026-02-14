@@ -1,5 +1,5 @@
-import {crypto, Email} from '@yoooloo42/ihavebacking'
-import {blindboxes} from '@yoooloo42/blindboxes'
+import {crypto, Email} from 'packages/ly0libs'
+import {blindboxes} from 'packages/ly0utils'
 import {GQuery} from '../../main/GQuery.js'
 
 // 获取验证码

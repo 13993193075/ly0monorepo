@@ -1,5 +1,5 @@
-import {crypto} from '@yoooloo42/ihavebacking'
-import {blindboxes} from '@yoooloo42/blindboxes'
+import {crypto} from 'packages/ly0libs'
+import {blindboxes} from 'packages/ly0utils'
 import {GQuery} from '../../main/GQuery.js'
 import {imageDomain} from '../../main/config.js'
 import ImageSave from '../../main/image-save.js'

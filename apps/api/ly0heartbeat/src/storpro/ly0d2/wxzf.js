@@ -1,6 +1,6 @@
 // 微信支付
 
-import {WeChat, WeChat_Pay} from '@yoooloo42/ihavebacking'
+import {WeChat, WeChat_Pay} from 'packages/ly0libs'
 import {GQuery} from '../../main/GQuery.js'
 import code from "./code.js"
 import ly0d1d0appid from '../ly0d1/d0appid.js'

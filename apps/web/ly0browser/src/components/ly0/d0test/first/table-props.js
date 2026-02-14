@@ -1,5 +1,5 @@
-import {request} from '@yoooloo42/ihavebacking'
-import {ly0withTable as withTable} from '@yoooloo42/ly0el'
+import {request} from 'packages/ly0libs'
+import {ly0withTable as withTable} from 'packages/ly0el'
 const ly0request = request.ly0
 
 export default {

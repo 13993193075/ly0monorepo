@@ -1,7 +1,7 @@
-import {request} from '@yoooloo42/ihavebacking'
-import {blindboxes} from '@yoooloo42/blindboxes'
+import {request} from 'packages/ly0libs'
+import {blindboxes} from 'packages/ly0utils'
 import {ElMessage, ElMessageBox} from 'element-plus'
-import { ly0withTable as withTable } from '@yoooloo42/ly0el'
+import { ly0withTable as withTable } from 'packages/ly0el'
 
 // 客房分区树形图 - 弹出窗口
 function insertManyPopup({scopeThis}) {

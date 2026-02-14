@@ -1,4 +1,4 @@
-import {Feie} from '@yoooloo42/ihavebacking'
+import {Feie} from 'packages/ly0libs'
 import {GQuery} from '../../main/GQuery.js'
 
 // 内部模块：查询修正

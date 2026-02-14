@@ -21,8 +21,8 @@
 import { reactive, onMounted, watch } from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import { useRouter } from 'vue-router';
-import {request as ly0request} from '@yoooloo42/ihavebacking'
-import {ly0withTable as withTable} from '@yoooloo42/ly0el'
+import {request as ly0request} from 'packages/ly0libs'
+import {ly0withTable as withTable} from 'packages/ly0el'
 import tableData from './table-data.js'
 import tableProps from './table-props.js'
 import storpro from './storpro.js'

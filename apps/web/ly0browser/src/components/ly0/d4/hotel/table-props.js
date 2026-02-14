@@ -1,4 +1,4 @@
-import {ly0withTable as withTable} from '@yoooloo42/ly0el'
+import {ly0withTable as withTable} from 'packages/ly0el'
 export default {
     titleLine: { // 标题线
         text: "旅店名称及参数设置"

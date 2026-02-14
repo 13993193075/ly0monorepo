@@ -1,7 +1,7 @@
 import utils from './utils/index.js'
 import code from './code.js'
 import {GQuery} from '../../main/GQuery.js'
-import {blindboxes, ly0d4 as beanLy0d4} from '@yoooloo42/blindboxes'
+import {blindboxes, ly0d4 as beanLy0d4} from 'packages/ly0utils'
 
 // 内部模块：查询修正
 function queryRevise (data) {

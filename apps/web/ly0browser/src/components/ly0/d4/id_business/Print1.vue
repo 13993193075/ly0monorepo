@@ -65,7 +65,7 @@
 
 <script setup>
 import printJS from 'print-js'
-import {blindboxes} from '@yoooloo42/blindboxes'
+import {blindboxes} from 'packages/ly0utils'
 import { reactive } from 'vue'
 
 const props = defineProps(['scopeThis'])

@@ -1,6 +1,6 @@
 import {GQuery} from '../../main/GQuery.js'
 import utils from "../ly0d7/utils/index.js"
-import {GBT} from '@yoooloo42/blindboxes'
+import {GBT} from 'packages/ly0utils'
 
 // 获取购物车信息
 function getCart(data){

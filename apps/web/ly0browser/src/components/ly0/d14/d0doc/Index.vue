@@ -1,8 +1,8 @@
 <script setup>
 import { reactive, onMounted } from 'vue'
 import {ElMessage} from 'element-plus'
-import {request} from '@yoooloo42/ihavebacking'
-import {blindboxes} from '@yoooloo42/blindboxes'
+import {request} from 'packages/ly0libs'
+import {blindboxes} from 'packages/ly0utils'
 import menu from './menu.js'
 import formData from './form-data.js'
 import formProps from './form-props.js'

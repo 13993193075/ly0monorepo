@@ -1,4 +1,4 @@
-import {request} from '@yoooloo42/ihavebacking'
+import {request} from 'packages/ly0libs'
 import {ElMessage} from 'element-plus'
 export default {
     popup: {

@@ -1,4 +1,4 @@
-import {request as ly0request} from '@yoooloo42/ihavebacking'
+import {request as ly0request} from 'packages/ly0libs'
 const ly0session = ly0request.ly0.ly0sessionLoad()
 export default {
     formData: {

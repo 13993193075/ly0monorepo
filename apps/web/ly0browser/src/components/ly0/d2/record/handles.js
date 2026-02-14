@@ -1,6 +1,6 @@
-import {request} from '@yoooloo42/ihavebacking'
+import {request} from 'packages/ly0libs'
 import {ElMessage, ElMessageBox} from 'element-plus'
-import {ly0withTable as withTable} from '@yoooloo42/ly0el'
+import {ly0withTable as withTable} from 'packages/ly0el'
 // 刷新支付状态
 function status({scopeThis, row}){
     request.ly0.storpro({

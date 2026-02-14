@@ -1,5 +1,5 @@
 import { ElMessage, ElMessageBox } from 'element-plus'
-import {request} from '@yoooloo42/ihavebacking'
+import {request} from 'packages/ly0libs'
 const ly0request = request.ly0
 
 function submit(scopeThis) {
