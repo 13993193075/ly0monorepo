@@ -1,7 +1,7 @@
 {
-  "name": "@yoooloo42/ly0heartbeat",
+  "name": "@yoooloo42/ly0test-api",
   "version": "1.0.0",
-  "description": "心跳 - ly0后台",
+  "description": "",
   "main": "src/index.js",
   "type": "module",
   "files": [
