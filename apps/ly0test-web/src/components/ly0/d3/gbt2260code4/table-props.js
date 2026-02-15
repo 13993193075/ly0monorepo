@@ -1,5 +1,5 @@
 import {ElMessage, ElMessageBox} from 'element-plus'
-import {ly0withTable as withTable} from 'packages/ly0el/src/index.js'
+import {withTable} from '@yoooloo42/ly0el'
 export default {
     titleLine: { // 标题线
         text: "行政区划编码 - 市级"

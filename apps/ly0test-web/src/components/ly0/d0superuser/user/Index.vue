@@ -1,10 +1,10 @@
 <template>
-    <ly0Table
+    <ly0el-table
         v-model="scopeThis.tableData"
         :myProps="scopeThis.tableProps"
         :scopeThis="scopeThis"
-    ></ly0Table>
-    <ly0Form
+    ></ly0el-table>
+    <ly0el-form
         v-if="scopeThis.formData
             && scopeThis.formProps
             && scopeThis.formProps.popup
@@ -12,7 +12,7 @@
         v-model="scopeThis.formData"
         :myProps="scopeThis.formProps"
         :scopeThis="scopeThis"
-    ></ly0Form>
+    ></ly0el-form>
 </template>
 
 <style lang="scss" scoped></style>
@@ -20,7 +20,7 @@
 <script setup>
 import { reactive, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router';
-import {ly0withTable as withTable} from 'packages/ly0el/src/index.js'
+import {withTable} from '@yoooloo42/ly0el'
 import tableData from './table-data.js'
 import tableProps from './table-props.js'
 import storpro from './storpro.js'

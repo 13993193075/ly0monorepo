@@ -1,5 +1,5 @@
-import {ly0withTable as withTable} from 'packages/ly0el/src/index.js'
-import { blindboxes } from 'packages/ly0utils/src/index.js'
+import {withTable} from '@yoooloo42/ly0el'
+import { utils as ly0utils } from '@yoooloo42/ly0utils'
 export default {
     titleLine: { // 标题线
         text: "系统日志"
@@ -31,7 +31,7 @@ export default {
                     return (row.number ? row.number + " | " : "") +
                         (row.cellphone ? row.cellphone + " | " : "") +
                         (row.email ? " " + row.email + " | " : "") +
-                        blindboxes.dateFormat.dateFormat(row.time, "yyyy/MM/dd HH:mm:ss") + " | " +
+                        ly0utils.dateFormat.dateFormat(row.time, "yyyy/MM/dd HH:mm:ss") + " | " +
                         row.memo
                 }
             },

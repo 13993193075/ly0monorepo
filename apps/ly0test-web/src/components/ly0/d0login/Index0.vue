@@ -16,9 +16,9 @@
 import { reactive, watch } from 'vue'
 import { useRouter } from 'vue-router';
 import compPassword from './Password.vue'
-import compSms from './sms.vue'
-import compEmail from './email.vue'
-import compWx from './wx.vue'
+import compSms from './Sms.vue'
+import compEmail from './Email.vue'
+import compWx from './Wx.vue'
 import compLogin from './Login.vue'
 import handles from './handles.js'
 

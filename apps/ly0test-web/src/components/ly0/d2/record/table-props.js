@@ -1,5 +1,5 @@
-import {blindboxes} from 'packages/ly0utils/src/index.js'
-import {ly0withTable as withTable} from 'packages/ly0el/src/index.js'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
+import {withTable} from '@yoooloo42/ly0el'
 export default {
     titleLine: { // 标题线
         text: "支付记录（维护）"
@@ -49,7 +49,7 @@ export default {
                 label: '支付状态',
                 show: 'expression',
                 hdlExpression({scopeThis, row}){
-                    return row.status_text + " " + blindboxes.dateFormat.dateFormat(row.time)
+                    return row.status_text + " " + ly0utils.dateFormat.dateFormat(row.time)
                 }
             },
             {

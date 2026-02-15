@@ -1,4 +1,4 @@
-import {ly0withTable} from 'packages/ly0el/src/index.js'
+import {withTable} from '@yoooloo42/ly0el'
 export default {
     titleLine: { // 标题线
         text: "开发者账号"
@@ -7,25 +7,25 @@ export default {
         [
             {
                 text: "全部",
-                hdlClick: ly0withTable.reload
+                hdlClick: withTable.reload
             },
             {
                 text: "刷新",
-                hdlClick: ly0withTable.refresh
+                hdlClick: withTable.refresh
             },
             {
                 text: "查询",
-                hdlClick: ly0withTable.popupFind
+                hdlClick: withTable.popupFind
             },
             {
                 text: "新增",
-                hdlClick: ly0withTable.popupInsertOne
+                hdlClick: withTable.popupInsertOne
             }
         ]
     ],
     table: {
-        hdlPageSizeChange: ly0withTable.pageSizeChange,
-        hdlCurrentPageChange: ly0withTable.currentPageChange,
+        hdlPageSizeChange: withTable.pageSizeChange,
+        hdlCurrentPageChange: withTable.currentPageChange,
         cols: [
             {
                 label: 'USER',
@@ -44,17 +44,17 @@ export default {
                     {
                         text: "详细",
                         size: "small",
-                        hdlClick: ly0withTable.popupDoc
+                        hdlClick: withTable.popupDoc
                     },
                     {
                         text: "修改",
                         size: "small",
-                        hdlClick: ly0withTable.popupUpdateOne
+                        hdlClick: withTable.popupUpdateOne
                     },
                     {
                         text: "删除",
                         size: "small",
-                        hdlClick: ly0withTable.submitDeleteOne,
+                        hdlClick: withTable.submitDeleteOne,
                         style: {
                             'background-color': '#ff640a',
                             'color': '#ffffff'

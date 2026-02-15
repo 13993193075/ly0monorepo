@@ -1,6 +1,6 @@
-import {blindboxes} from 'packages/ly0utils/src/index.js'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 import {ElMessage} from 'element-plus'
-import { ly0withTable as withTable } from 'packages/ly0el/src/index.js'
+import {withTable} from '@yoooloo42/ly0el'
 
 export default {
     popup: {
@@ -130,8 +130,8 @@ export default {
                 label: '入住时间 - 离开时间',
                 show: 'expression',
                 hdlExpression({scopeThis, row}) {
-                    return blindboxes.dateFormat.dateFormat(row.checkin) + ' - ' +
-                        blindboxes.dateFormat.dateFormat(row.checkout)
+                    return ly0utils.dateFormat.dateFormat(row.checkin) + ' - ' +
+                        ly0utils.dateFormat.dateFormat(row.checkout)
                 },
                 width: '300px'
             },

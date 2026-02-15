@@ -1,6 +1,5 @@
-import {request} from 'packages/ly0libs/src/index.js'
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
 import {ElMessage, ElMessageBox} from 'element-plus'
-const ly0request = request.ly0
 const ly0session = ly0request.ly0sessionLoad()
 
 // 刷新订单（年费记录）的支付状态

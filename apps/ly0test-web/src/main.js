@@ -17,7 +17,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import '@vueup/vue-quill/dist/vue-quill.bubble.css'
 
 // 引入ly0el组件
-import ly0el from 'packages/ly0el/src/index.js'
+import ly0el from '@yoooloo42/ly0el'
 
 const app = createApp(App)
 

@@ -1,10 +1,10 @@
 <template>
-    <ly0Table
+    <ly0el-table
         v-model="scopeThis.tableData"
         :myProps="scopeThis.tableProps"
         :scopeThis="scopeThis"
-    ></ly0Table>
-    <ly0Form
+    ></ly0el-table>
+    <ly0el-form
         v-if="scopeThis.formData
             && scopeThis.formProps
             && scopeThis.formProps.popup
@@ -12,7 +12,7 @@
         v-model="scopeThis.formData"
         :myProps="scopeThis.formProps"
         :scopeThis="scopeThis"
-    ></ly0Form>
+    ></ly0el-form>
 </template>
 
 <style lang="scss" scoped></style>
@@ -20,8 +20,8 @@
 <script setup>
 import { reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import {blindboxes} from 'packages/ly0utils/src/index.js'
-import {ly0withTable as withTable} from 'packages/ly0el/src/index.js'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
+import {withTable} from '@yoooloo42/ly0el'
 import tableData from '../first/table-data.js'
 import tableProps from '../first/table-props.js'
 import storpro from './storpro.js'
@@ -35,7 +35,7 @@ const scopeThis = reactive(
     {
         routerInstance: useRouter(),
         tableData,
-        tableProps: blindboxes.deepClone.deepMerge(blindboxes.deepClone.deepClone(tableProps), {
+        tableProps: ly0utils.deepClone.deepMerge(ly0utils.deepClone.deepClone(tableProps), {
             titleLine: { // 标题线
                 text: "业务构件"
             }

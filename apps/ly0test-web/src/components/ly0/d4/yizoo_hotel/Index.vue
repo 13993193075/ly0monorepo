@@ -53,11 +53,11 @@
             </tbody>
         </table>
 
-        <ly0Form
+        <ly0el-form
             v-model="scopeThis.updateOne.formData"
             :myProps="scopeThis.updateOne.formProps"
             :scopeThis="scopeThis"
-        ></ly0Form>
+        ></ly0el-form>
     </div>
 </template>
 

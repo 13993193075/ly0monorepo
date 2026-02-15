@@ -1,6 +1,6 @@
 import {request} from 'packages/ly0libs/src/index.js'
 import {ElMessage, ElMessageBox} from 'element-plus'
-import {ly0withTable as withTable} from 'packages/ly0el/src/index.js'
+import {withTable as withTable} from 'packages/ly0el/src/index.js'
 export default {
     popup: {
         switch: true,

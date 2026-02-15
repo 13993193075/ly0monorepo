@@ -1,7 +1,7 @@
-import {request} from 'packages/ly0libs/src/index.js'
-import {blindboxes} from 'packages/ly0utils/src/index.js'
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import {utils as ly0utils} from '@yooloo42/ly0utils'
 import {ElMessage, ElMessageBox} from 'element-plus'
-import { ly0withTable as withTable } from 'packages/ly0el/src/index.js'
+import {withTable} from '@yoooloo42/ly0el'
 
 // 客房分区树形图 - 弹出窗口
 function insertManyPopup({scopeThis}) {
@@ -55,7 +55,7 @@ function insertManyData({scopeThis}) {
         i--
     }
 
-    return blindboxes.tree.treeRoot({
+    return ly0utils.tree.treeRoot({
         data,
         evalCode: 'code',
         evalText: 'text',
@@ -77,7 +77,7 @@ async function submit({scopeThis, data}) {
             arrRoom.push(JSON.parse(i.treeItemAppendix))
         }
     })
-    const result = await request.ly0.storpro({
+    const result = await ly0request.storpro({
         storproName: scopeThis.storpro.insertMany,
         data: {
             id_business: scopeThis.props_myProps.id_business,
@@ -153,7 +153,7 @@ function insertMany0Data({scopeThis}) {
         i--
     }
 
-    return blindboxes.tree.treeRoot({
+    return ly0utils.tree.treeRoot({
         data,
         evalCode: 'code',
         evalText: 'text',

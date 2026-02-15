@@ -1,6 +1,6 @@
-import {WeChat, request} from "packages/ly0libs/src/index.js"
+import {WeChat} from "@yoooloo42/ly0browser"
 import { ElMessage, ElMessageBox } from 'element-plus'
-const ly0request = request.ly0
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
 
 // 消息监听处理
 let messageHdlShell

@@ -13,8 +13,7 @@
 
 <script setup>
 import { ElMessageBox, ElMessage } from 'element-plus'
-import {request} from 'packages/ly0libs/src/index.js'
-const ly0request = request.ly0
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
 
 const handleClear = function () {
     ElMessageBox.confirm('立即清理, 确认?', '警告', {

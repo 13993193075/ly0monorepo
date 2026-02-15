@@ -1,9 +1,3 @@
 packages:
-  - 'apps/ly0test-web/*' # web端
-  - 'apps/ly0test-mobile/*' # 移动端
-  - 'apps/ly0test-api/*' # 后端
-  - 'packages/ly0browser/*' # 前端（浏览器）函数库
-  - 'packages/ly0el/*' # vue+element-plus组件库
-  - 'packages/ly0libs/*' # 通用函数库 - 有第三方依赖
-  - 'packages/ly0nodejs/*' # nodejs函数库
-  - 'packages/ly0utils/*' # 通用函数库- 无第三方依赖
+  - 'packages/*'
+  - 'apps/*'

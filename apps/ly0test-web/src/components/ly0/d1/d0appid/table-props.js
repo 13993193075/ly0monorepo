@@ -1,7 +1,7 @@
-import {request} from 'packages/ly0libs/src/index.js'
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
 import { ElMessageBox, ElMessage } from 'element-plus'
-import {ly0withTable as withTable} from 'packages/ly0el/src/index.js'
-const ly0request = request.ly0
+import {withTable} from '@yoooloo42/ly0el'
+
 export default {
     titleLine: { // 标题线
         text: "应用凭据"

@@ -1,4 +1,4 @@
-import {ly0withTable as withTable} from 'packages/ly0el/src/index.js'
+import {withTable as withTable} from 'packages/ly0el/src/index.js'
 import cascade from './cascade.js'
 export default {
     formProps: {

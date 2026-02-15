@@ -1,5 +1,5 @@
 {
-  "name": "ly0browser",
+  "name": "@yoooloo42/ly0browser",
   "version": "1.0.0",
   "description": "前端（浏览器）函数库",
   "main": "src/index.js",

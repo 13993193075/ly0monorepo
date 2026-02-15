@@ -1,7 +1,7 @@
-import {request} from 'packages/ly0libs/src/index.js'
-import {blindboxes} from 'packages/ly0utils/src/index.js'
-const ly0session = request.ly0sessionLoad()
-import {ly0withTable as withTable} from 'packages/ly0el/src/index.js'
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
+const ly0session = ly0request.ly0sessionLoad()
+import {withTable} from '@yoooloo42/ly0el'
 
 export default {
     titleLine: { // 标题线
@@ -23,7 +23,7 @@ export default {
                 label: '起始日期 - 截止日期',
                 show: 'expression',
                 hdlExpression({row}){
-                    return blindboxes.dateFormat.dateFormat(row.from, "yyyy/MM/dd") + " - " + blindboxes.dateFormat.dateFormat(row.to, "yyyy/MM/dd")
+                    return ly0utils.dateFormat.dateFormat(row.from, "yyyy/MM/dd") + " - " + ly0utils.dateFormat.dateFormat(row.to, "yyyy/MM/dd")
                 }
             },
             {

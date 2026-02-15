@@ -1,6 +1,6 @@
-import {request} from 'packages/ly0libs/src/index.js'
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
 import {ElMessage, ElMessageBox} from 'element-plus'
-import {ly0withTable as withTable} from 'packages/ly0el/src/index.js'
+import {withTable} from '@yoooloo42/ly0el'
 export default {
     titleLine: { // 标题线
         text: "行政区划编码 - 县级"
@@ -38,7 +38,7 @@ export default {
                         // 打开进度条
                         scopeThis.tableProps.table.loading.visible = true
                         scopeThis.tableProps.table.loading.text = "正在导入..."
-                        request.ly0.storpro({
+                        ly0request.storpro({
                             noSession: true,
                             storproName: "ly0d3.gbt2260code6.loadAll",
                             data: null

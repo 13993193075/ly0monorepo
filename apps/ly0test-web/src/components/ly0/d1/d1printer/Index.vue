@@ -1,10 +1,10 @@
 <template>
-    <ly0Table
+    <ly0el-table
         v-model="scopeThis.tableData"
         :myProps="scopeThis.tableProps"
         :scopeThis="scopeThis"
-    ></ly0Table>
-    <ly0Form
+    ></ly0el-table>
+    <ly0el-form
         v-if="scopeThis.formData
             && scopeThis.formProps
             && scopeThis.formProps.popup
@@ -12,7 +12,7 @@
         v-model="scopeThis.formData"
         :myProps="scopeThis.formProps"
         :scopeThis="scopeThis"
-    ></ly0Form>
+    ></ly0el-form>
 </template>
 
 <style lang="scss" scoped></style>
@@ -21,8 +21,8 @@
 import { reactive, onMounted, watch } from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import { useRouter } from 'vue-router';
-import {request as ly0request} from 'packages/ly0libs/src/index.js'
-import {ly0withTable as withTable} from 'packages/ly0el/src/index.js'
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import {withTable} from '@yoooloo42/ly0el'
 import tableData from './table-data.js'
 import tableProps from './table-props.js'
 import storpro from './storpro.js'
@@ -55,7 +55,7 @@ const scopeThis = reactive(
                     cancelButtonText: '取消',
                     type: 'warning',
                 }).then(() => {
-                    ly0request.ly0.storpro({
+                    ly0request.storpro({
                         storproName: 'ly0d1.d1printer.register',
                         data: {
                             id_ukey: row.id_ukey,

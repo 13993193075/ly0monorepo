@@ -1,4 +1,4 @@
-import {ly0withTable as withTable} from 'packages/ly0el/src/index.js'
+import {withTable} from '@yooloo42/ly0el'
 export default {
     formProps: {
         popup: {

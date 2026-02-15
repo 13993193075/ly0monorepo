@@ -1,4 +1,4 @@
-import { ly0withTable as withTable } from 'packages/ly0el/src/index.js'
+import {withTable} from '@yoooloo42/ly0el'
 import {ElMessage} from 'element-plus'
 export default {
     formProps_checkin: {

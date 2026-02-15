@@ -1,6 +1,5 @@
 import { ElMessage, ElMessageBox } from 'element-plus'
-import {request} from 'packages/ly0libs/src/index.js'
-const ly0request = request.ly0
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
 
 function getVercode(scopeThis) {
     return new Promise((resolve, reject)=>{

@@ -6,11 +6,11 @@
 
         <div class="para-box">
             <div class="para">
-                <ly0Form
+                <ly0el-form
                     v-model="scopeThis.para.formData"
                     :myProps="scopeThis.para.formProps"
                     :scopeThis="scopeThis"
-                ></ly0Form>
+                ></ly0el-form>
             </div>
         </div>
 
@@ -27,7 +27,7 @@
 
 <script setup>
 import { reactive, onMounted } from 'vue'
-import {request} from 'packages/ly0libs/src/index.js'
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
 import para from './para.js'
 import test from './test.js'
 
@@ -37,7 +37,7 @@ const scopeThis = reactive({
 })
 
 onMounted(() => {
-    request.ly0.storpro({
+    ly0request.storpro({
         storproName: 'ly0d2.record0.getPgData',
         data: null,
     }).then(result => {

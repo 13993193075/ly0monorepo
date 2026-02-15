@@ -1,4 +1,4 @@
-import {ly0withTable as withTable} from 'packages/ly0el/src/index.js'
+import {withTable as withTable} from 'packages/ly0el/src/index.js'
 export default {
     popup: {
         switch: true,

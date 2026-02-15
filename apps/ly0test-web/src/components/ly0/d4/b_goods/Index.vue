@@ -1,10 +1,10 @@
 <template>
-    <ly0Table
+    <ly0el-table
         v-model="scopeThis.tableData"
         :myProps="scopeThis.tableProps"
         :scopeThis="scopeThis"
-    ></ly0Table>
-    <ly0Form
+    ></ly0el-table>
+    <ly0el-form
         v-if="scopeThis.formData
             && scopeThis.formProps
             && scopeThis.formProps.popup
@@ -12,7 +12,7 @@
         v-model="scopeThis.formData"
         :myProps="scopeThis.formProps"
         :scopeThis="scopeThis"
-    ></ly0Form>
+    ></ly0el-form>
 
     <compInsertMany v-if="!!scopeThis.insertMany.popup.visible" :scopeThis="scopeThis"></compInsertMany>
     <compInsertMany0 v-if="!!scopeThis.insertMany0.popup.visible" :scopeThis="scopeThis"></compInsertMany0>

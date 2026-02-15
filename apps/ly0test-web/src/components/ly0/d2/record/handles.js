@@ -1,9 +1,10 @@
-import {request} from 'packages/ly0libs/src/index.js'
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
 import {ElMessage, ElMessageBox} from 'element-plus'
-import {ly0withTable as withTable} from 'packages/ly0el/src/index.js'
+import {withTable} from '@yoooloo42/ly0el'
+
 // 刷新支付状态
 function status({scopeThis, row}){
-    request.ly0.storpro({
+    ly0request.storpro({
         storproName: scopeThis.storpro.getStatus,
         data: {
             id_business: row.id_business
@@ -16,7 +17,7 @@ function status({scopeThis, row}){
 
 // 中止支付
 function cancel({scopeThis, row}){
-    request.ly0.storpro({
+    ly0request.storpro({
         storproName: scopeThis.storpro.setFail,
         data: {id_business: row.id_business}
     }).then(result=>{

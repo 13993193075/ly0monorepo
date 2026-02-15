@@ -1,4 +1,4 @@
-import {blindboxes} from 'packages/ly0utils/src/index.js'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 
 export default {
     formProps: {
@@ -20,7 +20,7 @@ export default {
                         inputType: "expression",
                         label: "起始日期",
                         hdlExpression({formData}){
-                            return blindboxes.dateFormat.dateFormat(formData.from, "yyyy/MM/dd")
+                            return ly0utils.dateFormat.dateFormat(formData.from, "yyyy/MM/dd")
                         },
                         style: {width: '200px'}
                     },
@@ -28,7 +28,7 @@ export default {
                         inputType: "expression",
                         label: "截止日期",
                         hdlExpression({formData}){
-                            return blindboxes.dateFormat.dateFormat(formData.to, "yyyy/MM/dd")
+                            return ly0utils.dateFormat.dateFormat(formData.to, "yyyy/MM/dd")
                         },
                         style: {width: '200px'}
                     },

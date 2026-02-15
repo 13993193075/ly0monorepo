@@ -1,6 +1,6 @@
-import { ly0withTable as withTable } from 'packages/ly0el/src/index.js'
+import {withTable} from '@yoooloo42/ly0el'
 import cascade from './cascade.js'
-import {blindboxes} from 'packages/ly0utils/src/index.js'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 
 export default {
     titleLine: { // 标题线
@@ -57,8 +57,8 @@ export default {
                 show: 'expression',
                 hdlExpression({scopeThis, row}) {
                     return (
-                        blindboxes.dateFormat.dateFormat(row.checkin) + ' - ' +
-                        blindboxes.dateFormat.dateFormat(row.checkout)
+                        ly0utils.dateFormat.dateFormat(row.checkin) + ' - ' +
+                        ly0utils.dateFormat.dateFormat(row.checkout)
                     )
                 },
             },

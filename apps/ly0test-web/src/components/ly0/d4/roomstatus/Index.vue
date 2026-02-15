@@ -87,12 +87,12 @@
 
         <!-- 修改房态 -->
         <!-- 发生新订单 -->
-        <ly0Form
+        <ly0el-form
             v-if="scopeThis.formProps && scopeThis.formProps.popup.visible"
             v-model="scopeThis.formData"
             :myProps="scopeThis.formProps"
             :scopeThis="scopeThis"
-        ></ly0Form>
+        ></ly0el-form>
     </template>
 </template>
 
