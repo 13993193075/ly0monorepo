@@ -42,8 +42,8 @@
             </div>
             <div>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;入住时间：{{
-                    states.blindboxes.dateFormat.dateFormat(scopeThis.business.objBusiness.checkin) + ' - ' +
-                    states.blindboxes.dateFormat.dateFormat(scopeThis.business.objBusiness.checkout)
+                    states.ly0utils.dateFormat.dateFormat(scopeThis.business.objBusiness.checkin) + ' - ' +
+                    states.ly0utils.dateFormat.dateFormat(scopeThis.business.objBusiness.checkout)
                 }}</span>
             </div>
 
@@ -65,12 +65,12 @@
 
 <script setup>
 import printJS from 'print-js'
-import {blindboxes} from 'packages/ly0utils/src/index.js'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 import { reactive } from 'vue'
 
 const props = defineProps(['scopeThis'])
 const states = reactive({
-    blindboxes
+    ly0utils
 })
 
 function print (elId) {

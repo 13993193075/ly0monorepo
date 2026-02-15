@@ -1,5 +1,5 @@
 <script setup>
-import {blindboxes} from 'packages/ly0utils/src/index.js'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 const props = defineProps(['scopeThis'])
 </script>
 
@@ -10,7 +10,7 @@ const props = defineProps(['scopeThis'])
     <div v-else>
         <template v-for="(item, index) in scopeThis.business.arrMemo" :key="index">
             <div>
-                <span class="value-time">[{{blindboxes.dateFormat.dateFormat(item.time)}}]</span>
+                <span class="value-time">[{{ly0utils.dateFormat.dateFormat(item.time)}}]</span>
                 <span class="value-memo">{{item.memo}}</span>
             </div>
         </template>

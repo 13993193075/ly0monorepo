@@ -1,4 +1,5 @@
-import {request, FileSaver} from 'packages/ly0libs/src/index.js'
+import {FileSaver} from '@yoooloo42/ly0browser'
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
 import {ElMessage} from 'element-plus'
 
 // 获取报表数据
@@ -7,10 +8,10 @@ async function getReportData({scopeThis}) {
     scopeThis.loading = true
     scopeThis.loadingText = '正在统计中，可能需要较长时间，请稍候'
 
-    const result = await request.ly0.storpro({
+    const result = await ly0request.storpro({
         storproName: 'ly0d4.report.month',
         data: {
-            id_dataunit: request.ly0.ly0sessionLoad().dataunit._id,
+            id_dataunit: ly0request.ly0sessionLoad().dataunit._id,
             timeFrom: scopeThis.reqData.timeFrom,
             timeTo: scopeThis.reqData.timeTo,
         },

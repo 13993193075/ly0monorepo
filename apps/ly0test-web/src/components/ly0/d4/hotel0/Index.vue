@@ -20,7 +20,7 @@
 <script setup>
 import { reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
-import {withTable as withTable} from 'packages/ly0el/src/index.js'
+import {withTable} from '@yoooloo42/ly0el'
 import tableData from '../hotel/table-data.js'
 import tableProps from './table-props.js'
 import storpro from '../hotel/storpro.js'

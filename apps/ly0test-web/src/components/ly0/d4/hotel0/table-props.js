@@ -1,4 +1,4 @@
-import {withTable as withTable} from 'packages/ly0el/src/index.js'
+import {withTable} from '@yoooloo42/ly0el'
 export default {
     titleLine: { // 标题线
         text: "旅店名称及参数设置"

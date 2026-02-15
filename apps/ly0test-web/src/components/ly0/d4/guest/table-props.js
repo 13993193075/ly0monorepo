@@ -1,5 +1,5 @@
-import {withTable as withTable} from 'packages/ly0el/src/index.js'
-import {blindboxes} from 'packages/ly0utils/src/index.js'
+import {withTable} from '@yoooloo42/ly0el'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 export default {
     popup: {
         switch: true,
@@ -40,8 +40,8 @@ export default {
                         row.name + '/' +
                         row.sex_text + '/' +
                         (row.roomno || '-') + '\n' +
-                        blindboxes.dateFormat.dateFormat(row.checkin) + ' - ' +
-                        blindboxes.dateFormat.dateFormat(row.checkout)
+                        ly0utils.dateFormat.dateFormat(row.checkin) + ' - ' +
+                        ly0utils.dateFormat.dateFormat(row.checkout)
                     )
                 }
             },

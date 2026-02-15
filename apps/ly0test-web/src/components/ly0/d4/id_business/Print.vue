@@ -38,10 +38,10 @@
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;入住人数：{{ scopeThis.business.objBusiness.peoples }}</span>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;所需客房数：{{ scopeThis.business.objBusiness.rooms }}</span>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;入住时间：{{
-                    states.blindboxes.dateFormat.dateFormat(scopeThis.business.objBusiness.checkin)
+                    states.ly0utils.dateFormat.dateFormat(scopeThis.business.objBusiness.checkin)
                 }}</span>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;离开时间：{{
-                    states.blindboxes.dateFormat.dateFormat(scopeThis.business.objBusiness.checkout)
+                    states.ly0utils.dateFormat.dateFormat(scopeThis.business.objBusiness.checkout)
                 }}</span>
             </div>
             <div>
@@ -108,8 +108,8 @@
                     </td>
                     <td>
                         {{
-                            states.blindboxes.dateFormat.dateFormat(item.checkin) + ' - ' +
-                            states.blindboxes.dateFormat.dateFormat(item.checkout)
+                            states.ly0utils.dateFormat.dateFormat(item.checkin) + ' - ' +
+                            states.ly0utils.dateFormat.dateFormat(item.checkout)
                         }}
                     </td>
                 </tr>
@@ -183,7 +183,7 @@
                     :key="item._id + '-' + index + scopeThis.business.arrMemo.length"
                 >
                     <td>{{ item.memo }}</td>
-                    <td style="width: 200px">{{ states.blindboxes.dateFormat.dateFormat(item.time) }}</td>
+                    <td style="width: 200px">{{ states.ly0utils.dateFormat.dateFormat(item.time) }}</td>
                 </tr>
                 </tbody></table>
             </div>
@@ -210,12 +210,12 @@
 
 <script setup>
 import printJS from 'print-js'
-import {blindboxes} from 'packages/ly0utils/src/index.js'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 import { reactive } from 'vue'
 
 const props = defineProps(['scopeThis'])
 const states = reactive({
-    blindboxes
+    ly0utils
 })
 
 function print (elId) {

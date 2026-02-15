@@ -1,5 +1,5 @@
 <script setup>
-import {blindboxes} from 'packages/ly0utils/src/index.js'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 const props = defineProps(['scopeThis'])
 </script>
 
@@ -17,8 +17,8 @@ const props = defineProps(['scopeThis'])
             </div>
             <div>
                 <span class="value-status">{{
-                    blindboxes.dateFormat.dateFormat(item.checkin) + " - " +
-                    blindboxes.dateFormat.dateFormat(item.checkout)
+                    ly0utils.dateFormat.dateFormat(item.checkin) + " - " +
+                    ly0utils.dateFormat.dateFormat(item.checkout)
                 }}</span>
             </div>
         </template>

@@ -1,9 +1,9 @@
-import {request} from 'packages/ly0libs/src/index.js'
-import {blindboxes} from 'packages/ly0utils/src/index.js'
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 import {ElMessage} from 'element-plus'
-const ly0session = request.ly0.ly0sessionLoad()
-const dateFormat = blindboxes.dateFormat.dateFormat
-const days = blindboxes.dateFormat.days
+const ly0session = ly0request.ly0sessionLoad()
+const dateFormat = ly0utils.dateFormat.dateFormat
+const days = ly0utils.dateFormat.days
 
 // 全部展开
 function collapseAll({scopeThis}) {
@@ -54,7 +54,7 @@ async function reload({scopeThis}) {
 
 // 获取数据
 async function getData({scopeThis}) {
-    const result = await request.ly0.storpro({
+    const result = await ly0request.storpro({
         storproName: 'ly0d4.echart.echart0',
         data: {
             id_dataunit: ly0session.dataunit._id,

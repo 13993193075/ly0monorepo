@@ -1,10 +1,10 @@
 <script setup>
-import {blindboxes} from 'packages/ly0utils/src/index.js'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 import { reactive } from 'vue'
 const props = defineProps(['scopeThis'])
 
 const para = reactive({
-    dateFormat: blindboxes.dateFormat.dateFormat,
+    dateFormat: ly0utils.dateFormat.dateFormat,
     nullValue: '[无信息]'
 })
 </script>

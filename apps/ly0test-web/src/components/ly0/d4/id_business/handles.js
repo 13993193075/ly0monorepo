@@ -1,8 +1,8 @@
-import {request} from 'packages/ly0libs/src/index.js'
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
 import {ElMessage, ElMessageBox} from 'element-plus'
 // 页面初始化
 async function init({scopeThis}){
-    const result = await request.ly0.storpro({
+    const result = await ly0request.storpro({
         storproName: 'ly0d4.id_business.id_business',
         data: {
             id_business: scopeThis.id_business,
@@ -47,7 +47,7 @@ const businessStatus = {
                 cancelButtonText: '取消',
                 type: 'warning',
             })
-            const result = await request.ly0.storpro({
+            const result = await ly0request.storpro({
                 storproName: 'ly0d4.id_business.book',
                 data: { id_business: scopeThis.id_business },
             })
@@ -65,7 +65,7 @@ const businessStatus = {
                 cancelButtonText: '取消',
                 type: 'warning',
             })
-            const result = await request.ly0.storpro({
+            const result = await ly0request.storpro({
                 storproName: 'ly0d4.id_business.arrive',
                 data: { id_business: scopeThis.id_business },
             })
@@ -83,7 +83,7 @@ const businessStatus = {
                 cancelButtonText: '取消',
                 type: 'warning',
             })
-            const result = await request.ly0.storpro({
+            const result = await ly0request.storpro({
                 storproName: 'ly0d4.id_business.leave',
                 data: { id_business: scopeThis.id_business },
             })

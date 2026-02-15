@@ -1,8 +1,8 @@
 // 统计：房*天数资源
 // 统计：房*天数销售
 
-import {blindboxes} from 'packages/ly0utils/src/index.js'
-const dateFormat = blindboxes.dateFormat
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
+const dateFormat = ly0utils.dateFormat
 
 // 房*天数资源 统计口径：旅店
 function roomChannelHotel (para) {

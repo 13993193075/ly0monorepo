@@ -1,4 +1,4 @@
-import {blindboxes} from 'packages/ly0utils/src/index.js'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 export default {
     formProps: {
         popup: {
@@ -25,7 +25,7 @@ export default {
                                         inputType: 'expression',
                                         label: '记录时间',
                                         hdlExpression({scopeThis, formData}) {
-                                            return blindboxes.dateFormat.dateFormat(formData.time)
+                                            return ly0utils.dateFormat.dateFormat(formData.time)
                                         },
                                         style: {width: '200px'},
                                     },
