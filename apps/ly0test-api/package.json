@@ -9,8 +9,8 @@
     "src"
   ],
   "dependencies": {
-    "@yoooloo42/blindboxes": "workspace:*",
-    "@yoooloo42/ihavebacking": "workspace:*",
+    "@yoooloo42/ly0utils": "workspace:*",
+    "@yoooloo42/ly0nodejs": "workspace:*",
     "express": "^5.2.1"
   },
   "scripts": {

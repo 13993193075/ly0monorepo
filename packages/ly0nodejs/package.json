@@ -13,7 +13,7 @@
     "@alicloud/openapi-client": "^0.4.15",
     "@alicloud/pop-core": "^1.8.0",
     "@alicloud/tea-util": "^1.4.11",
-    "@yoooloo42/blindboxes": "workspace:*",
+    "@yoooloo42/ly0utils": "workspace:*",
     "aliyun-api-gateway": "^1.1.6",
     "axios": "^1.13.5",
     "cheerio": "^1.2.0",

@@ -1,4 +1,4 @@
-import {utils as ly0utils} from '@yoooloo42/ly0utils.js';
+import {utils as ly0utils} from '@yoooloo42/ly0utils';
 // 从 Node.js 内置模块导入工具
 import { createRequire } from 'node:module';
 const random = ly0utils.random

@@ -6,8 +6,8 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
     "@vueup/vue-quill": "^1.2.0",
-    "@yoooloo42/blindboxes": "workspace:*",
-    "@yoooloo42/ihavebacking": "workspace:*",
+    "@yoooloo42/ly0utils": "workspace:*",
+    "@yoooloo42/ly0browser": "workspace:*",
     "@yoooloo42/ly0el": "workspace:*",
     "axios": "^1.13.5",
     "echarts": "^6.0.0",
