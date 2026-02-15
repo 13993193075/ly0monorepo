@@ -12,14 +12,11 @@ import ali from 'aliyun-api-gateway'
  */
 async function carplate(para) {
     // 1. **规范:** 优先从环境变量读取 AppKey 和 AppSecret，提高安全性。
-    const appKey = para.appKey || process.env.ALIBABA_CLOUD_APP_KEY;
-    const appSecret = para.appSecret || process.env.ALIBABA_CLOUD_APP_SECRET;
+    const appKey = para.appKey || process.env.ALI_CARPLATE_APP_KEY || '';
+    const appSecret = para.appSecret || process.env.ALI_CARPLATE_APP_SECRET || '';
 
     if (!appKey || !appSecret) {
-        return {
-            code: 1,
-            message: "AppKey 或 AppSecret 缺失，请配置或传入！"
-        };
+        return {code: 1, message: "AppKey 或 AppSecret 缺失，请配置环境变量 ALI_CARPLATE_APP_KEY | ALI_CARPLATE_APP_SECRET 或传入"};
     }
 
     const Client = ali.Client

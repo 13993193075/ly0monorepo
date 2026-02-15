@@ -11,13 +11,10 @@ import ali from 'aliyun-api-gateway'
  */
 async function carplate(para) {
     // 1. **规范:** 优先从环境变量读取 APPCODE，提高安全性。
-    const appCode = para.appCode || process.env.ALIBABA_CLOUD_APPCODE;
+    const appCode = para.appCode || process.env.ALI_CARPLATE_APP_CODE || '';
 
     if (!appCode) {
-        return {
-            code: 1,
-            message: "APPCODE 缺失，请配置环境变量 ALIBABA_CLOUD_APPCODE 或传入！"
-        };
+        return {code: 1, message: "APPCODE 缺失，请配置环境变量 ALI_CARPLATE_APP_CODE 或传入"};
     }
 
     const SimpleClient = ali.SimpleClient

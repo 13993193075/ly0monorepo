@@ -14,13 +14,13 @@ import TeaUtil from '@alicloud/tea-util'
  */
 async function carplate(para) {
     // 1. **规范:** 优先从环境变量读取密钥，提高安全性。
-    const accessKeyId = para.accessKeyId || process.env.ALIBABA_CLOUD_ACCESS_KEY_ID || 'YOUR_DEFAULT_ACCESS_KEY_ID';
-    const accessKeySecret = para.accessKeySecret || process.env.ALIBABA_CLOUD_ACCESS_KEY_SECRET || 'YOUR_DEFAULT_ACCESS_KEY_SECRET';
+    const accessKeyId = para.accessKeyId || process.env.ALI_CARPLATE_ACCESS_KEY_ID || '';
+    const accessKeySecret = para.accessKeySecret || process.env.ALI_CARPLATE_ACCESS_KEY_SECRET || '';
 
     // **注意：生产环境中必须配置环境变量，并移除默认硬编码值！**
 
     if (!accessKeyId || !accessKeySecret) {
-        throw new Error("AccessKeyId 和 AccessKeySecret 缺失，请配置或传入！");
+        return {code: 1, message: "AccessKeyId 和 AccessKeySecret 缺失，请配置环境变量 ALI_CARPLATE_ACCESS_KEY_ID | ALI_CARPLATE_ACCESS_KEY_SECRET 或传入"};
     }
 
     const config = new OpenapiClient.Config({

@@ -19,65 +19,58 @@ const clientBoxInit = {
     apiVersion: '2017-05-25',
     regionId: 'cn-hangzhou', // 短信服务 API 的区域，通常使用杭州(cn-hangzhou)
     endpoint: 'https://dysmsapi.aliyuncs.com', // 短信服务的 Endpoint
-    // accessKeyId: ' ',
-    // accessKeySecret: ' ',
-    // signName: ' ',
-    // templateCode: ' '
+    accessKeyId: process.env.ALI_SMS_ACCESS_KEY_ID || '',
+    accessKeySecret: process.env.ALI_SMS_ACCESS_KEY_SECRET || '',
+    signName: process.env.ALI_SMS_SIGN_NAME || '',
+    templateCode: process.env.ALI_SMS_TEMPLATE_CODE || ''
 }
 
-function sms(cellphone, shortMessageCode, clientBox) {
+async function sms(cellphone, shortMessageCode, clientBox) {
     clientBox = Object.assign(clientBoxInit, clientBox)
-    return new Promise(function (resolve, reject) {
-        const client = new Core({
-            accessKeyId: clientBox.accessKeyId,
-            accessKeySecret: clientBox.accessKeySecret,
-            endpoint: clientBox.endpoint,
-            apiVersion: clientBox.apiVersion
-        })
-
-        const params = {
-            'RegionId': clientBox.regionId,
-            'PhoneNumbers': cellphone,
-            'SignName': clientBox.signName,
-            'TemplateCode': clientBox.templateCode,
-            'TemplateParam': JSON.stringify({code: shortMessageCode})
-        }
-
-        const requestOption = {
-            method: 'POST'
-        }
-
-        client.request(clientBox.action, params, requestOption).then(
-            result => {
-                console.log('发送短信成功：', result)
-                resolve({code: 0, message: '发送短信成功',
-                    result
-                })
-                /*
-                如果手机没有收到短信，那通常是以下原因之一（与您的代码逻辑无关）：
-                短信额度/欠费：检查您的阿里云账户是否有足够的短信余额；
-                短信模板或签名审核：确认您的签名(litafire)和模板(SMS_182679443)在阿里云控制台中已审核通过且启用；
-                频率限制：同一手机号在短时间内频繁发送可能会被阿里云限制。
-                */
-            },
-            err => {
-                console.log('发送短信失败：', err)
-                resolve({code: 1, message: '发送短信失败',
-                    err
-                })
-            }
-        )
+    const client = new Core({
+        accessKeyId: clientBox.accessKeyId,
+        accessKeySecret: clientBox.accessKeySecret,
+        endpoint: clientBox.endpoint,
+        apiVersion: clientBox.apiVersion
     })
+
+    const params = {
+        'RegionId': clientBox.regionId,
+        'PhoneNumbers': cellphone,
+        'SignName': clientBox.signName,
+        'TemplateCode': clientBox.templateCode,
+        'TemplateParam': JSON.stringify({code: shortMessageCode})
+    }
+
+    const requestOption = {
+        method: 'POST'
+    }
+
+    try{
+        const result = await client.request(clientBox.action, params, requestOption)
+        console.log('发送短信成功：', result)
+        return {code: 0, message: '发送短信成功',
+            result
+        }
+        /*
+        如果手机没有收到短信，那通常是以下原因之一（与您的代码逻辑无关）：
+        短信额度/欠费：检查您的阿里云账户是否有足够的短信余额；
+        短信模板或签名审核：确认您的签名(litafire)和模板(SMS_182679443)在阿里云控制台中已审核通过且启用；
+        频率限制：同一手机号在短时间内频繁发送可能会被阿里云限制。
+        */
+    }catch (err) {
+        console.log('发送短信失败：', err)
+        return {code: 1, message: '发送短信失败',
+            err
+        }
+    }
 }
 
 // 发送验证码
-function sendVercode(cellphone, codeLength = 6, clientBox){
-    return new Promise(function (resolve, reject) {
-        const vercode = random.vercode6N(codeLength);
-        sms(cellphone, vercode, clientBox).then(result=>{
-            resolve(Object.assign(result, {vercode}))
-        })
-    })
+async function sendVercode(cellphone, codeLength = 6, clientBox){
+    const vercode = random.vercode6N(codeLength);
+    const result = await sms(cellphone, vercode, clientBox)
+    return Object.assign(result, {vercode})
 }
 
 export {
