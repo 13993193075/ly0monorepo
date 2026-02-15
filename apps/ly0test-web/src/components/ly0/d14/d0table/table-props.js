@@ -1,5 +1,5 @@
-import {ly0withTable as withTable} from 'packages/ly0el/src/index.js'
-import {blindboxes} from 'packages/ly0utils/src/index.js'
+import {withTable} from '@yoooloo42/ly0el'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 export default {
     titleLine: { // 标题线
         text: "个人信息名录"
@@ -37,7 +37,7 @@ export default {
                 label: '出生日期',
                 show: 'expression',
                 hdlExpression({scopeThis, row}) {
-                    return blindboxes.dateFormat.dateFormat(row.f0birthdate, 'yyyy/MM/dd')
+                    return ly0utils.dateFormat.dateFormat(row.f0birthdate, 'yyyy/MM/dd')
                 },
             },
             {
@@ -49,7 +49,7 @@ export default {
                 label: '数据采样时间',
                 show: 'expression',
                 hdlExpression({scopeThis, row}) {
-                    return blindboxes.dateFormat.dateFormat(row.time_create, 'yyyy/MM/dd HH:mm:ss')
+                    return ly0utils.dateFormat.dateFormat(row.time_create, 'yyyy/MM/dd HH:mm:ss')
                 },
             },
             {

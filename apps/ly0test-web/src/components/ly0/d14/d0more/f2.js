@@ -1,4 +1,4 @@
-import {request} from 'packages/ly0libs/src/index.js'
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
 import {ElMessage, ElMessageBox} from 'element-plus'
 export default {
     update: {
@@ -116,7 +116,7 @@ export default {
             ]
         },
         submit({scopeThis}) {
-            request.ly0.storpro({
+            ly0request.storpro({
                 storproName: 'ly0d14.d0.updateOneF2',
                 data: {
                     _id: scopeThis.formData._id,

@@ -1,8 +1,8 @@
 <script setup>
 import { reactive, onMounted } from 'vue'
 import {ElMessage} from 'element-plus'
-import {request} from 'packages/ly0libs/src/index.js'
-import {blindboxes} from 'packages/ly0utils/src/index.js'
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 import menu from './menu.js'
 import formData from './form-data.js'
 import formProps from './form-props.js'
@@ -44,18 +44,18 @@ const scopeThis = reactive({
     refreshKey: 0, // 强制刷新
     handles: {
         async init({scopeThis}) {
-            const result = await request.ly0.storpro({
+            const result = await ly0request.storpro({
                 storproName: 'ly0d14.d0.id_ly0d14d0',
                 data: { id_ly0d14d0: scopeThis.root.id_d0 },
             })
-            blindboxes.deepClone.replaceObject(scopeThis.formData, result.doc)
-            const result0 = await request.ly0.storpro({
+            ly0utils.deepClone.replaceObject(scopeThis.formData, result.doc)
+            const result0 = await ly0request.storpro({
                 storproName: 'ly0d14.d0.getPgData',
                 data: null,
             })
-            blindboxes.deepClone.replaceObject(scopeThis.busiCode, result0.data)
+            ly0utils.deepClone.replaceObject(scopeThis.busiCode, result0.data)
             ElMessage('数据已刷新')
-            scopeThis.formProps = blindboxes.deepClone.deepMerge(
+            scopeThis.formProps = ly0utils.deepClone.deepMerge(
                 scopeThis.formProps,
                 formProps.getFormProps({scopeThis})
             )
@@ -71,18 +71,18 @@ onMounted(async function() {
 
 <template>
     <ly0Menu :myProps="scopeThis.menu" :scopeThis="scopeThis"></ly0Menu>
-    <ly0Form
+    <ly0el-form
         v-model="scopeThis.formData"
         :myProps="scopeThis.formProps"
         :scopeThis="scopeThis"
         :key="scopeThis.refreshKey"
-    ></ly0Form>
-    <ly0Form
+    ></ly0el-form>
+    <ly0el-form
         v-if="scopeThis.update.formProps.popup.visible"
         v-model="scopeThis.update.formData"
         :myProps="scopeThis.update.formProps"
         :scopeThis="scopeThis"
-    ></ly0Form>
+    ></ly0el-form>
 </template>
 
 <style scoped lang="scss">

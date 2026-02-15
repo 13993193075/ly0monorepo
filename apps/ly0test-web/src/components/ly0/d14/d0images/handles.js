@@ -1,7 +1,7 @@
-import {request} from 'packages/ly0libs/src/index.js'
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
 import {ElMessage, ElMessageBox} from 'element-plus'
 async function init({scopeThis}) {
-    const result = await request.ly0.storpro({
+    const result = await ly0request.storpro({
         storproName: 'ly0d14.d11.find',
         data: { id_ly0d14d0: scopeThis.root.id_d0 },
     })
@@ -14,7 +14,7 @@ async function init({scopeThis}) {
 }
 
 async function newImage({scopeThis, formData}) {
-    await request.ly0.storpro({
+    await ly0request.storpro({
         storproName: 'ly0d14.d11.insertOne',
         data: {
             id_ly0d14d0: scopeThis.root.id_d0,
@@ -32,7 +32,7 @@ function updateNamePopup({scopeThis, item}){
     scopeThis.updateName.formProps.popup.visible = true
 }
 async function updateName({scopeThis, formData}) {
-    await request.ly0.storpro({
+    await ly0request.storpro({
         storproName: 'ly0d14.d11.updateOne',
         data: {
             _id: formData._id,
@@ -51,7 +51,7 @@ async function deleteImage({scopeThis, item}) {
             cancelButtonText: '取消',
             type: 'warning',
         })
-        await request.ly0.storpro({
+        await ly0request.storpro({
             storproName: 'ly0d14.d11.deleteOne',
             data: { _id: item._id },
         })

@@ -56,18 +56,18 @@ onMounted(() => {
             </div>
         </div>
     </template>
-    <ly0Form
+    <ly0el-form
         v-if="scopeThis.newImage.formProps.popup.visible"
         v-model="scopeThis.newImage.formData"
         :myProps="scopeThis.newImage.formProps"
         :scopeThis="scopeThis"
-    ></ly0Form>
-    <ly0Form
+    ></ly0el-form>
+    <ly0el-form
         v-if="scopeThis.updateName.formProps.popup.visible"
         v-model="scopeThis.updateName.formData"
         :myProps="scopeThis.updateName.formProps"
         :scopeThis="scopeThis"
-    ></ly0Form>
+    ></ly0el-form>
 </template>
 
 <style scoped lang="scss">

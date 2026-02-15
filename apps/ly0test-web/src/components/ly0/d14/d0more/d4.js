@@ -1,4 +1,4 @@
-import {request} from 'packages/ly0libs/src/index.js'
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
 import {ElMessage, ElMessageBox} from 'element-plus'
 function get({scopeThis}) {
     const doc = {
@@ -511,7 +511,7 @@ async function submit({scopeThis}) {
         f4uncertain: scopeThis.update.formData.d4f4uncertain,
         f4: scopeThis.update.formData.d4f4,
     }
-    await request.ly0.storpro({
+    await ly0request.storpro({
         storproName: 'ly0d14.d4.updateOne',
         data: dataNew,
     })

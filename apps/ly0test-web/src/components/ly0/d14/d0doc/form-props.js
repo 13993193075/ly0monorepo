@@ -1,64 +1,64 @@
-import {blindboxes} from 'packages/ly0utils/src/index.js'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 import more from '../d0more/index.js'
 
 function getFormProps({scopeThis}) {
     // d1既往疾病史
     const more_d1 = more.d1.get({scopeThis})
-    scopeThis.formData = blindboxes.deepClone.deepMerge(
+    scopeThis.formData = ly0utils.deepClone.deepMerge(
         scopeThis.formData,
         more_d1.doc.formData,
     )
     // d2饮食篇
     const more_d2 = more.d2.get({scopeThis})
-    scopeThis.formData = blindboxes.deepClone.deepMerge(
+    scopeThis.formData = ly0utils.deepClone.deepMerge(
         scopeThis.formData,
         more_d2.doc.formData,
     )
     // d3饮食篇 - 膳食补充剂
     const more_d3 = more.d3.get({scopeThis})
-    scopeThis.formData = blindboxes.deepClone.deepMerge(
+    scopeThis.formData = ly0utils.deepClone.deepMerge(
         scopeThis.formData,
         more_d3.doc.formData,
     )
     // d4运动篇
     const more_d4 = more.d4.get({scopeThis})
-    scopeThis.formData = blindboxes.deepClone.deepMerge(
+    scopeThis.formData = ly0utils.deepClone.deepMerge(
         scopeThis.formData,
         more_d4.doc.formData,
     )
     // d5睡眠篇
     const more_d5 = more.d5.get({scopeThis})
-    scopeThis.formData = blindboxes.deepClone.deepMerge(
+    scopeThis.formData = ly0utils.deepClone.deepMerge(
         scopeThis.formData,
         more_d5.doc.formData,
     )
     // d6心理篇
     const more_d6 = more.d6.get({scopeThis})
-    scopeThis.formData = blindboxes.deepClone.deepMerge(
+    scopeThis.formData = ly0utils.deepClone.deepMerge(
         scopeThis.formData,
         more_d6.doc.formData,
     )
     // d7社会支持篇
     const more_d7 = more.d7.get({scopeThis})
-    scopeThis.formData = blindboxes.deepClone.deepMerge(
+    scopeThis.formData = ly0utils.deepClone.deepMerge(
         scopeThis.formData,
         more_d7.doc.formData,
     )
     // d8药物使用
     const more_d8 = more.d8.get({scopeThis})
-    scopeThis.formData = blindboxes.deepClone.deepMerge(
+    scopeThis.formData = ly0utils.deepClone.deepMerge(
         scopeThis.formData,
         more_d8.doc.formData,
     )
     // d9环境暴露
     const more_d9 = more.d9.get({scopeThis})
-    scopeThis.formData = blindboxes.deepClone.deepMerge(
+    scopeThis.formData = ly0utils.deepClone.deepMerge(
         scopeThis.formData,
         more_d9.doc.formData,
     )
     // d10相关实验室检查
     const more_d10 = more.d10.get({scopeThis})
-    scopeThis.formData = blindboxes.deepClone.deepMerge(
+    scopeThis.formData = ly0utils.deepClone.deepMerge(
         scopeThis.formData,
         more_d10.doc.formData,
     )
@@ -84,7 +84,7 @@ function getFormProps({scopeThis}) {
                                         inputType: 'expression0',
                                         label: '采样时间',
                                         hdlExpression({scopeThis, formData}) {
-                                            return blindboxes.dateFormat.dateFormat(formData.time_create, 'yyyy/MM/dd HH:mm:ss')
+                                            return ly0utils.dateFormat.dateFormat(formData.time_create, 'yyyy/MM/dd HH:mm:ss')
                                         },
                                     },
                                     {
@@ -96,7 +96,7 @@ function getFormProps({scopeThis}) {
                                         inputType: 'expression0',
                                         label: '出生日期',
                                         hdlExpression({scopeThis, formData}) {
-                                            return blindboxes.dateFormat.dateFormat(formData.f0birthdate, 'yyyy/MM/dd')
+                                            return ly0utils.dateFormat.dateFormat(formData.f0birthdate, 'yyyy/MM/dd')
                                         },
                                     },
                                     {
@@ -188,7 +188,7 @@ function getFormProps({scopeThis}) {
                                         inputType: 'expression0',
                                         label: '出生日期',
                                         hdlExpression({scopeThis, formData}) {
-                                            return blindboxes.dateFormat.dateFormat(formData.f1birthdate, 'yyyy/MM/dd')
+                                            return ly0utils.dateFormat.dateFormat(formData.f1birthdate, 'yyyy/MM/dd')
                                         },
                                     },
                                     {
@@ -263,7 +263,7 @@ function getFormProps({scopeThis}) {
                                         inputType: 'expression0',
                                         label: '末次月经',
                                         hdlExpression({scopeThis, formData}) {
-                                            return blindboxes.dateFormat.dateFormat(
+                                            return ly0utils.dateFormat.dateFormat(
                                                 formData.f2menstruation_last,
                                                 'yyyy/MM/dd',
                                             )

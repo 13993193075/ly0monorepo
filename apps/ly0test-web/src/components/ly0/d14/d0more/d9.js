@@ -1,4 +1,4 @@
-import {request} from 'packages/ly0libs/src/index.js'
+import {ly0request} from '@yoooloo42/ly0browser/ly0request'
 import {ElMessage, ElMessageBox} from 'element-plus'
 function get({scopeThis}) {
     const doc = {
@@ -150,7 +150,7 @@ async function submit({scopeThis}) {
             })
         }
     })
-    await request.ly0.storpro({
+    await ly0request.storpro({
         storproName: 'ly0d14.d9.updateMany',
         data: dataNew,
     })
