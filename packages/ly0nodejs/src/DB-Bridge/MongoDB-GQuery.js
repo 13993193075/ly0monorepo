@@ -29,15 +29,10 @@ async function GQuery({para, db}) {
         if(!para.tblName){
             return {code: 1, message: '表名不存在'}
         }
-
         // 执行参数
-        const paraExec = {}
-
-        // 表名
-        if(!para.tblName){
-            return {code: 1, message: '表名不存在'}
+        const paraExec = {
+            tblName: para.tblName // 表名
         }
-        paraExec.tblName = para.tblName
 
         // 操作符
         if(!para.operator || ![
@@ -395,6 +390,8 @@ async function exec({para, db}) {
             })
         }
     }
+
+    console.log('测试 222');
 }
 
 export {
