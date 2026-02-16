@@ -1,9 +1,9 @@
 import { ElMessage, ElMessageBox } from 'element-plus'
-import {request as ly0request} from "@yoooloo42/joker"
+import {request as ly0request} from '@yoooloo42/ly0browser'
 
 function getData(scopeThis){
     return new Promise((resolve, reject)=>{
-        ly0request.ly0.storpro({
+        ly0request.ly0request.storpro({
             noSession: true,
             storproName: "ly0d0login.destroy.id_login",
             data: {id_login: scopeThis.id_login}
@@ -75,7 +75,7 @@ function destroy(scopeThis, type){
             cancelButtonText: '取消',
             type: 'warning'
         }).then(()=>{
-            ly0request.ly0.storpro({
+            ly0request.ly0request.storpro({
                 storproName,
                 data: q
             }).then(result=>{

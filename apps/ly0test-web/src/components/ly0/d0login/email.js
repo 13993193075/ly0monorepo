@@ -1,5 +1,5 @@
 import { ElMessage, ElMessageBox } from 'element-plus'
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 
 function getVercode(scopeThis) {
     return new Promise((resolve, reject)=>{
@@ -9,7 +9,7 @@ function getVercode(scopeThis) {
             return resolve()
         }
 
-        ly0request.storpro({
+        ly0request.ly0request.storpro({
             storproName: "ly0d0login.email.getVercodeLogin",
             data: {email: scopeThis.emailData.email},
             noSession: true,
@@ -37,7 +37,7 @@ function submit(scopeThis) {
         }
 
         // 后台登录
-        ly0request.storpro({
+        ly0request.ly0request.storpro({
             storproName: "ly0d0login.email.login",
             data: {
                 email: scopeThis.emailData.email,

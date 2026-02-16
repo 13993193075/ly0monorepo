@@ -1,5 +1,5 @@
 import {ElMessage, ElMessageBox} from 'element-plus'
-import { ly0request } from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 import QRCode from 'qrcode'
 
 export default {
@@ -74,7 +74,7 @@ export default {
         }
     },
     confirm({scopeThis}) {
-        ly0request.storpro({
+        ly0request.ly0request.storpro({
             storproName: 'ly0d2.wxzf.getStatus',
             data: {
                 mchid: scopeThis.props.formData.mchid,

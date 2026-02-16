@@ -1,5 +1,5 @@
 import { ElMessage, ElMessageBox } from 'element-plus'
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 
 // 标题
 function title(scopeThis){
@@ -18,7 +18,7 @@ function title(scopeThis){
 function withId_login(scopeThis){
     return new Promise((resolve, reject)=>{
         // 根据id_login获取业务用户相关信息
-        ly0request.storpro({
+        ly0request.ly0request.storpro({
             storproName: "ly0d0login.user.withId_login",
             data: {
                 id_login: scopeThis.loginData.id_login,
@@ -146,7 +146,7 @@ function submit(scopeThis){
         }
 
         // 数据库写入session
-        ly0request.storpro({
+        ly0request.ly0request.storpro({
             storproName: "ly0d0login.session.newSession",
             data: {
                 id_login: scopeThis.loginData.id_login,
@@ -168,7 +168,7 @@ function submit(scopeThis){
                 return resolve()
             }
             // 浏览器缓存session
-            ly0request.ly0sessionSave(result.ly0session)
+            ly0request.ly0request.ly0sessionSave(result.ly0session)
 
             // 仅重写session，不发生应用跳转
             let sessionOnly = scopeThis.myProps &&
@@ -211,7 +211,7 @@ function submit(scopeThis){
             }
 
             // 应用跳转（应用入口）
-            ly0request.navigate({
+            ly0request.ly0request.navigate({
                 code: route_type,
                 path: route,
                 routerInstance: scopeThis.routerInstance,

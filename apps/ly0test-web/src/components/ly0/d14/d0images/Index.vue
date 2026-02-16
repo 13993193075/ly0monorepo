@@ -30,7 +30,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <ly0Menu :myProps="scopeThis.menu" :scopeThis="scopeThis"></ly0Menu>
+    <ly0el-menu :myProps="scopeThis.menu" :scopeThis="scopeThis"></ly0el-menu>
     <template v-for="(item, index) in scopeThis.data">
         <div class="image-item-box">
             <div class="image-box">

@@ -48,13 +48,13 @@
 // scopeThis.doc.formProps 表单属性
 
 import { ElMessageBox, ElMessage } from 'element-plus'
-import { ly0request } from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 import {utils as ly0utils} from '@yoooloo42/ly0utils'
 
 // 数据刷新
 const refresh = async ({scopeThis, noMessage}) => {
     scopeThis.tableProps.table.loading.visible = true
-    const result = await ly0request.storpro({
+    const result = await ly0request.ly0request.storpro({
         storproName: scopeThis.storpro.refresh,
         data: {
             query: scopeThis.query.formData,
@@ -109,7 +109,7 @@ const currentPageChange = async ({currentPage, scopeThis}) => {
 
 // 获取页面数据附加
 const getPgData = async ({scopeThis}) => {
-    const result = await ly0request.storpro({
+    const result = await ly0request.ly0request.storpro({
         storproName: scopeThis.storpro.getPgData,
         data: scopeThis.pgData && scopeThis.pgData.query ? scopeThis.pgData.query : null,
     })
@@ -203,7 +203,7 @@ const submitInsertOne = async ({scopeThis}) => {
             cancelButtonText: '取消',
             type: 'warning', // 警告图标
         })
-        const result = await ly0request.storpro({
+        const result = await ly0request.ly0request.storpro({
             storproName: scopeThis.storpro.insertOne,
             data: scopeThis.formData,
             routerInstance: scopeThis.routerInstance || null
@@ -238,7 +238,7 @@ const submitUpdateOne = async ({scopeThis}) => {
             cancelButtonText: '取消',
             type: 'warning', // 警告图标
         })
-        const result = await ly0request.storpro({
+        const result = await ly0request.ly0request.storpro({
             storproName: scopeThis.storpro.updateOne,
             data: scopeThis.formData,
             routerInstance: scopeThis.routerInstance || null
@@ -268,7 +268,7 @@ const submitDeleteOne = async ({scopeThis, row}) => {
             cancelButtonText: '取消',
             type: 'warning', // 警告图标
         })
-        const result = await ly0request.storpro({
+        const result = await ly0request.ly0request.storpro({
             storproName: scopeThis.storpro.deleteOne,
             data: row, // 继承行记录的值
             routerInstance: scopeThis.routerInstance || null

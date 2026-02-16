@@ -187,8 +187,24 @@ function navigate({
     }
 }
 
+const domain = domainPara
+export {
+    domain,
+    upload,
+    upload_image,
+    upload_carplate,
+    request,
+    ly0request,
+    storpro,
+    ly0sessionSave,
+    ly0sessionLoad,
+    ly0sessionClear,
+    ly0sessionLose,
+    ly0sessionLoseWithUsertbl,
+    navigate
+}
 export default {
-    domain: domainPara,
+    domain,
     upload,
     upload_image,
     upload_carplate,

@@ -1,5 +1,5 @@
 import withTable from '../with-table/index.js'
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {utils as ly0utils} from '@yoooloo42/ly0utils'
 
@@ -41,7 +41,7 @@ export default {
                                 cancelButtonText: '取消',
                                 type: 'warning'
                             }).then(()=>{
-                                ly0request.storpro({
+                                ly0request.ly0request.storpro({
                                     storproName: "ly0d2.wxzf.refund",
                                     data: {id_business: scopeThis.initBox.id_business}
                                 }).then(()=>{
@@ -56,7 +56,7 @@ export default {
                     {
                         title: "中止支付",
                         handle({scopeThis, index}){
-                            ly0request.storpro({
+                            ly0request.ly0request.storpro({
                                 storproName: "ly0d2.wxzf.setFail",
                                 data: {
                                     mchid: scopeThis.initBox.mchid,

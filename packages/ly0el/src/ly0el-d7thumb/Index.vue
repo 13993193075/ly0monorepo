@@ -87,7 +87,7 @@
 <script setup>
 import {reactive} from "vue";
 import ly0elUploadAvatar from "../ly0el-upload/Upload-avatar.vue"
-import { ly0request } from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 
 // 遵循 Vue 3 v-model 规范，使用 modelValue
 const props = defineProps({
@@ -122,7 +122,7 @@ const popup = reactive({
 
 const upload = reactive({
     props: {
-        uploadUrl: props.myProps.thumb.uploadUrl || ly0request.domain + ly0request.upload_image,
+        uploadUrl: props.myProps.thumb.uploadUrl || ly0request.ly0request.domain + ly0request.ly0request.upload_image,
         avatar: {
             width: props.myProps.thumb.width || '100px',
             height: props.myProps.thumb.height || '100px'

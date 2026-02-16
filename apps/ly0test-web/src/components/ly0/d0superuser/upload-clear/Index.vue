@@ -13,7 +13,7 @@
 
 <script setup>
 import { ElMessageBox, ElMessage } from 'element-plus'
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 
 const handleClear = function () {
     ElMessageBox.confirm('立即清理, 确认?', '警告', {
@@ -21,7 +21,7 @@ const handleClear = function () {
         cancelButtonText: '取消',
         type: 'warning',
     }).then(() => {
-        ly0request.storpro({
+        ly0request.ly0request.storpro({
             storproName: 'ly0d0.upload-clear.clear',
             data: null,
         }).then(result => {

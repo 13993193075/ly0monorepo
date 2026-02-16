@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 置顶菜单 -->
-    <ly0Menu v-if="!!formProps.menu" :scopeThis="scopeThis" :myProps="menuProps"></ly0Menu>
+    <ly0el-menu v-if="!!formProps.menu" :scopeThis="scopeThis" :myProps="menuProps"></ly0el-menu>
     <div :style="style.root_box()">
       <!-- 表单区域可以分为多个列 -->
       <div v-for="(item, index) in formProps.cols" :key="index">

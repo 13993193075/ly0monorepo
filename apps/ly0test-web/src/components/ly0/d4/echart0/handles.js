@@ -1,7 +1,7 @@
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 import {utils as ly0utils} from '@yoooloo42/ly0utils'
 import {ElMessage} from 'element-plus'
-const ly0session = ly0request.ly0sessionLoad()
+const ly0session = ly0request.ly0request.ly0sessionLoad()
 const dateFormat = ly0utils.dateFormat.dateFormat
 const days = ly0utils.dateFormat.days
 
@@ -52,7 +52,7 @@ async function reload({scopeThis}) {
 
 // 获取数据
 async function getData({scopeThis}) {
-    const result = await ly0request.storpro({
+    const result = await ly0request.ly0request.storpro({
         storproName: 'ly0d4.echart.echart0',
         data: {
             id_dataunit: ly0session.dataunit._id,

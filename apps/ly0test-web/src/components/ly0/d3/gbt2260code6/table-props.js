@@ -1,4 +1,4 @@
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {withTable} from '@yoooloo42/ly0el'
 export default {
@@ -38,7 +38,7 @@ export default {
                         // 打开进度条
                         scopeThis.tableProps.table.loading.visible = true
                         scopeThis.tableProps.table.loading.text = "正在导入..."
-                        ly0request.storpro({
+                        ly0request.ly0request.storpro({
                             noSession: true,
                             storproName: "ly0d3.gbt2260code6.loadAll",
                             data: null

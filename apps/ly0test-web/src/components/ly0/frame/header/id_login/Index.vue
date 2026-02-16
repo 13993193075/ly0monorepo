@@ -14,11 +14,11 @@
     </el-dialog>
     <compForm v-else :scopeThis="scopeThis"></compForm>
 
-    <ly0Form
+    <ly0el-form
         v-if="scopeThis.setPassword.formProps.popup.visible"
         v-model="scopeThis.setPassword.formData"
         :myProps="scopeThis.setPassword.formProps"
-    ></ly0Form>
+    ></ly0el-form>
 </template>
 
 <style scoped></style>

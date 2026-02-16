@@ -127,7 +127,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <ly0Menu :myProps="scopeThis.menu" :scopeThis="scopeThis"></ly0Menu>
+    <ly0el-menu :myProps="scopeThis.menu" :scopeThis="scopeThis"></ly0el-menu>
     <div v-if="scopeThis.business" style="padding: 10px;">
         <div :style="style.mainBox">
             <el-splitter>

@@ -21,7 +21,7 @@
 import { reactive, onMounted, watch } from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import { useRouter } from 'vue-router';
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 import {withTable} from '@yoooloo42/ly0el'
 import tableData from './table-data.js'
 import tableProps from './table-props.js'
@@ -55,7 +55,7 @@ const scopeThis = reactive(
                     cancelButtonText: '取消',
                     type: 'warning',
                 }).then(() => {
-                    ly0request.storpro({
+                    ly0request.ly0request.storpro({
                         storproName: 'ly0d1.d1printer.register',
                         data: {
                             id_ukey: row.id_ukey,

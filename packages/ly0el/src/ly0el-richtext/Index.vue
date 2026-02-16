@@ -12,7 +12,7 @@
 </template>
 <script setup>
 import {ref, computed, reactive} from "vue";
-import { ly0request } from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 // 引入quill富文本组件
 import { QuillEditor } from '@vueup/vue-quill'
 /* 以下quill富文本组件的样式库需要在宿主项目的main.js中引入
@@ -35,7 +35,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 // 文件上传地址
-const uploadUrl = props.myProps.uploadUrl || ly0request.upload
+const uploadUrl = props.myProps.uploadUrl || ly0request.ly0request.upload
 // 指定上传文件的参数名称(Field Name)
 const uploadFieldName = props.myProps.uploadFieldName || "upload_file"
 // 限制文件上传的最大大小，默认5MB
@@ -78,8 +78,8 @@ const imageHandler = () => {
             // 注意：这里需要你处理好响应，确保返回图片 URL
             
             // 假设使用 fetch
-            const response = await ly0request.request({
-                uploadUrl: uploadUrl ? uploadUrl : ly0request.domain + ly0request.upload,
+            const response = await ly0request.ly0request.request({
+                uploadUrl: uploadUrl ? uploadUrl : ly0request.ly0request.domain + ly0request.ly0request.upload,
                 data: formData
             })
             

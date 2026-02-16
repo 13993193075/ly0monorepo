@@ -1,6 +1,6 @@
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 import {ElMessage, ElMessageBox} from 'element-plus'
-let ly0session = ly0request.ly0sessionLoad()
+let ly0session = ly0request.ly0request.ly0sessionLoad()
 
 // 初始化
 async function get({scopeThis}) {
@@ -10,7 +10,7 @@ async function get({scopeThis}) {
             cancelButtonText: '取消',
             type: 'warning',
         })
-        const result = await ly0request.storpro({
+        const result = await ly0request.ly0request.storpro({
             storproName: 'ly0d4.yizoo_hotel.get',
             data: { id_dataunit: ly0session.dataunit._id },
         })
@@ -23,7 +23,7 @@ async function get({scopeThis}) {
 
 // 刷新
 async function findAll({scopeThis}) {
-    const result = await ly0request.storpro({
+    const result = await ly0request.ly0request.storpro({
         storproName: 'ly0d4.yizoo_hotel.findAll',
         data: { id_dataunit: ly0session.dataunit._id },
     })
@@ -34,7 +34,7 @@ async function findAll({scopeThis}) {
 // 获取最新令牌
 async function req({scopeThis, _id}) {
     ElMessage('正在向门锁伺服器发送请求')
-    const result = await ly0request.storpro({
+    const result = await ly0request.ly0request.storpro({
         storproName: 'ly0d4.yizoo_hotel.req',
         data: { _id },
     })
@@ -53,7 +53,7 @@ function updateOnePopup({scopeThis, item}) {
 
 // 修改：提交
 async function updateOneSubmit({scopeThis}) {
-    const result = await ly0request.storpro({
+    const result = await ly0request.ly0request.storpro({
         storproName: 'ly0d4.yizoo_hotel.updateOne',
         data: scopeThis.updateOne.formData,
     })

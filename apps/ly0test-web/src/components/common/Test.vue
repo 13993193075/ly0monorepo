@@ -1,7 +1,7 @@
 <template>
     <div style="padding: 10px;">
         <compHelloWorld></compHelloWorld>
-        <ly0Menu :scopeThis="scopeThis" :myProps="testMenu.menuProps"></ly0Menu>
+        <ly0el-menu :scopeThis="scopeThis" :myProps="testMenu.menuProps"></ly0el-menu>
         <compTable
           :scopeThis="scopeThis"
           :tableProps="testTable.tableProps"

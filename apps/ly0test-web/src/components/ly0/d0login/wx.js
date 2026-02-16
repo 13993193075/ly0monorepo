@@ -1,6 +1,6 @@
 import {WeChat} from "@yoooloo42/ly0browser"
 import { ElMessage, ElMessageBox } from 'element-plus'
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 
 // 消息监听处理
 let messageHdlShell
@@ -19,7 +19,7 @@ function messageHdl(scopeThis){
 
         if (event.data.code === 0) {
             // 登录验证
-            ly0request.storpro({
+            ly0request.ly0request.storpro({
                 storproName: "ly0d0login.wx.loginWithOpenid",
                 data: {
                     appid: event.data.appid,
@@ -58,7 +58,7 @@ function show(scopeThis){
     messageHdlShell = messageHdl(scopeThis)
 
     // 获取appid
-    ly0request.storpro({
+    ly0request.ly0request.storpro({
         storproName: "ly0d0login.wx.getAppid",
         data: null,
         noSession: true,
@@ -68,7 +68,7 @@ function show(scopeThis){
         // 生成微信二维码图片，监听用户操作
         WeChat.WxLogin({
             elementId: "elIdLoginWxCode",
-            redirect_uri: ly0request.domain + "/ly0/wechat-login-redirect",
+            redirect_uri: ly0request.ly0request.domain + "/ly0/wechat-login-redirect",
             appid
         })
 

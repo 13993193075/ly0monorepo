@@ -13,7 +13,7 @@
     </div>
 
     <!-- 置顶菜单 -->
-    <ly0Menu v-if="!!tableProps.menu" :scopeThis="scopeThis" :myProps="menuProps"></ly0Menu>
+    <ly0el-menu v-if="!!tableProps.menu" :scopeThis="scopeThis" :myProps="menuProps"></ly0el-menu>
 
     <!-- 置顶快捷按钮组 -->
     <div

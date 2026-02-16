@@ -1,8 +1,8 @@
-import ly0 from './ly0.js'
+import ly0request from './ly0.js'
 
 export {
-    ly0
+    ly0request
 }
 export default {
-    ly0
+    ly0request
 }

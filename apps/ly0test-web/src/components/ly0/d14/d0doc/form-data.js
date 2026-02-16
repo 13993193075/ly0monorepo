@@ -1,5 +1,5 @@
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
-const ly0session = ly0request.ly0sessionLoad()
+import { request as ly0request } from '@yoooloo42/ly0browser'
+const ly0session = ly0request.ly0request.ly0sessionLoad()
 
 export default{
     _id: null,

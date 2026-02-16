@@ -4,7 +4,7 @@
         :myProps="scopeThis.tableProps"
         :scopeThis="scopeThis"
     ></ly0Table>
-    <ly0Form
+    <ly0el-form
         v-if="scopeThis.formData
             && scopeThis.formProps
             && scopeThis.formProps.popup
@@ -12,7 +12,7 @@
         v-model="scopeThis.formData"
         :myProps="scopeThis.formProps"
         :scopeThis="scopeThis"
-    ></ly0Form>
+    ></ly0el-form>
 </template>
 
 <style lang="scss" scoped></style>

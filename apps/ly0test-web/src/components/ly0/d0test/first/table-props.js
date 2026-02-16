@@ -1,4 +1,4 @@
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 import {withTable} from '@yoooloo42/ly0el'
 
 export default {
@@ -52,7 +52,7 @@ export default {
                         text: "开始测试",
                         size: "small",
                         hdlClick({scopeThis, row}){
-                            ly0request.navigate({
+                            ly0request.ly0request.navigate({
                                 code: row.route_type,
                                 path: row.route,
                                 routerInstance: scopeThis.routerInstance

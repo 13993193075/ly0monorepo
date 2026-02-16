@@ -1,6 +1,6 @@
 import { ElMessage } from 'element-plus'
-import {request as ly0request} from "@yoooloo42/joker"
-const ly0session = ly0request.ly0.ly0sessionLoad()
+import {request as ly0request} from '@yoooloo42/ly0browser'
+const ly0session = ly0request.ly0request.ly0sessionLoad()
 
 export default {
     formData: {
@@ -65,7 +65,7 @@ export default {
                     return ElMessage("登录密码为空或不一致")
                 }
 
-                ly0request.ly0.storpro({
+                ly0request.ly0request.storpro({
                     noSession: true,
                     storproName: "ly0d0login.password.new_number",
                     data: {

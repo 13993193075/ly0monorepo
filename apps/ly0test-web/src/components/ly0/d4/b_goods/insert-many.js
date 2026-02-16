@@ -1,4 +1,4 @@
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 import {utils as ly0utils} from '@yooloo42/ly0utils'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {withTable} from '@yoooloo42/ly0el'
@@ -77,7 +77,7 @@ async function submit({scopeThis, data}) {
             arrRoom.push(JSON.parse(i.treeItemAppendix))
         }
     })
-    const result = await ly0request.storpro({
+    const result = await ly0request.ly0request.storpro({
         storproName: scopeThis.storpro.insertMany,
         data: {
             id_business: scopeThis.props_myProps.id_business,

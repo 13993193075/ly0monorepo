@@ -1,5 +1,5 @@
 import { ElMessage } from 'element-plus'
-import {request as ly0request} from "@yoooloo42/joker"
+import {request as ly0request} from '@yoooloo42/ly0browser'
 
 export default {
     formData: {
@@ -63,7 +63,7 @@ export default {
                     return
                 }
 
-                ly0request.ly0.storpro({
+                ly0request.ly0request.storpro({
                     noSession: true,
                     storproName: "ly0d0login.password.setPassword",
                     data: {

@@ -1,4 +1,4 @@
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 import {ElMessage} from 'element-plus'
 export default {
     popup: {
@@ -73,7 +73,7 @@ export default {
     ],
     submit: {
         async handle({scopeThis, formData}){
-            const result = await ly0request.storpro({
+            const result = await ly0request.ly0request.storpro({
                 storproName: 'ly0d4.id_business.setBaseInfo',
                 data: formData
             })

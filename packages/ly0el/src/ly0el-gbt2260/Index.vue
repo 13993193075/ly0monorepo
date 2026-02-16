@@ -115,7 +115,7 @@
 
 <script setup>
 import {reactive, ref, watch, computed} from "vue";
-import { ly0request } from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 
 // 遵循 Vue 3 v-model 规范，使用 modelValue
 const props = defineProps({
@@ -161,13 +161,13 @@ const popup = reactive({
 
 watch(() => props.modelValue,
     async (valNew, valOld) => {
-        const result2 = await ly0request.storpro({
+        const result2 = await ly0request.ly0request.storpro({
             noSession: true,
             storproName: 'ly0d3.gbt2260code2.init',
         })
         popup.formData.arrCode2 = result2.arrCode2.filter(item => item.code2)
         
-        const result6 = await ly0request.storpro({
+        const result6 = await ly0request.ly0request.storpro({
             noSession: true,
             storproName: 'ly0d3.gbt2260code6.get',
             data: { code6: valNew },
@@ -206,7 +206,7 @@ const hdl = {
     },
     
     changeCode2: async value => { // 使用 async 标记
-        const result = await ly0request.storpro({
+        const result = await ly0request.ly0request.storpro({
             noSession: true,
             storproName: 'ly0d3.gbt2260code4.code2',
             data: {code2: value},
@@ -219,7 +219,7 @@ const hdl = {
     },
     
     changeCode4: async value => {
-        const result = await ly0request.storpro({
+        const result = await ly0request.ly0request.storpro({
             noSession: true,
             storproName: 'ly0d3.gbt2260code6.code4',
             data: {code4: value},

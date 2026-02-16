@@ -1,4 +1,4 @@
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {withTable} from '@yoooloo42/ly0el'
 export default {
@@ -38,7 +38,7 @@ export default {
                             cancelButtonText: '取消',
                             type: 'warning',
                         })
-                        const result = await ly0request.storpro({
+                        const result = await ly0request.ly0request.storpro({
                             storproName: 'ly0d4.b_goods.allocation',
                             data: { id_business: scopeThis.props_myProps.id_business },
                         })

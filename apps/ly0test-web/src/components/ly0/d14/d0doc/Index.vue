@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, onMounted } from 'vue'
 import {ElMessage} from 'element-plus'
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 import {utils as ly0utils} from '@yoooloo42/ly0utils'
 import menu from './menu.js'
 import formData from './form-data.js'
@@ -44,12 +44,12 @@ const scopeThis = reactive({
     refreshKey: 0, // 强制刷新
     handles: {
         async init({scopeThis}) {
-            const result = await ly0request.storpro({
+            const result = await ly0request.ly0request.storpro({
                 storproName: 'ly0d14.d0.id_ly0d14d0',
                 data: { id_ly0d14d0: scopeThis.root.id_d0 },
             })
             ly0utils.deepClone.replaceObject(scopeThis.formData, result.doc)
-            const result0 = await ly0request.storpro({
+            const result0 = await ly0request.ly0request.storpro({
                 storproName: 'ly0d14.d0.getPgData',
                 data: null,
             })
@@ -70,7 +70,7 @@ onMounted(async function() {
 </script>
 
 <template>
-    <ly0Menu :myProps="scopeThis.menu" :scopeThis="scopeThis"></ly0Menu>
+    <ly0el-menu :myProps="scopeThis.menu" :scopeThis="scopeThis"></ly0el-menu>
     <ly0el-form
         v-model="scopeThis.formData"
         :myProps="scopeThis.formProps"

@@ -2,7 +2,7 @@
     <div v-if="!!scopeThis.ly0session" class="container">
         <div class="left">
             <img class="group-image" v-if="!!hdlGetGroupIcon()" :src="hdlGetGroupIcon()" />
-            <img class="group-image" v-else src="group.png" />
+            <img class="group-image" v-else src="./group.png" />
             {{
                 (scopeThis.ly0session.dataunit && scopeThis.ly0session.dataunit.name
                 ? scopeThis.ly0session.dataunit.name
@@ -23,7 +23,7 @@
                 <el-sub-menu index="0">
                     <template v-slot:title>
                         <img class="user-image" v-if="!!hdlGetUserIcon()" :src="hdlGetUserIcon()" />
-                        <img class="user-image" v-else src="user.jpg" />
+                        <img class="user-image" v-else src="./user.jpg" />
                         {{ hdlGetUserName() }}
                     </template>
                     <el-menu-item class="user-menu-item" index="user-info">业务用户</el-menu-item>
@@ -43,36 +43,36 @@
     </div>
 
     <!-- 子组件 -->
-    <ly0Form
+    <ly0el-form
         v-if="!!scopeThis.userInfo.formProps.popup.visible"
         v-model="scopeThis.userInfo.formData"
         :myProps="scopeThis.userInfo.formProps"
-    ></ly0Form>
+    ></ly0el-form>
     <compLoginInfo
         v-if="!!scopeThis.loginInfo.popup.visible"
         :id_login="scopeThis.ly0session.session.id_login"
         :myProps="scopeThis.loginInfo"
     ></compLoginInfo>
-    <ly0Form
+    <ly0el-form
         v-if="!!scopeThis.sessionInfo.formProps.popup.visible"
         v-model="scopeThis.sessionInfo.formData"
         :myProps="scopeThis.sessionInfo.formProps"
-    ></ly0Form>
-    <ly0Form
+    ></ly0el-form>
+    <ly0el-form
         v-if="!!scopeThis.newNumber.formProps.popup.visible"
         v-model="scopeThis.newNumber.formData"
         :myProps="scopeThis.newNumber.formProps"
-    ></ly0Form>
-    <ly0Form
+    ></ly0el-form>
+    <ly0el-form
         v-if="!!scopeThis.cellphoneBind.formProps.popup.visible"
         v-model="scopeThis.cellphoneBind.formData"
         :myProps="scopeThis.cellphoneBind.formProps"
-    ></ly0Form>
-    <ly0Form
+    ></ly0el-form>
+    <ly0el-form
         v-if="!!scopeThis.emailBind.formProps.popup.visible"
         v-model="scopeThis.emailBind.formData"
         :myProps="scopeThis.emailBind.formProps"
-    ></ly0Form>
+    ></ly0el-form>
     <compWxBind
         v-if="!!scopeThis.wxBind.popup"
         :myProps="scopeThis.wxBind"
@@ -88,8 +88,7 @@ import { useRouter } from 'vue-router';
 import {reactive} from 'vue'
 import compLoginInfo from './id_login/Index.vue'
 import compWxBind from './bind/WxBind.vue'
-import {request as ly0request} from '@yoooloo42/joker'
-
+import {request as ly0request} from '@yoooloo42/ly0browser'
 import userInfo from './user-info.js'
 import loginInfo from './login-info.js'
 import sessionInfo from './session-info.js'
@@ -99,7 +98,7 @@ import emailBind from './bind/email-bind.js'
 import wxBind from './bind/wx-bind.js'
 
 const routerInstance = useRouter()
-const ly0session = ly0request.ly0.ly0sessionLoad()
+const ly0session = ly0request.ly0request.ly0sessionLoad()
 const scopeThis = reactive({
     activeIndex: '0',
     ly0session,
@@ -142,20 +141,20 @@ function handleSelect(key) {
         return
     }
     if (key === 'logout') {
-        ly0request.ly0.storpro({
+        ly0request.ly0request.storpro({
             noSession: true,
             storproName: 'ly0d0login.session.logout',
             data: { ly0session: scopeThis.ly0session },
         }).then(() => {
-            ly0request.ly0.ly0sessionClear()
-            ly0request.ly0.navigate({path: '/', routerInstance})
+            ly0request.ly0request.ly0sessionClear()
+            ly0request.ly0request.navigate({path: '/', routerInstance})
         })
     }
 }
 
 function hdlGetGroupIcon() {
     return scopeThis.ly0session.group && scopeThis.ly0session.group.icon
-        ? ly0request.ly0.domain + scopeThis.ly0session.group.icon
+        ? ly0request.ly0request.domain + scopeThis.ly0session.group.icon
         : ''
 }
 
@@ -185,7 +184,7 @@ function hdlGetUserIcon() {
     ) {
         userIcon =
             scopeThis.ly0session.user && scopeThis.ly0session.user.icon
-                ? ly0request.ly0.domain + scopeThis.ly0session.user.icon
+                ? ly0request.ly0request.domain + scopeThis.ly0session.user.icon
                 : ''
     }
     return userIcon

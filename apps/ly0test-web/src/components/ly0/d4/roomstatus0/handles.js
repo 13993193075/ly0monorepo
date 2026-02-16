@@ -1,9 +1,9 @@
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
-let ly0session = ly0request.ly0sessionLoad()
+import { request as ly0request } from '@yoooloo42/ly0browser'
+let ly0session = ly0request.ly0request.ly0sessionLoad()
 
 // 获取页面数据
 async function getPgData({scopeThis}){
-    const result = await ly0request.storpro({
+    const result = await ly0request.ly0request.storpro({
         storproName: 'ly0d4.roomstatus0.getPgData',
         data: {
             id_dataunit: ly0session.dataunit._id,

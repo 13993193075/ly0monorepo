@@ -1,9 +1,9 @@
 import {ElMessage, ElMessageBox} from 'element-plus'
-import { ly0request } from '@yoooloo42/ly0browser/ly0request'
-const ly0session = ly0request.ly0sessionLoad()
+import { request as ly0request } from '@yoooloo42/ly0browser'
+const ly0session = ly0request.ly0request.ly0sessionLoad()
 
 function init({scopeThis}){
-    ly0request.storpro({
+    ly0request.ly0request.storpro({
         storproName: 'ly0d2.record0.getPgData',
         data: null,
     }).then(result => {
@@ -17,7 +17,7 @@ function init({scopeThis}){
 
 function submit({scopeThis}){
     if(scopeThis.formData.process_code === "0"){ //系统外流转
-        ly0request.storpro({
+        ly0request.ly0request.storpro({
             storproName: "ly0d2.wxzf.cash",
             data: {
                 id_business: scopeThis.formData.id_business,
@@ -38,7 +38,7 @@ function submit({scopeThis}){
             scopeThis.formProps.submitted = true
         })
     } else if(scopeThis.formData.process_code === "wxzf0"){ // 微信支付.客户付款码付款
-        ly0request.storpro({
+        ly0request.ly0request.storpro({
             storproName: "ly0d2.wxzf.wxzf0",
             data: {
                 id_business: scopeThis.formData.id_business,
@@ -64,7 +64,7 @@ function submit({scopeThis}){
             scopeThis.formProps.submitted = true
         })
     } else if(scopeThis.formData.process_code === "wxzf2"){ // 微信支付.商户二维码收款
-        ly0request.storpro({
+        ly0request.ly0request.storpro({
             storproName: "ly0d2.wxzf.wxzf2",
             data: {
                 id_business: scopeThis.formData.id_business,

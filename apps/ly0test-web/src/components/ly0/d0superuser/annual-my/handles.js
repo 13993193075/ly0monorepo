@@ -1,11 +1,11 @@
-import {ly0request} from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 import {ElMessage, ElMessageBox} from 'element-plus'
-const ly0session = ly0request.ly0sessionLoad()
+const ly0session = ly0request.ly0request.ly0sessionLoad()
 
 // 刷新订单（年费记录）的支付状态
 function getStatus({scopeThis, row}){
     return new Promise((resolve, reject)=>{
-        ly0request.storpro({
+        ly0request.ly0request.storpro({
             storproName: "ly0d2.wxzf.getStatus",
             data: {id_business: row._id}
         }).then(result=>{
@@ -39,7 +39,7 @@ function setStatus(scopeThis, data){
     // data.status_code
 
     return new Promise((resolve, reject)=>{
-        ly0request.storpro({
+        ly0request.ly0request.storpro({
             storproName: "ly0d0.annual-my.setStatus",
             data: {
                 _id: data._id,
@@ -56,11 +56,11 @@ function setStatus(scopeThis, data){
 // 中止支付
 function setFail({scopeThis, row}){
     return new Promise((resolve, reject)=>{
-        ly0request.storpro({
+        ly0request.ly0request.storpro({
             storproName: "ly0d2.wxzf.setFail",
             data: {id_business: row._id}
         }).then(()=>{
-            ly0request.storpro({
+            ly0request.ly0request.storpro({
                 storproName: "ly0d0.annual-my.setStatus",
                 data: {
                     _id: row._id,
@@ -78,13 +78,13 @@ function setFail({scopeThis, row}){
 // 发起支付
 function getCodeUrl({scopeThis, row}){
     //获取用于本站微信登录的appid凭据信息
-    ly0request.storpro({
+    ly0request.ly0request.storpro({
         storproName: "ly0d1d0appid.getAppidWithAnnual",
         data: null
     }).then(result=>{
         let objAppid = result.objAppid
         // 获取用于系统年费的商户号
-        ly0request.storpro({
+        ly0request.ly0request.storpro({
             storproName: "ly0d1d0mchid.getMchidWithAnnual",
             data: null
         }).then(result=>{
@@ -93,7 +93,7 @@ function getCodeUrl({scopeThis, row}){
                 _id: row._id,
                 status_code: "1"
             }).then(()=>{
-                ly0request.storpro({
+                ly0request.ly0request.storpro({
                     storproName: "ly0d2.wxzf.wxzf2",
                     data: {
                         id_dataunit: ly0session.dataunit._id,

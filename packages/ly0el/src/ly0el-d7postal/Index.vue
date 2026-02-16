@@ -108,7 +108,7 @@
 
 <script setup>
 import {reactive} from "vue";
-import { ly0request } from '@yoooloo42/ly0browser/ly0request'
+import { request as ly0request } from '@yoooloo42/ly0browser'
 // 遵循 Vue 3 v-model 规范，使用 modelValue
 const props = defineProps({
     // modelValue: 外部 v-model 绑定的值
@@ -160,7 +160,7 @@ const hdl = {
         let arrPromise = []
         modelValue_box.forEach(i => {
             arrPromise.push(
-                ly0request.storpro({
+                ly0request.ly0request.storpro({
                     noSession: true,
                     storproName: 'ly0d3.gbt2260code6.get',
                     data: { code6: i.gbt2260code },

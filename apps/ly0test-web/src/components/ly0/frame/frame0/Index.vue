@@ -3,7 +3,7 @@
     <compHeader></compHeader>
     <div :style="style.mainBox">
         <div :style="style.menuBox">
-            <ly0Menu :myProps="scopeThis.menuProps" :scopeThis="scopeThis"></ly0Menu>
+            <ly0el-menu :myProps="scopeThis.menuProps" :scopeThis="scopeThis"></ly0el-menu>
         </div>
         <div :style="style.main">
             <component :is="scopeThis.compMain"></component>

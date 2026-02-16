@@ -1,9 +1,9 @@
 <template>
     <div style="padding: 10px;">
-        <ly0Form
+        <ly0el-form
             v-model="formData"
             :myProps="formProps"
-        ></ly0Form>
+        ></ly0el-form>
     </div>
 </template>
 
