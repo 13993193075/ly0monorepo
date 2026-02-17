@@ -19,7 +19,7 @@ function submit(scopeThis) {
         }
 
         // 后台登录
-        ly0request.ly0request.storpro({
+        ly0request.ly0.storpro({
             storproName: "ly0d0login.password.login",
             data: {
                 number: scopeThis.passwordData.number,

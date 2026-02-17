@@ -160,7 +160,7 @@ const hdl = {
         let arrPromise = []
         modelValue_box.forEach(i => {
             arrPromise.push(
-                ly0request.ly0request.storpro({
+                ly0request.ly0.storpro({
                     noSession: true,
                     storproName: 'ly0d3.gbt2260code6.get',
                     data: { code6: i.gbt2260code },

@@ -150,7 +150,7 @@ async function submit({scopeThis}) {
             })
         }
     })
-    await ly0request.ly0request.storpro({
+    await ly0request.ly0.storpro({
         storproName: 'ly0d14.d9.updateMany',
         data: dataNew,
     })

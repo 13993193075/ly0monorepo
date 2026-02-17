@@ -77,7 +77,7 @@ async function submit({scopeThis, data}) {
             arrRoom.push(JSON.parse(i.treeItemAppendix))
         }
     })
-    const result = await ly0request.ly0request.storpro({
+    const result = await ly0request.ly0.storpro({
         storproName: scopeThis.storpro.insertMany,
         data: {
             id_business: scopeThis.props_myProps.id_business,

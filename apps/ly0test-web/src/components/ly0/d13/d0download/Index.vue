@@ -44,7 +44,7 @@ const scopeThis = reactive({
 })
 
 onMounted(() => {
-    ly0request.ly0request.storpro({
+    ly0request.ly0.storpro({
         noSession: true,
         storproName: 'ly0d13.d0url.findAll',
         data: null,

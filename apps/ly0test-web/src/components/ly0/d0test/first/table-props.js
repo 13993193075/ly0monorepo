@@ -52,7 +52,7 @@ export default {
                         text: "开始测试",
                         size: "small",
                         hdlClick({scopeThis, row}){
-                            ly0request.ly0request.navigate({
+                            ly0request.ly0.navigate({
                                 code: row.route_type,
                                 path: row.route,
                                 routerInstance: scopeThis.routerInstance

@@ -583,7 +583,7 @@ async function submit({scopeThis}) {
         f5code: scopeThis.update.formData.d5f5code,
         f5: scopeThis.update.formData.d5f5,
     }
-    await ly0request.ly0request.storpro({
+    await ly0request.ly0.storpro({
         storproName: 'ly0d14.d5.updateOne',
         data: dataNew,
     })

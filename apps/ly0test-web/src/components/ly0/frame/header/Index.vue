@@ -98,7 +98,7 @@ import emailBind from './bind/email-bind.js'
 import wxBind from './bind/wx-bind.js'
 
 const routerInstance = useRouter()
-const ly0session = ly0request.ly0request.ly0sessionLoad()
+const ly0session = ly0request.ly0.ly0sessionLoad()
 const scopeThis = reactive({
     activeIndex: '0',
     ly0session,
@@ -141,20 +141,20 @@ function handleSelect(key) {
         return
     }
     if (key === 'logout') {
-        ly0request.ly0request.storpro({
+        ly0request.ly0.storpro({
             noSession: true,
             storproName: 'ly0d0login.session.logout',
             data: { ly0session: scopeThis.ly0session },
         }).then(() => {
-            ly0request.ly0request.ly0sessionClear()
-            ly0request.ly0request.navigate({path: '/', routerInstance})
+            ly0request.ly0.ly0sessionClear()
+            ly0request.ly0.navigate({path: '/', routerInstance})
         })
     }
 }
 
 function hdlGetGroupIcon() {
     return scopeThis.ly0session.group && scopeThis.ly0session.group.icon
-        ? ly0request.ly0request.domain + scopeThis.ly0session.group.icon
+        ? ly0request.ly0.domain + scopeThis.ly0session.group.icon
         : ''
 }
 
@@ -184,7 +184,7 @@ function hdlGetUserIcon() {
     ) {
         userIcon =
             scopeThis.ly0session.user && scopeThis.ly0session.user.icon
-                ? ly0request.ly0request.domain + scopeThis.ly0session.user.icon
+                ? ly0request.ly0.domain + scopeThis.ly0session.user.icon
                 : ''
     }
     return userIcon

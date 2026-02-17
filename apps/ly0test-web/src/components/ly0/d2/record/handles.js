@@ -4,7 +4,7 @@ import {withTable} from '@yoooloo42/ly0el'
 
 // 刷新支付状态
 function status({scopeThis, row}){
-    ly0request.ly0request.storpro({
+    ly0request.ly0.storpro({
         storproName: scopeThis.storpro.getStatus,
         data: {
             id_business: row.id_business
@@ -17,7 +17,7 @@ function status({scopeThis, row}){
 
 // 中止支付
 function cancel({scopeThis, row}){
-    ly0request.ly0request.storpro({
+    ly0request.ly0.storpro({
         storproName: scopeThis.storpro.setFail,
         data: {id_business: row.id_business}
     }).then(result=>{

@@ -9,7 +9,7 @@ function getVercode(scopeThis) {
             return resolve()
         }
 
-        ly0request.ly0request.storpro({
+        ly0request.ly0.storpro({
             storproName: "ly0d0login.email.getVercodeLogin",
             data: {email: scopeThis.emailData.email},
             noSession: true,
@@ -37,7 +37,7 @@ function submit(scopeThis) {
         }
 
         // 后台登录
-        ly0request.ly0request.storpro({
+        ly0request.ly0.storpro({
             storproName: "ly0d0login.email.login",
             data: {
                 email: scopeThis.emailData.email,

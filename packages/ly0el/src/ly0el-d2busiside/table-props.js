@@ -41,7 +41,7 @@ export default {
                                 cancelButtonText: '取消',
                                 type: 'warning'
                             }).then(()=>{
-                                ly0request.ly0request.storpro({
+                                ly0request.ly0.storpro({
                                     storproName: "ly0d2.wxzf.refund",
                                     data: {id_business: scopeThis.initBox.id_business}
                                 }).then(()=>{
@@ -56,7 +56,7 @@ export default {
                     {
                         title: "中止支付",
                         handle({scopeThis, index}){
-                            ly0request.ly0request.storpro({
+                            ly0request.ly0.storpro({
                                 storproName: "ly0d2.wxzf.setFail",
                                 data: {
                                     mchid: scopeThis.initBox.mchid,

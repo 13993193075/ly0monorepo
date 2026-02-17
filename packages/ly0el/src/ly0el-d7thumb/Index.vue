@@ -122,7 +122,7 @@ const popup = reactive({
 
 const upload = reactive({
     props: {
-        uploadUrl: props.myProps.thumb.uploadUrl || ly0request.ly0request.domain + ly0request.ly0request.upload_image,
+        uploadUrl: props.myProps.thumb.uploadUrl || ly0request.ly0.domain + ly0request.ly0.upload_image,
         avatar: {
             width: props.myProps.thumb.width || '100px',
             height: props.myProps.thumb.height || '100px'

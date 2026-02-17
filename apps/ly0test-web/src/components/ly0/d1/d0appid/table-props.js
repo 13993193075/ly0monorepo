@@ -50,7 +50,7 @@ export default {
                 inactiveText: '否',
                 activeColor: '#ff640a',
                 hdlChange({scopeThis, row, inherit}) {
-                    ly0request.ly0request.storpro({
+                    ly0request.ly0.storpro({
                         storproName: 'ly0d1.d0appid.withThiswebsiteLogin',
                         data: {
                             _id: row._id,
@@ -71,7 +71,7 @@ export default {
                 inactiveText: '否',
                 activeColor: '#ff640a',
                 hdlChange({scopeThis, row, inherit}) {
-                    ly0request.ly0request.storpro({
+                    ly0request.ly0.storpro({
                         storproName: 'ly0d1.d0appid.withAnnual',
                         data: {
                             _id: row._id,

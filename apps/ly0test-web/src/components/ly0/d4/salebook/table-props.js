@@ -38,7 +38,7 @@ export default {
                             cancelButtonText: '取消',
                             type: 'warning',
                         })
-                        const result = await ly0request.ly0request.storpro({
+                        const result = await ly0request.ly0.storpro({
                             storproName: 'ly0d4.b_goods.allocation',
                             data: { id_business: scopeThis.props_myProps.id_business },
                         })

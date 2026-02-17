@@ -44,12 +44,12 @@ const scopeThis = reactive({
     refreshKey: 0, // 强制刷新
     handles: {
         async init({scopeThis}) {
-            const result = await ly0request.ly0request.storpro({
+            const result = await ly0request.ly0.storpro({
                 storproName: 'ly0d14.d0.id_ly0d14d0',
                 data: { id_ly0d14d0: scopeThis.root.id_d0 },
             })
             ly0utils.deepClone.replaceObject(scopeThis.formData, result.doc)
-            const result0 = await ly0request.ly0request.storpro({
+            const result0 = await ly0request.ly0.storpro({
                 storproName: 'ly0d14.d0.getPgData',
                 data: null,
             })

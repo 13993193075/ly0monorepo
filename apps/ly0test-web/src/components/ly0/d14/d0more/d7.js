@@ -469,7 +469,7 @@ async function submit({scopeThis}) {
         f9code: scopeThis.update.formData.d7f9code,
         f9: scopeThis.update.formData.d7f9,
     }
-    await ly0request.ly0request.storpro({
+    await ly0request.ly0.storpro({
         storproName: 'ly0d14.d7.updateOne',
         data: dataNew,
     })

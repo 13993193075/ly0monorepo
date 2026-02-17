@@ -8,10 +8,10 @@ async function getReportData({scopeThis}) {
     scopeThis.loading = true
     scopeThis.loadingText = '正在统计中，可能需要较长时间，请稍候'
 
-    const result = await ly0request.ly0request.storpro({
+    const result = await ly0request.ly0.storpro({
         storproName: 'ly0d4.report.month',
         data: {
-            id_dataunit: ly0request.ly0request.ly0sessionLoad().dataunit._id,
+            id_dataunit: ly0request.ly0.ly0sessionLoad().dataunit._id,
             timeFrom: scopeThis.reqData.timeFrom,
             timeTo: scopeThis.reqData.timeTo,
         },

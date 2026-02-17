@@ -26,9 +26,9 @@ export default {
                 date: '请选择日期'
             },
             upload: {
-                uploadUrl: ly0request.ly0request.domain + ly0request.ly0request.upload,
-                uploadUrl_image: ly0request.ly0request.domain + ly0request.ly0request.upload_image,
-                uploadUrl_carplate: ly0request.ly0request.domain + ly0request.ly0request.upload_carplate,
+                uploadUrl: ly0request.ly0.domain + ly0request.ly0.upload,
+                uploadUrl_image: ly0request.ly0.domain + ly0request.ly0.upload_image,
+                uploadUrl_carplate: ly0request.ly0.domain + ly0request.ly0.upload_carplate,
             },
             download: { // 行内下载
                 fileName: 'new-file', // 下载文件名

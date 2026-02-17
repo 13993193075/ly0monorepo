@@ -2,7 +2,7 @@ import { request as ly0request } from '@yoooloo42/ly0browser'
 import {ElMessage, ElMessageBox} from 'element-plus'
 // 页面初始化
 async function init({scopeThis}){
-    const result = await ly0request.ly0request.storpro({
+    const result = await ly0request.ly0.storpro({
         storproName: 'ly0d4.id_business.id_business',
         data: {
             id_business: scopeThis.id_business,
@@ -47,7 +47,7 @@ const businessStatus = {
                 cancelButtonText: '取消',
                 type: 'warning',
             })
-            const result = await ly0request.ly0request.storpro({
+            const result = await ly0request.ly0.storpro({
                 storproName: 'ly0d4.id_business.book',
                 data: { id_business: scopeThis.id_business },
             })
@@ -65,7 +65,7 @@ const businessStatus = {
                 cancelButtonText: '取消',
                 type: 'warning',
             })
-            const result = await ly0request.ly0request.storpro({
+            const result = await ly0request.ly0.storpro({
                 storproName: 'ly0d4.id_business.arrive',
                 data: { id_business: scopeThis.id_business },
             })
@@ -83,7 +83,7 @@ const businessStatus = {
                 cancelButtonText: '取消',
                 type: 'warning',
             })
-            const result = await ly0request.ly0request.storpro({
+            const result = await ly0request.ly0.storpro({
                 storproName: 'ly0d4.id_business.leave',
                 data: { id_business: scopeThis.id_business },
             })

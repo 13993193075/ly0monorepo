@@ -1,6 +1,6 @@
 import { request as ly0request } from '@yoooloo42/ly0browser'
 import {utils as ly0utils} from '@yoooloo42/ly0utils'
-const ly0session = ly0request.ly0request.ly0sessionLoad()
+const ly0session = ly0request.ly0.ly0sessionLoad()
 import {withTable} from '@yoooloo42/ly0el'
 
 export default {

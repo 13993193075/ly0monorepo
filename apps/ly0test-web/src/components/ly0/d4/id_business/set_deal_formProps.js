@@ -27,7 +27,7 @@ export default {
     submit: {
         async handle({scopeThis, formData}){
             scopeThis.formData.deal = Math.floor(scopeThis.formData.deal0 * 100)
-            const result = await ly0request.ly0request.storpro({
+            const result = await ly0request.ly0.storpro({
                 storproName: 'ly0d4.id_business.setDeal',
                 data: scopeThis.formData
             })

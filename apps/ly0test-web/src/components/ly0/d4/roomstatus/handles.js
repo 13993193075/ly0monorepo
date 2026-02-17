@@ -1,10 +1,10 @@
 import { request as ly0request } from '@yoooloo42/ly0browser'
 import {ElMessage, ElMessageBox} from 'element-plus'
-const ly0session = ly0request.ly0request.ly0sessionLoad()
+const ly0session = ly0request.ly0.ly0sessionLoad()
 
 // 获取页面数据
 async function getPgData({scopeThis}) {
-    const result = await ly0request.ly0request.storpro({
+    const result = await ly0request.ly0.storpro({
         storproName: 'ly0d4.roomstatus.getPgData',
         data: {
             id_dataunit: ly0session.dataunit._id,
@@ -35,7 +35,7 @@ async function collapseSwitch({scopeThis, open}) {
 
 // 入住登记 - 发生新订单
 async function newBusinessSubmit({scopeThis}) {
-    const result = await ly0request.ly0request.storpro({
+    const result = await ly0request.ly0.storpro({
         storproName: 'ly0d4.roomstatus.newBusiness',
         data: Object.assign(scopeThis.newBusiness.formData, {
             arrRoom: scopeThis.arrRoomChecked,
@@ -93,7 +93,7 @@ async function setStatusSubmit({scopeThis, formData}) {
     }
 }
 async function setStatusSubmit0({scopeThis, formData}) {
-    const result = await ly0request.ly0request.storpro({
+    const result = await ly0request.ly0.storpro({
         storproName: 'ly0d4.roomstatus.setStatus',
         data: {
             id_room: scopeThis.focus._id,

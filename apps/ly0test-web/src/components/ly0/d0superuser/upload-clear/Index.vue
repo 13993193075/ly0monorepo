@@ -21,7 +21,7 @@ const handleClear = function () {
         cancelButtonText: '取消',
         type: 'warning',
     }).then(() => {
-        ly0request.ly0request.storpro({
+        ly0request.ly0.storpro({
             storproName: 'ly0d0.upload-clear.clear',
             data: null,
         }).then(result => {

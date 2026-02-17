@@ -35,7 +35,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 // 文件上传地址
-const uploadUrl = props.myProps.uploadUrl || ly0request.ly0request.upload
+const uploadUrl = props.myProps.uploadUrl || ly0request.ly0.upload
 // 指定上传文件的参数名称(Field Name)
 const uploadFieldName = props.myProps.uploadFieldName || "upload_file"
 // 限制文件上传的最大大小，默认5MB
@@ -78,8 +78,8 @@ const imageHandler = () => {
             // 注意：这里需要你处理好响应，确保返回图片 URL
             
             // 假设使用 fetch
-            const response = await ly0request.ly0request.request({
-                uploadUrl: uploadUrl ? uploadUrl : ly0request.ly0request.domain + ly0request.ly0request.upload,
+            const response = await ly0request.ly0.request({
+                uploadUrl: uploadUrl ? uploadUrl : ly0request.ly0.domain + ly0request.ly0.upload,
                 data: formData
             })
             

@@ -1,7 +1,7 @@
 import { request as ly0request } from '@yoooloo42/ly0browser'
 import cascade from './cascade.js'
 import {withTable} from '@yoooloo42/ly0el'
-const ly0session = ly0request.ly0request.ly0sessionLoad()
+const ly0session = ly0request.ly0.ly0sessionLoad()
 export default {
     formProps: {
         popup: {

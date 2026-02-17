@@ -54,7 +54,7 @@ export default {
             ]
         },
         submit({scopeThis}) {
-            ly0request.ly0request.storpro({
+            ly0request.ly0.storpro({
                 storproName: 'ly0d14.d0.updateOneF1',
                 data: {
                     _id: scopeThis.formData._id,

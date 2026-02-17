@@ -74,7 +74,7 @@ export default {
         }
     },
     confirm({scopeThis}) {
-        ly0request.ly0request.storpro({
+        ly0request.ly0.storpro({
             storproName: 'ly0d2.wxzf.getStatus',
             data: {
                 mchid: scopeThis.props.formData.mchid,

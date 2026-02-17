@@ -50,7 +50,7 @@ export default {
                 inactiveText: "否",
                 activeColor: "#ff640a",
                 hdlChange({scopeThis, row, inherit}){
-                    ly0request.ly0request.storpro({
+                    ly0request.ly0.storpro({
                         storproName: "ly0d0.dataunit.systemOff",
                         data: {
                             _id: row._id,
@@ -109,7 +109,7 @@ export default {
                                     /*
                                     scopeThis.tableProps.table.loading.text = "正在清除数据单元，可能需要较长时间，请耐心等待..."
                                     scopeThis.tableProps.table.loading.visible = true
-                                    ly0request.ly0request.storpro({
+                                    ly0request.ly0.storpro({
                                         storproName: "ly0d0.dataunit-clear.clear",
                                         data: {
                                             id_dataunit: row._id

@@ -63,7 +63,7 @@ export default {
                     return
                 }
 
-                ly0request.ly0request.storpro({
+                ly0request.ly0.storpro({
                     noSession: true,
                     storproName: "ly0d0login.password.setPassword",
                     data: {

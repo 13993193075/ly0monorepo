@@ -19,7 +19,7 @@ function messageHdl(scopeThis){
 
         if (event.data.code === 0) {
             // 登录验证
-            ly0request.ly0request.storpro({
+            ly0request.ly0.storpro({
                 storproName: "ly0d0login.wx.loginWithOpenid",
                 data: {
                     appid: event.data.appid,
@@ -58,7 +58,7 @@ function show(scopeThis){
     messageHdlShell = messageHdl(scopeThis)
 
     // 获取appid
-    ly0request.ly0request.storpro({
+    ly0request.ly0.storpro({
         storproName: "ly0d0login.wx.getAppid",
         data: null,
         noSession: true,
@@ -68,7 +68,7 @@ function show(scopeThis){
         // 生成微信二维码图片，监听用户操作
         WeChat.WxLogin({
             elementId: "elIdLoginWxCode",
-            redirect_uri: ly0request.ly0request.domain + "/ly0/wechat-login-redirect",
+            redirect_uri: ly0request.ly0.domain + "/ly0/wechat-login-redirect",
             appid
         })
 

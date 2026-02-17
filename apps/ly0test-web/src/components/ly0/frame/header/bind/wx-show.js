@@ -15,7 +15,7 @@ function messageHdl(myProps){
 
         if (event.data.code === 0) {
             // 微信绑定
-            ly0request.ly0request.storpro({
+            ly0request.ly0.storpro({
                 noSession: true,
                 storproName: "ly0d0login.wx.bind",
                 data: {
@@ -47,7 +47,7 @@ function show(myProps){
     messageHdlShell = messageHdl(myProps)
 
     // 获取appid
-    ly0request.ly0request.storpro({
+    ly0request.ly0.storpro({
         noSession: true,
         storproName: "ly0d0login.wx.getAppid",
         data: null
@@ -57,7 +57,7 @@ function show(myProps){
         // 生成微信二维码图片，监听用户操作
         WeChat.WxLogin({
             elementId: "elIdWxBindCode",
-            redirect_uri: ly0request.ly0request.domain + "/ly0/wechat-login-redirect",
+            redirect_uri: ly0request.ly0.domain + "/ly0/wechat-login-redirect",
             appid
         })
 

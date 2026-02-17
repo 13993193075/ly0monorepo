@@ -55,7 +55,7 @@ const scopeThis = reactive(
                     cancelButtonText: '取消',
                     type: 'warning',
                 }).then(() => {
-                    ly0request.ly0request.storpro({
+                    ly0request.ly0.storpro({
                         storproName: 'ly0d1.d1printer.register',
                         data: {
                             id_ukey: row.id_ukey,

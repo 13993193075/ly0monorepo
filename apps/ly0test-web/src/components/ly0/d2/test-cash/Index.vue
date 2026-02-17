@@ -37,7 +37,7 @@ const scopeThis = reactive({
 })
 
 onMounted(() => {
-    ly0request.ly0request.storpro({
+    ly0request.ly0.storpro({
         storproName: 'ly0d2.record0.getPgData',
         data: null,
     }).then(result => {
