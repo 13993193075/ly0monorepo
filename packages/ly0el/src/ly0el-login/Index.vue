@@ -53,7 +53,7 @@ const scopeThis = reactive({
     handlers,
     LoginData: {
         id_login: null, // 登录账号id
-        loginType: 'Password', // 登录类型
+        type: 'number', // 登录类型
         number: "", // 工号
         cellphone: "", // 手机号
         email: "", // 电子邮箱
@@ -76,6 +76,8 @@ const scopeThis = reactive({
         },
     },
     passwordData: {
+        type: 'number', // 密码登录类型：'number', 'cellphone', 'email'
+        label: '工号', // 密码登录标签：'工号', '手机号', '电子邮箱'
         number: "",
         password: ""
     },
