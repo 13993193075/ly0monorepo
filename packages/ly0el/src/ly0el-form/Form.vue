@@ -1,6 +1,6 @@
 <template>
     <!-- 置顶菜单 -->
-    <ly0Menu v-if="formProps_box.menu && formProps_box.menu.menu && formProps_box.menu.menu.length > 0" :myProps="formProps_box.menu" :scopeThis="scopeThis"></ly0Menu>
+    <ly0el-menu v-if="formProps_box.menu && formProps_box.menu.menu && formProps_box.menu.menu.length > 0" :myProps="formProps_box.menu" :scopeThis="scopeThis"></ly0el-menu>
     <!-- 表单区域可以分为多个列 -->
     <div :style="style.root_box">
         <div v-for="(item, index) in formProps_box.cols" :key="index">
@@ -79,6 +79,7 @@
 import {reactive} from "vue";
 import compLabelBox from './LabelBox.vue'
 import compInputBox from './InputBox.vue'
+import ly0elMenu from "../ly0el-menu/Index.vue";
 import styleModule from './style.js'
 
 const props = defineProps({
