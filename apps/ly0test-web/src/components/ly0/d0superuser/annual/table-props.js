@@ -1,5 +1,5 @@
 import {utils as ly0utils} from '@yoooloo42/ly0utils'
-import {withTable} from '@yooloo42/ly0el'
+import {withTable} from '@yoooloo42/ly0el'
 
 export default {
     titleLine: { // 标题线

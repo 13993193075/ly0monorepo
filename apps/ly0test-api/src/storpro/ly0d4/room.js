@@ -1,4 +1,5 @@
 import {GQuery} from '../../main/GQuery.js'
+import {ly0d4} from '@yoooloo42/ly0utils'
 
 // 内部模块：查询修正
 async function queryRevise (data) {

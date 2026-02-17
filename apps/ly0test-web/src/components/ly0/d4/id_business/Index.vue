@@ -238,10 +238,10 @@ onMounted(async () => {
         :scopeThis="scopeThis"
     ></ly0el-form>
 
-    <ly0d2busiside
+    <ly0el-d2busiside
         v-if="!!scopeThis.ly0d2busiside_props.popup.visible"
         :myProps="scopeThis.ly0d2busiside_props"
-    ></ly0d2busiside>
+    ></ly0el-d2busiside>
 
     <comp_set_salebook
         v-if="!!scopeThis.set_salebook.id_business"

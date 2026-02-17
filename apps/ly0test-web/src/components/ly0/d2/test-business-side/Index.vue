@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <ly0d2busiside :myProps="scopeThis.test"></ly0d2busiside>
+        <ly0el-d2busiside :myProps="scopeThis.test"></ly0el-d2busiside>
     </div>
 </template>
 

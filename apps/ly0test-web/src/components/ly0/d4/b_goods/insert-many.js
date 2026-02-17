@@ -1,5 +1,5 @@
 import { request as ly0request } from '@yoooloo42/ly0browser'
-import {utils as ly0utils} from '@yooloo42/ly0utils'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {withTable} from '@yoooloo42/ly0el'
 
