@@ -4,6 +4,7 @@ import password from "./password.js"
 import sms from "./sms.js"
 import email from "./email.js"
 import wx from "./wx.js"
+import group from "./group.js"
 const routerInstance = useRouter() // 路由实例
 
 // 登录流程完成
@@ -17,5 +18,6 @@ export default {
     sms,
     email,
     submit,
-    wx
+    wx,
+    group
 }

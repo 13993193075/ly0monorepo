@@ -4,7 +4,7 @@
         <compSms v-else-if="scopeThis.showPg==='Sms'" :scopeThis="scopeThis"></compSms>
         <compEmail v-else-if="scopeThis.showPg==='Email'" :scopeThis="scopeThis"></compEmail>
         <compWx v-else-if="scopeThis.showPg==='Wx'" :scopeThis="scopeThis"></compWx>
-        <compLogin v-else-if="scopeThis.showPg==='Group'" :scopeThis="scopeThis"></compLogin>
+        <compGroup v-else-if="scopeThis.showPg==='Group'" :scopeThis="scopeThis"></compGroup>
     </div>
 </template>
 
