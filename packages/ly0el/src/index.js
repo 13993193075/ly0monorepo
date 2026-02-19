@@ -7,6 +7,7 @@ import ly0elD7size from './ly0el-d7size/Index.vue'
 import ly0elD7thumb from './ly0el-d7thumb/Index.vue'
 import ly0elForm from './ly0el-form/Index.vue'
 import ly0elGbt2260 from './ly0el-gbt2260/Index.vue'
+import ly0elLogin from './ly0el-login/Index.vue'
 import ly0elMenu from './ly0el-menu/Index.vue'
 import ly0elRichtext from './ly0el-richtext/Index.vue'
 import ly0elTable from './ly0el-table/Index.vue'
@@ -30,6 +31,7 @@ export {
     ly0elD7thumb,
     ly0elForm,
     ly0elGbt2260,
+    ly0elLogin,
     ly0elMenu,
     ly0elRichtext,
     ly0elTable,
@@ -55,6 +57,7 @@ export default {
         app.component('ly0el-d7thumb', ly0elD7thumb);
         app.component('ly0el-form', ly0elForm);
         app.component('ly0el-gbt2260', ly0elGbt2260);
+        app.component('ly0el-login', ly0elLogin);
         app.component('ly0el-menu', ly0elMenu);
         app.component('ly0el-richtext', ly0elRichtext);
         app.component('ly0el-table', ly0elTable);
@@ -76,6 +79,7 @@ export default {
     ly0elD7thumb,
     ly0elForm,
     ly0elGbt2260,
+    ly0elLogin,
     ly0elMenu,
     ly0elRichtext,
     ly0elTable,

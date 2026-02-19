@@ -3,7 +3,7 @@ export const ROUTES_VIEWS = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../../views/login/ly0d0user/Index.vue'),
+    component: () => import('../../views/login/ly0/Index.vue'),
   },
 
   {

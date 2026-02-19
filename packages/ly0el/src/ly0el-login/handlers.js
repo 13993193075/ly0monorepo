@@ -73,6 +73,7 @@ async function loggedin({scopeThis}){
         ly0request.ly0.navigate({
             code: scopeThis.loginData.route_type,
             path: scopeThis.loginData.route,
+            routerInstance: scopeThis.routerInstance
         })
     }
 }

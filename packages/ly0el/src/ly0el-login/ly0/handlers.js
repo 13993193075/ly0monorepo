@@ -164,6 +164,7 @@ async function submit({scopeThis}){
     ly0request.ly0.navigate({
         code: route_type,
         path: route,
+        routerInstance: scopeThis.routerInstance
     })
 }
 

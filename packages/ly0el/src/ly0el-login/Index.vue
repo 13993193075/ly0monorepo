@@ -20,6 +20,7 @@
 
 <script setup>
 import { ref, reactive } from "vue";
+import { useRouter } from 'vue-router';
 import compMain from './main.vue'
 import handlers from './handlers.js'
 
@@ -56,11 +57,12 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'change'])
 
 const scopeThis = reactive({
+    routerInstance: useRouter(), // Vue路由实例
     modelValue: props.modelValue,
     popup: props.myProps.popup,
     showPg: 'Password', // 初始页面：密码登录
     handlers,
-    LoginData: {
+    loginData: {
         id_login: null, // 登录账号id
         type: 'number', // 登录类型
         number: "", // 工号
@@ -78,14 +80,14 @@ const scopeThis = reactive({
         // 应用系统：ly0
         ly0: {
             arrDataunit: [],
-            id_dataunit: props.ly0.id_dataunit,
+            id_dataunit: props.myProps.ly0.id_dataunit,
             arrGroup: [],
             arrGroup0: [],
-            id_group: props.ly0.id_group,
+            id_group: props.myProps.ly0.id_group,
             arrUser: [],
             arrUser0: [],
-            usertbl: props.ly0.usertbl,
-            id_user: props.ly0.id_user,
+            usertbl: props.myProps.ly0.usertbl,
+            id_user: props.myProps.ly0.id_user,
         },
     },
     passwordData: {

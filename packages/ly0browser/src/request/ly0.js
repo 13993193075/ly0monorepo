@@ -1,6 +1,4 @@
 import axios from 'axios'
-import { useRouter } from 'vue-router'
-const routerInstance = useRouter() // 路由实例
 const domainPara = 'http://127.0.0.1:443'
 const upload = '/ly0/upload-req/file'
 const upload_image = '/ly0/upload-req/image'
@@ -174,6 +172,7 @@ function ly0sessionLoseWithUsertbl({routerInstance, usertbl}) {
 function navigate({
     code = '1', // 页面跳转类型
     path, // 跳转地址
+    routerInstance // Vue路由实例
 }){
     if(code === '0'){ // Web地址
         window.location.href = path
@@ -181,7 +180,7 @@ function navigate({
         if(routerInstance){
             routerInstance.push(path)
         }
-    }else{ // 默认VUE路由
+    }else{ // 默认Vue路由
         if(routerInstance){
             routerInstance.push(path)
         }
