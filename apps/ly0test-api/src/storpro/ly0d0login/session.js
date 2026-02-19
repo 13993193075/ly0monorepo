@@ -4,27 +4,29 @@ import destroy from './destroy.js'
 // 发生新session
 function newSession(data) {
     // data.id_login
+    // data.type
     // data.number
     // data.cellphone
     // data.email
     // data.wx_appid
     // data.wx_openid
-    // data.type
-    // data.id_user
+    // data.app
     // data.usertbl
+    // data.id_user
 
     return new Promise(function (resolve, reject) {
         if(!data.id_login){
             return resolve({code: 1, message: "没有账号id"})
         }
-        let number = data.number ? data.number : "",
-            cellphone = data.cellphone ? data.cellphone : "",
-            email = data.email ? data.email : "",
-            wx_appid = data.wx_appid ? data.wx_appid : "",
-            wx_openid = data.wx_openid ? data.wx_openid : "",
-            type = data.type ? data.type : "number",
-            id_user = data.id_user ? data.id_user : null
-        let usertbl = !!data.usertbl ? data.usertbl : "ly0d0user"
+        let type = data.type || "number",
+            number = data.number || "",
+            cellphone = data.cellphone || "",
+            email = data.email || "",
+            wx_appid = data.wx_appid || "",
+            wx_openid = data.wx_openid || "",
+            app = data.app || "ly0",
+            usertbl = data.usertbl || "ly0d0user",
+            id_user = data.id_user || null
 
         // 微信
         GQuery({
@@ -79,6 +81,7 @@ function newSession(data) {
                                 operator: "insertOne",
                                 update: {
                                     id_login: data.id_login,
+                                    type,
                                     number,
                                     cellphone,
                                     email,
@@ -86,12 +89,12 @@ function newSession(data) {
                                     wx_openid,
                                     wx_nickname: objWx ? objWx.nickname : "",
                                     wx_headimgurl: objWx ? objWx.headimgurl : "",
-                                    type,
+                                    expires,
+                                    app,
                                     id_dataunit: objUser && objUser.id_dataunit ? objUser.id_dataunit : null,
                                     id_group: objUser && objUser.id_group ? objUser.id_group : null,
-                                    id_user,
                                     usertbl,
-                                    expires
+                                    id_user,
                                 }
                             }).then(result => {
                                 let objSession = result.dataNew
@@ -101,6 +104,7 @@ function newSession(data) {
                                     operator: "insertOne",
                                     update: {
                                         id_login: data.id_login,
+                                        type,
                                         number,
                                         cellphone,
                                         email,
@@ -108,12 +112,13 @@ function newSession(data) {
                                         wx_openid,
                                         wx_nickname: objWx ? objWx.nickname : "",
                                         wx_headimgurl: objWx ? objWx.headimgurl : "",
+                                        time: new Date(),
+                                        memo: "发生新session成功",
+                                        app,
                                         id_dataunit: objSession.id_dataunit,
                                         id_group: objSession.id_group,
-                                        id_user,
                                         usertbl,
-                                        time: new Date(),
-                                        memo: "发生新session成功"
+                                        id_user,
                                     }
                                 }).then(result => {
                                     destroy.id_login({id_login: data.id_login}).then(result=>{
@@ -165,17 +170,19 @@ function logout(data) {
                     operator: "insertOne",
                     update: {
                         id_login: objSession.id_login,
+                        type: objSession.type,
                         number: objSession.number,
                         cellphone: objSession.cellphone,
                         email: objSession.email,
                         wx_appid: objSession.wx_appid,
                         wx_openid: objSession.wx_openid,
+                        time: new Date(),
+                        memo: "退出登录",
+                        app: objSession.app,
                         id_dataunit: objSession.id_dataunit,
                         id_group: objSession.id_group,
-                        id_user: objSession.id_user,
                         usertbl: objSession.usertbl,
-                        time: new Date(),
-                        memo: "退出登录"
+                        id_user: objSession.id_user
                     }
                 }).then(() => {
                     resolve({code: 0, message: "退出登录"})

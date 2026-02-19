@@ -22,6 +22,10 @@ function queryRevise(data) {
     if (data0.id_login) {
         data1.id_login = data0.id_login
     }
+    // 登录类型
+    if (data0.type) {
+        data1.type = data0.type
+    }
     // 工号
     if (data0.number) {
         data1.number = data0.number
@@ -45,26 +49,6 @@ function queryRevise(data) {
     if (data0.wx_openid) {
         data1.wx_openid = data0.wx_openid
     }
-    //
-    if (data0.type) {
-        data1.type = data0.type
-    }
-    // 数据单元
-    if (data0.id_dataunit) {
-        data1.id_dataunit = data0.id_dataunit
-    }
-    // 用户组
-    if (data0.id_group) {
-        data1.id_group = data0.id_group
-    }
-    // 用id
-    if (data0.id_user) {
-        data1.id_user = data0.id_user
-    }
-    // 用户表名
-    if (data0.usertbl) {
-        data1.usertbl = data0.usertbl
-    }
     // 时间
     if (data0.time_start || data0.time_end) {
         data1.time = {}
@@ -79,6 +63,26 @@ function queryRevise(data) {
     if (data0.memo) {
         data1.memo = {'$regex': `.*${data0.memo}.*`}
     }
+    // 应用标签
+    if (data0.app) {
+        data1.app = data0.app
+    }
+    // 数据单元
+    if (data0.id_dataunit) {
+        data1.id_dataunit = data0.id_dataunit
+    }
+    // 用户组
+    if (data0.id_group) {
+        data1.id_group = data0.id_group
+    }
+    // 用户表名
+    if (data0.usertbl) {
+        data1.usertbl = data0.usertbl
+    }
+    // 用id
+    if (data0.id_user) {
+        data1.id_user = data0.id_user
+    }
 
     return data1
 }
@@ -88,19 +92,20 @@ function find(data) {
     // data.query
     // data.query._id
     // data.query.id_login
+    // data.query.type
     // data.query.number
     // data.query.cellphone
     // data.query.email
     // data.query.wx_appid
     // data.query.wx_openid
-    // data.query.type
-    // data.query.id_dataunit
-    // data.query.id_group
-    // data.query.id_user
-    // data.query.usertbl
     // data.query.time_start
     // data.query.time_end
     // data.query.memo
+    // data.query.app
+    // data.query.id_dataunit
+    // data.query.id_group
+    // data.query.usertbl
+    // data.query.id_user
     // data.sort.label
     // data.sort.order
     // data.limit

@@ -35,7 +35,7 @@ async function submit({scopeThis}) {
         return
     }
 
-    // 后台登录
+    // 登录账号验证
     const result = await ly0request.ly0.storpro({
         storproName: "ly0d0login.password.login",
         data: {
@@ -45,19 +45,14 @@ async function submit({scopeThis}) {
         },
         noSession: true,
     })
-    ElMessage(result.message)
-
-    // 应用入口处理
     if (result.code === 0) {
+        ElMessage('登录账号验证成功')
         scopeThis.loginData.type = scopeThis.passwordData.type
         scopeThis.loginData.id_login = result.id_login
         scopeThis.loginData[scopeThis.passwordData.type] = scopeThis.passwordData.number
-        if(scopeThis.app === 'ly0'){
-            // 应用入口：ly0，选择用户组
-            scopeThis.showPg = "Group"
-            return
-        }
-        ElMessage('没有预置应用入口')
+        await scopeThis.handlers.loggedin({scopeThis})
+    }else{
+        ElMessage('登录账号验证失败')
     }
 }
 

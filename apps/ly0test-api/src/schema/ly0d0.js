@@ -62,6 +62,7 @@ export default {
     "ly0d0session": {
         "_id": {"note": "登录状态", "type": "mongodb.id", "required": "true"},
         "id_login": {"note": "", "type": "mongodb.id", "ref_tblName": "ly0d0login", "ref_fldName": "_id"},
+        "type": {"note": "", "type": "string"}, // 取值范围: "number", "cellphone", "email", "wx"
         "number": {"note": "工号", "type": "string"},
         "cellphone": {"note": "", "type": "string"},
         "email": {"note": "", "type": "string"},
@@ -69,16 +70,17 @@ export default {
         "wx_openid": {"note": "微信", "type": "string"},
         "wx_nickname": {"note": "昵称", "type": "string"},
         "wx_headimgurl": {"note": "头像", "type": "string"},
-        "type": {"note": "", "type": "string"}, // 取值范围: "number", "cellphone", "email", "wx"
+        "expires": {"note": "登录有效期至", "type": "date"},
+        "app": {"note": "应用标签", "type": "string"},
         "id_dataunit": {"note": "", "type": "mongodb.id", "ref_tblName": "ly0d0dataunit", "ref_fldName": "_id"},
         "id_group": {"note": "", "type": "mongodb.id", "ref_tblName": "ly0d0group", "ref_fldName": "_id"},
-        "id_user": {"note": "", "type": "mongodb.id"},
         "usertbl": {"note": "用户表名", "type": "string"},
-        "expires": {"note": "登录有效期至", "type": "date"}
+        "id_user": {"note": "", "type": "mongodb.id"}
     },
     "ly0d0syslog": {
         "_id": {"note": "系统日志", "type": "mongodb.id", "required": "true"},
         "id_login": {"note": "", "type": "mongodb.id", "ref_tblName": "ly0d0login", "ref_fldName": "_id"},
+        "type": {"note": "", "type": "string"},
         "number": {"note": "工号", "type": "string"},
         "cellphone": {"note": "", "type": "string"},
         "email": {"note": "", "type": "string"},
@@ -86,13 +88,13 @@ export default {
         "wx_openid": {"note": "微信", "type": "string"},
         "wx_nickname": {"note": "昵称", "type": "string"},
         "wx_headimgurl": {"note": "头像", "type": "string"},
-        "type": {"note": "", "type": "string"},
+        "time": {"note": "时间", "type": "date", "required": "true"},
+        "memo": {"note": "备忘", "type": "string", "required": "true"},
+        "app": {"note": "应用标签", "type": "string"},
         "id_dataunit": {"note": "", "type": "mongodb.id", "ref_tblName": "ly0d0dataunit", "ref_fldName": "_id"},
         "id_group": {"note": "", "type": "mongodb.id", "ref_tblName": "ly0d0group", "ref_fldName": "_id"},
-        "id_user": {"note": "", "type": "mongodb.id"},
         "usertbl": {"note": "用户表名", "type": "string"},
-        "time": {"note": "时间", "type": "date", "required": "true"},
-        "memo": {"note": "备忘", "type": "string", "required": "true"}
+        "id_user": {"note": "", "type": "mongodb.id"}
     },
     "ly0d0test": {
         "_id": {"note": "测试中心", "type": "mongodb.id", "required": "true"},

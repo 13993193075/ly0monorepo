@@ -2,7 +2,7 @@
     <div>
         <div>
             <el-icon><Avatar /></el-icon>
-            <label class="title">{{ scopeThis.handlers.group.title({scopeThis}) }}</label>
+            <label class="title">{{ scopeThis.handlers.ly0.title({scopeThis}) }}</label>
         </div>
         
         <el-divider content-position="center" class="divider-line"> 选择应用入口 </el-divider>
@@ -17,7 +17,7 @@
                     <el-select
                         class="input"
                         v-model="scopeThis.loginData.ly0.id_dataunit"
-                        @change="scopeThis.handlers.group.id_dataunitChange({scopeThis})"
+                        @change="scopeThis.handlers.ly0.id_dataunitChange({scopeThis})"
                         filterable
                     >
                         <el-option value="''" :label="'未选择'" :key="''"></el-option>
@@ -41,7 +41,7 @@
                     <el-select
                         class="input"
                         v-model="scopeThis.loginData.ly0.id_group"
-                        @change="scopeThis.handlers.group.setArrUser0({scopeThis})"
+                        @change="scopeThis.handlers.ly0.setArrUser0({scopeThis})"
                         filterable
                     >
                         <el-option value="''" :label="'未选择'" :key="''"></el-option>
@@ -59,19 +59,25 @@
         
         <div class="submit-row">
             <el-button
-                @click="scopeThis.handlers.group.submit({scopeThis})"
+                @click="scopeThis.handlers.ly0.submit({scopeThis})"
                 style="background-color: #009f95; color: white; margin-right: 10px"
             >确认</el-button>
-            <el-button @click="scopeThis.handlers.group.cancel({scopeThis})" style="margin-left: 10px"
+            <el-button @click="scopeThis.handlers.ly0.cancel({scopeThis})" style="margin-left: 10px"
             >取消</el-button>
         </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
-@use 'group';
+@use 'index';
 </style>
 
 <script setup>
+import {onMounted} from "vue";
 const props = defineProps(['scopeThis'])
+
+onMounted(()=>{
+    // 获取用户及相关信息
+    props.scopeThis.handlers.ly0.withId_login({scopeThis: props.scopeThis})
+})
 </script>

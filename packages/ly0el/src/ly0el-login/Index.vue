@@ -39,7 +39,16 @@ const props = defineProps({
                 width: '1000px',
                 top: '15vh',
             },
-            app: 'ly0'
+            sessionOnly: false, // 仅刷新session，不做应用跳转
+            route_type: '1',
+            route: '',
+            app: 'ly0',
+            ly0: {
+                id_dataunit: null, // 数据单元预置
+                id_group: null, // 用户组预置
+                usertbl: 'ly0d0user', // 用户数据表名
+                id_user: null, // 用户预置
+            }
         })
     }
 })
@@ -61,18 +70,22 @@ const scopeThis = reactive({
         wx_openid: "",
         wx_nickname: "",
         wx_headimgurl: "",
-        app: props.myProps.app,
+        sessionOnly: props.myProps.sessionOnly,
+        route_type: '', // 登录账号验证成功后的路由跳转类型：'0' - Web地址, '1' - Vue路由
+        route: '', // 登录账号验证成功后的路由跳转地址
+        app: props.myProps.app, // 应用入口
         
         // 应用系统：ly0
         ly0: {
             arrDataunit: [],
-            id_dataunit: null,
+            id_dataunit: props.ly0.id_dataunit,
             arrGroup: [],
             arrGroup0: [],
-            id_group: null,
+            id_group: props.ly0.id_group,
             arrUser: [],
             arrUser0: [],
-            id_user: null,
+            usertbl: props.ly0.usertbl,
+            id_user: props.ly0.id_user,
         },
     },
     passwordData: {
