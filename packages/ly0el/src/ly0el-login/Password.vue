@@ -5,7 +5,7 @@
             <td class="label-col">
                 <el-dropdown @command="hdlLabelChange">
                     <span class="el-dropdown-link">
-                        <span>{{ label }}</span>
+                        <span>{{ scopeThis.passwordData.label }}</span>
                         <el-icon><arrow-down /></el-icon>
                     </span>
                     <template #dropdown>
@@ -93,13 +93,10 @@
 </style>
 
 <script setup>
-import {ref} from "vue";
-
 const props = defineProps(['scopeThis'])
-const label = ref('工号')
 
 function hdlLabelChange(type){
-    props.script.handlers.password.labelChange({
+    props.scopeThis.handlers.password.labelChange({
         scopeThis: props.scopeThis,
         type
     })
