@@ -1,13 +1,11 @@
 <template>
-    <compIndex :frameProps="frameProps"></compIndex>
+    <ly0el-frame :myProps="frameProps"></ly0el-frame>
 </template>
 
 <style lang="scss" scoped></style>
 
 <script setup>
 import { reactive } from 'vue'
-import compIndex from '../frame/frame/Index.vue'
-
 import compD0appid from './d0appid/Index.vue'
 import compD0mchid from './d0mchid/Index.vue'
 import compD1ukey from './d1ukey/Index.vue'

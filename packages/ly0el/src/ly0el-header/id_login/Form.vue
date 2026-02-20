@@ -38,13 +38,13 @@
                 </td>
                 <td>
                     <el-button
-                        type="text"
+                        link
                         size="small"
                         @click="scopeThis.handles.setPassword(scopeThis, item.number, 'number')"
                         :disabled="scopeThis.readonly"
                     >设置登录密码</el-button>
                     <el-button
-                        type="text"
+                        link
                         size="small"
                         @click="scopeThis.handles.destroy(scopeThis, { number: item.number, type: 'number' })"
                         :disabled="index === 0 || !scopeThis.destroy || scopeThis.readonly"
@@ -64,13 +64,13 @@
                 </td>
                 <td>
                     <el-button
-                        type="text"
+                        link
                         size="small"
                         @click="scopeThis.handles.setPassword(scopeThis, item.cellphone, 'cellphone')"
                         :disabled="scopeThis.readonly"
                     >设置登录密码</el-button>
                     <el-button
-                        type="text"
+                        link
                         size="small"
                         @click="scopeThis.handles.destroy(scopeThis, {
                             cellphone: item.cellphone,
@@ -93,13 +93,13 @@
                 </td>
                 <td>
                     <el-button
-                        type="text"
+                        link
                         size="small"
                         @click="scopeThis.handles.setPassword(scopeThis, item.email, 'email')"
                         :disabled="scopeThis.readonly"
                     >设置登录密码</el-button>
                     <el-button
-                        type="text"
+                        link
                         size="small"
                         @click="scopeThis.handles.destroy(scopeThis, { email: item.email, type: 'email' })"
                         :disabled="scopeThis.readonly"
@@ -127,7 +127,7 @@
                 <td>
                     <div>
                         <el-button
-                            type="text"
+                            link
                             size="small"
                             @click="
                                 scopeThis.handles.destroy(scopeThis, {

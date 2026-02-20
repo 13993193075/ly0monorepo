@@ -1,5 +1,5 @@
 <template>
-        <compIndex :frameProps="frameProps"></compIndex>
+    <ly0el-frame :myProps="frameProps"></ly0el-frame>
 </template>
 
 <style lang="scss" scoped>
@@ -7,7 +7,6 @@
 
 <script setup>
 import { reactive } from 'vue'
-import compIndex from '../frame/frame/Index.vue'
 
 import compRestaurant from "./restaurant/Index.vue"
 import compRestaurant0 from "./restaurant0/Index.vue"

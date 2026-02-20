@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!!scopeThis.ly0session" class="container">
+    <div class="container">
         <div class="left">
             <img class="group-image" v-if="!!hdlGetGroupIcon()" :src="hdlGetGroupIcon()" />
             <img class="group-image" v-else src="./group.png" />
@@ -44,37 +44,37 @@
 
     <!-- 子组件 -->
     <ly0el-form
-        v-if="!!scopeThis.userInfo.formProps.popup.visible"
+        v-if="scopeThis.userInfo && scopeThis.userInfo.formProps.popup.visible"
         v-model="scopeThis.userInfo.formData"
         :myProps="scopeThis.userInfo.formProps"
     ></ly0el-form>
     <compLoginInfo
-        v-if="!!scopeThis.loginInfo.popup.visible"
+        v-if="scopeThis.loginInfo && scopeThis.loginInfo.popup.visible"
         :id_login="scopeThis.ly0session.session.id_login"
         :myProps="scopeThis.loginInfo"
     ></compLoginInfo>
     <ly0el-form
-        v-if="!!scopeThis.sessionInfo.formProps.popup.visible"
+        v-if="scopeThis.sessionInfo && scopeThis.sessionInfo.formProps.popup.visible"
         v-model="scopeThis.sessionInfo.formData"
         :myProps="scopeThis.sessionInfo.formProps"
     ></ly0el-form>
     <ly0el-form
-        v-if="!!scopeThis.newNumber.formProps.popup.visible"
+        v-if="scopeThis.newNumber && scopeThis.newNumber.formProps.popup.visible"
         v-model="scopeThis.newNumber.formData"
         :myProps="scopeThis.newNumber.formProps"
     ></ly0el-form>
     <ly0el-form
-        v-if="!!scopeThis.cellphoneBind.formProps.popup.visible"
+        v-if="scopeThis.cellphoneBind && scopeThis.cellphoneBind.formProps.popup.visible"
         v-model="scopeThis.cellphoneBind.formData"
         :myProps="scopeThis.cellphoneBind.formProps"
     ></ly0el-form>
     <ly0el-form
-        v-if="!!scopeThis.emailBind.formProps.popup.visible"
+        v-if="scopeThis.emailBind && scopeThis.emailBind.formProps.popup.visible"
         v-model="scopeThis.emailBind.formData"
         :myProps="scopeThis.emailBind.formProps"
     ></ly0el-form>
     <compWxBind
-        v-if="!!scopeThis.wxBind.popup"
+        v-if="scopeThis.wxBind && scopeThis.wxBind.popup"
         :myProps="scopeThis.wxBind"
     ></compWxBind>
 </template>
@@ -85,7 +85,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-import {reactive} from 'vue'
+import {reactive, onMounted} from 'vue'
 import compLoginInfo from './id_login/Index.vue'
 import compWxBind from './bind/WxBind.vue'
 import {request as ly0request} from '@yoooloo42/ly0browser'
@@ -100,18 +100,29 @@ import wxBind from './bind/wx-bind.js'
 const routerInstance = useRouter()
 const ly0session = ly0request.ly0.ly0sessionLoad()
 const scopeThis = reactive({
-    activeIndex: '0',
+    routerInstance,
     ly0session,
-    userInfo,
+    activeIndex: '0',
+    userInfo: null,
     loginInfo,
-    sessionInfo,
-    newNumber,
-    cellphoneBind,
-    emailBind,
-    wxBind,
+    sessionInfo: null,
+    newNumber: null,
+    cellphoneBind: null,
+    emailBind: null,
+    wxBind: null,
 })
 
-function handleSelect(key) {
+onMounted(() => {
+    // 因为公共组件资源会通过install提前预置到项目中，所以在相关的.js文件中，ly0session必须动态加载
+    scopeThis.userInfo = userInfo.get({scopeThis})
+    scopeThis.sessionInfo = sessionInfo.get({scopeThis})
+    scopeThis.newNumber = newNumber.get({scopeThis})
+    scopeThis.cellphoneBind = cellphoneBind.get({scopeThis})
+    scopeThis.emailBind = emailBind.get({scopeThis})
+    scopeThis.wxBind = wxBind.get({scopeThis})
+})
+
+async function handleSelect(key) {
     if (key === 'user-info') {
         scopeThis.userInfo.formProps.popup.visible = true
         return
@@ -141,13 +152,15 @@ function handleSelect(key) {
         return
     }
     if (key === 'logout') {
-        ly0request.ly0.storpro({
+        await ly0request.ly0.storpro({
             noSession: true,
             storproName: 'ly0d0login.session.logout',
             data: { ly0session: scopeThis.ly0session },
-        }).then(() => {
-            ly0request.ly0.ly0sessionClear()
-            ly0request.ly0.navigate({path: '/', routerInstance})
+        })
+        ly0request.ly0.ly0sessionClear()
+        ly0request.ly0.navigate({
+            path: '/',
+            routerInstance: scopeThis.routerInstance
         })
     }
 }

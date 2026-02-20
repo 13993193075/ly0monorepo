@@ -1,6 +1,6 @@
 <template>
-    <div :style="style.title">{{ frameProps.title }}</div>
-    <compHeader></compHeader>
+    <div :style="style.title">{{ myProps.title }}</div>
+    <ly0el-header></ly0el-header>
     <div :style="style.mainBox">
         <div :style="style.menuBox">
             <ly0el-menu :myProps="scopeThis.menuProps" :scopeThis="scopeThis"></ly0el-menu>
@@ -17,10 +17,9 @@
 
 <script setup>
 import { reactive, watch, onMounted, markRaw } from 'vue'
-import compHeader from '../header/Index.vue'
 import compMainEmpty from './MainEmpty.vue'
 
-const props = defineProps(["frameProps"]);
+const props = defineProps(["myProps"]);
 
 const scopeThis = reactive({
     indexCompMain: '',
@@ -32,7 +31,7 @@ const scopeThis = reactive({
 })
 
 onMounted(()=>{
-    scopeThis.menuProps.menu.splice(0, scopeThis.menuProps.menu.length, ...handles.menu(props.frameProps.menu))
+    scopeThis.menuProps.menu.splice(0, scopeThis.menuProps.menu.length, ...handles.menu(props.myProps.menu))
 })
 
 watch(()=>scopeThis.indexCompMain, function (newVal, oldVal) {
@@ -40,7 +39,7 @@ watch(()=>scopeThis.indexCompMain, function (newVal, oldVal) {
         scopeThis.compMain = handles.componentsFactory(
             newVal,
             compMainEmpty,
-            props.frameProps.menu,
+            props.myProps.menu,
             '',
         ).comp
     } else {

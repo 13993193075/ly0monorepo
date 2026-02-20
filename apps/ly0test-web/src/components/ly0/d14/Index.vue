@@ -1,12 +1,11 @@
 <template>
-    <compIndex :frameProps="frameProps"></compIndex>
+    <ly0el-frame :myProps="frameProps"></ly0el-frame>
 </template>
 
 <style lang="scss" scoped></style>
 
 <script setup>
 import { reactive } from 'vue'
-import compIndex from '../frame/frame/Index.vue'
 import compD14d0 from './d0/Index.vue'
 
 const frameProps = reactive({
