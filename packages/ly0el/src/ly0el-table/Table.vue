@@ -2,25 +2,25 @@
     <div style="padding: 10px;">
         <!-- 标题线 -->
         <div
-            v-if="tableProps_box.titleLine.text"
-            :style="tableProps_box.titleLine.style.line"
+            v-if="myProps.titleLine.text"
+            :style="myProps.titleLine.style.line"
         >
             <el-divider content-position="left">
-                <span :style="tableProps_box.titleLine.style.text">
-                    {{ tableProps_box.titleLine.text }}
+                <span :style="myProps.titleLine.style.text">
+                    {{ myProps.titleLine.text }}
                 </span>
             </el-divider>
         </div>
 
         <!-- 置顶菜单 -->
-        <ly0el-menu v-if="!!tableProps_box.menu" :myProps="tableProps_box.menu" :scopeThis="scopeThis_box"></ly0el-menu>
+        <ly0el-menu v-if="!!myProps.menu" :myProps="myProps.menu" :scopeThis="scopeThis"></ly0el-menu>
 
         <!-- 置顶快捷按钮组 -->
         <div
-            v-if="tableProps_box.topButtonGroups.length > 0"
+            v-if="myProps.topButtonGroups.length > 0"
             :style="style.topButtonGroups.rootBox"
         >
-            <el-button-group v-for="(item, index) in tableProps_box.topButtonGroups" :key="index">
+            <el-button-group v-for="(item, index) in myProps.topButtonGroups" :key="index">
                 <template v-for="(item0, index0) in item" :key="index0">
                     <el-tooltip
                         :disabled="!item0.tip"
@@ -36,7 +36,7 @@
                             :plain="style.topButtonGroups.button(index, index0).plain"
                             :round="style.topButtonGroups.button(index, index0).round"
                             :circle="style.topButtonGroups.button(index, index0).circle"
-                            @click="item0.hdlClick ? item0.hdlClick({tableData: tableData_box, tableProps: tableProps_box, scopeThis: scopeThis_box}) : null"
+                            @click="item0.hdlClick ? item0.hdlClick({tableData: modelValue, tableProps: myProps, scopeThis}) : null"
                         >
                             <span v-if="item0.text">{{ item0.text }}</span>
                         </el-button>
@@ -47,13 +47,13 @@
 
         <!-- 表体 -->
         <el-table
-            :data="tableData_box.data"
+            :data="modelValue.data"
             stripe
             border
-            v-loading="tableProps_box.table.loading.visible"
-            element-loading-text="tableProps_box.table.loading.text"
-            element-loading-spinner="tableProps_box.table.loading.spinner"
-            element-loading-background="tableProps_box.table.loading.background"
+            v-loading="myProps.table.loading.visible"
+            element-loading-text="myProps.table.loading.text"
+            element-loading-spinner="myProps.table.loading.spinner"
+            element-loading-background="myProps.table.loading.background"
             @cell-mouse-enter="hdl.cellMouseEnter"
             @row-click="hdl.rowClick"
             @selection-change="hdl.selectionChange"
@@ -61,16 +61,16 @@
         >
             <!-- 左手第1列：是否可以选择记录行 -->
             <el-table-column
-                v-if="tableProps_box.table.selection.yes"
+                v-if="myProps.table.selection.yes"
                 type="selection"
-                :width="tableProps_box.table.selection.width"
+                :width="myProps.table.selection.width"
             ></el-table-column>
 
             <!-- 列 -->
-            <template v-for="(col, colIndex) in tableProps_box.table.cols" :key="colIndex">
+            <template v-for="(col, colIndex) in myProps.table.cols" :key="colIndex">
                 <el-table-column
                     #default="scope"
-                    v-if="col.hdlVisible ? col.hdlVisible({scopeThis: scopeThis_box}) : true"
+                    v-if="col.hdlVisible ? col.hdlVisible({scopeThis}) : true"
                     v-model="col.fieldName"
                     :label="col.label"
                     :sortable="col.sortable"
@@ -81,9 +81,9 @@
                     }"
                     :width="col.width ? col.width : ''"
                 >
-                    <el-tooltip placement="left" effect="dark" :disabled="tableProps_box.table.cellTooltip.length === 0">
+                    <el-tooltip placement="left" effect="dark" :disabled="myProps.table.cellTooltip.length === 0">
                         <div
-                            @click="col.hdlClick ? col.hdlClick({scopeThis: scopeThis_box, row: scope.row}) : null"
+                            @click="col.hdlClick ? col.hdlClick({scopeThis, row: scope.row}) : null"
                             @mouseover="hdl.cellMouseover({col, row: scope.row})"
                         >
                             <template v-if="col.show === 'text'">
@@ -106,7 +106,7 @@
                                     @change="
                                         (valNew) => {
                                             if(col.hdlChange){
-                                                col.hdlChange({scopeThis: scopeThis_box, row: scope.row, inherit: {valNew}})
+                                                col.hdlChange({scopeThis, row: scope.row, inherit: {valNew}})
                                             }
                                         }
                                     "
@@ -116,7 +116,7 @@
                                 <el-button-group>
                                     <template v-for="(item, index) in col.buttonGroup" :key="index">
                                         <el-button
-                                            v-if="item.hdlVisible ? item.hdlVisible({scopeThis: scopeThis_box, row: scope.row}) : true"
+                                            v-if="item.hdlVisible ? item.hdlVisible({scopeThis, row: scope.row}) : true"
                                             :key="index"
                                             :style="style.cell.buttonGroup({item}).style"
                                             :icon="style.cell.buttonGroup({item}).icon"
@@ -125,9 +125,9 @@
                                             :plain="style.cell.buttonGroup({item}).plain"
                                             :round="style.cell.buttonGroup({item}).round"
                                             :circle="style.cell.buttonGroup({item}).circle"
-                                            @click="item.hdlClick({scopeThis: scopeThis_box, row: scope.row})"
+                                            @click="item.hdlClick({scopeThis, row: scope.row})"
                                         >
-                                            {{item.text ? item.text : item.hdlText({scopeThis: scopeThis_box, row: scope.row}) }}
+                                            {{item.text ? item.text : item.hdlText({scopeThis, row: scope.row}) }}
                                         </el-button>
                                     </template>
                                 </el-button-group>
@@ -181,8 +181,8 @@
                                     :myProps="{
                                         thumb: {
                                             fieldName: col.thumb.fieldName,
-                                            width: col.thumb.width || tableProps_box.table.colShow.ly0d7thumb.thumb.width,
-                                            height: col.thumb.height || tableProps_box.table.colshow.ly0d7thumb.thumb.height
+                                            width: col.thumb.width || myProps.table.colShow.ly0d7thumb.thumb.width,
+                                            height: col.thumb.height || myProps.table.colshow.ly0d7thumb.thumb.height
                                         },
                                         number: {
                                             fieldName: col.number.fieldName
@@ -198,7 +198,7 @@
 
                         <!-- 指向单元格时的提示信息（多行） -->
                         <template #content>
-                            <div v-for="(item, index) in tableProps_box.table.cellTooltip" :key="index">{{ item }}</div>
+                            <div v-for="(item, index) in myProps.table.cellTooltip" :key="index">{{ item }}</div>
                         </template>
                     </el-tooltip>
                 </el-table-column>
@@ -207,10 +207,10 @@
 
         <!-- 分页 -->
         <el-pagination
-            :total="tableData_box.total"
-            :page-size="tableData_box.pageSize"
-            :page-sizes="tableData_box.pageSizes"
-            :current-page="tableData_box.currentPage"
+            :total="modelValue.total"
+            :page-size="modelValue.pageSize"
+            :page-sizes="modelValue.pageSizes"
+            :current-page="modelValue.currentPage"
             :style="style.pagination"
             @size-change="hdl.pageSizeChange"
             @current-change="hdl.currentPageChange"
@@ -218,7 +218,7 @@
         ></el-pagination>
 
         <!-- 选择列 --><!-- 使用该组件，必须设置每一列的唯一标识：key -->
-        <compPickCol :tableProps="tableProps_box"></compPickCol>
+        <compPickCol :tableProps="myProps"></compPickCol>
     </div>
 </template>
 
@@ -248,61 +248,57 @@ const props = defineProps({
     }
 })
 
-// props属性包装，继承了顶层组件的响应性，页面和js可以使用相同的命名
-let tableData_box = props.modelValue
-const tableProps_box = props.myProps
-const scopeThis_box = props.scopeThis
 // 设置列选择初始化参数
-tableProps_box.table.pickCol.colsInit = ly0utils.deepClone.deepClone(tableProps_box.table.cols)
+props.myProps.table.pickCol.colsInit = ly0utils.deepClone.deepClone(props.myProps.table.cols)
 
 const hdl = {
     cellMouseEnter(row, column, cell, event) {
         // 当单元格hover进入时会触发该事件
-        if (tableProps_box.table.hdlCellMouseEnter) {
-            tableProps_box.table.hdlCellMouseEnter({scopeThis: scopeThis_box, tableProps: tableProps_box, inherit: {
+        if (props.myProps.table.hdlCellMouseEnter) {
+            props.myProps.table.hdlCellMouseEnter({scopeThis: props.scopeThis, tableProps: props.myProps, inherit: {
                 row,
                 column,
                 cell,
                 event
             }})
         } else {
-            tableProps_box.table.cellTooltip = []
+            props.myProps.table.cellTooltip = []
         }
     },
     cellMouseover({col, row}) {
         if (col.hdlMouseover) {
-            col.hdlMouseover({scopeThis: scopeThis_box, row, col})
+            col.hdlMouseover({scopeThis: props.scopeThis, row, col})
         } else {
-            tableProps_box.table.cellTooltip = []
+            props.myProps.table.cellTooltip = []
         }
     },
     async currentPageChange(currentPage) {
         // 当前页码改变
-        tableData_box.currentPage = currentPage
-        if(tableProps_box.table.hdlCurrentPageChange){
-            await tableProps_box.table.hdlCurrentPageChange({currentPage, scopeThis: scopeThis_box})
+        props.modelValue.currentPage = currentPage
+        if(props.myProps.table.hdlCurrentPageChange){
+            await props.myProps.table.hdlCurrentPageChange({currentPage, scopeThis: props.scopeThis})
         }
     },
     download({row, col}) {
         if(!col.hdlGetSrc){
             return {
                 src: '',
-                label: tableProps_box.table.colShow.download.downloadLabelNoSrc,
-                fileName: tableProps_box.table.colShow.download.fileName
+                label: props.myProps.table.colShow.download.downloadLabelNoSrc,
+                fileName: props.myProps.table.colShow.download.fileName
             }
         }
 
-        const src = col.hdlGetSrc({scopeThis: scopeThis_box, row})
+        const src = col.hdlGetSrc({scopeThis: props.scopeThis, row})
         const label = col.hdlGetDownloadLabel
-            ? col.hdlGetDownloadLabel({scopeThis: scopeThis_box, row})
-            : tableProps_box.table.colShow.download.downloadLabel
+            ? col.hdlGetDownloadLabel({scopeThis: props.scopeThis, row})
+            : props.myProps.table.colShow.download.downloadLabel
         const fileName = col.hdlGetFileName
-            ? col.hdlGetFileName({scopeThis: scopeThis_box, row})
-            : tableProps_box.table.colShow.download.fileName
+            ? col.hdlGetFileName({scopeThis: props.scopeThis, row})
+            : props.myProps.table.colShow.download.fileName
         return {
             src: src || '',
-            label: src ? label : tableProps_box.table.colShow.download.downloadLabelNoSrc,
-            fileName: src ? fileName : tableProps_box.table.colShow.download.fileName
+            label: src ? label : props.myProps.table.colShow.download.downloadLabelNoSrc,
+            fileName: src ? fileName : props.myProps.table.colShow.download.fileName
         }
     },
     getImageSrc({row, col}){
@@ -314,16 +310,16 @@ const hdl = {
     },
     // 页记录数改变
     async pageSizeChange(pageSize) {
-        tableData_box.pageSize = pageSize
-        tableData_box.currentPage = 1
-        if(tableProps_box.table.hdlPageSizeChange){
-            await tableProps_box.table.hdlPageSizeChange({pageSize, scopeThis: scopeThis_box})
+        props.modelValue.pageSize = pageSize
+        props.modelValue.currentPage = 1
+        if(props.myProps.table.hdlPageSizeChange){
+            await props.myProps.table.hdlPageSizeChange({pageSize, scopeThis: props.scopeThis})
         }
     },
     rowClick(row, column, event) {
         // 当某一行被点击时会触发该事件
-        if (tableProps_box.table.hdlRowClick) {
-            tableProps_box.table.hdlRowClick({scopeThis: scopeThis_box, inherit: {
+        if (props.myProps.table.hdlRowClick) {
+            props.myProps.table.hdlRowClick({scopeThis: props.scopeThis, inherit: {
                     row,
                     column,
                     event
@@ -332,8 +328,8 @@ const hdl = {
     },
     selectionChange(selection) {
         // 当选择项发生变化时会触发该事件
-        if (tableProps_box.table.hdlSelectionChange) {
-            tableProps_box.table.hdlSelectionChange({scopeThis: scopeThis_box, inherit: {
+        if (props.myProps.table.hdlSelectionChange) {
+            props.myProps.table.hdlSelectionChange({scopeThis: props.scopeThis, inherit: {
                     selection
                 }})
         }
@@ -344,8 +340,8 @@ const hdl = {
         // para.prop
         // para.order
         
-        if (tableProps_box.table.hdlSortChange) {
-            tableProps_box.table.hdlSortChange({scopeThis: scopeThis_box, inherit: {
+        if (props.myProps.table.hdlSortChange) {
+            props.myProps.table.hdlSortChange({scopeThis: props.scopeThis, inherit: {
                     column: para.column,
                     prop: para.prop,
                     order: para.order,
@@ -362,16 +358,16 @@ const style = {
             'margin-bottom': '10px'
         },
         button(index, index0){return {
-            style: tableProps_box.topButtonGroups[index][index0].style || {
+            style: props.myProps.topButtonGroups[index][index0].style || {
                 "background-color": "#009f95",
                 color: "#ffffff"
             },
-            icon: tableProps_box.topButtonGroups[index][index0].icon || "", // el-图标
-            type: tableProps_box.topButtonGroups[index][index0].type || "",
-            size: tableProps_box.topButtonGroups[index][index0].size || "",
-            plain: tableProps_box.topButtonGroups[index][index0].plain || false,
-            round: tableProps_box.topButtonGroups[index][index0].round || false,
-            circle: tableProps_box.topButtonGroups[index][index0].circle || false
+            icon: props.myProps.topButtonGroups[index][index0].icon || "", // el-图标
+            type: props.myProps.topButtonGroups[index][index0].type || "",
+            size: props.myProps.topButtonGroups[index][index0].size || "",
+            plain: props.myProps.topButtonGroups[index][index0].plain || false,
+            round: props.myProps.topButtonGroups[index][index0].round || false,
+            circle: props.myProps.topButtonGroups[index][index0].circle || false
         }}
     },
     cell: {
@@ -391,8 +387,8 @@ const style = {
             circle: item.circle || false
         }},
         image({col}){return {
-            width: col.imageWidth || tableProps_box.table.colShow.image.width,
-            height: col.imageHeight || tableProps_box.table.colShow.image.height,
+            width: col.imageWidth || props.myProps.table.colShow.image.width,
+            height: col.imageHeight || props.myProps.table.colShow.image.height,
         }}
     },
     pagination: {

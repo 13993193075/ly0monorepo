@@ -1,7 +1,7 @@
 import printJS from 'print-js';
 
 // 普通表格打印
-function printDom(id){
+function index(id){
     printJS({
         printable: id, // DOM id
         type: 'html',
@@ -52,5 +52,5 @@ function printDom0(id){
 }
 
 export default(function (){ return {
-    printDom, printDom0
+    printDom: index, printDom0
 } })();

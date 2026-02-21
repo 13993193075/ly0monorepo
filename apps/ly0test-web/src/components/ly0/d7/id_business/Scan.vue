@@ -182,7 +182,7 @@
 
 <script>
 import dataRequest from '../../../../utils/data-request.js'
-import decode from '../../../../utils/decode.js'
+import decode from '@yoooloo42/ly0utils/src/utils/decode.js'
 
 let scanInit = {
   scan: '',

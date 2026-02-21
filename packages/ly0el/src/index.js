@@ -10,6 +10,7 @@ import ly0elFrame from './ly0el-frame/Index.vue'
 import ly0elFrame0 from './ly0el-frame0/Index.vue'
 import ly0elGbt2260 from './ly0el-gbt2260/Index.vue'
 import ly0elHeader from './ly0el-header/Index.vue'
+import ly0elImagelist from './ly0el-imagelist/Index.vue'
 import ly0elLogin from './ly0el-login/Index.vue'
 import ly0elMenu from './ly0el-menu/Index.vue'
 import ly0elRichtext from './ly0el-richtext/Index.vue'
@@ -37,6 +38,7 @@ export {
     ly0elFrame0,
     ly0elGbt2260,
     ly0elHeader,
+    ly0elImagelist,
     ly0elLogin,
     ly0elMenu,
     ly0elRichtext,
@@ -66,6 +68,7 @@ export default {
         app.component('ly0el-frame0', ly0elFrame0);
         app.component('ly0el-gbt2260', ly0elGbt2260);
         app.component('ly0el-header', ly0elHeader);
+        app.component('ly0el-imagelist', ly0elImagelist);
         app.component('ly0el-login', ly0elLogin);
         app.component('ly0el-menu', ly0elMenu);
         app.component('ly0el-richtext', ly0elRichtext);
@@ -91,6 +94,7 @@ export default {
     ly0elFrame0,
     ly0elGbt2260,
     ly0elHeader,
+    ly0elImagelist,
     ly0elLogin,
     ly0elMenu,
     ly0elRichtext,

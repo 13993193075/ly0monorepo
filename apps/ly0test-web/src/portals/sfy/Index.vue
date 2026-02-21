@@ -1,5 +1,5 @@
 <template>
-    <compIndex :frameProps="frameProps"></compIndex>
+    <ly0el-frame :myProps="frameProps"></ly0el-frame>
 </template>
 
 <style lang="scss" scoped>
@@ -7,8 +7,7 @@
 
 <script setup>
 import { reactive } from 'vue'
-import compIndex from '../../components/ly0/frame/frame/Index.vue'
-import compD14d0 from '../../components/ly0/d14/d14d0/Index.vue'
+import compD14d0 from '../../components/ly0/d14/d0/Index.vue'
 import compD0user from "../../components/ly0/d0superuser/user-my-dataunit/Index.vue"
 
 const frameProps = reactive({

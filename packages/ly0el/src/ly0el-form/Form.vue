@@ -1,15 +1,15 @@
 <template>
     <!-- 置顶菜单 -->
-    <ly0el-menu v-if="formProps_box.menu && formProps_box.menu.menu && formProps_box.menu.menu.length > 0" :myProps="formProps_box.menu" :scopeThis="scopeThis"></ly0el-menu>
+    <ly0el-menu v-if="myProps.menu && myProps.menu.menu && myProps.menu.menu.length > 0" :myProps="myProps.menu" :scopeThis="scopeThis"></ly0el-menu>
     <!-- 表单区域可以分为多个列 -->
     <div :style="style.root_box">
-        <div v-for="(item, index) in formProps_box.cols" :key="index">
+        <div v-for="(item, index) in myProps.cols" :key="index">
             <table>
                 <tbody>
                     <template v-for="(item0, index0) in item.items" :key="index0">
-                        <tr v-if="item0.hdlVisible ? item0.hdlVisible({formData: formData_box, scopeThis: scopeThis_box}) : true">
+                        <tr v-if="item0.hdlVisible ? item0.hdlVisible({formData, scopeThis}) : true">
                             <td :style="style.field_box.left" v-if="!!item0.label">
-                                <compLabelBox v-model="formData_box" :myProps="formProps_box" :scopeThis="scopeThis_box" :item="item0"></compLabelBox>
+                                <compLabelBox v-model="formData" :myProps="myProps" :scopeThis="scopeThis" :item="item0"></compLabelBox>
                             </td>
                             <td :style="style.field_box.right" :colspan="style.no_field_label(item0)">
                                 <el-collapse
@@ -24,7 +24,7 @@
                                 >
                                     <template v-for="(item1, index1) in item0.items" :key="index1">
                                         <el-collapse-item
-                                            v-if="item1.hdlVisible ? item1.hdlVisible({formData: formData_box, scopeThis: scopeThis_box}) : true"
+                                            v-if="item1.hdlVisible ? item1.hdlVisible({formData, scopeThis}) : true"
                                             :title="item1.title"
                                             :name="item1.name ? item1.name : index1"
                                         >
@@ -33,18 +33,18 @@
                                                     <tr
                                                         v-if="
                                                             item2.hdlVisible
-                                                            ? item2.hdlVisible({formData: formData_box, scopeThis: scopeThis_box})
+                                                            ? item2.hdlVisible({formData, scopeThis})
                                                             : true
                                                         "
                                                     >
                                                         <td :style="style.field_box.left" v-if="item2.label">
-                                                            <compLabelBox v-model="formData_box" :myProps="formProps_box" :scopeThis="scopeThis_box" :item="item2"></compLabelBox>
+                                                            <compLabelBox v-model="formData" :myProps="myProps" :scopeThis="scopeThis" :item="item2"></compLabelBox>
                                                         </td>
                                                         <td
                                                             :style="style.field_box.right"
                                                             :colspan="style.no_field_label(item2)"
                                                         >
-                                                            <compInputBox v-model="formData_box" :myProps="formProps_box" :scopeThis="scopeThis_box" :item="item2"></compInputBox>
+                                                            <compInputBox v-model="formData" :myProps="myProps" :scopeThis="scopeThis" :item="item2"></compInputBox>
                                                         </td>
                                                     </tr>
                                                 </template>
@@ -52,7 +52,7 @@
                                         </el-collapse-item>
                                     </template>
                                 </el-collapse>
-                                <compInputBox v-model="formData_box" :myProps="formProps_box" :scopeThis="scopeThis_box" :item="item0"></compInputBox>
+                                <compInputBox v-model="formData" :myProps="myProps" :scopeThis="scopeThis" :item="item0"></compInputBox>
                             </td>
                         </tr>
                     </template>
@@ -62,7 +62,7 @@
     </div>
 
     <!-- 提交 -->
-    <template v-if="formProps_box.submit.switch">
+    <template v-if="myProps.submit.switch">
         <div :style="style.line"></div>
         <div :style="style.submit_box.style">
             <el-button
@@ -98,9 +98,7 @@ const props = defineProps({
 })
 
 // props属性包装，继承了顶层组件的响应性，页面和js可以使用相同的命名
-let formData_box = props.modelValue
-const formProps_box = props.myProps
-const scopeThis_box = props.scopeThis
+let formData = reactive(props.modelValue)
 
 const style = reactive({
     collapse: styleModule.collapse,
@@ -113,12 +111,12 @@ const style = reactive({
 
 const hdl = {
     async submit(){
-        if(formProps_box.submit.handle){
+        if(props.myProps.submit.handle){
             // 执行用户句柄
-            await formProps_box.submit.handle({
-                formData: formData_box,
-                formProps: formProps_box,
-                scopeThis: scopeThis_box
+            await props.myProps.submit.handle({
+                formData,
+                formProps: props.myProps,
+                scopeThis
             })
         }
     },

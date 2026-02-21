@@ -1,20 +1,20 @@
 // 找到顶级节点
-function findTop (p) {
-    let arrAll = p.arrAll,
-        evalFather = p.evalFather
-
+function findTop ({
+    arrAll = [],
+    evalFather = ''
+}) {
     return arrAll.filter(function (i) {
         return !eval('i.' + evalFather)
     })
 }
 
 // 递归：找到上级节点
-function findHigherLevel (p) {
-    let arrAll = p.arrAll,
-        valCode = p.valCode,
-        evalCode = p.evalCode,
-        evalFather = p.evalFather
-
+function findHigherLevel ({
+    arrAll = [],
+    valCode = null,
+    evalCode = '',
+    evalFather = ''
+}) {
     if (!valCode) {
         return []
     }
@@ -51,12 +51,12 @@ function findHigherLevel (p) {
 }
 
 // 递归：找到下级节点
-function findLowerLevel (p) {
-    let arrAll = p.arrAll,
-        valCode = p.valCode,
-        evalCode = p.evalCode,
-        evalFather = p.evalFather
-
+function findLowerLevel ({
+    arrAll = [],
+    valCode = null,
+    evalCode = '',
+    evalFather = ''
+}) {
     if (!valCode) {
         return []
     }
@@ -92,13 +92,12 @@ function findLowerLevel (p) {
 }
 
 // 找到上级节点(HigherLevel) + 本节点(Self) + 子节点(LowerLevel)
-function findHSL (p) {
-    let arrAll = p.arrAll,
-        valCode = p.valCode,
-        evalCode = p.evalCode,
-        evalFather = p.evalFather
-
-
+function findHSL ({
+    arrAll = [],
+    valCode = null,
+    evalCode = '',
+    evalFather = ''
+}) {
     if (!valCode) {
         return []
     }

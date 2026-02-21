@@ -32,7 +32,7 @@
 
 <script>
 // 组件
-import compImageList from '../../../common/image-list/Index.vue'
+import compImageList from '../../../../../../../packages/ly0el/src/image-list/Index.vue'
 import compForm from '../../../common/form/Index.vue'
 // 数据表属性
 import imageListProps from './imagelist-props.js'

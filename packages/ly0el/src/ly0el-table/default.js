@@ -21,7 +21,6 @@ export default {
                 }
             }
         },
-        topButtonGroups: [],
         table: {
             loading: {
                 visible: false,
