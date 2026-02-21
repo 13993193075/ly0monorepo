@@ -5,100 +5,99 @@ import {GBT} from 'packages/ly0utils/src/index.js'
 
 // 内部模块：查询修正
 function queryRevise(data) {
-    return new Promise((resolve, reject) => {
-        let data0 = data ? data : {}, data1 = {$and: []}
+    const data0 = data ? data : {},
+        data1 = {$and: []}
 
-        if (data0._id) { // _id 必须置于首项查询
-            data1.$and.push({_id: data0._id})
-            return resolve(data1)
-        }
-        data1.$and.push({id_dataunit: data0.id_dataunit})
+    if (data0._id) { // _id 必须置于首项查询
+        data1.$and.push({_id: data0._id})
+        return data1
+    }
+    data1.$and.push({id_dataunit: data0.id_dataunit})
 
-        // 商店 _id
-        if (data0.id_shop) {
-            data1.$and.push({id_shop: data0.id_shop})
-        }
-        // 商品编号 模糊匹配
-        if (data0.number) {
-            data1.$and.push({number: {'$regex': `.*${data0.number}.*`}})
-        }
-        // 商品名称 模糊匹配
-        if (data0.name) {
-            data1.$and.push({name: {'$regex': `.*${data0.name}.*`}})
-        }
-        // 商品分类 group
-        if (data0.group && data0.group.length > 0) {
-            data0.group.forEach(i=>{
-                // 空值忽略
-                if(!!i){
-                    data1.$and.push({
-                        group: i
-                    })
-                }
-            })
-        }
-        // 商品规格 size
-        if (data0.size && data0.size.length > 0) {
-            data0.size.forEach(i=>{
-                let q = {}
-                // 空值忽略
-                if(!!i.name){
-                    q.name = i.name
-                }
-                // 空值忽略
-                if(!!i.size){
-                    q.size = i.size
-                }
-                // 上新标注false，忽略
-                if(i.new === "true"){
-                    q.new = true
-                }
-
-                if(JSON.stringify(q) !== "{}"){
-                    data1.$and.push({
-                        size: {
-                            $elemMatch: q
-                        }
-                    })
-                }
-            })
-        }
-        // 品牌 模糊匹配
-        if (data0.brand) {
-            data1.$and.push({brand: {'$regex': `.*${data0.brand}.*`}})
-        }
-        // 是否进口
-        if("import" in data0 && data0.import !== null && data0.import !== "null"){
-            if(data0.import === true || data0.import === 'true'){
-                data1.import = true
-            }else if(data0.import === false || data0.import === 'false'){
-                data1.import = false
+    // 商店 _id
+    if (data0.id_shop) {
+        data1.$and.push({id_shop: data0.id_shop})
+    }
+    // 商品编号 模糊匹配
+    if (data0.number) {
+        data1.$and.push({number: {'$regex': `.*${data0.number}.*`}})
+    }
+    // 商品名称 模糊匹配
+    if (data0.name) {
+        data1.$and.push({name: {'$regex': `.*${data0.name}.*`}})
+    }
+    // 商品分类 group
+    if (data0.group && data0.group.length > 0) {
+        data0.group.forEach(i=>{
+            // 空值忽略
+            if(!!i){
+                data1.$and.push({
+                    group: i
+                })
             }
-        }
-        // 国内产地 左匹配
-        let str = ""
-        if (data0.domestic_code) {
-            if (data0.domestic_code.endsWith("0000")) {
-                str = data0.domestic_code.slice(0, 2)
-                data1.domestic_code = {'$regex': `^${str}`}
-            } else if (data0.domestic_code.endsWith("00")) {
-                str = data0.domestic_code.slice(0, 4)
-                data1.domestic_code = {'$regex': `^${str}`}
-            } else {
-                data1.domestic_code = data0.domestic_code
+        })
+    }
+    // 商品规格 size
+    if (data0.size && data0.size.length > 0) {
+        data0.size.forEach(i=>{
+            let q = {}
+            // 空值忽略
+            if(!!i.name){
+                q.name = i.name
             }
-        }
-        // 国外产地
-        if (data0.foreign_code) {
-            data1.foreign_code = data0.foreign_code
-        }
+            // 空值忽略
+            if(!!i.size){
+                q.size = i.size
+            }
+            // 上新标注false，忽略
+            if(i.new === "true"){
+                q.new = true
+            }
 
-        resolve(data1)
-    })
+            if(JSON.stringify(q) !== "{}"){
+                data1.$and.push({
+                    size: {
+                        $elemMatch: q
+                    }
+                })
+            }
+        })
+    }
+    // 品牌 模糊匹配
+    if (data0.brand) {
+        data1.$and.push({brand: {'$regex': `.*${data0.brand}.*`}})
+    }
+    // 是否进口
+    if("import" in data0 && data0.import !== null && data0.import !== "null"){
+        if(data0.import === true || data0.import === 'true'){
+            data1.import = true
+        }else if(data0.import === false || data0.import === 'false'){
+            data1.import = false
+        }
+    }
+    // 国内产地 左匹配
+    let str = ""
+    if (data0.domestic_code) {
+        if (data0.domestic_code.endsWith("0000")) {
+            str = data0.domestic_code.slice(0, 2)
+            data1.domestic_code = {'$regex': `^${str}`}
+        } else if (data0.domestic_code.endsWith("00")) {
+            str = data0.domestic_code.slice(0, 4)
+            data1.domestic_code = {'$regex': `^${str}`}
+        } else {
+            data1.domestic_code = data0.domestic_code
+        }
+    }
+    // 国外产地
+    if (data0.foreign_code) {
+        data1.foreign_code = data0.foreign_code
+    }
+
+    return data1
 }
 
 // 分页查询
-function find(data) {
+async function find(data) {
     // data.query
     // data.query._id
     // data.query.id_dataunit 当前用户信息：数据单元
@@ -116,52 +115,46 @@ function find(data) {
     // data.limit
     // data.page
 
-    return new Promise(function (resolve, reject) {
-        queryRevise(data.query).then(query => { // 查询修正
-            // 排序
-            let sort
-            if (data.sort && data.sort.label && data.sort.order) {
-                sort = {}
-                if (data.sort.order === 'ascending') {
-                    sort[data.sort.label] = 1
-                } else if (data.sort.order === 'descending') {
-                    sort[data.sort.label] = -1
-                } else {
-                    sort[data.sort.label] = 1
-                }
-            } else {
-                sort = {_id: -1}
-            }
+    // 查询修正
+    const query = queryRevise(data.query)
+    // 排序
+    let sort = {}
+    if (data.sort && data.sort.label && data.sort.order) {
+        if (data.sort.order === 'ascending') {
+            sort[data.sort.label] = 1
+        } else if (data.sort.order === 'descending') {
+            sort[data.sort.label] = -1
+        } else {
+            sort[data.sort.label] = 1
+        }
+    } else {
+        sort['_id'] = -1
+    }
 
-            Promise.all([
-                GQuery({
-                    tblName: "ly0d7goods",
-                    operator: "find",
-                    query,
-                    sort: {number: 1},
-                    skip: (data.page - 1) * data.limit,
-                    limit: Number(data.limit)
-                }),
-                GQuery({
-                    tblName: "ly0d7goods",
-                    operator: "countDocuments",
-                    query
-                })
-            ]).then(result => {
-                resolve({
-                    data: result[0].data.map(i=>{
-                        return Object.assign(i, {
-                            thumb: imageDomain + i.thumb,
-                            illustration: i.illustration.map(j=>{
-                                return imageDomain + j
-                            })
-                        })
-                    }),
-                    count: result[1].count
+    const resultData = await GQuery({
+        tblName: "ly0d7goods",
+        operator: "find",
+        query,
+        sort: {number: 1},
+        skip: (data.page - 1) * data.limit,
+        limit: Number(data.limit)
+    })
+    const resultTotal = await GQuery({
+        tblName: "ly0d7goods",
+        operator: "countDocuments",
+        query
+    })
+    return {
+        data: resultData.data.map(i=>{
+            return Object.assign(i, {
+                thumb: imageDomain.domain + i.thumb,
+                illustration: i.illustration.map(j=>{
+                    return imageDomain.domain + j
                 })
             })
-        })
-    })
+        }),
+        count: resultTotal.count
+    }
 }
 
 // 内部模块：数据约束
@@ -178,7 +171,6 @@ function dataRule(data) {
     }
     return {code: 0, message: "可以提交"}
 }
-
 
 // 插入一条记录
 function insertOne(data) {
