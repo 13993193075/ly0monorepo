@@ -1,5 +1,8 @@
 import { request as ly0request } from '@yoooloo42/ly0browser'
 const ly0session = ly0request.ly0.ly0sessionLoad()
+
+console.log('测试 000', ly0session);
+
 export default {
     formData: {
         _id: null,

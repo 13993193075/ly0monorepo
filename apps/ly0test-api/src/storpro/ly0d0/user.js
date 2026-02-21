@@ -5,7 +5,7 @@ import {imageDomain} from '../../main/config.js'
 import ImageSave from '../../main/image-save.js'
 
 // 内部模块：查询修正
-async function queryRevise(data) {
+function queryRevise(data) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
