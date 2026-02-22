@@ -92,7 +92,7 @@ async function find(data) {
     })
     return {code: 0, message: '',
         data: resultData.data,
-        count: resultTotal.count
+        total: resultTotal.count
     }
 }
 

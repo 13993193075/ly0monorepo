@@ -1,8 +1,9 @@
 import {GQuery} from '../../main/GQuery.js'
+import code from './code.js'
 
 // 内部模块：查询修正
 function queryRevise(data) {
-    let data0 = data ? data : {}, data1 = {}
+    const data0 = data ? data : {}, data1 = {}
     if (data0._id) {
         data1._id = data0._id
         return data1
@@ -91,7 +92,7 @@ function queryRevise(data) {
 }
 
 // 分页查询
-function find(data) {
+async function find(data) {
     // data.query
     // data.query._id
     // data.query.number
@@ -112,92 +113,79 @@ function find(data) {
     // data.limit
     // data.page
 
-    return new Promise((resolve, reject) => {
-        let query = queryRevise(data.query) // 查询修正
-        // 排序
-        let sort
-        if (data.sort && data.sort.label && data.sort.order) {
-            sort = {}
-            if (data.sort.order === 'ascending') {
-                sort[data.sort.label] = 1
-            } else if (data.sort.order === 'descending') {
-                sort[data.sort.label] = -1
-            } else {
-                sort[data.sort.label] = 1
-            }
+    const query = queryRevise(data.query) // 查询修正
+    // 排序
+    const sort = {}
+    if (data.sort && data.sort.label && data.sort.order) {
+        if (data.sort.order === 'ascending') {
+            sort[data.sort.label] = 1
+        } else if (data.sort.order === 'descending') {
+            sort[data.sort.label] = -1
         } else {
-            sort = {postal_time: -1}
+            sort[data.sort.label] = 1
         }
+    } else {
+        sort['postal_time'] = -1
+    }
 
-        Promise.all([
-            GQuery({
-                tblName: "ly0d7b_goods",
-                operator: "find",
-                query,
-                sort,
-                skip: (data.page - 1) * data.limit,
-                limit: Number(data.limit)
-            }),
-            GQuery({
-                tblName: "ly0d7b_goods",
-                operator: "countDocuments",
-                query
-            })
-        ]).then(function (result) {
-            resolve({
-                data: result [0].data,
-                count: result [1].count
-            })
-        })
+    const resultData = await GQuery({
+        tblName: "ly0d7b_goods",
+        operator: "find",
+        query,
+        sort,
+        skip: (data.page - 1) * data.limit,
+        limit: Number(data.limit)
     })
+    const resultTotal = await GQuery({
+        tblName: "ly0d7b_goods",
+        operator: "countDocuments",
+        query
+    })
+    return {
+        data: resultData.data,
+        total: resultTotal.count
+    }
 }
 
 // 修改邮寄状态
-function setPostalStatus(data) {
+async function setPostalStatus(data) {
     // data._id
     // data.postal_status_code
 
-    return new Promise((resolve, reject) => {
-        // 提交
-        let thisTime = new Date()
-        let update = {
-            postal_status_code: data.postal_status_code,
-            postal_status_text: code.postalStatus.find(i=>{
-                return i.code === data.postal_status_code
-            }).text
-        }
-        if(data.postal_status_code === "2"){
-            update.postal_sorted_time = thisTime
-        }
-        if(data.postal_status_code === "3"){
-            update.postal_received_time = thisTime
-        }
-        GQuery({
-            tblName: "ly0d7b_goods",
-            operator: "updateOne",
-            query: {_id: data._id},
-            update
-        }).then(() => {
-            resolve({code: 0, message: "修改邮寄状态成功"})
-        })
+    // 提交
+    const thisTime = new Date()
+    const update = {
+        postal_status_code: data.postal_status_code,
+        postal_status_text: code.postalStatus.find(i=>{
+            return i.code === data.postal_status_code
+        }).text
+    }
+    if(data.postal_status_code === "2"){
+        update.postal_sorted_time = thisTime
+    }
+    if(data.postal_status_code === "3"){
+        update.postal_received_time = thisTime
+    }
+    await GQuery({
+        tblName: "ly0d7b_goods",
+        operator: "updateOne",
+        query: {_id: data._id},
+        update
     })
+    return {code: 0, message: "修改邮寄状态成功"}
 }
 
 // 获取页面初始化数据
-function getPageData(data) {
-    // data: null
-
-    return new Promise((resolve, reject) => {
-        resolve({code: 0, message: "",
-            data: {
-                codePostalStatus: code.postalStatus
-            }
-        })
-    })
+function getPgData() {
+    return {code: 0, message: "",
+        data: {
+            codePostalStatus: code.postalStatus
+        }
+    }
 }
 
 export default {
     find,
     setPostalStatus,
-    getPageData
+    getPgData
 }

@@ -144,7 +144,7 @@ async function find(data) {
         operator: "countDocuments",
         query
     })
-    return {
+    return {code: 0, message: '',
         data: resultData.data.map(i=>{
             return Object.assign(i, {
                 thumb: imageDomain.domain + i.thumb,
@@ -153,7 +153,7 @@ async function find(data) {
                 })
             })
         }),
-        count: resultTotal.count
+        total: resultTotal.count
     }
 }
 
@@ -173,7 +173,7 @@ function dataRule(data) {
 }
 
 // 插入一条记录
-function insertOne(data) {
+async function insertOne(data) {
     // data.id_shop
     // data.number
     // data.name
@@ -187,119 +187,90 @@ function insertOne(data) {
     // data.thumb
     // data.illustration
 
-    return new Promise(function (resolve, reject) {
-        // 数据约束
-        let message = dataRule(data)
-        if (message.code === 1) {
-            return resolve(message)
-        }
-        if(data.size && data.size.length > 0){
-            data.size.forEach(i=>{
-                i.new = i.new === "true"
-            })
-        }
-        if(data.price && data.price.length > 0){
-            data.price.forEach(i=>{
-                i.member = i.member === "true"
-                i.hot = i.hot === "true"
-            })
-        }
-
-        // 提交
-        GQuery({
-            tblName: "ly0d7shop",
-            operator: "findOne",
-            query: {
-                _id: data.id_shop
-            }
-        }).then(result=>{
-            let objShop = result.data
-            GQuery({
-                tblName: "ly0d7goods",
-                operator: "insertOne",
-                update: {
-                    id_dataunit: objShop.id_dataunit,
-                    dataunit_name: objShop.dataunit_name,
-                    id_shop: objShop._id,
-                    shop_name: objShop.name,
-                    number: data.number,
-                    name: data.name,
-                    group: data.group ? data.group : null,
-                    size: data.size ? data.size : null,
-                    price: data.price ? data.price : null,
-                    brand: data.brand ? data.brand : "",
-                    import: ("import" in data && (data.import === true || data.import === "true")),
-                    domestic_code: !!data.domestic_code ? data.domestic_code : "",
-                    domestic: !!data.domestic_code ? GBT.gbt2260code6.find(i=>{
-                        return i.code6 === data.domestic_code
-                    }).text6 : "",
-                    foreign_code: !!data.foreign_code ? data.foreign_code : "",
-                    foreign: !!data.foreign_code ? GBT.gbt2659.find(i=>{
-                        return i.code === data.foreign_code
-                    }) : ""
-                }
-            }).then(result => {
-                let objGoods = result.data
-                // 缩略图处理
-                ImageSave.imageAppend({
-                    uploaded: data.thumb,
-                    dataunitId: objGoods.id_dataunit,
-                    tblName: "ly0d7goods",
-                    fieldName: "thumb",
-                    dataId: objGoods._id
-                }).then(function (thumb) {
-                    // 商品图示处理
-                    ImageSave.imagesAppend({
-                        arrUploaded: data.illustration,
-                        dataunitId: objGoods.id_dataunit,
-                        tblName: "ly0d7goods",
-                        fieldName: "illustration",
-                        dataId: objGoods._id
-                    }).then(function (illustration) {
-                        GQuery({
-                            tblName: "ly0d7goods",
-                            operator: "updateOne",
-                            query: {_id: objGoods._id},
-                            update: {
-                                thumb,
-                                illustration
-                            }
-                        }).then(() => {
-                            resolve({code: 0, message: "提交成功",
-                                _id: objGoods._id
-                            })
-                        })
-                    })
-                })
-            })
+    // 数据约束
+    const message = dataRule(data)
+    if (message.code === 1) {
+        return message
+    }
+    if(data.size && data.size.length > 0){
+        data.size.forEach(i=>{
+            i.new = i.new === "true"
         })
-    })
-}
-
-// 查询一条记录
-function findOne(data) {
-    // data._id
-
-    return new Promise(function (resolve, reject) {
-        GQuery({
-            tblName: "ly0d7goods",
-            operator: "findOne",
-            query: {_id: data._id}
-        }).then(result => {
-            resolve({code: 0, message: "已查询一条记录",
-                doc: Object.assign(result.data, {
-                    thumb: imageDomain + result.data.thumb,
-                    illustration: result.data.illustration.map(i=>{
-                        return imageDomain + i
-                    })
-                })
-            })
+    }
+    if(data.price && data.price.length > 0){
+        data.price.forEach(i=>{
+            i.member = i.member === "true"
+            i.hot = i.hot === "true"
         })
+    }
+
+    // 提交
+    let result = await GQuery({
+        tblName: "ly0d7shop",
+        operator: "findOne",
+        query: {
+            _id: data.id_shop
+        }
     })
+    const objShop = result.data
+    result = await GQuery({
+        tblName: "ly0d7goods",
+        operator: "insertOne",
+        update: {
+            id_dataunit: objShop.id_dataunit,
+            dataunit_name: objShop.dataunit_name,
+            id_shop: objShop._id,
+            shop_name: objShop.name,
+            number: data.number,
+            name: data.name,
+            group: data.group ? data.group : null,
+            size: data.size ? data.size : null,
+            price: data.price ? data.price : null,
+            brand: data.brand ? data.brand : "",
+            import: ("import" in data && (data.import === true || data.import === "true")),
+            domestic_code: !!data.domestic_code ? data.domestic_code : "",
+            domestic: !!data.domestic_code ? GBT.gbt2260code6.find(i=>{
+                return i.code6 === data.domestic_code
+            }).text6 : "",
+            foreign_code: !!data.foreign_code ? data.foreign_code : "",
+            foreign: !!data.foreign_code ? GBT.gbt2659.find(i=>{
+                return i.code === data.foreign_code
+            }) : ""
+        }
+    })
+    const objGoods = result.data
+    // 缩略图处理
+    const thumb = await ImageSave.imageAppend({
+        uploaded: data.thumb,
+        dataunitId: objGoods.id_dataunit,
+        tblName: "ly0d7goods",
+        fieldName: "thumb",
+        dataId: objGoods._id
+    })
+    // 商品图示处理
+    const illustration = await ImageSave.imagesAppend({
+        arrUploaded: data.illustration,
+        dataunitId: objGoods.id_dataunit,
+        tblName: "ly0d7goods",
+        fieldName: "illustration",
+        dataId: objGoods._id
+    })
+    await GQuery({
+        tblName: "ly0d7goods",
+        operator: "updateOne",
+        query: {_id: objGoods._id},
+        update: {
+            thumb,
+            illustration
+        }
+    })
+    return {code: 0, message: "插入一条记录成功",
+        _id: objGoods._id
+    }
 }
 
 // 修改一条记录
-function updateOne(data) {
+async function updateOne(data) {
     // data._id
     // data.id_shop
     // data.number
@@ -316,326 +287,286 @@ function updateOne(data) {
     // data.illustrationDelete
     // data.illustrationNew
 
-    return new Promise(function (resolve, reject) {
-        // 数据约束
-        let message = dataRule(data)
-        if (message.code === 1) {
-            return resolve(message) // 不能提交
-        }
-        if(data.size && data.size.length > 0){
-            data.size.forEach(i=>{
-                i.new = i.new === "true"
-            })
-        }
-        if(data.price && data.price.length > 0){
-            data.price.forEach(i=>{
-                i.member = i.member === "true"
-                i.hot = i.hot === "true"
-            })
-        }
-
-        // 提交
-        GQuery({
-            tblName: "ly0d7goods",
-            operator: "findOne",
-            query: {_id: data._id},
-            update: {
-            }
-        }).then(result => {
-            let objGoods = result.data
-            // 缩略图处理
-            ImageSave.imageUpdate({
-                uploaded: data.thumbNew,
-                old: objGoods.thumb,
-                deleteIfNotUploaded: "thumbDelete" in data && (data.thumbDelete === true || data.thumbDelete === "true"),
-                dataunitId: objGoods.id_dataunit,
-                tblName: "ly0d7goods",
-                fieldName: "thumb",
-                dataId: objGoods._id
-            }).then(function (thumb) {
-                // 商品图示处理
-                ImageSave.imagesUpdate({
-                    arrUploaded: data.illustrationNew,
-                    arrOld: objGoods.illustration,
-                    arrDelete: data.illustrationDelete,
-                    dataunitId: objGoods.id_dataunit,
-                    tblName: "ly0d7goods",
-                    fieldName: "illustration",
-                    dataId: objGoods._id
-                }).then(function (illustration) {
-                    GQuery({
-                        tblName: "ly0d7goods",
-                        operator: "updateOne",
-                        query: {_id: objGoods._id},
-                        update: {
-                            id_dataunit: objGoods.id_dataunit,
-                            dataunit_name: objGoods.dataunit_name,
-                            id_shop: objGoods.id_shop,
-                            shop_name: objGoods.shop_name,
-                            number: data.number,
-                            name: data.name,
-                            group: data.group ? data.group : null,
-                            size: data.size ? data.size : null,
-                            price: data.price ? data.price : null,
-                            brand: data.brand ? data.brand : "",
-                            import: ("import" in data && (data.import === true || data.import === "true")),
-                            domestic_code: !!data.domestic_code ? data.domestic_code : "",
-                            domestic: !!data.domestic_code ? GBT.gbt2260code6.find(i=>{
-                                return i.code6 === data.domestic_code
-                            }).text6 : "",
-                            foreign_code: !!data.foreign_code ? data.foreign_code : "",
-                            foreign: !!data.foreign_code ? GBT.gbt2659.find(i=>{
-                                return i.code === data.foreign_code
-                            }) : "",
-                            thumb,
-                            illustration
-                        }
-                    }).then(() => {
-                        resolve({code: 0, message: "修改成功"})
-                    })
-                })
-            })
-        })
-    })
-}
-
-// 删除一条记录
-function deleteOne(data) {
-    let _id = data._id
-
-    return new Promise(function (resolve, reject) {
-        GQuery({
-            tblName: "ly0d7b_goods",
-            operator: "findOne",
-            query: {id_goods: _id}
-        }).then(result => {
-            if (result.data) {
-                return resolve({code: 1, message: "不能删除，存在关联信息：ly0d7b_goods"});
-            }
-
-            GQuery({
-                tblName: "ly0d7goods",
-                operator: "findOne",
-                query: {_id}
-            }).then(result => {
-                let objGoods = result.data
-                // 缩略图处理
-                ImageSave.imageDelete({url: objGoods.thumb}).then(function () {
-                    // 商品图示处理
-                    ImageSave.imagesDelete({arrUrl: objGoods.illustration}).then(()=>{
-                        GQuery({
-                            tblName: "ly0d7goods",
-                            operator: "deleteOne",
-                            query: {_id}
-                        }).then(() => {
-                            resolve({code: 0, message: "删除成功"})
-                        })
-                    })
-                })
-            })
-        })
-    })
-}
-
-// 获取页面初始化数据
-function getPageData(data) {
-    // data.id_dataunit 当前用户信息：数据单元
-    // data.id_shop 当前用户信息：商店id
-
-    return new Promise(function (resolve, reject) {
-        let q = {id_dataunit: data.id_dataunit}
-        let q0 = JSON.parse(JSON.stringify(q))
-        if (data.id_shop) {
-            q._id = data.id_shop
-            q0.id_shop = data.id_shop
-        }
-
-        GQuery({
-            tblName: "ly0d7shop",
-            operator: "find",
-            query: q
-        }).then(result => {
-            let arrShop = result.data
-            GQuery({
-                tblName: "ly0d7goods",
-                operator: "find",
-                query: q0
-            }).then(result => {
-                let arrGoods = result.data
-                resolve({code: 0, message: "",
-                    data: {
-                        arrShop,
-                        arrGoods,
-                        gbt2659: GBT.gbt2659
-                    }
-                })
-            })
-        })
-    })
-}
-
-// 设置商品分类
-function setGroup(data) {
-    // data._id
-    // data.group
-
-    return new Promise(function (resolve, reject) {
-        // 提交
-        GQuery({
-            tblName: "ly0d7goods",
-            operator: "updateOne",
-            query: {_id: data._id},
-            update: {
-                group: data.group ? data.group : null
-            }
-        }).then(() => {
-            resolve({code: 0, message: "商品分类成功"})
-        })
-    })
-}
-
-// 设置商品规格
-function setSize(data) {
-    // data._id
-    // data.size
-
-    return new Promise(function (resolve, reject) {
+    // 数据约束
+    const message = dataRule(data)
+    if (message.code === 1) {
+        return message // 不能提交
+    }
+    if(data.size && data.size.length > 0){
         data.size.forEach(i=>{
             i.new = i.new === "true"
         })
-
-        // 提交
-        GQuery({
-            tblName: "ly0d7goods",
-            operator: "updateOne",
-            query: {_id: data._id},
-            update: {
-                size: data.size ? data.size : null
-            }
-        }).then(() => {
-            resolve({code: 0, message: "设置商品规格成功"})
-        })
-    })
-}
-
-// 设置商品标价
-function setPrice(data) {
-    // data._id
-    // data.price
-
-    return new Promise(function (resolve, reject) {
+    }
+    if(data.price && data.price.length > 0){
         data.price.forEach(i=>{
             i.member = i.member === "true"
             i.hot = i.hot === "true"
         })
+    }
 
-        // 提交
-        GQuery({
-            tblName: "ly0d7goods",
-            operator: "updateOne",
-            query: {_id: data._id},
-            update: {
-                price: data.price ? data.price : null
-            }
-        }).then(() => {
-            resolve({code: 0, message: "商品标价成功"})
-        })
+    // 提交
+    let result  = await GQuery({
+        tblName: "ly0d7goods",
+        operator: "findOne",
+        query: {_id: data._id},
+        update: {
+        }
     })
+    const objGoods = result.data
+    // 缩略图处理
+    const thumb = await ImageSave.imageUpdate({
+        uploaded: data.thumbNew,
+        old: objGoods.thumb,
+        deleteIfNotUploaded: "thumbDelete" in data && (data.thumbDelete === true || data.thumbDelete === "true"),
+        dataunitId: objGoods.id_dataunit,
+        tblName: "ly0d7goods",
+        fieldName: "thumb",
+        dataId: objGoods._id
+    })
+    // 商品图示处理
+    const illustration = await ImageSave.imagesUpdate({
+        arrUploaded: data.illustrationNew,
+        arrOld: objGoods.illustration,
+        arrDelete: data.illustrationDelete,
+        dataunitId: objGoods.id_dataunit,
+        tblName: "ly0d7goods",
+        fieldName: "illustration",
+        dataId: objGoods._id
+    })
+    await GQuery({
+        tblName: "ly0d7goods",
+        operator: "updateOne",
+        query: {_id: objGoods._id},
+        update: {
+            id_dataunit: objGoods.id_dataunit,
+            dataunit_name: objGoods.dataunit_name,
+            id_shop: objGoods.id_shop,
+            shop_name: objGoods.shop_name,
+            number: data.number,
+            name: data.name,
+            group: data.group ? data.group : null,
+            size: data.size ? data.size : null,
+            price: data.price ? data.price : null,
+            brand: data.brand ? data.brand : "",
+            import: ("import" in data && (data.import === true || data.import === "true")),
+            domestic_code: !!data.domestic_code ? data.domestic_code : "",
+            domestic: !!data.domestic_code ? GBT.gbt2260code6.find(i=>{
+                return i.code6 === data.domestic_code
+            }).text6 : "",
+            foreign_code: !!data.foreign_code ? data.foreign_code : "",
+            foreign: !!data.foreign_code ? GBT.gbt2659.find(i=>{
+                return i.code === data.foreign_code
+            }) : "",
+            thumb,
+            illustration
+        }
+    })
+    return {code: 0, message: "修改一条记录成功"}
+}
+
+// 删除一条记录
+async function deleteOne({_id}) {
+    let result = await GQuery({
+        tblName: "ly0d7b_goods",
+        operator: "findOne",
+        query: {id_goods: _id}
+    })
+    if (result.data) {
+        return {code: 1, message: "不能删除，存在关联信息：ly0d7b_goods"}
+    }
+
+    result = await GQuery({
+        tblName: "ly0d7goods",
+        operator: "findOne",
+        query: {_id}
+    })
+    const objGoods = result.data
+    // 缩略图处理
+    await ImageSave.imageDelete({url: objGoods.thumb})
+    // 商品图示处理
+    await ImageSave.imagesDelete({arrUrl: objGoods.illustration})
+    await GQuery({
+        tblName: "ly0d7goods",
+        operator: "deleteOne",
+        query: {_id}
+    })
+    return {code: 0, message: "删除一条记录成功"}
+}
+
+// 获取页面初始化数据
+async function getPgData(data) {
+    // data.id_dataunit 当前用户信息：数据单元
+    // data.id_shop 当前用户信息：商店id
+
+    const q = {id_dataunit: data.id_dataunit}
+    const q0 = JSON.parse(JSON.stringify(q))
+    if (data.id_shop) {
+        q._id = data.id_shop
+        q0.id_shop = data.id_shop
+    }
+
+    let result = await GQuery({
+        tblName: "ly0d7shop",
+        operator: "find",
+        query: q
+    })
+    const arrShop = result.data
+    result = await GQuery({
+        tblName: "ly0d7goods",
+        operator: "find",
+        query: q0
+    })
+    const arrGoods = result.data
+    return {code: 0, message: "",
+        data: {
+            arrShop,
+            arrGoods,
+            gbt2659: GBT.gbt2659
+        }
+    }
+}
+
+// 设置商品分类
+async function setGroup(data) {
+    // data._id
+    // data.group
+
+    // 提交
+    await GQuery({
+        tblName: "ly0d7goods",
+        operator: "updateOne",
+        query: {_id: data._id},
+        update: {
+            group: data.group ? data.group : null
+        }
+    })
+    return {code: 0, message: "设置商品分类成功"}
+}
+
+// 设置商品规格
+async function setSize(data) {
+    // data._id
+    // data.size
+
+    data.size.forEach(i=>{
+        i.new = i.new === "true"
+    })
+
+    // 提交
+    await GQuery({
+        tblName: "ly0d7goods",
+        operator: "updateOne",
+        query: {_id: data._id},
+        update: {
+            size: data.size ? data.size : null
+        }
+    })
+    return {code: 0, message: "设置商品规格成功"}
+}
+
+// 设置商品标价
+async function setPrice(data) {
+    // data._id
+    // data.price
+
+    data.price.forEach(i=>{
+        i.member = i.member === "true"
+        i.hot = i.hot === "true"
+    })
+
+    // 提交
+    await GQuery({
+        tblName: "ly0d7goods",
+        operator: "updateOne",
+        query: {_id: data._id},
+        update: {
+            price: data.price ? data.price : null
+        }
+    })
+    return {code: 0, message: "商品标价成功"}
 }
 
 // 设置商品缩略图
-function setThumb(data) {
+async function setThumb(data) {
     // data._id
     // data.thumb
     // data.number
     // data.name
 
-    return new Promise(function (resolve, reject) {
-        // 提交
-        GQuery({
-            tblName: "ly0d7goods",
-            operator: "updateOne",
-            query: {_id: data._id},
-            update: {
-                number: data.number,
-                name: data.name
-            }
-        }).then(() => {
-            GQuery({
-                tblName: "ly0d7goods",
-                operator: "findOne",
-                query: {_id: data._id}
-            }).then(result=>{
-                let oldData= result.data
-                ImageSave.imageUpdate({
-                    uploaded: data.thumb,
-                    old: oldData.thumb,
-                    dataunitId: oldData.id_dataunit,
-                    tblName: "ly0d7goods",
-                    fieldName: "thumb",
-                    dataId: data._id
-                }).then(thumb => {
-                    GQuery({
-                        tblName: "ly0d7goods",
-                        operator: "updateOne",
-                        query: {_id: data._id},
-                        update: {thumb: thumb ? thumb : ""}
-                    }).then(result => {
-                        resolve({code: 0, message: "设置商品缩略图成功",
-                            dataNew: result.dataNew[0]
-                        })
-                    })
-                })
-            })
-        })
+    // 提交
+    await GQuery({
+        tblName: "ly0d7goods",
+        operator: "updateOne",
+        query: {_id: data._id},
+        update: {
+            number: data.number,
+            name: data.name
+        }
     })
+    let result = await GQuery({
+        tblName: "ly0d7goods",
+        operator: "findOne",
+        query: {_id: data._id}
+    })
+    const oldData= result.data
+    const thumb = await ImageSave.imageUpdate({
+        uploaded: data.thumb,
+        old: oldData.thumb,
+        dataunitId: oldData.id_dataunit,
+        tblName: "ly0d7goods",
+        fieldName: "thumb",
+        dataId: data._id
+    })
+    result = await GQuery({
+        tblName: "ly0d7goods",
+        operator: "updateOne",
+        query: {_id: data._id},
+        update: {thumb: thumb ? thumb : ""}
+    })
+    return {code: 0, message: "设置商品缩略图成功",
+        dataNew: result.dataNew[0]
+    }
 }
 
 // 修改商品图示
-function setIllustration(data){
+async function setIllustration(data){
     // data._id
     // data.illustration
     // data.illustrationDelete
     // data.illustrationNew
 
-    return new Promise(function (resolve, reject) {
-        GQuery({
-            tblName: "ly0d7goods",
-            operator: "findOne",
-            query: {_id: data._id}
-        }).then(result=>{
-            let objGoods = result[0]
-            ImageSave.imagesUpdate({
-                arrUploaded: data.illustrationNew,
-                arrOld: data.illustration,
-                arrDelete: data.illustrationDelete,
-                dataunitId: objGoods.id_dataunit,
-                tblName: "ly0d7goods",
-                fieldName: "illustration",
-                dataId: objGoods._id
-            }).then(function (illustration) {
-                GQuery({
-                    tblName: "ly0d7goods",
-                    operator: "updateOne",
-                    query: {_id: objGoods._id},
-                    update: {
-                        illustration: !!illustration && illustration.length > 0 ? illustration : []
-                    }
-                }).then(() => {
-                    resolve({code: 0, message: "修改成功"})
-                })
-            })
-        })
+    const result= await GQuery({
+        tblName: "ly0d7goods",
+        operator: "findOne",
+        query: {_id: data._id}
     })
+    const objGoods = result[0]
+    const illustration = await ImageSave.imagesUpdate({
+        arrUploaded: data.illustrationNew,
+        arrOld: data.illustration,
+        arrDelete: data.illustrationDelete,
+        dataunitId: objGoods.id_dataunit,
+        tblName: "ly0d7goods",
+        fieldName: "illustration",
+        dataId: objGoods._id
+    })
+    await GQuery({
+        tblName: "ly0d7goods",
+        operator: "updateOne",
+        query: {_id: objGoods._id},
+        update: {
+            illustration: !!illustration && illustration.length > 0 ? illustration : []
+        }
+    })
+    return {code: 0, message: "修改商品图示成功"}
 }
 
 export default {
     find,
     insertOne,
-    findOne,
     updateOne,
     deleteOne,
-    getPageData,
+    getPgData,
     setGroup,
     setSize,
     setPrice,

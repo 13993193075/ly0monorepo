@@ -17,7 +17,7 @@ function queryRevise(data) {
 }
 
 // 分页查询
-function find(data) {
+async function find(data) {
     // data.query
     // data.query._id
     // data.query.id_business
@@ -27,44 +27,38 @@ function find(data) {
     // data.limit
     // data.page
 
-    return new Promise((resolve, reject) => {
-        let query = queryRevise(data.query) // 查询修正
-        // 排序
-        let sort
-        if (data.sort && data.sort.label && data.sort.order) {
-            sort = {}
-            if (data.sort.order === 'ascending') {
-                sort[data.sort.label] = 1
-            } else if (data.sort.order === 'descending') {
-                sort[data.sort.label] = -1
-            } else {
-                sort[data.sort.label] = 1
-            }
+    const query = queryRevise(data.query) // 查询修正
+    // 排序
+    const sort = {}
+    if (data.sort && data.sort.label && data.sort.order) {
+        if (data.sort.order === 'ascending') {
+            sort[data.sort.label] = 1
+        } else if (data.sort.order === 'descending') {
+            sort[data.sort.label] = -1
         } else {
-            sort = {_id: -1}
+            sort[data.sort.label] = 1
         }
+    } else {
+        sort['_id'] = -1
+    }
 
-        Promise.all([
-            GQuery({
-                tblName: "ly0d7memo",
-                operator: "find",
-                query,
-                sort,
-                skip: (data.page - 1) * data.limit,
-                limit: Number(data.limit)
-            }),
-            GQuery({
-                tblName: "ly0d7memo",
-                operator: "countDocuments",
-                query
-            })
-        ]).then(function (result) {
-            resolve({
-                data: result [0].data,
-                count: result [1].count
-            })
-        })
+    const resultData = await GQuery({
+        tblName: "ly0d7memo",
+        operator: "find",
+        query,
+        sort,
+        skip: (data.page - 1) * data.limit,
+        limit: Number(data.limit)
     })
+    const resultTotal = await GQuery({
+        tblName: "ly0d7memo",
+        operator: "countDocuments",
+        query
+    })
+    return {code: 0, message: '',
+        data: resultData.data,
+        count: resultTotal.count
+    }
 }
 
 // 内部模块：数据约束
@@ -77,135 +71,103 @@ function dataRule(data) {
 }
 
 // 插入一条记录
-function insertOne(data) {
+async function insertOne(data) {
     // data.id_business
     // data.memo
     // data.recorder_cellphone 当前用户信息：手机号
     // data.recorder_name 当前用户信息：用户名称
 
-    return new Promise((resolve, reject) => {
-        // 数据约束
-        let message = dataRule(data);
-        if (message.code === 1) {
-            return resolve(message);
+    // 数据约束
+    const message = dataRule(data);
+    if (message.code === 1) {
+        return message
+    }
+
+    // 提交
+    const thisTime = new Date();
+    let result = await GQuery({
+        tblName: "ly0d7business",
+        operator: "findOne",
+        query: {_id: data.id_business}
+    })
+    const objBusiness = result.data
+    result = await GQuery({
+        tblName: "ly0d7memo",
+        operator: "insertOne",
+        update: {
+            time_create: thisTime,
+            time_update: thisTime,
+            id_dataunit: objBusiness.id_dataunit,
+            dataunit_name: objBusiness.dataunit_name,
+            id_shop: objBusiness.id_shop,
+            shop_name: objBusiness.shop_name,
+            id_business: objBusiness._id,
+            memo: data.memo,
+            time: thisTime,
+            recorder_cellphone: data.recorder_cellphone,
+            recorder_name: data.recorder_name
         }
-
-        // 提交
-        let thisTime = new Date();
-        GQuery({
-            tblName: "ly0d7business",
-            operator: "findOne",
-            query: {_id: data.id_business}
-        }).then(result => {
-            let objBusiness = result.data
-            GQuery({
-                tblName: "ly0d7memo",
-                operator: "insertOne",
-                update: {
-                    time_create: thisTime,
-                    time_update: thisTime,
-                    id_dataunit: objBusiness.id_dataunit,
-                    dataunit_name: objBusiness.dataunit_name,
-                    id_shop: objBusiness.id_shop,
-                    shop_name: objBusiness.shop_name,
-                    id_business: objBusiness._id,
-                    memo: data.memo,
-                    time: thisTime,
-                    recorder_cellphone: data.recorder_cellphone,
-                    recorder_name: data.recorder_name
-                }
-            }).then(result => {
-                resolve({
-                    code: 0, message: "新增成功",
-                    _id: result.dataNew._id
-                })
-            })
-        })
     })
-}
-
-// 查询一条记录
-function findOne(data) {
-    // data._id
-
-    return new Promise((resolve, reject) => {
-        GQuery({
-            tblName: "ly0d7memo",
-            operator: "findOne",
-            query: {_id: data._id}
-        }).then(result => {
-            resolve({code: 0, message: "",
-                doc: result.data
-            })
-        })
-    })
+    return {code: 0, message: "插入一条记录成功",
+        _id: result.dataNew._id
+    }
 }
 
 // 修改一条记录
-function updateOne(data) {
+async function updateOne(data) {
     // data._id
     // data.id_business
     // data.memo
     // data.recorder_cellphone 当前用户信息：手机号
     // data.recorder_name 当前用户信息：用户名称
 
-    return new Promise((resolve, reject) => {
-        // 数据约束
-        let message = dataRule(data)
-        if (message.code === 1) {
-            return resolve(message)
-        }
+    // 数据约束
+    const message = dataRule(data)
+    if (message.code === 1) {
+        return message
+    }
 
-        // 提交
-        let thisTime = new Date()
-        GQuery({
-            tblName: "ly0d7business",
-            operator: "findOne",
-            query: {_id: data.id_business}
-        }).then(result => {
-            let objBusiness = result.data
-            GQuery({
-                tblName: "ly0d7memo",
-                operator: "updateOne",
-                query: {_id: data._id},
-                update: {
-                    time_update: thisTime,
-                    id_dataunit: objBusiness.id_dataunit,
-                    dataunit_name: objBusiness.dataunit_name,
-                    id_shop: objBusiness.id_shop,
-                    shop_name: objBusiness.shop_name,
-                    id_business: objBusiness._id,
-                    memo: data.memo,
-                    time: thisTime,
-                    recorder_cellphone: data.recorder_cellphone,
-                    recorder_name: data.recorder_name
-                }
-            }).then(() => {
-                resolve({code: 0, message: "修改成功"})
-            })
-        })
+    // 提交
+    const thisTime = new Date()
+    const result = await GQuery({
+        tblName: "ly0d7business",
+        operator: "findOne",
+        query: {_id: data.id_business}
     })
+    const objBusiness = result.data
+    await GQuery({
+        tblName: "ly0d7memo",
+        operator: "updateOne",
+        query: {_id: data._id},
+        update: {
+            time_update: thisTime,
+            id_dataunit: objBusiness.id_dataunit,
+            dataunit_name: objBusiness.dataunit_name,
+            id_shop: objBusiness.id_shop,
+            shop_name: objBusiness.shop_name,
+            id_business: objBusiness._id,
+            memo: data.memo,
+            time: thisTime,
+            recorder_cellphone: data.recorder_cellphone,
+            recorder_name: data.recorder_name
+        }
+    })
+    return {code: 0, message: "修改一条记录成功"}
 }
 
 // 删除一条记录
-function deleteOne(data) {
-    // data._id
-
-    return new Promise((resolve, reject) => {
-        GQuery({
-            tblName: "ly0d7memo",
-            operator: "deleteOne",
-            query: {_id: data._id}
-        }).then(() => {
-            resolve({code: 0, message: "删除成功"})
-        })
+async function deleteOne({_id}) {
+    await GQuery({
+        tblName: "ly0d7memo",
+        operator: "deleteOne",
+        query: {_id: data._id}
     })
+    return {code: 0, message: "删除一条记录成功"}
 }
 
 export default {
     find,
     insertOne,
-    findOne,
     updateOne,
     deleteOne
 }
