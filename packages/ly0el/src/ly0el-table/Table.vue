@@ -154,35 +154,35 @@
                             </template>
 
                             <!-- 商品分类 -->
-                            <template v-if="col.show === 'd7group'">
+                            <template v-if="col.show === 'ly0d7group'">
                                 <ly0el-d7group
                                     v-model="scope.row[col.fieldName]"
                                     :myProps="{readOnly: !!col.readOnly}"
                                 ></ly0el-d7group>
                             </template>
                             <!-- 商品标价 -->
-                            <template v-if="col.show === 'd7price'">
+                            <template v-if="col.show === 'ly0d7price'">
                                 <ly0el-d7price
                                     v-model="scope.row[col.fieldName]"
                                     :myProps="{readOnly: !!col.readOnly}"
                                 ></ly0el-d7price>
                             </template>
                             <!-- 商品规格 -->
-                            <template v-if="col.show === 'd7size'">
+                            <template v-if="col.show === 'ly0d7size'">
                                 <ly0el-d7size
                                     v-model="scope.row[col.fieldName]"
                                     :myProps="{readOnly: !!col.readOnly}"
                                 ></ly0el-d7size>
                             </template>
                             <!-- 商品缩略图 -->
-                            <template v-if="col.show === 'd7thumb'">
+                            <template v-if="col.show === 'ly0d7thumb'">
                                 <ly0el-d7thumb
                                     v-model="scope.row"
                                     :myProps="{
                                         thumb: {
                                             fieldName: col.thumb.fieldName,
                                             width: col.thumb.width || myProps.table.colShow.ly0d7thumb.thumb.width,
-                                            height: col.thumb.height || myProps.table.colshow.ly0d7thumb.thumb.height
+                                            height: col.thumb.height || myProps.table.colShow.ly0d7thumb.thumb.height
                                         },
                                         number: {
                                             fieldName: col.number.fieldName

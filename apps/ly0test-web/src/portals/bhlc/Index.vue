@@ -10,7 +10,7 @@ import { reactive } from 'vue'
 import compIndex from '../../components/ly0/frame/frame/Index.vue'
 
 import compShop0 from "../../components/ly0/d7/old-shop0/Index.vue"
-import compGoods from "../../components/ly0/d7/goods/Index.vue"
+import compGoods from "../../components/ly0/d7/goods-old/Index.vue"
 import compPostalCenter from "../../components/ly0/d7/postal-center/Index.vue"
 import compGuest from "../../components/ly0/d7/guest/Index.vue"
 import compD0user from "../../components/ly0/d0superuser/user-my-dataunit/Index.vue"

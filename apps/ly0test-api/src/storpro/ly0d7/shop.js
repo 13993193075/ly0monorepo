@@ -64,7 +64,7 @@ async function find (data) {
         operator: 'countDocuments',
         query
     })
-    return {
+    return {code: 0, message: '',
         data: resultData.data,
         total: resultTotal.count
     }
@@ -93,7 +93,7 @@ async function insertOne (data) {
         return message
     }
 
-    let result = GQuery({
+    let result = await GQuery({
         tblName: "ly0d0dataunit",
         operator: "findOne",
         query: {
@@ -101,7 +101,7 @@ async function insertOne (data) {
         }
     })
     const objDataunit = result.data
-    result = GQuery({
+    result = await GQuery({
         tblName: 'ly0d7shop',
         operator: 'insertOne',
         update: {
@@ -232,7 +232,7 @@ async function mall(data) { // 商城代收
     // data.mall
 
     // 排他性处理
-    const result = GQuery({
+    const result = await GQuery({
         tblName: "ly0d7shop",
         operator: "findOne",
         query: {_id: data._id}

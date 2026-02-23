@@ -13,13 +13,11 @@ export default {
                         inputType: "input",
                         label: "商店编号",
                         fieldName: "_id",
-                        style: {width: '300px'},
                     },
                     {
                         inputType: 'input',
                         label: '商店名称',
                         fieldName: 'name',
-                        style: {width: '200px'},
                     },
                     {
                         inputType: "select",
@@ -32,7 +30,6 @@ export default {
                             {code: true, text: "是"},
                             {code: false, text: "否"}
                         ],
-                        style: {width: '150px'},
                     },
                 ]
             }

@@ -1,11 +1,20 @@
-// 新增提交前的处理
-function insertOneSubmitBefore(scopeThis){
-    if(scopeThis.pageData.data.arrShop.length === 1){
-        scopeThis.formDataBox.insertOne.fieldsValue.id_shop = scopeThis.pageData.data.arrShop[0]
+import {withTable} from '@yoooloo42/ly0el'
+import tableData from "./table-data.js";
+async function init({scopeThis}){
+    await withTable.init({scopeThis})
+    // 唯一业务单位缺省处理
+    if(scopeThis.pgData.data.arrShop.length === 1){
+        if(!scopeThis.insertOne.formData.id_shop){
+            scopeThis.insertOne.formData.id_shop = scopeThis.pgData.data.arrShop[0]._id
+        }
+        if(!scopeThis.query.formData.id_shop){
+            scopeThis.query.formData.id_shop = scopeThis.pgData.data.arrShop[0]._id
+        }
+        if(!scopeThis.pgData.query.id_shop){
+            scopeThis.pgData.query.id_shop = scopeThis.pgData.data.arrShop[0]._id
+        }
     }
 }
-
-export default{
-    insertOneSubmitBefore,
-    updateOneSubmitBefore: insertOneSubmitBefore
+export default {
+    init
 }

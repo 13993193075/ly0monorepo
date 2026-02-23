@@ -4,8 +4,7 @@ export default {
     formData: {
         _id: null,
         id_dataunit: ly0session.dataunit._id,
-        id_hotel: ly0session.user.id_hotel ?? null,
-        text: '',
+        name: '',
     },
     sort: null,
     pageSize: 10,

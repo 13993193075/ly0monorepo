@@ -1,6 +1,21 @@
 <template>
   <div style="padding: 10px">
     <compTable :scopeThis="scopeThis" :tableProps="tableProps" :dataBox="tableDataBox"></compTable>
+    <compFormFind
+      :scopeThis="scopeThis"
+      :formProps="formProps.find"
+      :dataBox="formDataBox.find"
+    ></compFormFind>
+    <compFormInsertOne
+      :scopeThis="scopeThis"
+      :formProps="formProps.insertOne"
+      :dataBox="formDataBox.insertOne"
+    ></compFormInsertOne>
+    <compFormDoc
+      :scopeThis="scopeThis"
+      :formProps="formProps.doc"
+      :dataBox="formDataBox.doc"
+    ></compFormDoc>
     <compFormUpdateOne
       :scopeThis="scopeThis"
       :formProps="formProps.updateOne"
@@ -24,15 +39,20 @@ import formProps from './form-props.js'
 // 数据盒子
 import formDataBox from '../../../common/table/with-table/form-databox.js'
 // 表单字段初始值
-import fieldsValue_init from '../shop/fields-value-init.js'
+import fieldsValue_init from './fields-value-init.js'
 // with-table标准句柄
 import handles from '../../../common/table/with-table/handles.js'
+// with-table补充句柄
+import hdlsSupplement from './handles.js'
 // 存储过程
-import storpro from '../shop/storpro.js'
+import storpro from './storpro.js'
 
 export default {
   components: {
     compTable,
+    compFormFind: compForm,
+    compFormInsertOne: compForm,
+    compFormDoc: compForm,
     compFormUpdateOne: compForm,
   },
   data: function () {
@@ -44,7 +64,23 @@ export default {
       formDataBox: formDataBox.getFormDataBox(this),
       fieldsValue_init: fieldsValue_init.getFieldsValue_init(this),
       handles,
+      hdlsSupplement,
       storpro: storpro.getStorpro(this),
+      ly0session: {},
+      pageData: {
+        queryBody: {
+          id_dataunit: fieldsValue_init.ly0session.dataunit._id,
+          id_shop: fieldsValue_init.ly0session.user.id_shop
+            ? fieldsValue_init.ly0session.user.id_shop
+            : null,
+        },
+        data: {
+          arrShop: [],
+          gbt2659: [],
+        },
+      },
+      srcPrefix: fieldsValue_init.srcPrefix, // 图片src前缀
+      upload: fieldsValue_init.upload, // 上传路径
     }
   },
   mounted() {

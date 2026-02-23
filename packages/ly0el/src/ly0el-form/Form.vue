@@ -116,7 +116,7 @@ const hdl = {
             await props.myProps.submit.handle({
                 formData,
                 formProps: props.myProps,
-                scopeThis
+                scopeThis: props.scopeThis,
             })
         }
     },

@@ -8,16 +8,19 @@
 import { reactive } from 'vue'
 
 import compShop from './shop/Index.vue'
-import compShop0 from './old-shop0/Index.vue'
+import compShop0 from './shop0/Index.vue'
 import compDecode from './decode/Index.vue'
 import compGoods from './goods/Index.vue'
-import compGroupData from './group-data/Index.vue'
+import compGroup from './group/Index.vue'
+/*
 import compBusiness1 from './business1/Index.vue'
 import compBusiness2 from './business2/Index.vue'
 import compBusiness from './business/Index.vue'
 import compEchart from './echart/Index.vue'
 import compGuest from './guest/Index.vue'
 import compPostalCenter from './postal-center/Index.vue'
+
+ */
 
 const frameProps = reactive({
     title: 'ly0 - 企业应用集成平台@商店',
@@ -26,11 +29,11 @@ const frameProps = reactive({
             title: '基础信息预置',
             menu: [
                 {
-                    title: '商店',
+                    title: '商店名称及参数设置',
                     component: compShop,
                 },
                 {
-                    title: '参数设置',
+                    title: '商店名称及参数设置',
                     component: compShop0,
                 },
                 {
@@ -42,11 +45,12 @@ const frameProps = reactive({
                     component: compGoods,
                 },
                 {
-                    title: '商品分类名称',
-                    component: compGroupData,
+                    title: '商品分类',
+                    component: compGroup,
                 },
             ],
         },
+        /*
         {
             title: '订单记录',
             menu: [
@@ -86,6 +90,8 @@ const frameProps = reactive({
                 },
             ],
         },
+        
+         */
     ],
 })
 </script>

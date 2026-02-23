@@ -5,7 +5,7 @@ function queryRevise(data) {
     let data0 = data ? data : {}, data1 = {}
     if (data0._id) {
         data1._id = data0._id
-        return resolve(data1)
+        return data1
     }
     data1.id_dataunit = data0.id_dataunit
 
@@ -88,7 +88,7 @@ async function insertOne(data) {
     // 数据约束
     let message = dataRule(data);
     if (message.code === 1) {
-        return resolve(message);
+        return message
     }
 
     // 提交
@@ -127,7 +127,7 @@ async function updateOne(data) {
     // 数据约束
     let message = dataRule(data);
     if (message.code === 1) {
-        return resolve(message); // 不能提交
+        return message // 不能提交
     }
 
     // 提交

@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 import {imageDomain} from '../../main/config.js'
 import ImageSave from '../../main/image-save.js'
-import {GBT} from 'packages/ly0utils/src/index.js'
+import {GBT, utils as ly0utils} from '@yoooloo42/ly0utils'
 
 // 内部模块：查询修正
 function queryRevise(data) {
@@ -145,13 +145,10 @@ async function find(data) {
         query
     })
     return {code: 0, message: '',
-        data: resultData.data.map(i=>{
-            return Object.assign(i, {
-                thumb: imageDomain.domain + i.thumb,
-                illustration: i.illustration.map(j=>{
-                    return imageDomain.domain + j
-                })
-            })
+        data: ly0utils.imageAddr.dataSet({
+            data: resultData.data,
+            domain: imageDomain.domain,
+            fieldNames: ['thumb', 'illustration']
         }),
         total: resultTotal.count
     }
@@ -238,7 +235,7 @@ async function insertOne(data) {
             }) : ""
         }
     })
-    const objGoods = result.data
+    const objGoods = result.dataNew
     // 缩略图处理
     const thumb = await ImageSave.imageAppend({
         uploaded: data.thumb,

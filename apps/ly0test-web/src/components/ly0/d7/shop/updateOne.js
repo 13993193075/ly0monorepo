@@ -13,13 +13,11 @@ export default {
                         inputType: 'input',
                         label: '商店名称',
                         fieldName: 'name',
-                        style: {width: '200px'},
                     },
                     {
                         inputType: 'input',
                         label: '小票机型号',
                         fieldName: 'doorlock_sys',
-                        style: {width: '200px'},
                     },
                     {
                         inputType: "switch",
@@ -42,13 +40,11 @@ export default {
                                         inputType: 'input',
                                         label: 'APPID',
                                         fieldName: 'wx_appid',
-                                        style: {width: '300px'},
                                     },
                                     {
                                         inputType: 'input',
                                         label: 'MCHID',
                                         fieldName: 'wx_mchid',
-                                        style: {width: '300px'},
                                     },
                                 ],
                             },

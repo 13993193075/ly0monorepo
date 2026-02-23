@@ -37,11 +37,11 @@ const frameProps = reactive({
             title: '基础信息预置',
             menu: [
                 {
-                    title: '旅店名称',
+                    title: '旅店名称及参数设置',
                     component: compHotel,
                 },
                 {
-                    title: '旅店名称',
+                    title: '旅店名称及参数设置',
                     component: compHotel0,
                 },
                 {

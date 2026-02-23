@@ -13,8 +13,8 @@
                             <span v-if="!!item.name" :style="style.modelValue_box.name">{{ item.name }}</span>
                             <span v-else :style="style.modelValue_box.name_empty">[未设置标价名称]</span>
                             <span :style="style.modelValue_box.price">￥{{ (item.price / 100).toFixed(2) }}</span>
-                            <img v-if="!!item.member" :style="style.modelValue_box.member" src="member.png" alt="会员" />
-                            <img v-if="!!item.hot" :style="style.modelValue_box.hot" src="hot.png" alt="热点" />
+                            <img v-if="!!item.member" :style="style.modelValue_box.member" src="./member.png" alt="会员" />
+                            <img v-if="!!item.hot" :style="style.modelValue_box.hot" src="./hot.png" alt="热点" />
                             <span :style="style.modelValue_box.note">{{ item.note || '' }}</span>
                         </td>
                     </tr>

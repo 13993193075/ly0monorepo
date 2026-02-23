@@ -12,7 +12,7 @@
                     <span v-else :style="style.modelValue_box.nameEmpty">[未设置规格名称]</span>
                     <span v-if="!!item.size" :style="style.modelValue_box.size">{{ item.size }}</span>
                     <span v-else :style="style.modelValue_box.sizeEmpty">[未设置规格内容]</span>
-                    <img v-if="!!item.new" :style="style.modelValue_box.new" src="new.png" />
+                    <img v-if="!!item.new" :style="style.modelValue_box.new" src="./new.png" />
                 </td>
             </tr>
         </tbody>
