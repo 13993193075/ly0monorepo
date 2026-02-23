@@ -8,7 +8,7 @@
 import { reactive } from 'vue'
 
 import compShop from './shop/Index.vue'
-import compShop0 from './shop0/Index.vue'
+import compShop0 from './old-shop0/Index.vue'
 import compDecode from './decode/Index.vue'
 import compGoods from './goods/Index.vue'
 import compGroupData from './group-data/Index.vue'

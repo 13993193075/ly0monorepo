@@ -5,6 +5,7 @@ export default {
         _id: null,
         id_dataunit: ly0session.dataunit._id,
         name: '',
+        mall: null,
     },
     sort: null,
     pageSize: 10,

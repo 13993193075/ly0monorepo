@@ -1,6 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 import {imageDomain} from '../../main/config.js'
 import ImageSave from '../../main/image-save.js'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 
 // 内部模块：查询修正
 async function queryRevise (data) {
@@ -72,10 +73,10 @@ async function find (data) {
         query
     })
     return {code: 0, message: '',
-        data: resultData.data.map(i=>{
-            return Object.assign(i, {
-                thumb: [i.thumb && i.thumb.length > 0 ? imageDomain.domain + i.thumb[0] : '']
-            })
+        data: ly0utils.imageAddr.dataSet({
+            data: resultData.data,
+            domain: imageDomain.domain,
+            fieldNames: ['thumb']
         }),
         total: resultTotal.count
     }

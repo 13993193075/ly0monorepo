@@ -38,35 +38,6 @@ export default {
                         inputType: 'collapse',
                         items: [
                             {
-                                title: '离店结算时间',
-                                items: [
-                                    {
-                                        inputType: 'text',
-                                        label: '中午结算时间：时',
-                                        fieldName: 'checkout_hours',
-                                        style: {width: '100px'},
-                                    },
-                                    {
-                                        inputType: 'text',
-                                        label: '分',
-                                        fieldName: 'checkout_minutes',
-                                        style: {width: '100px'},
-                                    },
-                                    {
-                                        inputType: 'text',
-                                        label: '下午结算时间：时',
-                                        fieldName: 'checkout0_hours',
-                                        style: {width: '100px'},
-                                    },
-                                    {
-                                        inputType: 'text',
-                                        label: '分',
-                                        fieldName: 'checkout0_minutes',
-                                        style: {width: '100px'},
-                                    },
-                                ],
-                            },
-                            {
                                 title: '微信支付',
                                 items: [
                                     {

@@ -11,48 +11,30 @@ export default {
                 items: [
                     {
                         inputType: 'input',
-                        label: '旅店名称',
+                        label: '商店名称',
                         fieldName: 'name',
                         style: {width: '200px'},
                     },
                     {
                         inputType: 'input',
-                        label: '门锁系统',
+                        label: '小票机型号',
                         fieldName: 'doorlock_sys',
                         style: {width: '200px'},
                     },
                     {
+                        inputType: "switch",
+                        label: "商城代收",
+                        fieldName: "mall",
+                        activeText: "是",
+                        inactiveText: "否",
+                        activeValue: true,
+                        inactiveValue: false,
+                        activeColor: "#ee7405",
+                        disabled: true // 排他性处理
+                    },
+                    {
                         inputType: 'collapse',
                         items: [
-                            {
-                                title: '离店结算时间',
-                                items: [
-                                    {
-                                        inputType: 'input',
-                                        label: '中午结算时间：时',
-                                        fieldName: 'checkout_hours',
-                                        style: {width: '100px'},
-                                    },
-                                    {
-                                        inputType: 'input',
-                                        label: '分',
-                                        fieldName: 'checkout_minutes',
-                                        style: {width: '100px'},
-                                    },
-                                    {
-                                        inputType: 'input',
-                                        label: '下午结算时间：时',
-                                        fieldName: 'checkout0_hours',
-                                        style: {width: '100px'},
-                                    },
-                                    {
-                                        inputType: 'input',
-                                        label: '分',
-                                        fieldName: 'checkout0_minutes',
-                                        style: {width: '100px'},
-                                    },
-                                ],
-                            },
                             {
                                 title: '微信支付',
                                 items: [

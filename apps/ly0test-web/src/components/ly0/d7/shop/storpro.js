@@ -1,6 +1,6 @@
 export default{
-    refresh: "ly0d4.hotel.find",
-    insertOne: "ly0d4.hotel.insertOne",
-    updateOne: "ly0d4.hotel.updateOne",
-    deleteOne: "ly0d4.hotel.deleteOne"
+    refresh: "ly0d7.shop.find",
+    insertOne: "ly0d7.shop.insertOne",
+    updateOne: "ly0d7.shop.updateOne",
+    deleteOne: "ly0d7.shop.deleteOne"
 }
