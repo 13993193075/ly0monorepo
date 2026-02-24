@@ -81,6 +81,7 @@ const refresh = async ({scopeThis, noMessage}) => {
             ElMessage('数据刷新错误')
         }
     }
+    scopeThis.keyTbl++
     return {code: result.code, message: result.message}
 }
 

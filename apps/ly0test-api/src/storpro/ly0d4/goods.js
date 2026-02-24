@@ -102,13 +102,9 @@ async function insertOne (data) {
     // data.price_name
     // data.price
     // data.thumb
+    // 剔除图片地址中的域名
     const data_thumb = []
-    data.thumb.forEach(i=>{
-        try{
-            data_thumb.push(new URL(i).pathname)
-        }catch (err) {
-        }
-    })
+    data.thumb.forEach(i=>{data_thumb.push(new URL(i).pathname)})
 
     // 数据约束
     let result = await dataRule(data)
@@ -116,13 +112,14 @@ async function insertOne (data) {
         return result
     }
 
-    // 提交
+    // 获取旅店信息
     result = await GQuery({
         tblName: 'ly0d4hotel',
         operator: 'findOne',
         query: {_id: data.id_hotel}
     })
     const objHotel = result.data
+    // 发生新记录
     result = await GQuery({
         tblName: 'ly0d4goods',
         operator: 'insertOne',
@@ -134,24 +131,25 @@ async function insertOne (data) {
             name: data.name,
         }
     })
-    const dataNew = result.dataNew
+    const objGoods = result.dataNew
+    // 图片处理
     if(data_thumb.length > 0){
-        const thumb = await ImageSave.imageAppend({
+        const thumb = [await ImageSave.imageAppend({
             uploaded: data_thumb[0],
             dataunitId: data.id_dataunit,
             tblName: 'ly0d4goods',
             fieldName: 'thumb',
-            dataId: dataNew._id
-        })
+            dataId: objGoods._id
+        })]
         await GQuery({
             tblName: 'ly0d4goods',
             operator: 'updateOne',
-            query: {_id: dataNew._id},
-            update: {thumb: thumb ? [thumb] : []}
+            query: {_id: objGoods._id},
+            update: {thumb}
         })
     }
     return {code: 0, message: '提交成功',
-        _id: dataNew._id
+        _id: objGoods._id
     }
 }
 
@@ -163,13 +161,9 @@ async function updateOne (data) {
     // data.price_name
     // data.price
     // data.thumb
+    // 剔除图片地址中的域名
     const data_thumb = []
-    data.thumb.forEach(i=>{
-        try{
-            data_thumb.push(new URL(i).pathname)
-        }catch (err) {
-        }
-    })
+    data.thumb.forEach(i=>{data_thumb.push(new URL(i).pathname)})
 
     // 数据约束
     let result = await dataRule(data)
@@ -177,13 +171,21 @@ async function updateOne (data) {
         return result
     }
 
-    // 提交
+    // 获取旅店信息
     result = await GQuery({
         tblName: 'ly0d4hotel',
         operator: 'findOne',
         query: {_id: data.id_hotel}
     })
     let objHotel = result.data
+    // 获取房型信息
+    result = await GQuery({
+        tblName: 'ly0d4goods',
+        operator: 'findOne',
+        query: {_id: data._id}
+    })
+    const objGoods = result.data
+    // 预置提交项目
     let upd = {
         id_dataunit: objHotel.id_dataunit,
         dataunit_name: objHotel.dataunit_name,
@@ -191,27 +193,22 @@ async function updateOne (data) {
         hotel_name: objHotel.name,
         name: data.name,
     }
+    // 图片处理
     if(data_thumb.length > 0){
-        result = await GQuery({
-            tblName: 'ly0d4goods',
-            operator: 'findOne',
-            query: {_id: data._id}
-        })
-        const dataOld = result.data
-        const thumb = await ImageSave.imageUpdate({
+        upd.thumb = [await ImageSave.imageUpdate({
             uploaded: data_thumb[0],
-            old: dataOld.thumb && dataOld.thumb.length > 0 ? dataOld.thumb[0] : '',
+            old: objGoods.thumb && objGoods.thumb.length > 0 ? objGoods.thumb[0] : '',
             dataunitId: data.id_dataunit,
             tblName: 'ly0d4goods',
             fieldName: 'thumb',
-            dataId: dataOld._id
-        })
-        upd.thumb = [thumb]
+            dataId: objGoods._id
+        })]
     }
+    // 提交
     await GQuery({
         tblName: 'ly0d4goods',
         operator: 'updateOne',
-        query: {_id: data._id},
+        query: {_id: objGoods._id},
         update: upd
     })
     return {code: 0, message: '修改成功'}

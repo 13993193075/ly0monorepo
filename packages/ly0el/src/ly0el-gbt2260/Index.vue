@@ -241,6 +241,8 @@ const hdl = {
         modelValue_box.text6 = foundItem6 ? foundItem6.text6 : ''
         // 触发 update:modelValue 事件更新父组件的 v-model 绑定的值
         emit("update:modelValue", modelValue_box.code6 ?? modelValue_box.code4 ?? modelValue_box.code2 ?? '')
+        // 触发 change 事件告知父组件已确认修改
+        emit('change', modelValue_box.code6 ?? modelValue_box.code4 ?? modelValue_box.code2 ?? '');
         popup.visible = false
     }
 }

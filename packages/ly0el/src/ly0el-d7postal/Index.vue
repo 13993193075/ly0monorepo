@@ -174,6 +174,8 @@ const hdl = {
             })
             // 触发 update:modelValue 事件更新父组件的 v-model 绑定的值
             emit("update:modelValue", modelValue_box)
+            // 触发 change 事件告知父组件已确认修改
+            emit('change', modelValue_box);
             popup.visible = false
         })
     }

@@ -158,21 +158,27 @@
                                 <ly0el-d7group
                                     v-model="scope.row[col.fieldName]"
                                     :myProps="{readOnly: !!col.readOnly}"
+                                    @change="newValue=>hdl.d7groupSubmit(newValue, {row: scope.row, col})"
+                                    :key="scopeThis.keyTbl"
                                 ></ly0el-d7group>
-                            </template>
-                            <!-- 商品标价 -->
-                            <template v-if="col.show === 'ly0d7price'">
-                                <ly0el-d7price
-                                    v-model="scope.row[col.fieldName]"
-                                    :myProps="{readOnly: !!col.readOnly}"
-                                ></ly0el-d7price>
                             </template>
                             <!-- 商品规格 -->
                             <template v-if="col.show === 'ly0d7size'">
                                 <ly0el-d7size
                                     v-model="scope.row[col.fieldName]"
                                     :myProps="{readOnly: !!col.readOnly}"
+                                    @change="newValue=>hdl.d7sizeSubmit(newValue, {row: scope.row, col})"
+                                    :key="scopeThis.keyTbl"
                                 ></ly0el-d7size>
+                            </template>
+                            <!-- 商品标价 -->
+                            <template v-if="col.show === 'ly0d7price'">
+                                <ly0el-d7price
+                                    v-model="scope.row[col.fieldName]"
+                                    :myProps="{readOnly: !!col.readOnly}"
+                                    @change="newValue=>hdl.d7priceSubmit(newValue, {row: scope.row, col})"
+                                    :key="scopeThis.keyTbl"
+                                ></ly0el-d7price>
                             </template>
                             <!-- 商品缩略图 -->
                             <template v-if="col.show === 'ly0d7thumb'">
@@ -192,6 +198,8 @@
                                         },
                                         readOnly: !!col.readOnly
                                     }"
+                                    @change="newValue=>hdl.d7thumbSubmit(newValue, {row: scope.row, col})"
+                                    :key="scopeThis.keyTbl"
                                 ></ly0el-d7thumb>
                             </template>
                         </div>
@@ -346,6 +354,43 @@ const hdl = {
                     prop: para.prop,
                     order: para.order,
                 }})
+        }
+    },
+    
+    // 提交：商品分类
+    async d7groupSubmit(newValue, inherit){
+        if(!inherit.col.readOnly && inherit.col.hdlSubmit){
+            await inherit.col.hdlSubmit(props.scopeThis, {
+                _id: inherit.row._id,
+                group: newValue,
+            })
+        }
+    },
+    // 提交：商品规格
+    async d7sizeSubmit(newValue, inherit){
+        if(!inherit.col.readOnly && inherit.col.hdlSubmit){
+            await inherit.col.hdlSubmit(props.scopeThis, {
+                _id: inherit.row._id,
+                size: newValue,
+            })
+        }
+    },
+    // 提交：商品标价
+    async d7priceSubmit(newValue, inherit){
+        if(!inherit.col.readOnly && inherit.col.hdlSubmit){
+            await inherit.col.hdlSubmit(props.scopeThis, {
+                _id: inherit.row._id,
+                price: newValue,
+            })
+        }
+    },
+    // 提交：商品编号、名称、图标
+    async d7thumbSubmit(newValue, inherit){
+        if(!inherit.col.readOnly && inherit.col.hdlSubmit){
+            await inherit.col.hdlSubmit(props.scopeThis, {
+                _id: inherit.row._id,
+                thumb: newValue,
+            })
         }
     },
 }

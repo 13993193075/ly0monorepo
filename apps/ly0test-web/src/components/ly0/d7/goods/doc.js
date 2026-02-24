@@ -15,16 +15,25 @@ export default {
                         hdlVisible({scopeThis}) {
                             return scopeThis.pgData.data.arrShop.length > 1 // 只有一个商店时不显示
                         },
+                        style: {
+                            width: "300px",
+                        }
                     },
                     {
                         inputType: "text",
                         label: "商品编号",
-                        fieldName: "number"
+                        fieldName: "number",
+                        style: {
+                            width: "200px",
+                        }
                     },
                     {
                         inputType: "text",
                         label: "商品名称",
                         fieldName: "name",
+                        style: {
+                            width: "400px",
+                        }
                     },
                     {
                         inputType: "ly0d7group",
@@ -50,6 +59,9 @@ export default {
                         hdlExpression({scopeThis, formData}){
                             return !!formData.import ? "是" : "否"
                         },
+                        style: {
+                            width: "100px",
+                        }
                     },
                     // 国内产地
                     {
@@ -58,6 +70,9 @@ export default {
                         fieldName: "domestic",
                         hdlVisible({scopeThis, formData}){
                             return formData.import === false
+                        },
+                        style: {
+                            width: "400px",
                         }
                     },
                     // 国际产地
@@ -67,6 +82,9 @@ export default {
                         fieldName: "foreign",
                         hdlVisible({scopeThis, formData}){
                             return formData.import === true
+                        },
+                        style: {
+                            width: "400px",
                         }
                     },
                     {
@@ -78,6 +96,10 @@ export default {
                                     {
                                         inputType: "image",
                                         fieldName: "thumb",
+                                        style: {
+                                            width: "160px",
+                                            height: "120px"
+                                        }
                                     }
                                 ]
                             },
@@ -87,6 +109,10 @@ export default {
                                     {
                                         inputType: "images",
                                         fieldName: "illustration",
+                                        style: {
+                                            width: "160px",
+                                            height: "120px"
+                                        }
                                     }
                                 ]
                             },

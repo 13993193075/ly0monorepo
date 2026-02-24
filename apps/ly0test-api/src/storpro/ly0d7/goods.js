@@ -183,6 +183,15 @@ async function insertOne(data) {
     // data.foreign_code
     // data.thumb
     // data.illustration
+    // 剔除图片地址中的域名
+    const data_thumb = [],
+        data_illustration = []
+    if(data.thumb && data.thumb.length > 0) {
+        data.thumb.forEach(i=>{data_thumb.push(new URL(i).pathname)})
+    }
+    if(data.illustration && data.illustration.length > 0) {
+        data.illustration.forEach(i=>{data_illustration.push(new URL(i).pathname)})
+    }
 
     // 数据约束
     const message = dataRule(data)
@@ -201,7 +210,7 @@ async function insertOne(data) {
         })
     }
 
-    // 提交
+    // 获取商店信息
     let result = await GQuery({
         tblName: "ly0d7shop",
         operator: "findOne",
@@ -210,6 +219,7 @@ async function insertOne(data) {
         }
     })
     const objShop = result.data
+    // 发生新记录
     result = await GQuery({
         tblName: "ly0d7goods",
         operator: "insertOne",
@@ -235,32 +245,37 @@ async function insertOne(data) {
             }) : ""
         }
     })
-    const objGoods = result.dataNew
+    const objGoods = result.dataNew,
+        upd = {} // 待更新的项目
     // 缩略图处理
-    const thumb = await ImageSave.imageAppend({
-        uploaded: data.thumb,
-        dataunitId: objGoods.id_dataunit,
-        tblName: "ly0d7goods",
-        fieldName: "thumb",
-        dataId: objGoods._id
-    })
+    if(data_thumb.length > 0){
+        upd.thumb = [await ImageSave.imageAppend({
+            uploaded: data_thumb[0],
+            dataunitId: objGoods.id_dataunit,
+            tblName: "ly0d7goods",
+            fieldName: "thumb",
+            dataId: objGoods._id
+        })]
+    }
     // 商品图示处理
-    const illustration = await ImageSave.imagesAppend({
-        arrUploaded: data.illustration,
-        dataunitId: objGoods.id_dataunit,
-        tblName: "ly0d7goods",
-        fieldName: "illustration",
-        dataId: objGoods._id
-    })
-    await GQuery({
-        tblName: "ly0d7goods",
-        operator: "updateOne",
-        query: {_id: objGoods._id},
-        update: {
-            thumb,
-            illustration
-        }
-    })
+    if(data_illustration.length > 0){
+        upd.illustration = await ImageSave.imagesAppend({
+            arrUploaded: data_illustration,
+            dataunitId: objGoods.id_dataunit,
+            tblName: "ly0d7goods",
+            fieldName: "illustration",
+            dataId: objGoods._id
+        })
+    }
+    // 提交
+    if(upd.thumb || upd.illustration){
+        await GQuery({
+            tblName: "ly0d7goods",
+            operator: "updateOne",
+            query: {_id: objGoods._id},
+            update: upd
+        })
+    }
     return {code: 0, message: "插入一条记录成功",
         _id: objGoods._id
     }
@@ -279,10 +294,21 @@ async function updateOne(data) {
     // data.import
     // data.domestic_code
     // data.foreign_code
-    // data.thumbDelete
-    // data.thumbNew
-    // data.illustrationDelete
-    // data.illustrationNew
+    // data.thumb
+    // data.illustration
+    // 剔除图片地址中的域名
+    const data_thumb = [],
+        data_illustration = [],
+        data_illustrationDelete = []
+    if(data.thumb && data.thumb.length > 0){
+        data.thumb.forEach(i=>{data_thumb.push(new URL(i).pathname)})
+    }
+    if(data.illustration && data.illustration.length > 0){
+        data.illustration.forEach(i=>{data_illustration.push(new URL(i).pathname)})
+    }
+    if(data.illustrationDelete && data.illustrationDelete.length > 0){
+        data.illustrationDelete.forEach(i=>{data_illustrationDelete.push(new URL(i).pathname)})
+    }
 
     // 数据约束
     const message = dataRule(data)
@@ -301,40 +327,14 @@ async function updateOne(data) {
         })
     }
 
-    // 提交
+    // 获取商品信息
     let result  = await GQuery({
         tblName: "ly0d7goods",
         operator: "findOne",
         query: {_id: data._id},
-        update: {
-        }
     })
-    const objGoods = result.data
-    // 缩略图处理
-    const thumb = await ImageSave.imageUpdate({
-        uploaded: data.thumbNew,
-        old: objGoods.thumb,
-        deleteIfNotUploaded: "thumbDelete" in data && (data.thumbDelete === true || data.thumbDelete === "true"),
-        dataunitId: objGoods.id_dataunit,
-        tblName: "ly0d7goods",
-        fieldName: "thumb",
-        dataId: objGoods._id
-    })
-    // 商品图示处理
-    const illustration = await ImageSave.imagesUpdate({
-        arrUploaded: data.illustrationNew,
-        arrOld: objGoods.illustration,
-        arrDelete: data.illustrationDelete,
-        dataunitId: objGoods.id_dataunit,
-        tblName: "ly0d7goods",
-        fieldName: "illustration",
-        dataId: objGoods._id
-    })
-    await GQuery({
-        tblName: "ly0d7goods",
-        operator: "updateOne",
-        query: {_id: objGoods._id},
-        update: {
+    const objGoods = result.data,
+        upd = { // 预置提交项目
             id_dataunit: objGoods.id_dataunit,
             dataunit_name: objGoods.dataunit_name,
             id_shop: objGoods.id_shop,
@@ -354,9 +354,35 @@ async function updateOne(data) {
             foreign: !!data.foreign_code ? GBT.gbt2659.find(i=>{
                 return i.code === data.foreign_code
             }) : "",
-            thumb,
-            illustration
         }
+    // 缩略图处理
+    if(data_thumb.length > 0){
+        upd.thumb = [await ImageSave.imageUpdate({
+            uploaded: data_thumb[0],
+            old: objGoods.thumb && objGoods.thumb.length > 0 ? objGoods.thumb[0] : '',
+            dataunitId: objGoods.id_dataunit,
+            tblName: "ly0d7goods",
+            fieldName: "thumb",
+            dataId: objGoods._id
+        })]
+    }
+    // 商品图示处理
+    if(data_illustration.length > 0 || data_illustrationDelete.length > 0){
+        upd.illustration = await ImageSave.imagesUpdate({
+            arrUploaded: data_illustration,
+            arrOld: objGoods.illustration,
+            dataunitId: objGoods.id_dataunit,
+            tblName: "ly0d7goods",
+            fieldName: "illustration",
+            dataId: objGoods._id
+        })
+    }
+    // 提交
+    await GQuery({
+        tblName: "ly0d7goods",
+        operator: "updateOne",
+        query: {_id: objGoods._id},
+        update: upd
     })
     return {code: 0, message: "修改一条记录成功"}
 }
@@ -434,7 +460,7 @@ async function setGroup(data) {
         operator: "updateOne",
         query: {_id: data._id},
         update: {
-            group: data.group ? data.group : null
+            group: data.group
         }
     })
     return {code: 0, message: "设置商品分类成功"}
@@ -446,7 +472,7 @@ async function setSize(data) {
     // data.size
 
     data.size.forEach(i=>{
-        i.new = i.new === "true"
+        i.new = i.new === true || i.new === "true"
     })
 
     // 提交
@@ -455,7 +481,7 @@ async function setSize(data) {
         operator: "updateOne",
         query: {_id: data._id},
         update: {
-            size: data.size ? data.size : null
+            size: data.size
         }
     })
     return {code: 0, message: "设置商品规格成功"}
@@ -467,8 +493,8 @@ async function setPrice(data) {
     // data.price
 
     data.price.forEach(i=>{
-        i.member = i.member === "true"
-        i.hot = i.hot === "true"
+        i.member = i.member === true || i.member === "true"
+        i.hot = i.hot === true || i.hot === "true"
     })
 
     // 提交
@@ -477,7 +503,7 @@ async function setPrice(data) {
         operator: "updateOne",
         query: {_id: data._id},
         update: {
-            price: data.price ? data.price : null
+            price: data.price
         }
     })
     return {code: 0, message: "商品标价成功"}
@@ -486,12 +512,14 @@ async function setPrice(data) {
 // 设置商品缩略图
 async function setThumb(data) {
     // data._id
-    // data.thumb
     // data.number
     // data.name
+    // data.thumb
+    // 剔除图片地址中的域名
+    const data_thumb = []
+    data.thumb.forEach(i=>{data_thumb.push(new URL(i).pathname)})
 
-    // 提交
-    await GQuery({
+    let result = await GQuery({
         tblName: "ly0d7goods",
         operator: "updateOne",
         query: {_id: data._id},
@@ -500,28 +528,28 @@ async function setThumb(data) {
             name: data.name
         }
     })
-    let result = await GQuery({
-        tblName: "ly0d7goods",
-        operator: "findOne",
-        query: {_id: data._id}
-    })
-    const oldData= result.data
-    const thumb = await ImageSave.imageUpdate({
-        uploaded: data.thumb,
-        old: oldData.thumb,
-        dataunitId: oldData.id_dataunit,
-        tblName: "ly0d7goods",
-        fieldName: "thumb",
-        dataId: data._id
-    })
-    result = await GQuery({
-        tblName: "ly0d7goods",
-        operator: "updateOne",
-        query: {_id: data._id},
-        update: {thumb: thumb ? thumb : ""}
-    })
+    let dataOld= result.dataOld,
+        dataNew= result.dataNew
+    // 图片处理
+    if(data_thumb.length > 0) {
+        const thumb = await ImageSave.imageUpdate({
+            uploaded: data_thumb[0],
+            old: dataOld.thumb && dataOld.thumb.length > 0 ? dataOld.thumb[0] : '',
+            dataunitId: dataOld.id_dataunit,
+            tblName: "ly0d7goods",
+            fieldName: "thumb",
+            dataId: data._id
+        })
+        result = await GQuery({
+            tblName: "ly0d7goods",
+            operator: "updateOne",
+            query: {_id: data._id},
+            update: {thumb: [thumb]}
+        })
+        dataNew= result.dataNew
+    }
     return {code: 0, message: "设置商品缩略图成功",
-        dataNew: result.dataNew[0]
+        dataNew
     }
 }
 
@@ -530,7 +558,7 @@ async function setIllustration(data){
     // data._id
     // data.illustration
     // data.illustrationDelete
-    // data.illustrationNew
+    // data.illustration
 
     const result= await GQuery({
         tblName: "ly0d7goods",
@@ -539,7 +567,7 @@ async function setIllustration(data){
     })
     const objGoods = result[0]
     const illustration = await ImageSave.imagesUpdate({
-        arrUploaded: data.illustrationNew,
+        arrUploaded: data.illustration,
         arrOld: data.illustration,
         arrDelete: data.illustrationDelete,
         dataunitId: objGoods.id_dataunit,

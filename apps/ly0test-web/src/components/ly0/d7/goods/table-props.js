@@ -1,4 +1,7 @@
 import {withTable} from '@yoooloo42/ly0el'
+import {request as ly0request} from '@yoooloo42/ly0browser'
+import {ElMessage} from 'element-plus'
+
 export default {
     titleLine: { // 标题线
         text: "商品名录"
@@ -39,29 +42,73 @@ export default {
                 label: '商品名称',
                 show: 'ly0d7thumb',
                 thumb: {
-                    fieldName: 'thumb'
+                    fieldName: 'thumb',
+                    width: '160px',
+                    height: '120px',
                 },
                 number: {
                     fieldName: 'number',
                 },
                 name: {
-                    fieldName: "name"
+                    fieldName: "name",
                 },
+                async hdlSubmit(scopeThis, data){
+                    await ly0request.ly0.storpro({
+                        storproName: 'ly0d7.goods.setThumb',
+                        data: {
+                            _id: data._id,
+                            thumb: data.thumb.thumb,
+                            number: data.thumb.number,
+                            name: data.thumb.name,
+                        }
+                    })
+                    ElMessage("已更新商品基本信息")
+                }
             },
             {
                 label: '商品分类',
                 show: 'ly0d7group',
                 fieldName: "group",
+                async hdlSubmit(scopeThis, data){
+                    await ly0request.ly0.storpro({
+                        storproName: 'ly0d7.goods.setGroup',
+                        data: {
+                            _id: data._id,
+                            group: data.group,
+                        }
+                    })
+                    ElMessage("已重新设置商品分类")
+                }
             },
             {
                 label: '商品规格',
                 show: 'ly0d7size',
                 fieldName: "size",
+                async hdlSubmit(scopeThis, data){
+                    await ly0request.ly0.storpro({
+                        storproName: 'ly0d7.goods.setSize',
+                        data: {
+                            _id: data._id,
+                            size: data.size,
+                        }
+                    })
+                    ElMessage("已重新设置商品规格")
+                }
             },
             {
                 label: '商品标价',
                 show: 'ly0d7price',
                 fieldName: "price",
+                async hdlSubmit(scopeThis, data){
+                    await ly0request.ly0.storpro({
+                        storproName: 'ly0d7.goods.setPrice',
+                        data: {
+                            _id: data._id,
+                            price: data.price,
+                        }
+                    })
+                    ElMessage("已重新标价")
+                }
             },
             {
                 label: '',

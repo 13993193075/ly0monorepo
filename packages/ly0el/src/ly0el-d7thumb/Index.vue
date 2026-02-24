@@ -43,19 +43,6 @@
                 <tbody>
                     <tr>
                         <td>
-                            <el-collapse>
-                                <el-collapse-item title="原图">
-                                    <el-image
-                                        :style="style.thumb"
-                                        :src="popup.formData.thumb[0]"
-                                        :preview-src-list="popup.formData.thumb"
-                                    ></el-image>
-                                </el-collapse-item>
-                            </el-collapse>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
                             <div style="margin-top: 10px; margin-bottom: 10px">上传新图</div>
                             <ly0elUploadAvatar
                                 v-model="popup.formData.thumb"
@@ -148,6 +135,8 @@ const hdl = {
         modelValue_box[props.myProps.number.fieldName] = popup.formData.number
         // 触发 update:modelValue 事件更新父组件的 v-model 绑定的值
         emit("update:modelValue", modelValue_box)
+        // 触发 change 事件告知父组件已确认修改
+        emit('change', modelValue_box);
         popup.visible = false
     },
 }

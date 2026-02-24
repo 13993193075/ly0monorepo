@@ -97,8 +97,8 @@ export default {
                                         inputType: "upload-avatar",
                                         fieldName: "thumb",
                                         avatar: {
-                                            width: "150px",
-                                            height: "150px"
+                                            width: "160px",
+                                            height: "120px"
                                         }
                                     },
                                 ]
@@ -107,7 +107,7 @@ export default {
                                 title: "商品图示 - 上传",
                                 items: [
                                     {
-                                        inputType: "upload-picture-wall",
+                                        inputType: "upload-picture-card",
                                         fieldName: "illustration",
                                         limit: 10
                                     }

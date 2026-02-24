@@ -41,5 +41,5 @@ const props = defineProps({
 // 顶层组件的props属性需做响应性包装，页面和js可以使用相同的命名
 let tableData_box = reactive(ly0utils.deepClone.deepDefaults(props.modelValue, ly0default.modelValue))
 const tableProps_box = reactive(ly0utils.deepClone.deepDefaults(props.myProps, ly0default.myProps))
-const scopeThis_box = reactive(props.scopeThis)
+const scopeThis_box = reactive(Object.assign(props.scopeThis, {keyTbl: 0}))
 </script>

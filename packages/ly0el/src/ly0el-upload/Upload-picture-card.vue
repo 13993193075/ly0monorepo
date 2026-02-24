@@ -95,7 +95,7 @@ const hdl = {
         // 触发 update:modelValue 事件更新父组件的 v-model 绑定的值
         emit("update:modelValue", arr)
     },
-    hdlSuccess (response, file, fileList) { // 上传
+    success (response, file, fileList) {
         // 重置文件列表， 注意：通过使用splice保持响应性
         fileList_box.value.splice(0, fileList_box.value.length, ...JSON.parse(JSON.stringify(fileList)))
         if (response.code === 0) {
@@ -105,13 +105,12 @@ const hdl = {
             })
             // 触发 update:modelValue 事件更新父组件的 v-model 绑定的值
             emit("update:modelValue", arr)
-            
             ElMessage({type: 'info', message: '上传成功'})
         } else {
             ElMessage({type: 'error', message: '上传失败'})
         }
     },
-    hdlDeleteAll () { // 删除全部已上传图片
+    deleteAll () { // 删除全部已上传图片
         // 重置文件列表， 注意：通过使用splice保持响应性
         fileList_box.value.splice(0, fileList_box.value.length)
         // 触发 update:modelValue 事件更新父组件的 v-model 绑定的值

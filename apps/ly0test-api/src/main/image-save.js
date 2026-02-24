@@ -81,7 +81,6 @@ async function imagesDelete({arrUrl}){
 async function imagesUpdate({
     arrUploaded,
     arrOld,
-    arrDelete,
     dataunitId,
     tblName,
     fieldName,
@@ -91,7 +90,6 @@ async function imagesUpdate({
         pathHead,
         arrUploaded,
         arrOld,
-        arrDelete,
         dataunitId,
         tblName,
         fieldName,

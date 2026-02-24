@@ -63,7 +63,7 @@ export default {
         "domestic_code": {"note": "", "type": "string"},
         "foreign": {"note": "国外产地", "type": "string"},
         "foreign_code": {"note": "", "type": "string"},
-        "thumb": {"note": "缩略图", "type": "string"},
+        "thumb": {"note": "缩略图", "type": "array"},
         "illustration": {"note": "商品图示", "type": "array"}
     },
     "ly0d7business": {

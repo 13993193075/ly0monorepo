@@ -1,5 +1,4 @@
 import {withTable} from '@yoooloo42/ly0el'
-import tableData from "./table-data.js";
 async function init({scopeThis}){
     await withTable.init({scopeThis})
     // 唯一业务单位缺省处理

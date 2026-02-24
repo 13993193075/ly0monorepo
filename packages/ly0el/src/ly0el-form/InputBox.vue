@@ -219,7 +219,7 @@
         <div v-if="propsItem_box.inputType === 'upload'">
             <ly0el-upload
                 v-model="formData_box[propsItem_box.fieldName]"
-                :myProps="{uploadUrl: upload.uploadUrl}"
+                :myProps="{uploadUrl: upload.uploadUrl, limit: propsItem_box.limit}"
             ></ly0el-upload>
         </div>
         <!-- 头像 -->
@@ -250,14 +250,14 @@
         <div v-if="propsItem_box.inputType === 'upload-picture'">
             <ly0el-upload-picture
                 v-model="formData_box[propsItem_box.fieldName]"
-                :myProps="{uploadUrl: upload.uploadUrl_image}"
+                :myProps="{uploadUrl: upload.uploadUrl_image, limit: propsItem_box.limit}"
             ></ly0el-upload-picture>
         </div>
         <!-- 图片墙 -->
         <div v-if="propsItem_box.inputType === 'upload-picture-card'">
             <ly0el-upload-picture-card
                 v-model="formData_box[propsItem_box.fieldName]"
-                :myProps="{uploadUrl: upload.uploadUrl_image}"
+                :myProps="{uploadUrl: upload.uploadUrl_image, limit: propsItem_box.limit}"
             ></ly0el-upload-picture-card>
         </div>
         
@@ -550,7 +550,7 @@ const download = reactive({
 const upload = reactive({
     uploadUrl: formProps_box.para.upload.uploadUrl,
     uploadUrl_image: formProps_box.para.upload.uploadUrl_image,
-    uploadUrl_carplate: formProps_box.para.upload.uploadUrl_carplate
+    uploadUrl_carplate: formProps_box.para.upload.uploadUrl_carplate,
 })
 
 const style = reactive({

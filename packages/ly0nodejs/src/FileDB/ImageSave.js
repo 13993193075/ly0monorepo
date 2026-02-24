@@ -185,45 +185,47 @@ async function imagesUpdate (para) {
     // para.pathHead.uploadUrl 上传URL
     // para.arrUploaded 已上传文件的URL
     // para.arrOld 原文件的URL
-    // para.arrDelete 待删除文件的URL
 
     // para.dataunitId 数据单元ID
     // para.tblName 表名
     // para.fieldName 字段名
     // para.dataId 数据ID
 
+    const arrOld = para.arrOld || [],
+        arrUploaded = para.arrUploaded || [],
+        arrOldDelete = [],
+        arrOldReserve = [],
+        arrUploadedNew = []
+    arrOld.forEach(i => {
+        if(!arrUploaded.includes(i)){
+            arrOldDelete.push(i)
+        }else{
+            arrOldReserve.push(i)
+        }
+    })
+    arrUploaded.forEach(i => {
+        if(!arrOld.includes(i)){
+            arrUploadedNew.push(i)
+        }
+    })
     await imagesDelete({
         pathHead: {
             dbFolder: para.pathHead.dbFolder,
             dbUrl: para.pathHead.dbUrl
         },
-        arrUrl: para.arrDelete
+        arrUrl: arrOldDelete
     })
 
-    const resultAppend = imagesAppend ({
+    const result = await imagesAppend ({
         pathHead: para.pathHead,
-        arrUploaded: para.arrUploaded,
+        arrUploaded: arrUploadedNew,
 
         dataunitId: para.dataunitId,
         tblName: para.tblName,
         fieldName: para.fieldName,
         dataId: para.dataId
     })
-
-    // 原文件中未删除的并入返回结果
-    let arrHoldon = []
-    para.arrOld.forEach(i=>{
-        let holdon = true
-        para.arrDelete.forEach(j=>{
-            if(i === j){
-                holdon = false
-            }
-        })
-        if(holdon){
-            arrHoldon.push(i)
-        }
-    })
-    return arrHoldon.concat(resultAppend)
+    return arrOldReserve.concat(result)
 }
 
 // 富文本新增
