@@ -1,97 +1,73 @@
 <template>
-  <div>
-    <template v-if="!idBusiness.id_business">
-      <compTable
-        style="padding: 10px"
-        :scopeThis="scopeThis"
-        :tableProps="tableProps"
-        :dataBox="tableDataBox"
-      ></compTable>
-      <compFormFind
-        :scopeThis="scopeThis"
-        :formProps="formProps.find"
-        :dataBox="formDataBox.find"
-      ></compFormFind>
-      <compFormInsertOne
-        :scopeThis="scopeThis"
-        :formProps="formProps.insertOne"
-        :dataBox="formDataBox.insertOne"
-      ></compFormInsertOne>
-      <compFormUpdateOne
-        :scopeThis="scopeThis"
-        :formProps="formProps.updateOne"
-        :dataBox="formDataBox.updateOne"
-      ></compFormUpdateOne>
+    <template v-if="!!scopeThis.id_business">
+        <!-- compIdBusiness v-model="scopeThis.id_business" :key="key_id_business" @reload="key_id_business++"></compIdBusiness -->
     </template>
-    <compIdBusiness v-else :scopeThis="scopeThis" :myProps="idBusiness"></compIdBusiness>
-  </div>
+    <template v-else>
+        <ly0el-table
+            v-model="scopeThis.tableData"
+            :myProps="scopeThis.tableProps"
+            :scopeThis="scopeThis"
+        ></ly0el-table>
+        <ly0el-form
+            v-if="scopeThis.formData
+                && scopeThis.formProps
+                && scopeThis.formProps.popup
+                && scopeThis.formProps.popup.visible"
+            v-model="scopeThis.formData"
+            :myProps="scopeThis.formProps"
+            :scopeThis="scopeThis"
+        ></ly0el-form>
+    </template>
 </template>
 
 <style lang="scss" scoped></style>
 
-<script>
-// 组件
-import compTable from '../../../common/table/Index.vue'
-import compForm from '../../../common/form/Index.vue'
-import compIdBusiness from '../id_business/Index.vue'
-// 数据表属性
+<script setup>
+import { ref, reactive, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import tableData from './table-data.js'
 import tableProps from './table-props.js'
-// 数据盒子
-import tableDataBox from '../../../common/table/with-table/table-databox.js'
-// 表单属性
-import formProps from './form-props.js'
-// 数据盒子
-import formDataBox from '../../../common/table/with-table/form-databox.js'
-// 表单字段初始值
-import fieldsValue_init from './fields-value-init.js'
-// with-table标准句柄
-import handles from '../../../common/table/with-table/handles.js'
-// 存储过程
 import storpro from './storpro.js'
+import query from './query.js'
+import find from './find.js'
+import insertOne from './insertOne.js'
+import updateOne from './updateOne.js'
+import doc from './doc.js'
+import pgData from './pgData.js'
+import handles from './handles.js'
+// import compIdBusiness from '../id_business/Index.vue'
+import {withTable} from '@yoooloo42/ly0el'
 
-export default {
-  components: {
-    compTable,
-    compFormFind: compForm,
-    compFormInsertOne: compForm,
-    compFormUpdateOne: compForm,
-    compIdBusiness,
-  },
-  data: function () {
-    return {
-      scopeThis: this,
-      tableProps: tableProps.getTableProps(this),
-      tableDataBox: tableDataBox.getTableDataBox(this),
-      formProps: formProps.getFormProps(this),
-      formDataBox: formDataBox.getFormDataBox(this),
-      fieldsValue_init: fieldsValue_init.getFieldsValue_init(this),
-      handles,
-      storpro: storpro.getStorpro(this),
-      pageData: {
-        queryBody: {
-          id_dataunit: fieldsValue_init.ly0session.dataunit._id,
-          id_shop: fieldsValue_init.ly0session.user.id_shop
-            ? fieldsValue_init.ly0session.user.id_shop
-            : null,
-        },
-        data: {
-          arrShop: [],
-          arrBusinessStatus: [],
-        },
-      },
-      idBusiness: {
-        id_business: null,
-        flow: false, // 非流程化：订单维护
-        refreshAfterGoback: {
-          // 返回后的刷新
-          hdl: handles.reload,
-          para: this,
-        },
-      },
+// 用于 订单详细 组件的内部刷新
+const key_id_business = ref(0)
+
+const scopeThis = reactive(
+    {
+        routerInstance: useRouter(),
+        tableData,
+        tableProps,
+        formData: {},
+        formProps: {},
+        queryInit: query,
+        query: JSON.parse(JSON.stringify(query)),
+        storpro,
+        find,
+        insertOne,
+        updateOne,
+        doc,
+        pgData,
+        handles,
+        id_business: null
     }
-  },
-  mounted() {
-    this.handles.init(this) // 初始化
-  },
-}
+)
+
+watch(()=>scopeThis.id_business, (newVal, oldVal) => {
+    if(!newVal) { // 订单详细关闭后，刷新订单记录
+        withTable.refresh({scopeThis})
+    }
+})
+
+onMounted(async ()=>{
+    scopeThis.handles.init({scopeThis})
+})
 </script>

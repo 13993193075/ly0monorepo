@@ -21,7 +21,8 @@ const httpsSsl = {
 async function run() {
     // 初始化MongoDB数据库连接
     const MongoDB_clientInstance = await DB_Bridge.MongoDB.connectMongoDB({
-        connectionUrl: 'mongodb://127.0.0.1:27017/ly0'
+        // connectionUrl: 'mongodb://127.0.0.1:27017/ly0'
+        connectionUrl: 'mongodb://admin:y2026m02d25h17M51%2CLjh@192.168.0.200:27017/ly0?authSource=admin'
     })
     global.ly0mongodb = DB_Bridge.MongoDB.getDB(MongoDB_clientInstance, 'ly0') // 全局变量：存储过程使用
 

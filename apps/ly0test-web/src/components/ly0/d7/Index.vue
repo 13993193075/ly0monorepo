@@ -12,10 +12,8 @@ import compShop0 from './shop0/Index.vue'
 import compDecode from './decode/Index.vue'
 import compGoods from './goods/Index.vue'
 import compGroup from './group/Index.vue'
-/*
-import compBusiness1 from './business1/Index.vue'
-import compBusiness2 from './business2/Index.vue'
 import compBusiness from './business/Index.vue'
+/*
 import compEchart from './echart/Index.vue'
 import compGuest from './guest/Index.vue'
 import compPostalCenter from './postal-center/Index.vue'
@@ -50,24 +48,16 @@ const frameProps = reactive({
                 },
             ],
         },
-        /*
         {
-            title: '订单记录',
+            title: '日常业务',
             menu: [
-                {
-                    title: '交易中',
-                    component: compBusiness1,
-                },
-                {
-                    title: '交易完成',
-                    component: compBusiness2,
-                },
                 {
                     title: '订单维护',
                     component: compBusiness,
                 },
             ],
         },
+        /*
         {
             title: '电子图表',
             menu: [

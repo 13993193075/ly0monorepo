@@ -1,32 +1,37 @@
+<script setup>
+import { reactive } from 'vue'
+
+const props = defineProps(['scopeThis'])
+
+const para = reactive({
+    nullValue: '[无信息]'
+})
+</script>
+
 <template>
-  <div v-if="!!business">
-    <div class="field-row">
-      <span class="field-label-amount">计费：</span>
-      <span class="field-value-amount">{{ Math.floor(business.objBusiness.amount) / 100 }}</span>
-      <span>&nbsp;&nbsp;</span>
-      <span class="field-label-amount">核收：</span>
-      <span class="field-value-amount">{{ Math.floor(business.objBusiness.deal) / 100 }}</span>
-      <span>&nbsp;&nbsp;</span>
-      <span class="field-label">备注：</span>
-      <span class="field-value">{{ business.objBusiness.dealnote }}</span>
+    <div>
+        <span class="label">计费：</span>
+        <span class="value">{{Math.floor(scopeThis.business.objBusiness.amount) / 100}}</span>
+
+        <span class="label">&nbsp;&nbsp;核收：</span>
+        <span class="value">{{Math.floor(scopeThis.business.objBusiness.deal) / 100}}</span>
+
+        <span class="label">&nbsp;&nbsp;备注：</span>
+        <span v-if="scopeThis.business.objBusiness.dealnote" class="value">
+            {{scopeThis.business.objBusiness.dealnote}}
+        </span>
+        <span v-else class="null-value">{{para.nullValue}}</span>
     </div>
-  </div>
 </template>
 
-<style scoped>
-@use './amount.scss';
-</style>
-
-<script>
-export default {
-  props: ['scopeThis'],
-  data() {
-    return {
-      business: null,
-    }
-  },
-  mounted() {
-    this.business = this.scopeThis.business
-  },
+<style scoped lang="scss">
+.label {
+    color: #2f0101;
 }
-</script>
+.value {
+    color: #0000FF;
+}
+.null-value {
+    color: #666666;
+}
+</style>

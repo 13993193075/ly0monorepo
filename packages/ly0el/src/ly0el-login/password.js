@@ -45,14 +45,12 @@ async function submit({scopeThis}) {
         },
         noSession: true,
     })
+    ElMessage(result.message)
     if (result.code === 0) {
-        ElMessage('登录账号验证成功')
         scopeThis.loginData.type = scopeThis.passwordData.type
         scopeThis.loginData.id_login = result.id_login
         scopeThis.loginData[scopeThis.passwordData.type] = scopeThis.passwordData.number
         await scopeThis.handlers.loggedin({scopeThis})
-    }else{
-        ElMessage('登录账号验证失败')
     }
 }
 

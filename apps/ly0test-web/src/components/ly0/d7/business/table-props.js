@@ -1,95 +1,91 @@
-// with-table标准句柄
-import handles from '../../../common/table/with-table/handles.js'
-// 日期格式
-import dateFormat from "../../../../utils/date-format.js"
-
-function getTableProps (scopeThis) {
-    return {
-        titleLine: {
-            text: '订单记录 - 维护'
-        },
-        topButtonGroups: {
-            box: [
-                {
-                    box: [
-                        {
-                            text: '全部',
-                            hdlClick: handles.reloadAll
-                        },
-                        {
-                            text: '刷新',
-                            hdlClick: handles.reload
-                        },
-                        {
-                            text: '查询',
-                            hdlClick: handles.findPopup
-                        },
-                        {
-                            text: '新增',
-                            hdlClick: handles.insertOnePopup
-                        }
-                    ]
-                }
-            ]
-        },
-        table: {
-            cols: [
-                {
-                    label: "订单编号",
-                    show: "expression",
-                    hdlExpression(scopeThis, row){
-                        if(scopeThis.pageData.data.arrShop.length > 1){
-                            return row.shop_name + "/" + row._id
-                        }else{
-                            return row._id
-                        }
-                    }
-                },
-                {
-                    label: "订单状态",
-                    show: "text",
-                    fieldName: "status_text"
-                },
-                {
-                    label: '交易时间',
-                    show: 'expression',
-                    hdlExpression(scopeThis, row){
-                        return dateFormat.dateFormat(row.time)
-                    }
-                },
-                {
-                    label: '客户信息',
-                    show: 'expression',
-                    hdlExpression(scopeThis, row){
-                        return (row.client_cellphone ? row.client_cellphone : "-") + "/" + (row.client_name ? row.client_name : "-")
-                    }
-                },
-                {
-                    label: '操作',
-                    show: 'button-group',
-                    buttonGroup: [
-                        {
-                            text: '订单详细',
-                            hdlClick(scopeThis, row){
-                                scopeThis.idBusiness.id_business = row._id
-                            },
-                        },
-                        {
-                            text: '修改',
-                            hdlClick: handles.updateOnePopup,
-                        },
-                        {
-                            text: '删除',
-                            hdlClick: handles.deleteOneSubmit,
-                            style: 'background-color:#ff640a; color:#ffffff;'
-                        }
-                    ]
-                }
-            ]
-        }
-    }
-}
+import {withTable} from '@yoooloo42/ly0el'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 
 export default {
-    getTableProps
+    titleLine: { // 标题线
+        text: "订单记录 - 维护"
+    },
+    topButtonGroups: [ // 置顶快捷按钮组
+        [
+            {
+                text: "全部",
+                hdlClick: withTable.reload
+            },
+            {
+                text: "刷新",
+                hdlClick: withTable.refresh
+            },
+            {
+                text: "查询",
+                hdlClick: withTable.popupFind
+            },
+            {
+                text: "新增",
+                hdlClick: withTable.popupInsertOne
+            }
+        ]
+    ],
+    table: {
+        hdlPageSizeChange: withTable.pageSizeChange,
+        hdlCurrentPageChange: withTable.currentPageChange,
+        cols: [
+            {
+                label: '订单编号',
+                show: 'expression',
+                hdlExpression({scopeThis, row}) {
+                    if (scopeThis.pgData.data.arrShop.length > 1) {
+                        return row.shop_name + '/' + row._id
+                    } else {
+                        return row._id
+                    }
+                },
+            },
+            {
+                label: '订单状态',
+                show: 'text',
+                fieldName: 'status_text',
+            },
+            {
+                label: '交易时间',
+                show: 'expression',
+                hdlExpression({scopeThis, row}) {
+                    return ly0utils.dateFormat.dateFormat(row.time)
+                },
+            },
+            {
+                label: '客户信息',
+                show: 'expression',
+                hdlExpression({scopeThis, row}) {
+                    return (row.client_cellphone ? row.client_cellphone : "-") + "/" +
+                        (row.client_name ? row.client_name : "-")
+                },
+            },
+            {
+                label: '操作',
+                show: 'button-group',
+                buttonGroup: [
+                    {
+                        text: "订单详细",
+                        size: "small",
+                        hdlClick: withTable.popupDoc
+                        // hdlClick({scopeThis, row}) {scopeThis.id_business = row._id}
+                    },
+                    {
+                        text: "修改",
+                        size: "small",
+                        hdlClick: withTable.popupUpdateOne
+                    },
+                    {
+                        text: "删除",
+                        size: "small",
+                        hdlClick: withTable.submitDeleteOne,
+                        style: {
+                            'background-color': '#ff640a',
+                            'color': '#ffffff'
+                        }
+                    }
+                ]
+            }
+        ]
+    }
 }
