@@ -51,9 +51,9 @@
             stripe
             border
             v-loading="myProps.table.loading.visible"
-            element-loading-text="myProps.table.loading.text"
-            element-loading-spinner="myProps.table.loading.spinner"
-            element-loading-background="myProps.table.loading.background"
+            :element-loading-text="myProps.table.loading.text"
+            :element-loading-spinner="myProps.table.loading.spinner"
+            :element-loading-background="myProps.table.loading.background"
             @cell-mouse-enter="hdl.cellMouseEnter"
             @row-click="hdl.rowClick"
             @selection-change="hdl.selectionChange"

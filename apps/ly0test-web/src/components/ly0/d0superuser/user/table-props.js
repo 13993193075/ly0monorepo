@@ -61,7 +61,12 @@ export default {
                     {
                         text: "修改",
                         size: "small",
-                        hdlClick: withTable.popupUpdateOne
+                        async hdlClick({scopeThis, row}){
+                            scopeThis.pgData.data.arrGroup0 = scopeThis.pgData.data.arrGroup.filter(i=>{
+                                return "" + i.id_dataunit === "" + row.id_dataunit
+                            })
+                            await withTable.popupUpdateOne({scopeThis, row})
+                        }
                     },
                     {
                         text: "删除",

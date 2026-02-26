@@ -65,9 +65,16 @@ async function withId_login({scopeThis}){
     }
     // 用户唯一：置用户组唯一
     if(scopeThis.loginData.ly0.arrUser.length === 1){
-        scopeThis.loginData.ly0.arrGroup = scopeThis.loginData.ly0.arrGroup.find(i=>{
-            return i.id_user === scopeThis.loginData.ly0.arrUser[0]._id
+        const result = scopeThis.loginData.ly0.arrGroup.find(i=>{
+            return i._id === scopeThis.loginData.ly0.arrUser[0].id_group
         })
+        if(!result){
+            ElMessage("用户组不存在")
+            scopeThis.showPg = "Password" // 返回密码登录页面
+            return
+        }else{
+            scopeThis.loginData.ly0.arrGroup = [result]
+        }
     }
 
     // 级联

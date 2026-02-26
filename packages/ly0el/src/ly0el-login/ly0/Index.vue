@@ -76,8 +76,8 @@
 import {onMounted} from "vue";
 const props = defineProps(['scopeThis'])
 
-onMounted(()=>{
+onMounted(async ()=>{
     // 获取用户及相关信息
-    props.scopeThis.handlers.ly0.withId_login({scopeThis: props.scopeThis})
+    await props.scopeThis.handlers.ly0.withId_login({scopeThis: props.scopeThis})
 })
 </script>

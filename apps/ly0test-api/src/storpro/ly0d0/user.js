@@ -124,7 +124,7 @@ async function insertOne(data) {
         operator: 'insertOne',
         update: {
             id_dataunit: objGroup.id_dataunit,
-            dataunit_name: objGroup.name,
+            dataunit_name: objGroup.dataunit_name,
             id_group: objGroup._id,
             group_name: objGroup.name,
             name: data.name
