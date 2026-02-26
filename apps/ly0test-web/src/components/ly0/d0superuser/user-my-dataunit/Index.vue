@@ -13,6 +13,7 @@
         :myProps="scopeThis.formProps"
         :scopeThis="scopeThis"
     ></ly0el-form>
+    <ly0el-newnumber v-if="scopeThis.newNumber.popup.visible" :Props="scopeThis.newNumber"></ly0el-newnumber>
 </template>
 
 <style lang="scss" scoped></style>
@@ -55,6 +56,15 @@ const scopeThis = reactive(
                 arrDataunit: [],
                 arrGroup: [],
                 arrGroup0: [],
+            }
+        },
+        newNumber: {
+            userTbl: 'ly0d0user',
+            userId: null,
+            popup: {
+                switch: true,
+                visible: false,
+                title: '注册新工号'
             }
         }
     }
