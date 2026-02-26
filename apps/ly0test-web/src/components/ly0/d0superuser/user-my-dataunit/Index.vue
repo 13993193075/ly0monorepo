@@ -40,11 +40,11 @@ const scopeThis = reactive(
         tableProps,
         formData: {},
         formProps: {},
-        queryInit: JSON.parse(JSON.stringify(query)),
+        queryInit: query,
         query: JSON.parse(JSON.stringify(query)),
         storpro,
         find,
-        insertOne: JSON.parse(JSON.stringify(insertOne)),
+        insertOne,
         updateOne,
         doc,
         handles: {
