@@ -22,6 +22,8 @@ async function newNumber(data) {
     }
     // 密码加密
     const passwordCipherText = crypto.Hash.sha256(data.password)
+
+    // 查询工号是否已被占用
     let result = await GQuery({
         tblName: 'ly0d0number',
         operator: 'findOne',
@@ -31,12 +33,35 @@ async function newNumber(data) {
         return {code: 1, message: '工号已被占用'}
     }
 
+    // 获取用户信息
     result = await GQuery({
-        tblName: 'ly0d0login',
-        operator: 'insertOne',
-        update: {count: 0}
+        tblName: data.userTbl,
+        operator: 'findOne',
+        query: {_id: data.userId},
     })
-    const objLogin = result.dataNew
+    const objUser = result.data
+
+    // 用户是否已注册登录账号
+    let objLogin = null
+    if(objUser.id_login){
+        // 用户已注册登录账号，获取账号信息
+        result = await GQuery({
+            tblName: 'ly0d0login',
+            operator: 'findOne',
+            query: {_id: objUser.id_login}
+        })
+        objLogin = result.data
+    }else{
+        // 否则，发生新的登录账号记录
+        result = await GQuery({
+            tblName: 'ly0d0login',
+            operator: 'insertOne',
+            update: {count: 0}
+        })
+        objLogin = result.dataNew
+    }
+
+    // 发生新的工号记录
     await GQuery({
         tblName: 'ly0d0number',
         operator: 'insertOne',
@@ -46,12 +71,17 @@ async function newNumber(data) {
             password: passwordCipherText,
         }
     })
-    await GQuery({
-        tblName: data.userTbl,
-        operator: 'updateOne',
-        query: {_id: data.userId},
-        update: {id_login: objLogin._id}
-    })
+
+    // 用户未注册过登录账号，完成注册
+    if(!objUser.id_login){
+        await GQuery({
+            tblName: data.userTbl,
+            operator: 'updateOne',
+            query: {_id: data.userId},
+            update: {id_login: objLogin._id}
+        })
+    }
+
     return {code: 0, message: '工号注册成功'}
 }
 
