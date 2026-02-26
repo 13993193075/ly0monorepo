@@ -28,26 +28,46 @@ export default {
         hdlCurrentPageChange: withTable.currentPageChange,
         cols: [
             {
-                label: '数据单元',
-                show: 'text',
-                fieldName: 'dataunit_name'
-            },
-            {
-                label: '用户组',
-                show: 'text',
-                fieldName: 'group_name'
+                label: '数据单元/用户组',
+                show: 'expression',
+                hdlExpression({scopeThis, row}){
+                    return row.dataunit_name + '/' + row.group_name;
+                }
             },
             {
                 label: '用户名称',
                 show: 'text',
                 fieldName: 'name'
             },
+            /*
             {
                 label: "图标",
                 show: "image",
                 fieldName: "icon",
                 imageWidth: "30px",
                 imageHeight: "30px"
+            },
+
+             */
+            {
+                label: '操作',
+                show: 'button-group',
+                buttonGroup: [
+                    {
+                        text: "注册新工号",
+                        size: "small",
+                        async hdlClick({scopeThis, row}){
+                            scopeThis.newNumber.userId = row._id;
+                            scopeThis.newNumber.popup.visible = true;
+                        }
+                    },
+                    {
+                        text: "绑定已有工号",
+                        size: "small",
+                        async hdlClick({scopeThis, row}){
+                        }
+                    },
+                ]
             },
             {
                 label: '操作',

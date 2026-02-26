@@ -13,6 +13,7 @@ import ly0elHeader from './ly0el-header/Index.vue'
 import ly0elImagelist from './ly0el-imagelist/Index.vue'
 import ly0elLogin from './ly0el-login/Index.vue'
 import ly0elMenu from './ly0el-menu/Index.vue'
+import ly0elNewnumber from './ly0el-newnumber/Index.vue'
 import ly0elRichtext from './ly0el-richtext/Index.vue'
 import ly0elTable from './ly0el-table/Index.vue'
 import ly0el_upload from './ly0el-upload/index.js'
@@ -41,6 +42,7 @@ export {
     ly0elImagelist,
     ly0elLogin,
     ly0elMenu,
+    ly0elNewnumber,
     ly0elRichtext,
     ly0elTable,
 
@@ -71,6 +73,7 @@ export default {
         app.component('ly0el-imagelist', ly0elImagelist);
         app.component('ly0el-login', ly0elLogin);
         app.component('ly0el-menu', ly0elMenu);
+        app.component('ly0el-newnumber', ly0elNewnumber);
         app.component('ly0el-richtext', ly0elRichtext);
         app.component('ly0el-table', ly0elTable);
         // 上传组件
@@ -97,6 +100,7 @@ export default {
     ly0elImagelist,
     ly0elLogin,
     ly0elMenu,
+    ly0elNewnumber,
     ly0elRichtext,
     ly0elTable,
 

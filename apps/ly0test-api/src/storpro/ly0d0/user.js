@@ -242,19 +242,26 @@ async function deleteOne(data) {
 
 // 获取页面初始化数据
 async function getPgData(data) {
-    // data: null
+    // data.id_dataunit
+
+    const q = {},
+        q0 = {}
+    if(data && data.id_dataunit){
+        q._id = data.id_dataunit
+        q0.id_dataunit = data.id_dataunit
+    }
 
     let result = await GQuery({
         tblName: 'ly0d0dataunit',
         operator: 'find',
-        query: {},
+        query: q,
         sort: {_id: -1}
     })
     const arrDataunit = result.data
     result = await GQuery({
         tblName: 'ly0d0group',
         operator: 'find',
-        query: {},
+        query: q0,
         sort: {_id: -1}
     })
     const arrGroup = result.data

@@ -134,69 +134,7 @@ function setPassword(data) {
     })
 }
 
-// 注册新工号（工号绑定）
-function new_number(data){
-    // data.id_login
-    // data.number
-    // data.password
-
-    return new Promise((resolve, reject)=>{
-        if(!data.id_login){
-            return resolve({code: 1, message: "没有账号id"})
-        }
-        if(!data.number){
-            return resolve({code: 1, message: "没有工号"})
-        }
-        if(!data.password){
-            return resolve({code: 1, message: "没有登录密码"})
-        }
-        // 登录密码格式
-        let result = ly0utils.regexp.password(data.password)
-        if (result.code !== 0) {
-            return resolve(result)
-        }
-        // 登录密码加密
-        let passwordCipherText = crypto.Hash.sha256(data.password)
-
-        GQuery({
-            tblName: "ly0d0login",
-            operator: "findOne",
-            query: {_id: data.id_login}
-        }).then(result=>{
-            let objLogin = result.data
-            if(!objLogin){
-                return resolve({code: 1, message: "账号id不存在"})
-            }
-            GQuery({
-                tblName: "ly0d0number",
-                operator: "findOne",
-                query: {
-                    number: data.number
-                }
-            }).then(result=>{
-                let objNumber = result.data
-                if(!!objNumber){
-                    return resolve({code: 1, message: "工号已存在"})
-                }
-
-                GQuery({
-                    tblName: "ly0d0number",
-                    operator: "insertOne",
-                    update: {
-                        id_login: data.id_login,
-                        number: data.number,
-                        password: passwordCipherText
-                    }
-                }).then(()=>{
-                    resolve({code: 0, message: "注册工号成功"})
-                })
-            })
-        })
-    })
-}
-
 export default {
     login,
     setPassword,
-    new_number
 }

@@ -66,7 +66,7 @@ function get({scopeThis}){
 
                     ly0request.ly0.storpro({
                         noSession: true,
-                        storproName: "ly0d0login.password.new_number",
+                        storproName: "ly0d0.newNumber.loggedin",
                         data: {
                             id_login: formData.id_login,
                             number: formData.number,

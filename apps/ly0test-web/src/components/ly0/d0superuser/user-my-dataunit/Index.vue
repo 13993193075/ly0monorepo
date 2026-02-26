@@ -21,14 +21,16 @@
 import { reactive, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router';
 import {withTable} from '@yoooloo42/ly0el'
-import tableData from './table-data.js'
-import tableProps from './table-props.js'
-import storpro from './storpro.js'
-import query from './query.js'
-import find from './find.js'
-import insertOne from './insertOne.js'
-import updateOne from './updateOne.js'
-import doc from './doc.js'
+import {request as ly0request} from '@yoooloo42/ly0browser'
+import tableData from '../user/table-data.js'
+import tableProps from '../user/table-props.js'
+import storpro from '../user/storpro.js'
+import query from '../user/query.js'
+import find from '../user/find.js'
+import insertOne from '../user/insertOne.js'
+import updateOne from '../user/updateOne.js'
+import doc from '../user/doc.js'
+const ly0session = ly0request.ly0.ly0sessionLoad()
 
 const scopeThis = reactive(
     {
@@ -37,18 +39,18 @@ const scopeThis = reactive(
         tableProps,
         formData: {},
         formProps: {},
-        queryInit: query,
+        queryInit: JSON.parse(JSON.stringify(query)),
         query: JSON.parse(JSON.stringify(query)),
         storpro,
         find,
-        insertOne,
+        insertOne: JSON.parse(JSON.stringify(insertOne)),
         updateOne,
         doc,
         handles: {
             withTable
         },
         pgData: {
-            query: null,
+            query: {id_dataunit: ly0session.dataunit._id},
             data: {
                 arrDataunit: [],
                 arrGroup: [],
@@ -59,6 +61,9 @@ const scopeThis = reactive(
 )
 
 onMounted(async ()=>{
+    scopeThis.queryInit.formData.id_dataunit = ly0session.dataunit._id
+    scopeThis.query.formData.id_dataunit = ly0session.dataunit._id
+    scopeThis.insertOne.formData.id_dataunit = ly0session.dataunit._id
     await withTable.init({scopeThis})
 })
 </script>
