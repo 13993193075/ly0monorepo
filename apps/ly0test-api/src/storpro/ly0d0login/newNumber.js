@@ -92,7 +92,7 @@ async function loggedin(data){
     // data.password
 
     if(!data.id_login){
-        return {code: 1, message: "没有账号id"}
+        return {code: 1, message: "没有登录账号id"}
     }
     if(!data.number){
         return {code: 1, message: "没有工号"}
@@ -115,7 +115,7 @@ async function loggedin(data){
     })
     const objLogin = result.data
     if(!objLogin){
-        return {code: 1, message: "账号id不存在"}
+        return {code: 1, message: "登录账号id不存在"}
     }
     result = await GQuery({
         tblName: "ly0d0number",
@@ -126,7 +126,7 @@ async function loggedin(data){
     })
     const objNumber = result.data
     if(!!objNumber){
-        return {code: 1, message: "工号已存在"}
+        return {code: 1, message: "工号已被占用"}
     }
 
     await GQuery({
@@ -140,7 +140,60 @@ async function loggedin(data){
     })
     return {code: 0, message: "注册工号成功"}
 }
+
+// 绑定已有工号
+async function bind(data){
+    // data.userTbl
+    // data.userId
+    // data.number
+    // data.password
+
+    if(!data.userTbl){
+        return {code: 1, message: "没有用户表名"}
+    }
+    if(!data.userId){
+        return {code: 1, message: "没有用户id"}
+    }
+    if(!data.number){
+        return {code: 1, message: "没有工号"}
+    }
+    if(!data.password){
+        return {code: 1, message: "没有登录密码"}
+    }
+    // 登录密码格式
+    let result = ly0utils.regexp.password(data.password)
+    if (result.code !== 0) {
+        return result
+    }
+    // 登录密码加密
+    let passwordCipherText = crypto.Hash.sha256(data.password)
+
+    result = await GQuery({
+        tblName: 'ly0d0number',
+        operator: 'findOne',
+        query: {
+            number: data.number,
+            password: passwordCipherText
+        }
+    })
+    if(result.code !== 0 || !result.data){
+        return {code: 1, message: '工号不存在或密码验证失败'}
+    }
+    const objNumber = result.data
+    result = await GQuery({
+        tblName: data.userTbl,
+        operator: 'updateOne',
+        query: {_id: data.userId},
+        update: {id_login: objNumber.id_login}
+    })
+    if(result.code !== 0 || !result.dataNew || !result.dataNew.id_login){
+        return {code: 1, message: '用户信息错误'}
+    }
+    return {code: 0, message: '工号绑定成功'}
+}
+
 export default {
     newNumber,
-    loggedin
+    loggedin,
+    bind
 }

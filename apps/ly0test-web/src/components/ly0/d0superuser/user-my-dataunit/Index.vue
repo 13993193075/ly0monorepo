@@ -31,6 +31,7 @@ import find from '../user/find.js'
 import insertOne from '../user/insertOne.js'
 import updateOne from '../user/updateOne.js'
 import doc from '../user/doc.js'
+import newNumber from '../user/newNumber.js'
 const ly0session = ly0request.ly0.ly0sessionLoad()
 
 const scopeThis = reactive(
@@ -40,7 +41,7 @@ const scopeThis = reactive(
         tableProps,
         formData: {},
         formProps: {},
-        queryInit: query,
+        queryInit: JSON.parse(JSON.stringify(query)),
         query: JSON.parse(JSON.stringify(query)),
         storpro,
         find,
@@ -58,15 +59,7 @@ const scopeThis = reactive(
                 arrGroup0: [],
             }
         },
-        newNumber: {
-            userTbl: 'ly0d0user',
-            userId: null,
-            popup: {
-                switch: true,
-                visible: false,
-                title: '注册新工号'
-            }
-        }
+        newNumber: JSON.parse(JSON.stringify(newNumber)),
     }
 )
 

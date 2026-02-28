@@ -30,6 +30,7 @@ import find from './find.js'
 import insertOne from './insertOne.js'
 import updateOne from './updateOne.js'
 import doc from './doc.js'
+import newNumber from './newNumber.js'
 
 const scopeThis = reactive(
     {
@@ -38,7 +39,7 @@ const scopeThis = reactive(
         tableProps,
         formData: {},
         formProps: {},
-        queryInit: query,
+        queryInit: JSON.parse(JSON.stringify(query)),
         query: JSON.parse(JSON.stringify(query)),
         storpro,
         find,
@@ -56,15 +57,7 @@ const scopeThis = reactive(
                 arrGroup0: [],
             }
         },
-        newNumber: {
-            userTbl: 'ly0d0user',
-            userId: null,
-            popup: {
-                switch: true,
-                visible: false,
-                title: '注册新工号'
-            }
-        }
+        newNumber: JSON.parse(JSON.stringify(newNumber)),
     }
 )
 

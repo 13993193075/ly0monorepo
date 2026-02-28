@@ -58,11 +58,7 @@
         v-model="scopeThis.sessionInfo.formData"
         :myProps="scopeThis.sessionInfo.formProps"
     ></ly0el-form>
-    <ly0el-form
-        v-if="scopeThis.newNumber && scopeThis.newNumber.formProps.popup.visible"
-        v-model="scopeThis.newNumber.formData"
-        :myProps="scopeThis.newNumber.formProps"
-    ></ly0el-form>
+    <ly0el-newnumber v-if="scopeThis.newNumber && scopeThis.newNumber.popup.visible" :Props="scopeThis.newNumber"></ly0el-newnumber>
     <ly0el-form
         v-if="scopeThis.cellphoneBind && scopeThis.cellphoneBind.formProps.popup.visible"
         v-model="scopeThis.cellphoneBind.formData"
@@ -92,7 +88,6 @@ import {request as ly0request} from '@yoooloo42/ly0browser'
 import userInfo from './user-info.js'
 import loginInfo from './login-info.js'
 import sessionInfo from './session-info.js'
-import newNumber from './bind/new-number.js'
 import cellphoneBind from './bind/cellphone-bind.js'
 import emailBind from './bind/email-bind.js'
 import wxBind from './bind/wx-bind.js'
@@ -106,7 +101,15 @@ const scopeThis = reactive({
     userInfo: null,
     loginInfo,
     sessionInfo: null,
-    newNumber: null,
+    newNumber: {
+        branch: 'loggedin',
+        id_login: ly0session.session.id_login,
+        popup: {
+            switch: true,
+            visible: false,
+            title: '注册新工号'
+        },
+    },
     cellphoneBind: null,
     emailBind: null,
     wxBind: null,
@@ -116,7 +119,6 @@ onMounted(() => {
     // 因为公共组件资源会通过install提前预置到项目中，所以在相关的.js文件中，ly0session必须动态加载
     scopeThis.userInfo = userInfo.get({scopeThis})
     scopeThis.sessionInfo = sessionInfo.get({scopeThis})
-    scopeThis.newNumber = newNumber.get({scopeThis})
     scopeThis.cellphoneBind = cellphoneBind.get({scopeThis})
     scopeThis.emailBind = emailBind.get({scopeThis})
     scopeThis.wxBind = wxBind.get({scopeThis})
@@ -136,7 +138,7 @@ async function handleSelect(key) {
         return
     }
     if (key === 'new-number') {
-        scopeThis.newNumber.formProps.popup.visible = true
+        scopeThis.newNumber.popup.visible = true
         return
     }
     if (key === 'cellphone-bind') {

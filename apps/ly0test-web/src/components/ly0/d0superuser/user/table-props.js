@@ -57,6 +57,7 @@ export default {
                         text: "注册新工号",
                         size: "small",
                         async hdlClick({scopeThis, row}){
+                            scopeThis.newNumber.branch = 'newNumber'
                             scopeThis.newNumber.userId = row._id;
                             scopeThis.newNumber.popup.visible = true;
                         }
@@ -65,6 +66,10 @@ export default {
                         text: "绑定已有工号",
                         size: "small",
                         async hdlClick({scopeThis, row}){
+                            scopeThis.newNumber.branch = 'bind'
+                            scopeThis.newNumber.popup.title = '绑定已有工号'
+                            scopeThis.newNumber.userId = row._id;
+                            scopeThis.newNumber.popup.visible = true;
                         }
                     },
                 ]
