@@ -48,11 +48,7 @@
         v-model="scopeThis.userInfo.formData"
         :myProps="scopeThis.userInfo.formProps"
     ></ly0el-form>
-    <compLoginInfo
-        v-if="scopeThis.loginInfo && scopeThis.loginInfo.popup.visible"
-        :id_login="scopeThis.ly0session.session.id_login"
-        :myProps="scopeThis.loginInfo"
-    ></compLoginInfo>
+    <ly0el-idlogin v-if="scopeThis.loginInfo && scopeThis.loginInfo.popup.visible" :Props="scopeThis.loginInfo"></ly0el-idlogin>
     <ly0el-form
         v-if="scopeThis.sessionInfo && scopeThis.sessionInfo.formProps.popup.visible"
         v-model="scopeThis.sessionInfo.formData"
@@ -82,7 +78,6 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import {reactive, onMounted} from 'vue'
-import compLoginInfo from './id_login/Index.vue'
 import compWxBind from './bind/WxBind.vue'
 import {request as ly0request} from '@yoooloo42/ly0browser'
 import userInfo from './user-info.js'

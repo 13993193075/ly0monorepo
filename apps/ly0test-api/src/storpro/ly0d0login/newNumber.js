@@ -1,5 +1,6 @@
 import {GQuery} from '../../main/GQuery.js'
 import {crypto} from '@yoooloo42/ly0nodejs'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 
 // 注册新工号（用户管理）
 async function newNumber(data) {
@@ -20,11 +21,15 @@ async function newNumber(data) {
     if(!data.password){
         return {code: 1, message: "没有登录密码"}
     }
+    let result = ly0utils.regexp.password(data.password)
+    if (!result) {
+        return {code: 1, message: '密码强度不足'}
+    }
     // 密码加密
     const passwordCipherText = crypto.Hash.sha256(data.password)
 
     // 查询工号是否已被占用
-    let result = await GQuery({
+    result = await GQuery({
         tblName: 'ly0d0number',
         operator: 'findOne',
         query: {number: data.number},
@@ -100,10 +105,9 @@ async function loggedin(data){
     if(!data.password){
         return {code: 1, message: "没有登录密码"}
     }
-    // 登录密码格式
     let result = ly0utils.regexp.password(data.password)
-    if (result.code !== 0) {
-        return result
+    if (!result) {
+        return {code: 1, message: '密码强度不足'}
     }
     // 登录密码加密
     let passwordCipherText = crypto.Hash.sha256(data.password)
@@ -160,15 +164,10 @@ async function bind(data){
     if(!data.password){
         return {code: 1, message: "没有登录密码"}
     }
-    // 登录密码格式
-    let result = ly0utils.regexp.password(data.password)
-    if (result.code !== 0) {
-        return result
-    }
     // 登录密码加密
-    let passwordCipherText = crypto.Hash.sha256(data.password)
+    const passwordCipherText = crypto.Hash.sha256(data.password)
 
-    result = await GQuery({
+    let result = await GQuery({
         tblName: 'ly0d0number',
         operator: 'findOne',
         query: {

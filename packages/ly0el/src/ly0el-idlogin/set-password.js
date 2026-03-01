@@ -11,6 +11,7 @@ export default {
     },
     formProps: {
         popup: {
+            switch: true,
             visible: false,
             title: "设置登录密码"
         },
@@ -57,13 +58,13 @@ export default {
             }
         ],
         submit: {
-            handle({formData, formProps}){
+            async handle({formData, formProps}){
                 if(!formData.passwordNew || (formData.passwordNew !== formData.passwordNewConfirm)){
                     ElMessage("新密码未输入或不一致")
                     return
                 }
 
-                ly0request.ly0.storpro({
+                const result = await ly0request.ly0.storpro({
                     noSession: true,
                     storproName: "ly0d0login.password.setPassword",
                     data: {
@@ -72,13 +73,12 @@ export default {
                         password: formData.passwordNew,
                         password_old: formData.passwordOld
                     }
-                }).then(result=>{
-                    ElMessage(result.message);
-                    if(result.code === 0){
-                        // 关闭弹窗
-                        formProps.popup.visible = false
-                    }
                 })
+                ElMessage(result.message);
+                if(result.code === 0){
+                    // 关闭弹窗
+                    formProps.popup.visible = false
+                }
             }
         }
     }

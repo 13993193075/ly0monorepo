@@ -14,6 +14,7 @@
         :scopeThis="scopeThis"
     ></ly0el-form>
     <ly0el-newnumber v-if="scopeThis.newNumber.popup.visible" :Props="scopeThis.newNumber"></ly0el-newnumber>
+    <ly0el-idlogin v-if="scopeThis.id_login.popup.visible" :Props="scopeThis.id_login"></ly0el-idlogin>
 </template>
 
 <style lang="scss" scoped></style>
@@ -23,6 +24,7 @@ import { reactive, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router';
 import {withTable} from '@yoooloo42/ly0el'
 import {request as ly0request} from '@yoooloo42/ly0browser'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 import tableData from '../user/table-data.js'
 import tableProps from '../user/table-props.js'
 import storpro from '../user/storpro.js'
@@ -32,6 +34,7 @@ import insertOne from '../user/insertOne.js'
 import updateOne from '../user/updateOne.js'
 import doc from '../user/doc.js'
 import newNumber from '../user/newNumber.js'
+import id_login from '../user/id_login.js'
 const ly0session = ly0request.ly0.ly0sessionLoad()
 
 const scopeThis = reactive(
@@ -41,12 +44,12 @@ const scopeThis = reactive(
         tableProps,
         formData: {},
         formProps: {},
-        queryInit: JSON.parse(JSON.stringify(query)),
-        query: JSON.parse(JSON.stringify(query)),
+        queryInit: ly0utils.deepClone.deepClone(query),
+        query: ly0utils.deepClone.deepClone(query),
         storpro,
-        find,
-        insertOne,
-        updateOne,
+        find: ly0utils.deepClone.deepClone(find),
+        insertOne: ly0utils.deepClone.deepClone(insertOne),
+        updateOne: ly0utils.deepClone.deepClone(updateOne),
         doc,
         handles: {
             withTable
@@ -60,6 +63,7 @@ const scopeThis = reactive(
             }
         },
         newNumber: JSON.parse(JSON.stringify(newNumber)),
+        id_login: JSON.parse(JSON.stringify(id_login)),
     }
 )
 
@@ -69,4 +73,20 @@ onMounted(async ()=>{
     scopeThis.insertOne.formData.id_dataunit = ly0session.dataunit._id
     await withTable.init({scopeThis})
 })
+
+// 注册新工号|绑定已有工号后刷新
+watch(
+    [
+        ()=>scopeThis.newNumber.popup.visible,
+        ()=>scopeThis.id_login.popup.visible,
+    ],
+    (
+        [newPopup1, newPopup2],
+        [oldPopup1, oldPopup2]
+    ) => {
+        if(newPopup1 === false || newPopup2 === false){
+            withTable.refresh({scopeThis, noMessage: true})
+        }
+    }
+)
 </script>

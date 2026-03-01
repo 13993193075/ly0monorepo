@@ -273,138 +273,20 @@ async function getPgData(data) {
     }
 }
 
-// 注册新账号
-async function newLogin(data){
-    // data.number
-    // data.password
-    // data.id_user
-    // data.usertbl
-
-    if(!data.number){
-        return {code: 1, message: "没有工号"}
-    }
-    if(!data.password){
-        return {code: 1, message: "没有登录密码"}
-    }
-    // 登录密码格式
-    if (!ly0utils.regexp.password(data.password)) {
-        return {code: 1, message: '登录密码格式错误'}
-    }
-    // 登录密码加密
-    const passwordCipherText = crypto.Hash.sha256(data.password)
-    if(!data.id_user){
-        return {code: 1, message: "没有用户id"}
-    }
-    // 用户表名
-    const usertbl = data.usertbl ? data.usertbl : "ly0d0user"
-
-    // 判断工号是否已存在
-    let result = await GQuery({
-        tblName: "ly0d0number",
-        operator: "findOne",
-        query: {number: data.number}
-    })
-    const objNumber = result.data
-    if(!!objNumber){
-        return {code: 1, message: "工号已存在，不能注册"}
-    }
-
-    // 新建登录账号
-    result = await GQuery({
-        tblName: "ly0d0login",
-        operator: "insertOne"
-    })
-    const objLogin = result.data
-    // 注册新工号
+// 登录账号取关
+async function id_loginSetNull({
+    userTbl = 'ly0d0user',
+    userId
+}){
     await GQuery({
-        tblName: "ly0d0number",
-        operator: "insertOne",
-        update: {
-            id_login: objLogin._id,
-            number: data.number,
-            password: passwordCipherText
-        }
-    })
-    // 账号关联
-    await GQuery({
-        tblName: usertbl,
+        tblName: userTbl,
         operator: "updateOne",
-        query: {_id: data.id_user},
-        update: {
-            id_login: objLogin._id
-        }
-    })
-    return {code: 0, message: "注册新账号成功"}
-}
-
-// 注册 - 使用已有账号
-async function oldLogin(data){
-    // data.number
-    // data.password
-    // data.id_user
-    // data.usertbl
-
-    if(!data.number){
-        return {code: 1, message: "没有工号"}
-    }
-    if(!data.password){
-        return {code: 1, message: "没有登录密码"}
-    }
-    // 登录密码格式
-    if (!ly0utils.regexp.password(data.password)) {
-        return {code: 1, message: '登录密码格式错误'}
-    }
-    // 登录密码加密
-    const passwordCipherText = crypto.Hash.sha256(data.password)
-    if(!data.id_user){
-        return {code: 1, message: "没有用户id"}
-    }
-    // 用户表名
-    const usertbl = data.usertbl ? data.usertbl : "ly0d0user"
-
-    // 判断工号是否已存在
-    let result = await GQuery({
-        tblName: "ly0d0number",
-        operator: "findOne",
-        query: {number: data.number}
-    })
-    const objNumber = result.data
-    if(!objNumber){
-        return {code: 1, message: "工号不存在，不能注册"}
-    }
-
-    if(objNumber.password !== passwordCipherText){
-        return {code: 1, message: "密码错误，不能注册"}
-    }
-
-    // 账号关联
-    await GQuery({
-        tblName: usertbl,
-        operator: "updateOne",
-        query: {_id: data.id_user},
-        update: {
-            id_login: objNumber.id_login
-        }
-    })
-    return {code: 0, message: "注册成功 - 使用已有账号"}
-}
-
-// 用户登录账号取关
-async function id_loginSetNull(data){
-    // data.id_user
-    // data.usertbl
-
-    // 用户表名
-    const usertbl = data.usertbl ? data.usertbl : "ly0d0user"
-    await GQuery({
-        tblName: usertbl,
-        operator: "updateOne",
-        query: {_id: data.id_user},
+        query: {_id: userId},
         update: {
             id_login: null
         }
     })
-    return {code: 0, message: "用户登录账号已取关"}
+    return {code: 0, message: "登录账号已取关"}
 }
 
 export default {
@@ -413,7 +295,5 @@ export default {
     updateOne,
     deleteOne,
     getPgData,
-    newLogin,
-    oldLogin,
     id_loginSetNull
 }

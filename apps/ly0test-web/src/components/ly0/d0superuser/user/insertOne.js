@@ -19,10 +19,10 @@ export default {
                             return scopeThis.pgData.data.arrDataunit
                         },
                         hdlChange({formData, scopeThis, value}){
-                            formData.id_group = null
                             scopeThis.pgData.data.arrGroup0 = scopeThis.pgData.data.arrGroup.filter(i=>{
                                 return "" + i.id_dataunit === "" + value
                             })
+                            formData.id_group = null
                         },
                         style: "width: 200px;",
                     },

@@ -1,26 +1,27 @@
 <template>
     <div style="font-size: large">
         <span>账号id - </span>
-        <span style="color: #770000">{{ scopeThis.id_login }}</span>
+        <span style="color: #770000">{{ scopeThis.Props.id_login }}</span>
         <el-button
             size="small"
             type="danger"
             plain
             round
-            :disabled="!scopeThis.destroy || scopeThis.readonly"
+            :disabled="!scopeThis.Props.destroy || scopeThis.Props.readonly"
             style="margin-left: 20px;"
-            @click="scopeThis.handles.destroy(scopeThis, {
-                id_login: scopeThis.id_login,
-                type: 'destroy'
+            @click="scopeThis.handles.destroy({
+                scopeThis,
+                type: {
+                    id_login: scopeThis.Props.id_login,
+                    type: 'destroy'
+                }
             })"
         >注销</el-button
       >
     </div>
     <div style="margin-bottom: 20px">
         <span style="font-size: x-small; color: #6a6a6a">{{
-            '[短信限额剩余次数：' + (scopeThis.loginData.objLogin && scopeThis.loginData.objLogin.count
-                ? scopeThis.loginData.objLogin.count
-                : 0) + ']'
+            '[短信限额剩余次数：' + (scopeThis.loginData.objLogin.count || 0) + ']'
         }}</span>
     </div>
     <table style="width: 100%">
@@ -40,14 +41,24 @@
                     <el-button
                         link
                         size="small"
-                        @click="scopeThis.handles.setPassword(scopeThis, item.number, 'number')"
-                        :disabled="scopeThis.readonly"
+                        @click="scopeThis.handles.setPassword({
+                            scopeThis,
+                            number: item.number,
+                            type: 'number'
+                        })"
+                        :disabled="scopeThis.Props.readonly"
                     >设置登录密码</el-button>
                     <el-button
                         link
                         size="small"
-                        @click="scopeThis.handles.destroy(scopeThis, { number: item.number, type: 'number' })"
-                        :disabled="index === 0 || !scopeThis.destroy || scopeThis.readonly"
+                        @click="scopeThis.handles.destroy({
+                            scopeThis,
+                            type: {
+                                number: item.number,
+                                type: 'number'
+                            }
+                        })"
+                        :disabled="index === 0 || !scopeThis.Props.destroy || scopeThis.Props.readonly"
                     >注销</el-button>
                 </td>
             </tr>
@@ -66,17 +77,24 @@
                     <el-button
                         link
                         size="small"
-                        @click="scopeThis.handles.setPassword(scopeThis, item.cellphone, 'cellphone')"
-                        :disabled="scopeThis.readonly"
+                        @click="scopeThis.handles.setPassword({
+                            scopeThis,
+                            number: item.cellphone,
+                            type: 'cellphone'
+                        })"
+                        :disabled="scopeThis.Props.readonly"
                     >设置登录密码</el-button>
                     <el-button
                         link
                         size="small"
-                        @click="scopeThis.handles.destroy(scopeThis, {
-                            cellphone: item.cellphone,
-                            type: 'cellphone',
+                        @click="scopeThis.handles.destroy({
+                            scopeThis,
+                            type: {
+                                cellphone: item.cellphone,
+                                type: 'cellphone',
+                            }
                         })"
-                        :disabled="scopeThis.readonly"
+                        :disabled="scopeThis.Props.readonly"
                     >注销</el-button>
                 </td>
             </tr>
@@ -95,14 +113,24 @@
                     <el-button
                         link
                         size="small"
-                        @click="scopeThis.handles.setPassword(scopeThis, item.email, 'email')"
-                        :disabled="scopeThis.readonly"
+                        @click="scopeThis.handles.setPassword({
+                            scopeThis,
+                            number: item.email,
+                            type: 'email'
+                        })"
+                        :disabled="scopeThis.Props.readonly"
                     >设置登录密码</el-button>
                     <el-button
                         link
                         size="small"
-                        @click="scopeThis.handles.destroy(scopeThis, { email: item.email, type: 'email' })"
-                        :disabled="scopeThis.readonly"
+                        @click="scopeThis.handles.destroy({
+                            scopeThis,
+                            type: {
+                                email: item.email,
+                                 type: 'email'
+                            }
+                        })"
+                        :disabled="scopeThis.Props.readonly"
                     >注销</el-button>
                 </td>
             </tr>
@@ -130,29 +158,54 @@
                             link
                             size="small"
                             @click="
-                                scopeThis.handles.destroy(scopeThis, {
-                                    wx_appid: item.appid,
-                                    wx_openid: item.openid,
-                                    wx_nickname: item.nickname,
-                                    type: 'wx'
+                                scopeThis.handles.destroy({
+                                    scopeThis,
+                                    type: {
+                                        wx_appid: item.appid,
+                                        wx_openid: item.openid,
+                                        wx_nickname: item.nickname,
+                                        type: 'wx'
+                                    }
                                 })"
-                            :disabled="scopeThis.readonly"
+                            :disabled="scopeThis.Props.readonly"
                         >注销</el-button>
                     </div>
                 </td>
             </tr>
         </tbody>
     </table>
+    
+    <ly0el-form
+        v-if="scopeThis.setPassword.formProps.popup.visible"
+        v-model="scopeThis.setPassword.formData"
+        :myProps="scopeThis.setPassword.formProps"
+    ></ly0el-form>
 </template>
 
 <style scoped>
 </style>
 
 <script setup>
-const props = defineProps({
-    scopeThis: {
-        type: Object,
-        default: () => ({})
-    }
+import handles from './handles.js'
+import setPassword from './set-password.js'
+import {onMounted, reactive} from "vue";
+
+const props = defineProps(['Props'])
+
+const scopeThis = reactive({
+    Props: props.Props,
+    loginData: {
+        objLogin: {},
+        arrNumber: [],
+        arrCellphone: [],
+        arrEmail: [],
+        arrWx: [],
+    },
+    setPassword,
+    handles
+})
+
+onMounted(async () => {
+    await scopeThis.handles.getData({scopeThis})
 })
 </script>
