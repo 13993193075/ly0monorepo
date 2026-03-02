@@ -2,7 +2,7 @@ import {ly0d4} from '@yoooloo42/ly0utils'
 import {GQuery} from '../../main/GQuery.js'
 
 // 内部模块：查询修正
-async function queryRevise (data) {
+function queryRevise (data) {
     let data0 = data ? data : {},
         data1 = {}
 
@@ -46,7 +46,7 @@ async function find (data) {
     // data.page
 
     // 查询修正
-    const query = await queryRevise(data.query)
+    const query = queryRevise(data.query)
     // 排序
     let sort
     if(data.sort && data.sort.label && data.sort.order){
@@ -61,6 +61,7 @@ async function find (data) {
     }else{
         sort = {_id: -1}
     }
+    sort = {goods_name: 1}
 
     const resultData = await GQuery({
         tblName: 'ly0d4price',
@@ -73,7 +74,7 @@ async function find (data) {
     const resultTotal = await GQuery({
         tblName: 'ly0d4price',
         operator: 'countDocuments',
-        query: {id_goods: data.query.id_goods}
+        query
     })
     return {code: 0, message: '',
         data: resultData.data,
@@ -82,7 +83,7 @@ async function find (data) {
 }
 
 // 内部模块：数据约束
-async function dataRule (data) {
+function dataRule (data) {
     // 不能提交
     if (!data.id_hotel) {
         return {code: 1, message: '旅店：必选项'}
@@ -111,7 +112,7 @@ async function insertOne (data) {
     // data.price
 
     // 数据约束
-    let result = await dataRule(data)
+    let result = dataRule(data)
     if (result.code === 1) {
         return result
     }
@@ -122,7 +123,7 @@ async function insertOne (data) {
         query: {_id: data.id_goods}
     })
     const objGoods = result.data
-    const objMethod = ly0d4.busicode.method.find(i=>{
+    const objMethod = ly0d4.busicode.pricingMethod.find(i=>{
         return i.code === data.method_code
     })
     result = await GQuery({
@@ -154,7 +155,7 @@ async function updateOne (data) {
     //  data.price
 
     // 数据约束
-    let result = await dataRule(data)
+    let result = dataRule(data)
     if (result.code === 1) {
         return result
     }
@@ -165,7 +166,7 @@ async function updateOne (data) {
         query: {_id: data.id_goods}
     })
     const objGoods = result.data
-    const objMethod = ly0d4.busicode.method.find(i=>{
+    const objMethod = ly0d4.busicode.pricingMethod.find(i=>{
         return i.code === data.method_code
     })
     await GQuery({
@@ -213,9 +214,11 @@ async function getPgData (data) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_hotel 当前用户信息：旅店id
 
-    let q = {id_dataunit: data.id_dataunit}
+    const q = {id_dataunit: data.id_dataunit}
+    const q0 = {id_dataunit: data.id_dataunit}
     if (data.id_hotel) {
         q._id = data.id_hotel
+        q0.id_hotel = data.id_hotel
     }
 
     let result = await GQuery({
@@ -227,9 +230,10 @@ async function getPgData (data) {
     result = await GQuery({
         tblName: 'ly0d4goods',
         operator: 'find',
-        query: q
+        query: q0
     })
     const arrGoods = result.data
+
     return {code: 0, message: "",
         data: {
             arrHotel,

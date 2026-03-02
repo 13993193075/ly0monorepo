@@ -115,7 +115,7 @@ const getPgData = async ({scopeThis}) => {
         data: scopeThis.pgData && scopeThis.pgData.query ? scopeThis.pgData.query : null,
     })
     if(result.code === 0){
-        ly0utils.deepClone.deepMerge(scopeThis.pgData, {data: result.data})
+        scopeThis.pgData.data = result.data
         ElMessage('已获取页面数据')
         return
     }

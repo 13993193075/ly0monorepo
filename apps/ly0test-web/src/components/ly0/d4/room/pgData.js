@@ -3,7 +3,7 @@ const ly0session = ly0request.ly0.ly0sessionLoad()
 export default {
     query: {
         id_dataunit: ly0session.dataunit._id,
-        id_hotel: ly0session.user.id_hotel ? ly0session.user.id_hotel : null,
+        id_hotel: ly0session.user.id_hotel || null,
     },
     data: {
         arrHotel: [],

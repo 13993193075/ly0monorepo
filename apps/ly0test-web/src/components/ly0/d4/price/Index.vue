@@ -51,6 +51,6 @@ const scopeThis = reactive(
 )
 
 onMounted(async ()=>{
-    scopeThis.handles.init({scopeThis})
+    await scopeThis.handles.init({scopeThis})
 })
 </script>
