@@ -9,9 +9,10 @@
     "src"
   ],
   "dependencies": {
-    "@yoooloo42/ly0utils": "workspace:*",
     "@yoooloo42/ly0browser": "workspace:*",
-    "qrcode": "^1.5.4"
+    "@yoooloo42/ly0utils": "workspace:*",
+    "qrcode": "^1.5.4",
+    "vue-router": "^5.0.2"
   },
   "devDependencies": {
     "@vueup/vue-quill": "^1.2.0",
@@ -21,6 +22,7 @@
   "peerDependencies": {
     "@vueup/vue-quill": "^1.2.0",
     "element-plus": "^2.13.2",
-    "vue": "^3.5.28"
+    "vue": "^3.5.28",
+    "vue-router": "^5.0.2"
   }
 }

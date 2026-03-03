@@ -1,6 +1,15 @@
 {
-    "uploadUrl": "/gsfy/upload",
-    "uploadFolder": "C:/gsfy/upload",
-    "imageUrl": "/gsfy/image",
-    "imageFolder": "C:/gsfy/image"
+    "branch": "test",
+    "test": {
+        "uploadUrl": "/gsfy/upload",
+        "uploadFolder": "C:/gsfy/upload",
+        "imageUrl": "/gsfy/image",
+        "imageFolder": "C:/gsfy/image"
+    },
+    "stellarium": {
+        "uploadUrl": "/gsfy/upload",
+        "uploadFolder": "C:/gsfy/upload",
+        "imageUrl": "/gsfy/image",
+        "imageFolder": "C:/gsfy/image"
+    }
 }

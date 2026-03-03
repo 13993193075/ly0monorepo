@@ -1,10 +1,8 @@
 import express from 'express'
-import http from 'http'
-import https from 'https'
 import path from 'path';
 import { fileURLToPath } from 'url';
 import {DB_Bridge} from '@yoooloo42/ly0nodejs'
-import {listen, gsfy, upload} from './config.js'
+import {mongodb, gsfy, upload} from './config.js'
 import routerUploadReq from '../upload-req/router.js'
 import routerStorpro from '../storpro/router.js'
 import routerWechatLoginRedirect from '../wechat-login-redirect/router.js'
@@ -13,16 +11,28 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express()
-const httpsSsl = {
-    key: listen.https_ssl.key_path,
-    cert: listen.https_ssl.cert_path
-}
 
 async function run() {
-    // 初始化MongoDB数据库连接
+    // 连接MongoDB数据库
+    let connectionUrl = 'mongodb://'
+    if(mongodb.security && mongodb.security === true){
+        // 安全模式
+        connectionUrl = connectionUrl +
+            process.env.MONGODB_USERNAME + ':' +
+            process.env.MONGODB_PASSWORD + '@' +
+            mongodb.ip + ':' +
+            mongodb.port + '/' +
+            process.env.MONGODB_DBNAME + '?authSource=' +
+            process.env.MONGODB_AUTHSOURCE
+    }else{
+        // 本地调试模式
+        connectionUrl = connectionUrl +
+            mongodb.ip + ':' +
+            mongodb.port + '/' +
+            process.env.MONGODB_DBNAME
+    }
     const MongoDB_clientInstance = await DB_Bridge.MongoDB.connectMongoDB({
-        // connectionUrl: 'mongodb://127.0.0.1:27017/ly0'
-        connectionUrl: 'mongodb://admin:y2026m02d25h17M51%2CLjh@192.168.0.200:27017/ly0?authSource=admin'
+        connectionUrl
     })
     global.ly0mongodb = DB_Bridge.MongoDB.getDB(MongoDB_clientInstance, 'ly0') // 全局变量：存储过程使用
 
@@ -108,10 +118,7 @@ async function run() {
     */
 
     return({
-        http,
-        https,
-        httpsSsl,
-        app
+        app,
     })
 }
 

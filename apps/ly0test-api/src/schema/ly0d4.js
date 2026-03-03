@@ -104,7 +104,7 @@ export default {
         "hotel_name": {"note": "旅店名称", "type": "string", "required": "true"},
         "text": {"note": "释义", "type": "string"}
     },
-    
+
     "ly0d4business": {
         "_id": {"note": "订单信息", "type": "mongodb.id", "required": "true"},
         "time_create": {"note": "创建时间", "type": "date", "required": "true"},

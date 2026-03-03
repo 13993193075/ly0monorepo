@@ -78,6 +78,9 @@ importers:
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
+      print-js:
+        specifier: ^1.6.0
+        version: 1.6.0
       xlsx:
         specifier: ^0.18.5
         version: 0.18.5
@@ -93,6 +96,9 @@ importers:
       qrcode:
         specifier: ^1.5.4
         version: 1.5.4
+      vue-router:
+        specifier: ^5.0.2
+        version: 5.0.2(@vue/compiler-sfc@3.5.28)(vue@3.5.28)
     devDependencies:
       '@vueup/vue-quill':
         specifier: ^1.2.0

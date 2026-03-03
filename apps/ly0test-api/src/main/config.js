@@ -10,27 +10,36 @@ const __dirname = path.dirname(__filename);
 const gsfy_path = path.join(__dirname, '../config/gsfy.json');
 const imageDomain_path = path.join(__dirname, '../config/image-domain.json');
 const listen_path = path.join(__dirname, '../config/listen.json');
+const mongodb_path = path.join(__dirname, '../config/mongodb.json');
 const upload_path = path.join(__dirname, '../config/upload.json');
 
 const gsfy_str = FileDB.utf8.readFileSync(gsfy_path).data
 const imageDomain_str = FileDB.utf8.readFileSync(imageDomain_path).data
 const listen_str = FileDB.utf8.readFileSync(listen_path).data
+const mongodb_str = FileDB.utf8.readFileSync(mongodb_path).data
 const upload_str = FileDB.utf8.readFileSync(upload_path).data
 
 const gsfy = JSON.parse(gsfy_str)
 const imageDomain = JSON.parse(imageDomain_str)
 const listen = JSON.parse(listen_str)
+const mongodb = JSON.parse(mongodb_str)
 const upload = JSON.parse(upload_str)
 
+const export_gsfy = gsfy[gsfy.branch],
+    export_imageDomain = imageDomain[imageDomain.branch],
+    export_mongodb = mongodb[mongodb.branch],
+    export_upload = upload[upload.branch]
 export {
-    gsfy,
-    imageDomain,
+    export_gsfy as gsfy,
+    export_imageDomain as imageDomain,
     listen,
-    upload
+    export_mongodb as mongodb,
+    export_upload as upload
 }
 export default {
-    gsfy,
-    imageDomain,
+    gsfy: export_gsfy,
+    imageDomain: export_imageDomain,
     listen,
-    upload
+    mongodb: export_mongodb,
+    upload: export_upload
 }

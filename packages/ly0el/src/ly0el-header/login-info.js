@@ -1,11 +1,14 @@
-import {request as ly0request} from '@yoooloo42/ly0browser'
-const ly0session = ly0request.ly0.ly0sessionLoad()
+function get({scopeThis}){
+    return {
+        id_login: scopeThis.ly0session.session.id_login,
+        readonly: false,
+        destroy: false,
+        popup: {
+            switch: true,
+            visible: false
+        },
+    }
+}
 export default {
-    id_login: ly0session.session.id_login,
-    readonly: false,
-    destroy: false,
-    popup: {
-        switch: true,
-        visible: false
-    },
+    get
 }

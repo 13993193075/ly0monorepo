@@ -1,5 +1,6 @@
 {
     "port": 443,
+    "type": "local-port",
     "https_ssl": {
         "key_path": "./https.ssl/20250701.stuffs.top.key",
         "cert_path": "./https.ssl/20250701.stuffs.top.pem"

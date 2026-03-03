@@ -1,13 +1,13 @@
 <template>
     <div class="container">
         <div class="left">
-            <img class="group-image" v-if="!!hdlGetGroupIcon()" :src="hdlGetGroupIcon()" />
+            <img class="group-image" v-if="!!hdlGetGroupIcon({scopeThis})" :src="hdlGetGroupIcon({scopeThis})" />
             <img class="group-image" v-else src="./group.png" />
             {{
-                (scopeThis.ly0session.dataunit && scopeThis.ly0session.dataunit.name
+                (scopeThis.ly0session && scopeThis.ly0session.dataunit && scopeThis.ly0session.dataunit.name
                 ? scopeThis.ly0session.dataunit.name
                 : '&lt;数据单元&gt;') + ' | ' +
-                    (scopeThis.ly0session.group && scopeThis.ly0session.group.name ? scopeThis.ly0session.group.name : '&lt;用户组&gt;')
+                    (scopeThis.ly0session && scopeThis.ly0session.group && scopeThis.ly0session.group.name ? scopeThis.ly0session.group.name : '&lt;用户组&gt;')
             }}
         </div>
         <div class="right">
@@ -22,9 +22,9 @@
             >
                 <el-sub-menu index="0">
                     <template v-slot:title>
-                        <img class="user-image" v-if="!!hdlGetUserIcon()" :src="hdlGetUserIcon()" />
+                        <img class="user-image" v-if="!!hdlGetUserIcon({scopeThis})" :src="hdlGetUserIcon({scopeThis})" />
                         <img class="user-image" v-else src="./user.jpg" />
-                        {{ hdlGetUserName() }}
+                        {{ hdlGetUserName({scopeThis}) }}
                     </template>
                     <el-menu-item class="user-menu-item" index="user-info">业务用户</el-menu-item>
                     <el-menu-item class="user-menu-item" index="login-info">我的账号</el-menu-item>
@@ -88,17 +88,16 @@ import emailBind from './bind/email-bind.js'
 import wxBind from './bind/wx-bind.js'
 
 const routerInstance = useRouter()
-const ly0session = ly0request.ly0.ly0sessionLoad()
 const scopeThis = reactive({
     routerInstance,
-    ly0session,
+    ly0session: null,
     activeIndex: '0',
     userInfo: null,
-    loginInfo,
+    loginInfo: null,
     sessionInfo: null,
     newNumber: {
         branch: 'loggedin',
-        id_login: ly0session.session.id_login,
+        id_login: null,
         popup: {
             switch: true,
             visible: false,
@@ -112,8 +111,11 @@ const scopeThis = reactive({
 
 onMounted(() => {
     // 因为公共组件资源会通过install提前预置到项目中，所以在相关的.js文件中，ly0session必须动态加载
+    scopeThis.ly0session = ly0request.ly0.ly0sessionLoad()
     scopeThis.userInfo = userInfo.get({scopeThis})
+    scopeThis.loginInfo = loginInfo.get({scopeThis})
     scopeThis.sessionInfo = sessionInfo.get({scopeThis})
+    scopeThis.newNumber.id_login = scopeThis.ly0session.session.id_login
     scopeThis.cellphoneBind = cellphoneBind.get({scopeThis})
     scopeThis.emailBind = emailBind.get({scopeThis})
     scopeThis.wxBind = wxBind.get({scopeThis})
@@ -162,13 +164,13 @@ async function handleSelect(key) {
     }
 }
 
-function hdlGetGroupIcon() {
-    return scopeThis.ly0session.group && scopeThis.ly0session.group.icon
+function hdlGetGroupIcon({scopeThis}) {
+    return scopeThis.ly0session && scopeThis.ly0session.group && scopeThis.ly0session.group.icon
         ? ly0request.ly0.domain + scopeThis.ly0session.group.icon
         : ''
 }
 
-function hdlGetUserName() {
+function hdlGetUserName({scopeThis}) {
     let userName = ''
     if (
         scopeThis.ly0session &&
@@ -177,14 +179,14 @@ function hdlGetUserName() {
         scopeThis.ly0session.session.usertbl === 'ly0d0user'
     ) {
         userName =
-            scopeThis.ly0session.user && scopeThis.ly0session.user.name
+            scopeThis.ly0session && scopeThis.ly0session.user && scopeThis.ly0session.user.name
                 ? scopeThis.ly0session.user.name
                 : '&lt;用户名称&gt;'
     }
     return userName
 }
 
-function hdlGetUserIcon() {
+function hdlGetUserIcon({scopeThis}) {
     let userIcon = ''
     if (
         scopeThis.ly0session &&
@@ -193,7 +195,7 @@ function hdlGetUserIcon() {
         scopeThis.ly0session.session.usertbl === 'ly0d0user'
     ) {
         userIcon =
-            scopeThis.ly0session.user && scopeThis.ly0session.user.icon
+            scopeThis.ly0session && scopeThis.ly0session.user && scopeThis.ly0session.user.icon
                 ? ly0request.ly0.domain + scopeThis.ly0session.user.icon
                 : ''
     }

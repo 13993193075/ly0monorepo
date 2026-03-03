@@ -29,6 +29,7 @@ export const ROUTES_LY0 = [
         name: 'ly0d4',
         component: () => import('../../components/ly0/d4/Index.vue'),
     },
+    /*
     {
         path: '/ly0/d5',
         name: 'ly0d5',
@@ -74,14 +75,19 @@ export const ROUTES_LY0 = [
         name: 'ly0d13',
         component: () => import('../../components/ly0/d13/Index.vue'),
     },
+
+     */
     {
         path: '/ly0/d14',
         name: 'ly0d14',
         component: () => import('../../components/ly0/d14/Index.vue'),
     },
+    /*
     {
         path: '/ly0/d15',
         name: 'ly0d15',
         component: () => import('../../components/ly0/d15/Index.vue'),
     },
+
+     */
 ]
