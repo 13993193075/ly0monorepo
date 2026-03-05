@@ -4,7 +4,7 @@ import ImageSave from '../../main/image-save.js'
 import {FileDB} from 'packages/ly0libs/src/index.js'
 
 // 内部模块：查询修正
-function queryRevise(data) {
+function queryRevise({data}) {
     let data0 = data ? data : {}, data1 = {}
     if (data0._id) {
         data1._id = data0._id
@@ -21,7 +21,7 @@ function queryRevise(data) {
 }
 
 // 分页查询
-function find(data) {
+function find({data}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit 当前用户信息：数据单元
@@ -77,7 +77,7 @@ function find(data) {
 }
 
 // 内部模块：数据约束
-function dataRule(data) {
+function dataRule({data}) {
     if (!data.title) {
         return {code: 1, message: "标题：必填项"}
     }
@@ -88,7 +88,7 @@ function dataRule(data) {
 }
 
 // 插入一条记录
-function insertOne(data) {
+function insertOne({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.content
     // data.appendix
@@ -169,7 +169,7 @@ function insertOne(data) {
 }
 
 // 插入一条记录
-function insertOne0(data) {
+function insertOne0({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.content
     // data.appendix
@@ -242,7 +242,7 @@ function insertOne0(data) {
 }
 
 // 查询一条记录
-function findOne(data) {
+function findOne({data}) {
     // data._id
 
     return new Promise((resolve, reject) => {
@@ -262,7 +262,7 @@ function findOne(data) {
 }
 
 // 修改一条记录
-function updateOne(data) {
+function updateOne({data}) {
     // data._id
     // data.id_dataunit 当前用户信息：数据单元
     // data.content
@@ -343,7 +343,7 @@ function updateOne(data) {
 }
 
 // 修改一条记录
-function updateOne0(data) {
+function updateOne0({data}) {
     // data._id
     // data.id_dataunit 当前用户信息：数据单元
     // data.content
@@ -415,7 +415,7 @@ function updateOne0(data) {
 }
 
 // 删除一条记录
-function deleteOne(data) {
+function deleteOne({data}) {
     // data._id
 
     return new Promise(function (resolve, reject) {

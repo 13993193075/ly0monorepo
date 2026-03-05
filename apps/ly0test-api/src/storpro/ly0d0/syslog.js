@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 内部模块：查询修正
-function queryRevise(data) {
+function queryRevise({data}) {
     // 只查我的数据单元 - 空查询
     if(data.id_dataunit && data.id_dataunit === "myDataunitNone"){
         return {
@@ -88,7 +88,7 @@ function queryRevise(data) {
 }
 
 // 分页查询
-function find(data) {
+function find({data}) {
     // data.query
     // data.query._id
     // data.query.id_login

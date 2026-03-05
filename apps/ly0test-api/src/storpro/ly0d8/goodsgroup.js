@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 内部模块：查询修正
-function queryRevise(data) {
+function queryRevise({data}) {
     return new Promise((resolve, reject) => {
         let data0 = data ? data : {}, data1 = {}
         if (data0._id) {
@@ -25,7 +25,7 @@ function queryRevise(data) {
 }
 
 // 分页查询
-function find(data) {
+function find({data}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit 当前用户信息：数据单元
@@ -78,7 +78,7 @@ function find(data) {
 }
 
 // 内部模块：数据约束
-function dataRule(data) {
+function dataRule({data}) {
     // 不能提交
     if (!data.id_unit) {
         return {code: 1, message: "库管单位：必选项"}
@@ -90,7 +90,7 @@ function dataRule(data) {
 }
 
 // 插入一条记录
-function insertOne(data) {
+function insertOne({data}) {
     // data.id_unit
     // data.text
 
@@ -129,7 +129,7 @@ function insertOne(data) {
 }
 
 // 查询一条记录
-function findOne(data) {
+function findOne({data}) {
     // data._id
 
     return new Promise((resolve, reject) => {
@@ -147,7 +147,7 @@ function findOne(data) {
 }
 
 // 修改一条记录
-function updateOne(data) {
+function updateOne({data}) {
     // data._id
     // data.id_unit
     // data.text
@@ -185,7 +185,7 @@ function updateOne(data) {
 }
 
 // 删除一条记录
-function deleteOne(data) {
+function deleteOne({data}) {
     let _id = data._id
 
     return new Promise((resolve, reject) => {
@@ -255,7 +255,7 @@ function deleteOne(data) {
 }
 
 // 获取页面初始化数据
-function getPageData(data) {
+function getPageData({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_unit 当前用户信息：库管单位id
 

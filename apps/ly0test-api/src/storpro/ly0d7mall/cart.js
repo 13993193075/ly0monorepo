@@ -3,7 +3,7 @@ import id_business from "../ly0d7/id_business.js"
 import {GBT} from '@yoooloo42/ly0utils'
 
 // 获取购物车信息
-async function getCart(data){
+async function getCart({data}){
     // data.id_guest
 
     let result = await GQuery({
@@ -39,7 +39,7 @@ async function getCart(data){
 }
 
 // 加入购物车
-async function addOne(data){
+async function addOne({data}){
     // data.id_goods
     // data.id_guest
 
@@ -155,7 +155,7 @@ async function deleteOne({id_bGoods}){
 }
 
 // 修改数量
-async function setCount(data){
+async function setCount({data}){
     // data.id_bGoods
     // data.count
 
@@ -171,7 +171,7 @@ async function setCount(data){
 }
 
 // 成交
-async function deal(data){
+async function deal({data}){
     // data.id_business
     // data.postal.code6
     // data.postal.address

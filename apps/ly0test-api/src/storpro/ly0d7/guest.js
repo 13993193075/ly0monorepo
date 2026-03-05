@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import {GBT} from 'packages/ly0utils/src/index.js'
 
 // 内部模块：查询修正
-function queryRevise(data) {
+function queryRevise({data}) {
     const data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -42,7 +42,7 @@ function queryRevise(data) {
 }
 
 // 分页查询
-async function find(data) {
+async function find({data}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit
@@ -90,7 +90,7 @@ async function find(data) {
 }
 
 // 内部模块：数据约束
-function dataRule(data) {
+function dataRule({data}) {
     if (!data.id_dataunit) {
         return {code: 1, message: '数据单元：必选项'}
     }
@@ -110,7 +110,7 @@ function dataRule(data) {
 }
 
 // 新增一条记录
-async function insertOne(data) {
+async function insertOne({data}) {
     // data.id_dataunit
     // data.name
     // data.gbt2260code
@@ -153,7 +153,7 @@ async function insertOne(data) {
 }
 
 // 修改一条记录
-async function updateOne(data) {
+async function updateOne({data}) {
     // data._id
     // data.id_dataunit
     // data.name

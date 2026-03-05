@@ -3,7 +3,7 @@ import {GBT} from '@yoooloo42/ly0utils'
 import code from './code/index.js'
 
 // 内部模块：查询修正
-function queryRevise(data) {
+function queryRevise({data}) {
     let data0 = data ? data : {}, data1 = {}
     if (data0._id) {
         data1._id = data0._id
@@ -94,7 +94,7 @@ function queryRevise(data) {
 }
 
 // 分页查询
-function find(data) {
+function find({data}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit 当前用户信息：数据单元
@@ -158,7 +158,7 @@ function find(data) {
 }
 
 // 内部模块：数据约束
-function dataRule(data) {
+function dataRule({data}) {
     if (!data.f0name) {
         return {code: 1, message: "姓名：必填项"}
     }
@@ -178,7 +178,7 @@ function gbt2260text(code6){
 }
 
 // 插入一条记录
-function insertOne(data) {
+function insertOne({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.f0name
     // data.f0birthdate
@@ -269,7 +269,7 @@ function insertOne(data) {
 }
 
 // 查询一条记录
-function id_ly0d14d0(data) {
+function id_ly0d14d0({data}) {
     // data.id_ly0d14d0
 
     return new Promise((resolve, reject) => {
@@ -382,7 +382,7 @@ function id_ly0d14d0(data) {
 }
 
 // 修改一条记录
-function updateOne(data) {
+function updateOne({data}) {
     // data._id
     // data.id_dataunit 当前用户信息：数据单元
     // data.f0name
@@ -469,7 +469,7 @@ function updateOne(data) {
 }
 
 // 删除一条记录
-function deleteOne(data) {
+function deleteOne({data}) {
     let _id = data._id
 
     return new Promise(function (resolve, reject) {
@@ -544,7 +544,7 @@ function deleteOne(data) {
 }
 
 // 获取页面渲染数据
-function getPgData (data) {
+function getPgData ({data}) {
     // data: null
 
     return new Promise(function (resolve, reject) {
@@ -562,7 +562,7 @@ function getPgData (data) {
 }
 
 // 修改：配偶信息
-function updateOneF1(data) {
+function updateOneF1({data}) {
     // data._id
     // data.f1name
     // data.f1birthdate
@@ -603,7 +603,7 @@ function updateOneF1(data) {
 }
 
 // 修改：孕产信息
-function updateOneF2(data) {
+function updateOneF2({data}) {
     // data._id
     // data.f2height
     // data.f2weight

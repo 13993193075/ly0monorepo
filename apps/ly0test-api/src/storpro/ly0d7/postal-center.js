@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import code from './code.js'
 
 // 内部模块：查询修正
-function queryRevise(data) {
+function queryRevise({data}) {
     const data0 = data ? data : {}, data1 = {}
     if (data0._id) {
         data1._id = data0._id
@@ -92,7 +92,7 @@ function queryRevise(data) {
 }
 
 // 分页查询
-async function find(data) {
+async function find({data}) {
     // data.query
     // data.query._id
     // data.query.number
@@ -148,7 +148,7 @@ async function find(data) {
 }
 
 // 修改邮寄状态
-async function setPostalStatus(data) {
+async function setPostalStatus({data}) {
     // data._id
     // data.postal_status_code
 

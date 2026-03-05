@@ -3,7 +3,7 @@ import {imageDomain} from "../../main/config.js"
 import ImageSave from '../../main/image-save.js'
 
 // 内部模块：查询修正
-function queryRevise (data) {
+function queryRevise ({data}) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -20,7 +20,7 @@ function queryRevise (data) {
 }
 
 // 分页查询
-function find (data) {
+function find ({data}) {
     // data.query
     // data.query._id
     // data.query.note
@@ -74,7 +74,7 @@ function find (data) {
 }
 
 // 内部模块：数据约束
-function dataRule (data) {
+function dataRule ({data}) {
     return new Promise((resolve, reject) => {
         if (!data.note) {
             return resolve({code: 1, message: '备注不能为空'})
@@ -84,7 +84,7 @@ function dataRule (data) {
 }
 
 // 插入一条记录
-function insertOne (data) {
+function insertOne ({data}) {
     // data.note
     // data.appendix
     const data_appendix = []
@@ -134,7 +134,7 @@ function insertOne (data) {
 }
 
 // 修改一条记录
-function updateOne (data) {
+function updateOne ({data}) {
     // data._id
     // data.note
     // data.appendix
@@ -186,7 +186,7 @@ function updateOne (data) {
 }
 
 // 删除一条记录
-function deleteOne (data) {
+function deleteOne ({data}) {
     // data._id
 
     return new Promise(function (resolve, reject) {

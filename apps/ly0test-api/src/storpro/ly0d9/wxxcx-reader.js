@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import ImageSave from '../../main/image-save.js'
 
 //提交抄表照片
-function savePhoto(data) {
+function savePhoto({data}) {
     //data.id_property
     //data.id_metername
     //data.photo
@@ -85,7 +85,7 @@ function savePhoto(data) {
 }
 
 //提交抄表读数
-function readout (data) {
+function readout ({data}) {
     //data._id
     //data.readout
 

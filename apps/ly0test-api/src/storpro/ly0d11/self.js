@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import code from "./code.js"
 
 // 内部模块：查询修正
-function queryRevise (data) {
+function queryRevise ({data}) {
     return new Promise((resolve, reject) => {
         let data0 = data ? data : {},
             data1 = {}
@@ -26,7 +26,7 @@ function queryRevise (data) {
 }
 
 // 分页查询
-function find (data) {
+function find ({data}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit 当前用户信息：数据单元
@@ -79,7 +79,7 @@ function find (data) {
 }
 
 // 内部模块：数据约束
-function dataRule (data) {
+function dataRule ({data}) {
     return new Promise(function (resolve, reject) {
         if (!data.id_carpark) {
             return resolve({code: 1, message: '停车场：必选项'})
@@ -92,7 +92,7 @@ function dataRule (data) {
 }
 
 // 插入一条记录
-function insertOne (data) {
+function insertOne ({data}) {
     // data.id_carpark
     // data.name
     // data.term
@@ -139,7 +139,7 @@ function insertOne (data) {
 }
 
 // 查询一条记录
-function findOne (data) {
+function findOne ({data}) {
     // data._id
 
     return new Promise(function (resolve, reject) {
@@ -156,7 +156,7 @@ function findOne (data) {
 }
 
 // 修改一条记录
-function updateOne (data) {
+function updateOne ({data}) {
     // data._id
     // data.id_carpark
     // data.name
@@ -203,7 +203,7 @@ function updateOne (data) {
 }
 
 // 删除一条记录
-function deleteOne (data) {
+function deleteOne ({data}) {
     // data._id
 
     return new Promise(function (resolve, reject) {
@@ -218,7 +218,7 @@ function deleteOne (data) {
 }
 
 // 获取页面初始化数据
-function getPageData (data) {
+function getPageData ({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_carpark 当前用户信息：停车场id
 

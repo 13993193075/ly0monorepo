@@ -82,7 +82,7 @@ function amountItemGoods (para) {
 }
 
 // 获取物业列表
-function getProperty(data) {
+function getProperty({data}) {
     let id_dataunit = data.id_dataunit, // 当前用户信息：数据单元
         owner_cellphone = data.owner_cellphone; // 当前用户信息：手机号
 
@@ -99,7 +99,7 @@ function getProperty(data) {
 }
 
 // 获取收费记录
-function getRecords(data) {
+function getRecords({data}) {
     let id_property = data.id_property // 当前物业 _id
 
     return new Promise((resolve, reject) => {
@@ -346,7 +346,7 @@ function getRecords(data) {
 }
 
 // 查询支付流水，查询支付状态并同步
-function getPayment(data) {
+function getPayment({data}) {
     let id_property = data.id_property // 当前物业 _id
 
     return new Promise(function (resolve, reject) {
@@ -432,7 +432,7 @@ function reset(para){
 }
 
 // 微信支付.客户微信号付款
-function wxzf1(data) {
+function wxzf1({data}) {
     let js_code = data.js_code, // 客户临时票据
         id_property = data.id_property,
         arrBGoodsNoClear = data.arrBGoodsNoClear,
@@ -484,7 +484,7 @@ function wxzf1(data) {
 }
 
 // 微信支付：中止支付
-function wxzfFail(data) {
+function wxzfFail({data}) {
     let id_property = data.id_property // 当前物业 _id
 
     return new Promise(function (resolve, reject) {
@@ -505,7 +505,7 @@ function wxzfFail(data) {
 }
 
 // 获取抄表记录
-function getMeterRecords(data){
+function getMeterRecords({data}){
     let id_property = data.id_property // 当前物业 _id
 
     return new Promise((resolve, reject)=>{

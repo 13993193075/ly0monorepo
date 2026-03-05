@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import {GBT} from '@yoooloo42/ly0utils'
 
 // 内部模块：查询修正
-function queryRevise (data) {
+function queryRevise ({data}) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -28,7 +28,7 @@ function queryRevise (data) {
 }
 
 // 分页查询
-function find (data) {
+function find ({data}) {
     // data.query
     // data.query.code2
     // data.query.text2
@@ -81,7 +81,7 @@ function find (data) {
 }
 
 // 内部模块：数据约束
-function dataRule (data) {
+function dataRule ({data}) {
     // 不能提交
     if (!data.code2) {
         return {code: 1, message: '省级编码：必填项'}
@@ -99,7 +99,7 @@ function dataRule (data) {
 }
 
 // 插入一条记录
-function insertOne (data) {
+function insertOne ({data}) {
     // data.code2
     // data.text2
     // data.code4
@@ -131,7 +131,7 @@ function insertOne (data) {
 }
 
 // 修改一条记录
-function updateOne (data) {
+function updateOne ({data}) {
     // data._id
     // data.code2
     // data.text2
@@ -163,7 +163,7 @@ function updateOne (data) {
 }
 
 // 删除一条记录
-function deleteOne (data) {
+function deleteOne ({data}) {
     // data._id
 
     return new Promise(function (resolve, reject) {
@@ -178,41 +178,32 @@ function deleteOne (data) {
 }
 
 // 级联
-function code2(data){
+async function code2({data}){
     // data.code2
 
-    return new Promise(function (resolve, reject) {
-        GQuery({
-            tblName: 'ly0d3gbt2260code4',
-            operator: 'find',
-            query: {code2: data.code2}
-        }).then(result => {
-            resolve({code: 0, message: '',
-                arrCode4: result.data
-            })
-        })
+    const result = await GQuery({
+        tblName: 'ly0d3gbt2260code4',
+        operator: 'find',
+        query: {code2: data.code2}
     })
+    return {code: 0, message: '',
+        arrCode4: result.data
+    }
 }
 
 // 代码导入
-function loadAll(data){
-    // data: null
-
-    return new Promise(function (resolve, reject) {
-        GQuery({
-            tblName: 'ly0d3gbt2260code4',
-            operator: 'deleteMany',
-            query: {}
-        }).then(() => {
-            GQuery({
-                tblName: 'ly0d3gbt2260code4',
-                operator: 'insertMany',
-                update: GBT.gbt2260code4
-            }).then(() => {
-                resolve({code: 0, message: '导入成功'})
-            })
-        })
+async function loadAll(){
+    await GQuery({
+        tblName: 'ly0d3gbt2260code4',
+        operator: 'deleteMany',
+        query: {}
     })
+    await GQuery({
+        tblName: 'ly0d3gbt2260code4',
+        operator: 'insertMany',
+        update: GBT.gbt2260code4
+    })
+    return {code: 0, message: '导入成功'}
 }
 
 export default {

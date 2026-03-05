@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import {imageDomain} from "../../main/config.js";
 
 // 内部模块：查询修正
-function queryRevise (data) {
+function queryRevise ({data}) {
     return new Promise((resolve, reject) => {
         let data0 = data ? data : {}, data1 = {}
         if (data0._id) {
@@ -44,7 +44,7 @@ function queryRevise (data) {
 }
 
 // 分页查询
-function find (data) {
+function find ({data}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit 当前用户信息：数据单元
@@ -106,7 +106,7 @@ function find (data) {
 }
 
 // 获取页面初始化数据
-function getPageData (data) {
+function getPageData ({data}) {
     // data.id_property
 
     return new Promise((resolve, reject) => {

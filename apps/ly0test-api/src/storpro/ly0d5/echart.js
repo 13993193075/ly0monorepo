@@ -2,7 +2,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 时段应收统计
-function echart(data) {
+function echart({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_restaurant 当前用户信息：餐馆id
 

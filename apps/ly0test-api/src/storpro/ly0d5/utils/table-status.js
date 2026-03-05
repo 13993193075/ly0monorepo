@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import code from "../code.js"
 
 // 修改餐位状态
-function setTableStatus (data) {
+function setTableStatus ({data}) {
     // data.id_table
     // data.status_code
 
@@ -51,7 +51,7 @@ function setTableStatus (data) {
 }
 
 // 同步餐位状态：不能修改其它订单的餐位状态
-function setTableStatusWithBusiness (data) {
+function setTableStatusWithBusiness ({data}) {
     // data.id_business
 
     return new Promise((resolve, reject) => {
@@ -137,7 +137,7 @@ function setTableStatusWithBusiness (data) {
 }
 
 // 预订
-function book(data) {
+function book({data}) {
     // data.id_business
 
     return new Promise((resolve, reject) => {
@@ -160,7 +160,7 @@ function book(data) {
 }
 
 // 入住
-function arrive(data) {
+function arrive({data}) {
     // data.id_business
 
     return new Promise((resolve, reject) => {
@@ -183,7 +183,7 @@ function arrive(data) {
 }
 
 // 离开
-function leave(data) {
+function leave({data}) {
     // data.id_business
 
     return new Promise((resolve, reject) => {

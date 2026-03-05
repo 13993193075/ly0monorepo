@@ -72,7 +72,7 @@
                     #default="scope"
                     v-if="col.hdlVisible ? col.hdlVisible({scopeThis}) : true"
                     v-model="col.fieldName"
-                    :label="col.label"
+                    :label="col.hdlLabel ? col.hdlLabel({scopeThis, col}) : col.label"
                     :sortable="col.sortable"
                     :sort-method="(row2, row1)=>{
                         if(col.hdlSortMethod){

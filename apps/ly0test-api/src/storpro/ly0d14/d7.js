@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import code from './code/index.js'
 
 // 修改：社会支持篇
-function updateOne (data) {
+function updateOne ({data}) {
     // data.id_ly0d14d0
     // data.f0code
     // data.f1code

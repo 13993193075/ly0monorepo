@@ -2,7 +2,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 获取旅店及相关信息
-function getHotel(data) {
+function getHotel({data}) {
     // data.userId
 
     return new Promise((resolve, reject) => {
@@ -37,7 +37,7 @@ function getHotel(data) {
 }
 
 // 分页查询
-function getRoom(data) {
+function getRoom({data}) {
     // data.id_hotel
     // data.roomno
     // data.id_roomplace
@@ -75,7 +75,7 @@ function getRoom(data) {
 }
 
 // 退房
-function toStatus3(data) {
+function toStatus3({data}) {
     // data.id_room
 
     return new Promise((resolve, reject) => {
@@ -91,7 +91,7 @@ function toStatus3(data) {
 }
 
 // 就绪
-function toStatus4(data) {
+function toStatus4({data}) {
     // data.id_room
 
     return new Promise((resolve, reject) => {
@@ -107,7 +107,7 @@ function toStatus4(data) {
 }
 
 // 客房备忘
-function memo(data) {
+function memo({data}) {
     // data.id_room
     // data.memo
     // data.recorder_cellphone

@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import {Feie} from 'packages/ly0libs/src/index.js'
 
 // 获取当前业务单位小票机列表，以供前端人工选择要使用的打印机
-function getPrinters(data) {
+function getPrinters({data}) {
     // data.id_property
 
     return new Promise((resolve, reject) => {
@@ -44,7 +44,7 @@ function getPrinters(data) {
 }
 
 // 飞鹅云打印
-function feie(data) {
+function feie({data}) {
     let objUnit = data.objUnit,
         scene = data.scene,
         arrPrinter = data.arrPrinter,
@@ -122,7 +122,7 @@ function feie(data) {
     })
 }
 
-function print(data) {
+function print({data}) {
     let scene = "前台总账", // 使用场景
         id_property = data.id_property,
         id_business = data.id_business ? data.id_business : null,

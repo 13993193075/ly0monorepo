@@ -21,7 +21,9 @@
 
 <script setup>
 import { reactive, onMounted, watch } from 'vue'
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
+import {request as ly0request} from "@yoooloo42/ly0browser";
+import {utils as ly0utils} from "@yoooloo42/ly0utils"
 import {withTable} from '@yoooloo42/ly0el'
 import tableData from './table-data.js'
 import tableProps from './table-props.js'
@@ -31,13 +33,14 @@ import find from './find.js'
 import insertOne from './insertOne.js'
 import updateOne from './updateOne.js'
 import doc from './doc.js'
+import pgData from "./pgData.js";
 import newNumber from './newNumber.js'
 import id_login from './id_login.js'
-import {utils as ly0utils} from "@yoooloo42/ly0utils";
 
 const scopeThis = reactive(
     {
         routerInstance: useRouter(),
+        ly0session: null,
         tableData,
         tableProps,
         formData: {},
@@ -49,16 +52,9 @@ const scopeThis = reactive(
         insertOne: ly0utils.deepClone.deepClone(insertOne),
         updateOne: ly0utils.deepClone.deepClone(updateOne),
         doc,
+        pgData: ly0utils.deepClone.deepClone(pgData),
         handles: {
             withTable
-        },
-        pgData: {
-            query: null,
-            data: {
-                arrDataunit: [],
-                arrGroup: [],
-                arrGroup0: [],
-            }
         },
         newNumber: JSON.parse(JSON.stringify(newNumber)),
         id_login: JSON.parse(JSON.stringify(id_login)),
@@ -66,6 +62,7 @@ const scopeThis = reactive(
 )
 
 onMounted(async ()=>{
+    scopeThis.ly0session = ly0request.ly0.ly0sessionLoad()
     await withTable.init({scopeThis})
 })
 

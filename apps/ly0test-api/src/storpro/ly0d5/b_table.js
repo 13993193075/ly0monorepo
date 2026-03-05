@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import utils from "./utils/index.js"
 
 // 内部模块：查询修正
-function queryRevise(data) {
+function queryRevise({data}) {
     let data0 = data ? data : {}, data1 = {}
     if (data0._id) {
         data1._id = data0._id
@@ -16,7 +16,7 @@ function queryRevise(data) {
 }
 
 // 分页查询
-function find(data) {
+function find({data}) {
     // data.query
     // data.query._id
     // data.query.id_business
@@ -86,7 +86,7 @@ function dataRule (data, branch) {
 }
 
 // 插入一条记录
-function insertOne(data) {
+function insertOne({data}) {
     // data.id_business
     // data.id_diningplace
     // data.id_table
@@ -154,7 +154,7 @@ function insertOne(data) {
 }
 
 // 查询一条记录
-function findOne(data) {
+function findOne({data}) {
     // data._id
 
     return new Promise((resolve, reject) => {
@@ -171,7 +171,7 @@ function findOne(data) {
 }
 
 // 修改一条记录
-function updateOne(data) {
+function updateOne({data}) {
     // _id
     // data.id_business
     // data.id_diningplace
@@ -239,7 +239,7 @@ function updateOne(data) {
 }
 
 // 删除一条记录
-function deleteOne(data) {
+function deleteOne({data}) {
     // data._id
 
     return new Promise(function (resolve, reject) {
@@ -268,7 +268,7 @@ function deleteOne(data) {
 }
 
 // 获取页面初始化数据
-function getPageData(data) {
+function getPageData({data}) {
     // data.id_business
 
     return new Promise(function (resolve, reject) {
@@ -314,7 +314,7 @@ function getPageData(data) {
 }
 
 // 插入多条记录
-function insertMany (data) {
+function insertMany ({data}) {
     // data.id_business
     // data.arrTable
 

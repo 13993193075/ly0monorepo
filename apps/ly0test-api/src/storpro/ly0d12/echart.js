@@ -1,6 +1,6 @@
 import {GQuery} from '../../main/GQuery.js'
 
-function echart(data) {
+function echart({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_place 当前用户信息：场所id
 

@@ -1,9 +1,5 @@
-import {crypto} from '@yoooloo42/ly0nodejs'
-import {utils as ly0utils} from '@yoooloo42/ly0utils'
-import {GQuery} from '../../main/GQuery.js'
-
 // 密码登录
-async function login(data){
+async function login({data, dependencies}) {
     // data.number 工号
     // data.type 工号类型：number, cellphone, email
     // data.password 登录密码
@@ -24,7 +20,7 @@ async function login(data){
         return {code: 1, message: "没有登录密码"}
     }
     // 密码加密
-    let passwordCipherText = crypto.Hash.sha256(data.password)
+    let passwordCipherText = dependencies.ly0nodejs.crypto.Hash.sha256(data.password)
     // 表名及查询条件
     let tblName = "ly0d0number", q = {}
     if(data.type === "cellphone"){
@@ -34,7 +30,7 @@ async function login(data){
     }
     q[type] = data.number
     // 获取注册信息
-    const result = await GQuery({
+    const result = await dependencies.GQuery.GQuery({
         tblName,
         operator: "findOne",
         query: q
@@ -62,7 +58,7 @@ async function login(data){
 }
 
 // 修改登录密码
-async function setPassword(data) {
+async function setPassword({data, dependencies}) {
     // data.number
     // data.type
     // data.password
@@ -86,13 +82,13 @@ async function setPassword(data) {
     }
 
     // 新密码格式
-    let result = ly0utils.regexp.password(data.password)
+    let result = dependencies.ly0utils.utils.regexp.password(data.password)
     if (!result) {
         return {code: 1, message: '新密码格式错误或强度不够'}
     }
     // 密码加密
-    const passwordCipherText = crypto.Hash.sha256(data.password)
-    const passwordCipherText_old = crypto.Hash.sha256(data.password_old)
+    const passwordCipherText = dependencies.ly0nodejs.crypto.Hash.sha256(data.password)
+    const passwordCipherText_old = dependencies.ly0nodejs.crypto.Hash.sha256(data.password_old)
 
     // 表名及查询条件
     let tblName = "ly0d0number", q = {}
@@ -104,7 +100,7 @@ async function setPassword(data) {
     q[type] = data.number
 
     // 获取注册信息
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName,
         operator: "findOne",
         query: q
@@ -118,7 +114,7 @@ async function setPassword(data) {
     }
 
     // 修改密码
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName,
         operator: "updateOne",
         query: {_id: objNumber._id},

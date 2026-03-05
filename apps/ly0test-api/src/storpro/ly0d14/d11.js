@@ -3,7 +3,7 @@ import {imageDomain} from "../../main/config.js"
 import ImageSave from '../../main/image-save.js'
 
 // 插入一条记录
-function insertOne(data) {
+function insertOne({data}) {
     // data.id_ly0d14d0
     // data.name
     // data.image
@@ -61,7 +61,7 @@ function insertOne(data) {
 }
 
 // 删除一条记录
-function deleteOne(data) {
+function deleteOne({data}) {
     // data._id
 
     return new Promise(function (resolve, reject) {
@@ -84,7 +84,7 @@ function deleteOne(data) {
 }
 
 // 修改一条记录
-function updateOne(data){
+function updateOne({data}){
     // data._id
     // data.name
 
@@ -101,7 +101,7 @@ function updateOne(data){
 }
 
 //
-function find(data){
+function find({data}){
     // data.id_ly0d14d0
 
     return new Promise(function (resolve, reject) {

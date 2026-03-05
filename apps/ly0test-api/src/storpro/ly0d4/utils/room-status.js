@@ -2,7 +2,7 @@ import {GQuery} from '../../../main/GQuery.js'
 import {ly0d4} from '@yoooloo42/ly0utils'
 
 // 修改房态
-async function setRoomStatus (data) {
+async function setRoomStatus ({data}) {
     // data.id_room
     // data.status_code
 
@@ -49,7 +49,7 @@ async function setRoomStatus (data) {
 }
 
 // 同步房态：不能修改其它订单的房态
-async function setRoomStatusWithBusiness(data) {
+async function setRoomStatusWithBusiness({data}) {
     // data.id_business
     try {
         // 获取订单基本信息
@@ -154,7 +154,7 @@ async function setRoomStatusWithBusiness(data) {
 }
 
 // 预订
-async function book(data) {
+async function book({data}) {
     // data.id_business
 
     await GQuery({ // 订单状态重置：预订
@@ -173,7 +173,7 @@ async function book(data) {
 }
 
 // 入住
-async function arrive(data) {
+async function arrive({data}) {
     // data.id_business
 
     await GQuery({ // 订单状态重置：入住
@@ -192,7 +192,7 @@ async function arrive(data) {
 }
 
 // 离开
-async function leave(data) {
+async function leave({data}) {
     // data.id_business
 
     let result = await GQuery({ // 查询支付状态

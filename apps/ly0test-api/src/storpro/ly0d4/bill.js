@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 内部模块：查询修正
-function queryRevise (data) {
+function queryRevise ({data}) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -18,7 +18,7 @@ function queryRevise (data) {
 }
 
 // 分页查询
-async function find (data) {
+async function find ({data}) {
     // data.query
     // data.query._id
     // data.query.id_business
@@ -64,7 +64,7 @@ async function find (data) {
 }
 
 // 内部模块：数据约束
-function dataRule (data) {
+function dataRule ({data}) {
     // 不能提交
     if (!/^[0-9]+$/.test(data.amount)) {
         return {code: 1, message: '金额：必填项，>= 0'}
@@ -73,7 +73,7 @@ function dataRule (data) {
 }
 
 // 插入一条记录
-async function insertOne (data) {
+async function insertOne ({data}) {
     // data.id_business
     // data.amount
     // data.note
@@ -119,7 +119,7 @@ async function insertOne (data) {
 }
 
 // 修改一条记录
-async function updateOne (data) {
+async function updateOne ({data}) {
     // data._id
     // data.id_business
     // data.amount
@@ -164,7 +164,7 @@ async function updateOne (data) {
 }
 
 // 删除一条记录
-async function deleteOne (data) {
+async function deleteOne ({data}) {
     // data._id
 
     await GQuery({

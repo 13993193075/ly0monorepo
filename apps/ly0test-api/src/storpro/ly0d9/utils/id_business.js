@@ -1,7 +1,7 @@
 import {GQuery} from '../../../main/GQuery.js'
 
 // 服务类项目计费
-function amount(data) {
+function amount({data}) {
     // data.price 单价
     // data.method 计费方法
     // data.area 计费面积
@@ -50,7 +50,7 @@ function amount(data) {
 }
 
 // 获取 id_business 对应的物业（已制单）账目信息
-function id_business (data) {
+function id_business ({data}) {
     // data.id_business
 
     return new Promise((resolve, reject) => {
@@ -148,7 +148,7 @@ function id_business (data) {
 }
 
 // 获取物业未制单账目信息
-function id_property (data) {
+function id_property ({data}) {
     // data.id_property
 
     return new Promise((resolve, reject) => {
@@ -251,7 +251,7 @@ function id_property (data) {
 }
 
 // 制单
-function business_new(data){
+function business_new({data}){
     // data.id_property
     return new Promise((resolve, reject) => {
         GQuery({
@@ -357,7 +357,7 @@ function business_new(data){
 }
 
 // 取消制单
-function business_cancel(data){
+function business_cancel({data}){
     // data.id_property
     return new Promise((resolve, reject) => {
         GQuery({

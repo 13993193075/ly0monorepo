@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import ly0d2code from "../ly0d2/code.js"
 
 // 分页查询
-function find(data){
+function find({data}){
     // data.query
     // data.query.id_dataunit
     // data.sort.label
@@ -56,7 +56,7 @@ function find(data){
 }
 
 // 设置支付状态
-function setStatus(data){
+function setStatus({data}){
     // data._id
     // data.status_code
 

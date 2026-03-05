@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 获取场所列表
-function getPlace (data) {
+function getPlace ({data}) {
     // data.id_dataunit 当前用户信息：数据单元
 
     return new Promise(function (resolve, reject) {
@@ -19,7 +19,7 @@ function getPlace (data) {
 }
 
 // 获取位置信息
-function getPosition (data) {
+function getPosition ({data}) {
     // data.id_dataunit 当前用户信息：数据单元
 
     return new Promise(function (resolve, reject) {
@@ -36,7 +36,7 @@ function getPosition (data) {
 }
 
 // 获取教室信息
-function getRoom (data) {
+function getRoom ({data}) {
     // data.query
     // data.query.id_dataunit 当前用户信息：数据单元
     // data.query.id_place
@@ -79,7 +79,7 @@ function getRoom (data) {
 }
 
 // 获取座位及相关综合信息
-function getSeat (data) {
+function getSeat ({data}) {
     // data.id_room
     // data.time
 
@@ -185,7 +185,7 @@ function getSeat (data) {
 
 // 取消预约
 // 某一用户某一天某一时段只能有一条记录
-function cancel (data) {
+function cancel ({data}) {
     // data.user_cellphone 当前用户信息：手机号码
     // data.user_name 当前用户信息：用户名称
     // data.id_day
@@ -211,7 +211,7 @@ function cancel (data) {
 }
 
 // 提交预约
-function submit (data) {
+function submit ({data}) {
     // data.user_cellphone 当前用户信息：手机号码
     // data.user_name 当前用户信息：用户名称
     // data.id_seat
@@ -286,7 +286,7 @@ function submit (data) {
 }
 
 // 我的预约记录
-function myAppointment (data) {
+function myAppointment ({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.user_cellphone 当前用户信息：手机号码
     // data.date

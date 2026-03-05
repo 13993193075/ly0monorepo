@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 获取页面数据
-async function getPgData (data) {
+async function getPgData ({data}) {
     // data.id_dataunit
     // data.id_hotel
 

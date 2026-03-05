@@ -4,7 +4,7 @@ import ly0d5business from './business.js'
 import ly0d5b_table from './b_table.js'
 
 // 获取餐位状态
-function getPageData (data) {
+function getPageData ({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_restaurant 当前用户信息：餐馆id
 
@@ -49,7 +49,7 @@ function getPageData (data) {
 }
 
 // 用餐登记
-function newBusiness (data) {
+function newBusiness ({data}) {
     // data.client_cellphone
     // data.client_name
     // data.peoples
@@ -98,7 +98,7 @@ function newBusiness (data) {
 }
 
 // 修改状态
-function setStatus (data) {
+function setStatus ({data}) {
     // data._id
     // data.status_code
 

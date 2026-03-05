@@ -1,7 +1,7 @@
 import {GQuery} from '../../../main/GQuery.js'
 
 // 查询客房是否已被使用
-async function roomUsed(data){
+async function roomUsed({data}){
     // data.id_b_goods ID排除
     // data.id_room
     // data.checkin
@@ -51,7 +51,7 @@ async function roomUsed(data){
 }
 
 // 自动配房
-async function allocation(data) {
+async function allocation({data}) {
     try {
         const thisTime = new Date();
 

@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import dataunitClear from './dataunit-clear.js'
 
 // 内部模块：查询修正
-function queryRevise (data) {
+function queryRevise ({data}) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -18,7 +18,7 @@ function queryRevise (data) {
 }
 
 // 分页查询
-function find (data) {
+function find ({data}) {
     // data.query
     // data.query._id
     // data.query.name
@@ -67,7 +67,7 @@ function find (data) {
 }
 
 // 内部模块：数据约束
-function dataRule (data) {
+function dataRule ({data}) {
     if (!data.name) {
         return {code: 1, message: '名称：必填项'}
     }
@@ -75,7 +75,7 @@ function dataRule (data) {
 }
 
 // 插入一条记录
-function insertOne (data) {
+function insertOne ({data}) {
     // data.name
     // data.systemoff
 
@@ -101,7 +101,7 @@ function insertOne (data) {
 }
 
 // 修改一条记录
-function updateOne (data) {
+function updateOne ({data}) {
     // data._id
     // data.name
     // data.systemoff
@@ -127,7 +127,7 @@ function updateOne (data) {
 }
 
 // 删除一条记录
-function deleteOne (data) {
+function deleteOne ({data}) {
     let _id = data._id
 
     return new Promise(function (resolve, reject) {
@@ -147,7 +147,7 @@ function deleteOne (data) {
     })
 }
 
-function systemOff (data) {
+function systemOff ({data}) {
     // data._id
     // data.systemoff
 

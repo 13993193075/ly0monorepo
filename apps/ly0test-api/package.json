@@ -4,13 +4,9 @@
   "description": "",
   "main": "src/index.js",
   "type": "module",
-  "files": [
-    "src/index.js",
-    "src"
-  ],
   "dependencies": {
-    "@yoooloo42/ly0utils": "workspace:*",
     "@yoooloo42/ly0nodejs": "workspace:*",
+    "@yoooloo42/ly0utils": "workspace:*",
     "express": "^5.2.1"
   },
   "scripts": {

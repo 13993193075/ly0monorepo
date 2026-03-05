@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 内部模块：数据约束：批量新增
-function dataRuleBatch(data) {
+function dataRuleBatch({data}) {
     return new Promise((resolve, reject) => {
         GQuery({
             tblName: "ly0d12room",
@@ -34,7 +34,7 @@ function dataRuleBatch(data) {
 }
 
 // 批量新增
-function batch(data) {
+function batch({data}) {
     // data.id_room
     // data.row_from
     // data.row_to
@@ -81,7 +81,7 @@ function batch(data) {
 
 // 批量删除
 // 安全警告：可能会删除关联数据
-function deleteMany(data) {
+function deleteMany({data}) {
     // data.id_room
     // data.row_from
     // data.row_to

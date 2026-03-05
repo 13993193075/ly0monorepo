@@ -2,7 +2,7 @@ import {blindboxes} from "packages/ly0utils/src/index.js"
 const regexp = blindboxes.regexp
 
 // 内部模块：查询修正
-function queryRevise(data) {
+function queryRevise({data}) {
     return new Promise((resolve, reject) => {
         let data0 = data ? data : {}, data1 = {}
         if (data0._id) {

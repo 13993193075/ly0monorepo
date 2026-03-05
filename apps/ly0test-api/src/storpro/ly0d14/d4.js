@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 内部模块：数据约束
-function dataRule (data) {
+function dataRule ({data}) {
     // 不能提交
     if ((data.f0uncertain !== 'true') && !(/^[0-7]?$/.test(data.f0))) {
         return {code: 1, message: '1.1. 取值范围：0-7'}
@@ -32,7 +32,7 @@ function dataRule (data) {
 }
 
 // 修改：运动篇
-function updateOne (data) {
+function updateOne ({data}) {
     // data.id_ly0d14d0
     // data.f0uncertain
     // data.f0

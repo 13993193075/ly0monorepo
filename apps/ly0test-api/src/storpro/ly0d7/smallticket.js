@@ -34,7 +34,7 @@ async function getPrinters({id_business}) {
 }
 
 // 飞鹅云打印
-async function feie(data) {
+async function feie({data}) {
     const objShop = data.objShop,
         scene = data.scene,
         arrPrinter = data.arrPrinter,
@@ -97,7 +97,7 @@ async function feie(data) {
     return { code: 0, message: "打印成功" };
 }
 
-async function print(data) {
+async function print({data}) {
     let scene = "前台总账", // 使用场景,
         id_business = data.id_business, // 订单 ID
         arrPrinter = data.arrPrinter // 前端人工选择要使用的打印机

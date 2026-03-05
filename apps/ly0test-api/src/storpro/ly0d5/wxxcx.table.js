@@ -5,7 +5,7 @@ import utils from './utils/index.js'
 import ly0d2wxzf from '../ly0d2/wxzf.js'
 
 // 查询餐位信息
-function tableScan(data) {
+function tableScan({data}) {
     let tableId = data.tableId ? data.tableId : null,
         tableNo = '',
         businessId = data.businessId ? data.businessId : null
@@ -84,7 +84,7 @@ function tableScan(data) {
 }
 
 // 获取菜单
-function getMenu(data) {
+function getMenu({data}) {
     // data.tableId
 
     return new Promise((resolve, reject) => {
@@ -154,7 +154,7 @@ function getMenu(data) {
 }
 
 // 获取订单
-function getBusiness(data) {
+function getBusiness({data}) {
     //data.tableId
 
     return new Promise((resolve, reject) => {
@@ -216,7 +216,7 @@ function getBusiness(data) {
 }
 
 // 下单
-function setBusiness(data) {
+function setBusiness({data}) {
     // data.tableId
     // data.arrBGoods
     // data.arrBGoods0
@@ -395,7 +395,7 @@ function setBusiness(data) {
 }
 
 // 查询支付流水，查询支付状态并同步
-function getPayment(data) {
+function getPayment({data}) {
     // data.tableId
 
     return new Promise(function (resolve, reject) {
@@ -499,7 +499,7 @@ function getPayment(data) {
 }
 
 // 微信支付.客户微信号付款
-function wxzf1(data) {
+function wxzf1({data}) {
     // data.tableId 餐位 ID
     // data.js_code 客户临时票据
 
@@ -550,7 +550,7 @@ function wxzf1(data) {
 }
 
 // 微信支付.商户二维码收款
-function wxzf2(data) {
+function wxzf2({data}) {
     // data.tableId 餐位 ID
 
     return new Promise(function (resolve, reject) {
@@ -599,7 +599,7 @@ function wxzf2(data) {
 }
 
 // 微信支付：中止支付
-function wxzfFail(data) {
+function wxzfFail({data}) {
     // data.tableId 餐位 ID
 
     return new Promise(function (resolve, reject) {

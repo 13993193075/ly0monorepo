@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 内部模块：查询修正
-function queryRevise (data) {
+function queryRevise ({data}) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -18,7 +18,7 @@ function queryRevise (data) {
 }
 
 // 分页查询
-async function find (data) {
+async function find ({data}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit 当前用户信息：数据单元
@@ -63,7 +63,7 @@ async function find (data) {
 }
 
 // 内部模块：数据约束
-function dataRule (data) {
+function dataRule ({data}) {
     // 不能提交
     if (!data.name) {
         return {code: 1, message: '商店名称：必填项'}
@@ -72,7 +72,7 @@ function dataRule (data) {
 }
 
 // 插入一条记录
-async function insertOne (data) {
+async function insertOne ({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.name
 
@@ -104,7 +104,7 @@ async function insertOne (data) {
 }
 
 // 修改一条记录
-async function updateOne (data) {
+async function updateOne ({data}) {
     // data._id
     // data.id_dataunit 当前用户信息：数据单元
     // data.name

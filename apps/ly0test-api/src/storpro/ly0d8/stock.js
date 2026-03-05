@@ -85,7 +85,7 @@ function stock (para) {
 }
 
 // 内部模块：查询修正
-function queryRevise (data) {
+function queryRevise ({data}) {
     return new Promise((resolve, reject) => {
         let q = data.query ? data.query : {},
             q0 = {}, // 货品名录
@@ -157,7 +157,7 @@ function queryRevise (data) {
     })
 }
 
-function find (data) {
+function find ({data}) {
     // data.query
     // data.query.id_dataunit 当前用户信息：数据单元
     // data.query.id_unit
@@ -278,7 +278,7 @@ function find (data) {
     })
 }
 
-function findOne (data) {
+function findOne ({data}) {
     // data._id
 
     return new Promise((resolve, reject) => {
@@ -294,7 +294,7 @@ function findOne (data) {
     })
 }
 
-function getPageData (data) {
+function getPageData ({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_unit 当前用户信息：库管单位id
 

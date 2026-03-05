@@ -2,7 +2,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 我的订单
-function myBusiness(data) {
+function myBusiness({data}) {
     // 订单手机号
     // data.cellphone
 

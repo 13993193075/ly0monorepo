@@ -5,7 +5,7 @@ import ly0d4business from './business.js'
 import ly0d4b_goods from './b_goods.js'
 
 // 获取页面数据
-async function getPgData (data) {
+async function getPgData ({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_hotel 当前用户信息：旅店id
 
@@ -54,7 +54,7 @@ async function getPgData (data) {
 }
 
 // 入住登记 - 发生新订单
-async function newBusiness (data) {
+async function newBusiness ({data}) {
     // data.cellphone
     // data.checkin
     // data.checkout
@@ -111,7 +111,7 @@ async function newBusiness (data) {
 }
 
 // 修改房态
-async function setStatus (data) {
+async function setStatus ({data}) {
     // data.id_room
     // data.status_code
 

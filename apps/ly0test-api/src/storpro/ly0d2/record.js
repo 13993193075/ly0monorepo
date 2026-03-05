@@ -4,7 +4,7 @@ import {GQuery} from '../../main/GQuery.js'
 import code from "./code.js"
 
 // 内部模块：查询修正
-function queryRevise(data){
+function queryRevise({data}){
     let data0 = data ? data : {} , data1 = {};
     if(data0._id){
         data1._id = data0._id;
@@ -60,7 +60,7 @@ function queryRevise(data){
 }
 
 // 分页查询
-function find(data){
+function find({data}){
     // data.query
     // data.query._id
     // data.query.id_dataunit
@@ -119,7 +119,7 @@ function find(data){
 }
 
 // 删除一条记录
-function deleteOne(data){
+function deleteOne({data}){
     // data._id
 
     return new Promise(function(resolve, reject){
@@ -134,7 +134,7 @@ function deleteOne(data){
 }
 
 // 获取页面初始化数据
-function getPgData(data){
+function getPgData({data}){
     // data: null
 
     return new Promise(function(resolve, reject){

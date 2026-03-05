@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 获取商城用户采购记录
-async function getBusiness(data){
+async function getBusiness({data}){
     // data.id_guest
     // data.limit
     // data.page

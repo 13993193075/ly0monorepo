@@ -4,7 +4,7 @@ import ImageSave from '../../main/image-save.js'
 import {GBT, utils as ly0utils} from '@yoooloo42/ly0utils'
 
 // 内部模块：查询修正
-function queryRevise(data) {
+function queryRevise({data}) {
     const data0 = data ? data : {},
         data1 = {$and: []}
 
@@ -97,7 +97,7 @@ function queryRevise(data) {
 }
 
 // 分页查询
-async function find(data) {
+async function find({data}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit 当前用户信息：数据单元
@@ -155,7 +155,7 @@ async function find(data) {
 }
 
 // 内部模块：数据约束
-function dataRule(data) {
+function dataRule({data}) {
     // 不能提交
     if (!data.id_shop) {
         return {code: 1, message: "商店：必选项"}
@@ -170,7 +170,7 @@ function dataRule(data) {
 }
 
 // 插入一条记录
-async function insertOne(data) {
+async function insertOne({data}) {
     // data.id_shop
     // data.number
     // data.name
@@ -282,7 +282,7 @@ async function insertOne(data) {
 }
 
 // 修改一条记录
-async function updateOne(data) {
+async function updateOne({data}) {
     // data._id
     // data.id_shop
     // data.number
@@ -417,7 +417,7 @@ async function deleteOne({_id}) {
 }
 
 // 获取页面初始化数据
-async function getPgData(data) {
+async function getPgData({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_shop 当前用户信息：商店id
 
@@ -450,7 +450,7 @@ async function getPgData(data) {
 }
 
 // 设置商品分类
-async function setGroup(data) {
+async function setGroup({data}) {
     // data._id
     // data.group
 
@@ -467,7 +467,7 @@ async function setGroup(data) {
 }
 
 // 设置商品规格
-async function setSize(data) {
+async function setSize({data}) {
     // data._id
     // data.size
 
@@ -488,7 +488,7 @@ async function setSize(data) {
 }
 
 // 设置商品标价
-async function setPrice(data) {
+async function setPrice({data}) {
     // data._id
     // data.price
 
@@ -510,7 +510,7 @@ async function setPrice(data) {
 }
 
 // 设置商品缩略图
-async function setThumb(data) {
+async function setThumb({data}) {
     // data._id
     // data.number
     // data.name
@@ -554,7 +554,7 @@ async function setThumb(data) {
 }
 
 // 修改商品图示
-async function setIllustration(data){
+async function setIllustration({data}){
     // data._id
     // data.illustration
     // data.illustrationDelete

@@ -1,7 +1,7 @@
 import {GQuery} from '../../../main/GQuery.js'
 
 // 查询餐位是否已被使用
-function tableUsed(data){
+function tableUsed({data}){
     // data.id_b_table ID排除
     // data.id_table
 

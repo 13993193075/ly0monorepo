@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 内部模块：查询修正
-function queryRevise(data) {
+function queryRevise({data}) {
     let data0 = data ? data : {}, data1 = {}
     if (data0._id) {
         data1._id = data0._id
@@ -30,7 +30,7 @@ function queryRevise(data) {
 }
 
 // 分页查询
-function find(data) {
+function find({data}) {
     // data.query
     // data.query._id
     // data.query.note
@@ -82,7 +82,7 @@ function find(data) {
 }
 
 // 内部模块：数据约束
-function dataRule(data) {
+function dataRule({data}) {
     // 不能提交
     if (!data.appid) {
         return {code: 1, message: "应用ID：必填项"}
@@ -94,7 +94,7 @@ function dataRule(data) {
 }
 
 // 插入一条记录
-function insertOne(data) {
+function insertOne({data}) {
     // data.appid
     // data.secret
     // data.note
@@ -126,7 +126,7 @@ function insertOne(data) {
 }
 
 // 修改一条记录
-function updateOne(data) {
+function updateOne({data}) {
     // data.appid
     // data.secret
     // data.note
@@ -157,7 +157,7 @@ function updateOne(data) {
 }
 
 // 删除一条记录
-function deleteOne(data) {
+function deleteOne({data}) {
     // data._id
 
     return new Promise((resolve, reject) => {
@@ -172,7 +172,7 @@ function deleteOne(data) {
 }
 
 // 获取更多appid凭据信息
-function getAppidMore (data) {
+function getAppidMore ({data}) {
     // data.appid
 
     return new Promise(function (resolve, reject) {
@@ -191,7 +191,7 @@ function getAppidMore (data) {
     })
 }
 
-function withThiswebsiteLogin(data) { // 用于本站微信登录
+function withThiswebsiteLogin({data}) { // 用于本站微信登录
     // data._id
     // data.with_thiswebsite_login
 
@@ -219,7 +219,7 @@ function withThiswebsiteLogin(data) { // 用于本站微信登录
     })
 }
 
-function withAnnual(data) { // 用于系统年费
+function withAnnual({data}) { // 用于系统年费
     // data._id
     // data.with_annual
 
@@ -248,7 +248,7 @@ function withAnnual(data) { // 用于系统年费
 }
 
 // 获取用于本站微信登录的appid凭据信息
-function getAppidWithThiswebsiteLogin (data) {
+function getAppidWithThiswebsiteLogin ({data}) {
     // data: null
 
     return new Promise(function (resolve, reject) {
@@ -269,7 +269,7 @@ function getAppidWithThiswebsiteLogin (data) {
 }
 
 // 获取用于系统年费的appid凭据信息
-function getAppidWithAnnual (data) {
+function getAppidWithAnnual ({data}) {
     // data: null
 
     return new Promise(function (resolve, reject) {

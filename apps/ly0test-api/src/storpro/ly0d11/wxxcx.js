@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import ly0d2wxzf from '../ly0d2/wxzf.js'
 
 // 获取停车场信息
-function getCarpark(data) {
+function getCarpark({data}) {
     // data.id_user 当前用户信息
 
     return new Promise(function (resolve, reject) {
@@ -26,7 +26,7 @@ function getCarpark(data) {
 }
 
 // 微信支付.商户二维码收款
-function wxzf2(data) {
+function wxzf2({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.recorder_cellphone 当前用户信息：手机号码
     // data.recorder_name 当前用户信息：用户名称
@@ -71,7 +71,7 @@ function wxzf2(data) {
 }
 
 // 停车记录
-function record(data) {
+function record({data}) {
     // data.id_carpark
     // data.carplateSearchVal
     // data.filter

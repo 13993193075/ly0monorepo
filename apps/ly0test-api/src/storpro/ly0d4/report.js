@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import {ly0d4} from '@yoooloo42/ly0utils'
 
 // 月报表
-async function month (data) {
+async function month ({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.timeFrom
     // data.timeTo

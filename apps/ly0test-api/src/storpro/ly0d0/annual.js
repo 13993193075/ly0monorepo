@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import ly0d2code from "../ly0d2/code.js"
 
 // 内部模块：查询修正
-function queryRevise (data) {
+function queryRevise ({data}) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -19,7 +19,7 @@ function queryRevise (data) {
 }
 
 // 分页查询
-function find (data) {
+function find ({data}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit
@@ -69,7 +69,7 @@ function find (data) {
 }
 
 // 内部模块：数据约束
-function dataRule (data) {
+function dataRule ({data}) {
     if (!data.id_dataunit) {
         return {code: 1, message: '数据单元：必选项'}
     }
@@ -90,7 +90,7 @@ function dataRule (data) {
 }
 
 // 插入一条记录
-function insertOne (data) {
+function insertOne ({data}) {
     // data.id_dataunit
     // data.fee
     // data.from
@@ -133,7 +133,7 @@ function insertOne (data) {
 }
 
 // 修改一条记录
-function updateOne (data) {
+function updateOne ({data}) {
     // data._id
     // data.id_dataunit
     // data.fee
@@ -176,7 +176,7 @@ function updateOne (data) {
 }
 
 // 删除一条记录
-function deleteOne (data) {
+function deleteOne ({data}) {
     let _id = data._id
     return new Promise(function (resolve, reject) {
         GQuery({
@@ -190,7 +190,7 @@ function deleteOne (data) {
 }
 
 // 获取页面初始化数据
-function getPgData (data) {
+function getPgData ({data}) {
     // data: null
 
     return new Promise(function (resolve, reject) {

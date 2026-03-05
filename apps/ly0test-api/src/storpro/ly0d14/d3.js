@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import code from './code/index.js'
 
 // 修改：饮食篇 - 膳食补充剂
-function updateMany (data) {
+function updateMany ({data}) {
     // data
     // data.id_ly0d14d0
     // data.data

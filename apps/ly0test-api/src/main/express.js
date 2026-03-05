@@ -1,14 +1,11 @@
+import path from 'path'
+import {dirRoot} from './dirroot.js'
 import express from 'express'
-import path from 'path';
-import { fileURLToPath } from 'url';
 import {DB_Bridge} from '@yoooloo42/ly0nodejs'
 import {mongodb, gsfy, upload} from './config.js'
 import routerUploadReq from '../upload-req/router.js'
 import routerStorpro from '../storpro/router.js'
 import routerWechatLoginRedirect from '../wechat-login-redirect/router.js'
-// 获取当前文件的目录路径 (相当于 CommonJS 的 __dirname)
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express()
 
@@ -91,7 +88,7 @@ async function run() {
     app.set('views', '../') // 模板文件夹
 
     // 静态资源
-    app.use('/ly0/static', express.static(path.join(__dirname, '../static')))
+    app.use('/ly0/static', express.static(path.join(dirRoot, 'src/static')))
     // 文件上传与存储
     app.use(upload.uploadUrl, express.static(upload.uploadFolder))
     app.use(upload.imageUrl, express.static(upload.imageFolder))
@@ -110,7 +107,7 @@ async function run() {
 
     // 响应根路由 '/' 的请求
     // 静态资源方式
-    app.use('/', express.static(path.join(__dirname, '../static/dist')))
+    app.use('/', express.static(path.join(dirRoot, 'src/static/dist')))
     /* 重定向方式
     app.use('/', (request, response) => {
         response.redirect('/ly0/frontend/dist/index.html')

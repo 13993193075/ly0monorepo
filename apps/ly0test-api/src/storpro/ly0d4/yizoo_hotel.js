@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import {Yizoo} from '@yoooloo42/ly0nodejs'
 
 //内部模块：数据约束
-function dataRule (data) {
+function dataRule ({data}) {
     //不能提交
     if (!data.url) {
         return {code: 1, message: '接口请求地址：必填项'}
@@ -18,7 +18,7 @@ function dataRule (data) {
 }
 
 // 查询全部
-async function findAll (data) {
+async function findAll ({data}) {
     // data.id_dataunit 当前用户信息：数据单元
 
     const result = await GQuery({
@@ -33,7 +33,7 @@ async function findAll (data) {
 }
 
 // 查询一条记录
-async function findOne (data) {
+async function findOne ({data}) {
     // data._id
 
     const result = await GQuery({
@@ -47,7 +47,7 @@ async function findOne (data) {
 }
 
 // 修改一条记录
-async function updateOne (data) {
+async function updateOne ({data}) {
     // data._id
     // data.url
     // data.accountname
@@ -74,7 +74,7 @@ async function updateOne (data) {
 }
 
 // 同步旅店信息
-async function get (data) {
+async function get ({data}) {
     // data.id_dataunit
 
     await GQuery({
@@ -106,7 +106,7 @@ async function get (data) {
 }
 
 // 获取最新令牌
-async function req (data) {
+async function req ({data}) {
     // data._id
 
     let result = GQuery({

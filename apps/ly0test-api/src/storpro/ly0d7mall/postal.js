@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import {GBT} from '@yoooloo42/ly0utils'
 
 // 增加1个新的邮寄地址
-async function addOne(data){
+async function addOne({data}){
     // data.id_guest
     // data.postal.code6
     // data.postal.address
@@ -31,7 +31,7 @@ async function addOne(data){
 }
 
 // 删除1个邮寄地址
-async function deleteOne(data){
+async function deleteOne({data}){
     // data.id_guest
     // data.index
 
@@ -60,7 +60,7 @@ async function deleteOne(data){
 }
 
 // 修改1个邮寄地址
-async function updateOne(data){
+async function updateOne({data}){
     // data.id_guest
     // data.index
     // data.postal.code6
@@ -107,7 +107,7 @@ async function updateOne(data){
 }
 
 // 修改默认邮寄地址
-async function updateGuest(data){
+async function updateGuest({data}){
     // data.id_guest
     // data.postal.code6
     // data.postal.address

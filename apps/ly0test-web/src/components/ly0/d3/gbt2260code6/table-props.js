@@ -29,30 +29,30 @@ export default {
                 text: "导入代码",
                 icon: "Upload",
                 size: "small",
-                hdlClick({scopeThis}){
-                    ElMessageBox.confirm('此操作将先清空全部编码数据，继续?', '警告', {
-                        confirmButtonText: '确认',
-                        cancelButtonText: '取消',
-                        type: 'warning'
-                    }).then(()=>{
+                async hdlClick({scopeThis}){
+                    try {
+                        await ElMessageBox.confirm('此操作将先清空全部编码数据，继续?', '警告', {
+                            confirmButtonText: '确认',
+                            cancelButtonText: '取消',
+                            type: 'warning'
+                        })
                         // 打开进度条
                         scopeThis.tableProps.table.loading.visible = true
                         scopeThis.tableProps.table.loading.text = "正在导入..."
-                        ly0request.ly0.storpro({
+                        const result = await ly0request.ly0.storpro({
                             noSession: true,
                             storproName: "ly0d3.gbt2260code6.loadAll",
                             data: null
-                        }).then(result=>{
-                            // 关闭进度条
-                            scopeThis.tableProps.table.loading.visible = false
-                            scopeThis.tableProps.table.loading.text = ""
-                            ElMessage(result.message)
-                            // 刷新页面
-                            scopeThis.handles.reload({scopeThis})
                         })
-                    }).catch(()=>{
+                        // 关闭进度条
+                        scopeThis.tableProps.table.loading.visible = false
+                        scopeThis.tableProps.table.loading.text = ""
+                        ElMessage(result.message)
+                        // 刷新页面
+                        await withTable.reload({scopeThis})
+                    }catch(err){
                         ElMessage({type: 'info', message: '取消操作'})
-                    })
+                    }
                 }
             }
         ]

@@ -13,7 +13,7 @@ const para_global = {
 }
 
 // 客户付款码付款
-function wxzf0(data){
+function wxzf0({data}){
     let id_business = data.id_business, // 订单ID
         businesstype_code = data.businesstype_code, // 订单类型
         amount = data.amount, // 金额
@@ -126,7 +126,7 @@ function wxzf0(data){
 }
 
 // 客户微信号付款
-function wxzf1(data){
+function wxzf1({data}){
     let id_business = data.id_business, // 订单ID
         businesstype_code = data.businesstype_code, //订单类型
         amount = data.amount, //金额
@@ -245,7 +245,7 @@ function wxzf1(data){
 }
 
 // 商户二维码收款
-function wxzf2(data){
+function wxzf2({data}){
     let id_business = data.id_business, // 订单ID
         businesstype_code = data.businesstype_code, // 订单类型
         amount = data.amount, // 金额
@@ -357,7 +357,7 @@ function wxzf2(data){
 }
 
 // 查询微信后台并同步，每次仅同步一条
-function getStatus(data){
+function getStatus({data}){
     // data.mchid
     // data.id_business
 
@@ -465,7 +465,7 @@ function getStatus(data){
 }
 
 // 查询支付流水
-function getPayments(data){
+function getPayments({data}){
     // data.mchid
     // data.id_business
 
@@ -528,7 +528,7 @@ function getPayments(data){
 }
 
 // 中止支付
-function setFail(data){
+function setFail({data}){
     // data.mchid
     // data.id_business
 
@@ -585,7 +585,7 @@ function setFail(data){
 }
 
 // 收银-系统外流转
-function cash(data){
+function cash({data}){
     let id_business = data.id_business, // 订单ID
         businesstype_code = data.businesstype_code, // 订单类型
         amount = data.amount, // 金额
@@ -654,7 +654,7 @@ function cash(data){
 }
 
 // 退款
-function refund(data){
+function refund({data}){
     // data.id_business
 
     return new Promise(function(resolve, reject){
@@ -678,7 +678,7 @@ function refund(data){
 }
 
 // 删除所有支付记录
-function deletePayments(data){
+function deletePayments({data}){
     // data.id_business
 
     return new Promise(function(resolve, reject){

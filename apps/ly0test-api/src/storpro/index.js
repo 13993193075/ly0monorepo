@@ -1,10 +1,7 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from 'path'
+import {dirRoot} from '../main/dirroot.js'
 import { pathToFileURL } from 'url'
-
-// 获取当前文件的目录路径 (相当于 CommonJS 的 __dirname)
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import dependencies from "./dependencies.js"
 
 /**
  * 🎯 功能：去掉字符串中最后一个出现的"."及其后的所有字符，并同时返回被截取的部分。
@@ -42,28 +39,23 @@ function splitStringAtLastDot(str) {
 }
 
 // 执行存储过程
-function exec(storproBody) {
+async function exec(storproBody) {
     // storproBody.storproName
     // storproBody.data
 
-    return new Promise((resolve, reject) => {
-        if (!storproBody || !storproBody.storproName) {
-            return resolve({code: 1, message: "存储过程请求参数错误"})
-        }
+    if (!storproBody || !storproBody.storproName) {
+        return {code: 1, message: "存储过程请求参数错误"}
+    }
 
-        console.log("[系统跟踪]执行存储过程名称：", storproBody.storproName)
-        let pathStorpro = splitStringAtLastDot(storproBody.storproName)
+    console.log("[系统跟踪]执行存储过程名称：", storproBody.storproName)
+    const pathStorpro = splitStringAtLastDot(storproBody.storproName)
+    // 获取存储过程
+    const filePath = path.join(dirRoot, 'src/storpro/' + pathStorpro.prefix.replaceAll('.', '/') + '.js')
+    const fileUrl = pathToFileURL(filePath).href
+    const module = await import(fileUrl)
 
-        // 获取存储过程
-        const filePath = path.join(__dirname, './' + pathStorpro.prefix.replaceAll('.', '/') + '.js')
-        const fileUrl = pathToFileURL(filePath).href;
-        import(fileUrl).then(module=>{
-            // 执行存储过程
-            module.default[pathStorpro.suffix](storproBody.data).then(result=>{
-                resolve(result)
-            })
-        })
-    })
+    // 执行存储过程
+    return await module.default[pathStorpro.suffix]({data: storproBody.data, dependencies, storproRun: exec})
 }
 
 export {

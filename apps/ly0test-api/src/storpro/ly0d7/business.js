@@ -3,7 +3,7 @@ import code from "./code.js"
 import id_business from "./id_business.js"
 
 // 查询修正
-function queryRevise(data) {
+function queryRevise({data}) {
     let data0 = data ? data : {}, data1 = {}
 
     if (data0._id) { // _id 必须置于首项查询
@@ -46,7 +46,7 @@ function queryRevise(data) {
 }
 
 // 分页查询
-async function find(data) {
+async function find({data}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit 当前用户信息：数据单元
@@ -97,7 +97,7 @@ async function find(data) {
 }
 
 // 内部模块：数据约束
-function dataRule(data) {
+function dataRule({data}) {
     // 不能提交
     if (!data.id_shop) {
         return {code: 1, message: "商店：必选项"};
@@ -119,7 +119,7 @@ function dataRule(data) {
 }
 
 // 插入一条记录
-async function insertOne(data) {
+async function insertOne({data}) {
     // data.id_shop
     // data.status_code
     // data.time
@@ -165,7 +165,7 @@ async function insertOne(data) {
 }
 
 // 修改一条记录
-async function updateOne(data) {
+async function updateOne({data}) {
     // data._id
     // data.id_shop
     // data.status_code
@@ -237,7 +237,7 @@ async function deleteOne({_id}) {
 }
 
 //  获取页面初始化数据
-async function getPgData(data) {
+async function getPgData({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_shop 当前用户信息：商店id
 
@@ -260,7 +260,7 @@ async function getPgData(data) {
 }
 
 // 核收
-async function deal(data) {
+async function deal({data}) {
     // data._id
     // data.deal
     // data.dealnote

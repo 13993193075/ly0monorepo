@@ -1,7 +1,7 @@
 import {GQuery} from '../../../main/GQuery.js'
 
 // 工单信息
-function id_business(data){
+function id_business({data}){
     // data.id_business
 
     return new Promise(function(resolve, reject){

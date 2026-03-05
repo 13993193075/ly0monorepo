@@ -1,6 +1,6 @@
 import {GQuery} from '../../main/GQuery.js'
 
-function echart(data) {
+function echart({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_carpark 当前用户信息：停车场id
 
@@ -38,7 +38,7 @@ function echart(data) {
     })
 }
 
-function echart0(data) {
+function echart0({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_carpark 当前用户信息：停车场id
 

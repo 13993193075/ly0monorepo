@@ -62,7 +62,7 @@ function amountItemCarwithin (para) {
 }
 
 // 通过手机号获取待缴费信息
-function getPending(data) {
+function getPending({data}) {
     // data.id_dataunit
     // data.cellphone
 
@@ -139,7 +139,7 @@ function getPending(data) {
 }
 
 // 缴费
-function submit(data) {
+function submit({data}) {
     // data.arrPending
 
     return new Promise((resolve, reject) => {

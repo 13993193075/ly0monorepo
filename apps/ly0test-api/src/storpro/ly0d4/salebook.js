@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 内部模块：查询修正
-function queryRevise (data) {
+function queryRevise ({data}) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -18,7 +18,7 @@ function queryRevise (data) {
 }
 
 // 分页查询
-async function find (data) {
+async function find ({data}) {
     // data.query
     // data.query._id
     // data.query.id_business
@@ -64,7 +64,7 @@ async function find (data) {
 }
 
 // 内部模块：数据约束：新增
-function dataRule (data) {
+function dataRule ({data}) {
     // 不能提交
     if (!data.id_goods) {
         return {code: 1, message: '房型：必选项'}
@@ -77,7 +77,7 @@ function dataRule (data) {
 }
 
 // 插入一条记录
-async function insertOne (data) {
+async function insertOne ({data}) {
     // data.id_business
     // data.id_goods
     // data.count
@@ -124,7 +124,7 @@ async function insertOne (data) {
 }
 
 // 修改一条记录
-async function updateOne (data) {
+async function updateOne ({data}) {
     // data._id
     // data.id_business
     // data.id_goods
@@ -169,7 +169,7 @@ async function updateOne (data) {
     return {code: 0, message: '修改一条记录成功'}
 }
 
-async function deleteOne (data) {
+async function deleteOne ({data}) {
     // data._id
 
     await GQuery({
@@ -180,7 +180,7 @@ async function deleteOne (data) {
     return {code: 0, message: '删除一条记录成功'}
 }
 
-async function getPgData (data) {
+async function getPgData ({data}) {
     // data.id_business
 
     let result = await GQuery({

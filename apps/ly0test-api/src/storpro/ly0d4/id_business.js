@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import {ly0d4} from '@yoooloo42/ly0utils'
 import utils from "./utils/index.js";
 
-async function id_business(data){
+async function id_business({data}){
     // data.id_business
 
     let result = await GQuery({
@@ -157,7 +157,7 @@ async function id_business(data){
 }
 
 // 修改订单基本信息
-async function setBaseInfo(data) {
+async function setBaseInfo({data}) {
     // data._id
     // data.cellphone
     // data.checkin
@@ -207,7 +207,7 @@ async function setBaseInfo(data) {
 }
 
 // 修改核收金额
-async function setDeal(data) {
+async function setDeal({data}) {
     // data._id
     // data.deal
     // data.dealnote

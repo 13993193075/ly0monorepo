@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import ImageSave from '../../main/image-save.js'
 
 // 一类计价
-function fee1(data) {
+function fee1({data}) {
     let timein = new Date(data.timein),
         timeout = new Date(data.timeout),
         carwithin = !!data.carwithin, // 长期车
@@ -102,7 +102,7 @@ function fee1(data) {
 }
 
 // 二类计价
-function fee2(data) {
+function fee2({data}) {
     let timein = new Date(data.timein),
         timeout = new Date(data.timeout),
         carwithin = !!data.carwithin, // 长期车
@@ -318,7 +318,7 @@ function fee2(data) {
         (fee2hour * (Math.min(hours, fee2term * termCount) - termCount))
 }
 
-function fee(data) {
+function fee({data}) {
     let timein = new Date(data.timein),
         timeout = new Date(data.timeout),
         carwithin = !!data.carwithin, // 长期车
@@ -375,7 +375,7 @@ function fee(data) {
 }
 
 // 车牌查询
-function cf(data) {
+function cf({data}) {
     // data.id_carpark 必填项，停车场 _id
     // data.carplate 必填项，车牌
     // data.id_pricing 可选项，计费项目
@@ -463,7 +463,7 @@ function cf(data) {
 }
 
 // 进车登记
-function passin(data) {
+function passin({data}) {
     // data.id_carpark
     // data.carplate
     // data.carwithin
@@ -551,7 +551,7 @@ function passin(data) {
 }
 
 // 出车登记
-function passout(data) {
+function passout({data}) {
     // data.id_carpark
     // data.carplate
     // data.id_carpassin

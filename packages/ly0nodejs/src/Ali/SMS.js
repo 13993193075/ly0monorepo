@@ -1,11 +1,13 @@
-import {utils as ly0utils} from '@yoooloo42/ly0utils';
 // 从 Node.js 内置模块导入工具
-import { createRequire } from 'node:module';
-const random = ly0utils.random
+// import { createRequire } from 'node:module';
 // 创建一个 require 函数
-const require = createRequire(import.meta.url);
+// const require = createRequire(import.meta.url);
 // 引入阿里云 SDK 核心依赖
-const Core = require('@alicloud/pop-core')
+// const Core = require('@alicloud/pop-core')
+import Core from '@alicloud/pop-core'
+
+import {utils as ly0utils} from '@yoooloo42/ly0utils';
+const random = ly0utils.random
 
 /**
  * 向指定手机号发送短信

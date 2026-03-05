@@ -1,9 +1,5 @@
-import {GQuery} from '../../main/GQuery.js'
-import {crypto} from '@yoooloo42/ly0nodejs'
-import {utils as ly0utils} from '@yoooloo42/ly0utils'
-
 // 注册新工号（用户管理）
-async function newNumber(data) {
+async function newNumber({data, dependencies}) {
     // data.userTbl
     // data.userId
     // data.number
@@ -21,15 +17,15 @@ async function newNumber(data) {
     if(!data.password){
         return {code: 1, message: "没有登录密码"}
     }
-    let result = ly0utils.regexp.password(data.password)
+    let result = dependencies.ly0utils.utils.regexp.password(data.password)
     if (!result) {
         return {code: 1, message: '密码强度不足'}
     }
     // 密码加密
-    const passwordCipherText = crypto.Hash.sha256(data.password)
+    const passwordCipherText = dependencies.ly0nodejs.crypto.Hash.sha256(data.password)
 
     // 查询工号是否已被占用
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d0number',
         operator: 'findOne',
         query: {number: data.number},
@@ -39,7 +35,7 @@ async function newNumber(data) {
     }
 
     // 获取用户信息
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: data.userTbl,
         operator: 'findOne',
         query: {_id: data.userId},
@@ -50,7 +46,7 @@ async function newNumber(data) {
     let objLogin = null
     if(objUser.id_login){
         // 用户已注册登录账号，获取账号信息
-        result = await GQuery({
+        result = await dependencies.GQuery.GQuery({
             tblName: 'ly0d0login',
             operator: 'findOne',
             query: {_id: objUser.id_login}
@@ -58,7 +54,7 @@ async function newNumber(data) {
         objLogin = result.data
     }else{
         // 否则，发生新的登录账号记录
-        result = await GQuery({
+        result = await dependencies.GQuery.GQuery({
             tblName: 'ly0d0login',
             operator: 'insertOne',
             update: {count: 0}
@@ -67,7 +63,7 @@ async function newNumber(data) {
     }
 
     // 发生新的工号记录
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d0number',
         operator: 'insertOne',
         update: {
@@ -79,7 +75,7 @@ async function newNumber(data) {
 
     // 用户未注册过登录账号，完成注册
     if(!objUser.id_login){
-        await GQuery({
+        await dependencies.GQuery.GQuery({
             tblName: data.userTbl,
             operator: 'updateOne',
             query: {_id: data.userId},
@@ -91,7 +87,7 @@ async function newNumber(data) {
 }
 
 // 注册新工号（已登录）
-async function loggedin(data){
+async function loggedin({data, dependencies}) {
     // data.id_login
     // data.number
     // data.password
@@ -105,14 +101,14 @@ async function loggedin(data){
     if(!data.password){
         return {code: 1, message: "没有登录密码"}
     }
-    let result = ly0utils.regexp.password(data.password)
+    let result = dependencies.ly0utils.utils.regexp.password(data.password)
     if (!result) {
         return {code: 1, message: '密码强度不足'}
     }
     // 登录密码加密
-    let passwordCipherText = crypto.Hash.sha256(data.password)
+    let passwordCipherText = dependencies.ly0nodejs.crypto.Hash.sha256(data.password)
 
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d0login",
         operator: "findOne",
         query: {_id: data.id_login}
@@ -121,7 +117,7 @@ async function loggedin(data){
     if(!objLogin){
         return {code: 1, message: "登录账号id不存在"}
     }
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d0number",
         operator: "findOne",
         query: {
@@ -133,7 +129,7 @@ async function loggedin(data){
         return {code: 1, message: "工号已被占用"}
     }
 
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d0number",
         operator: "insertOne",
         update: {
@@ -146,7 +142,7 @@ async function loggedin(data){
 }
 
 // 绑定已有工号
-async function bind(data){
+async function bind({data, dependencies}) {
     // data.userTbl
     // data.userId
     // data.number
@@ -165,9 +161,9 @@ async function bind(data){
         return {code: 1, message: "没有登录密码"}
     }
     // 登录密码加密
-    const passwordCipherText = crypto.Hash.sha256(data.password)
+    const passwordCipherText = dependencies.ly0nodejs.crypto.Hash.sha256(data.password)
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d0number',
         operator: 'findOne',
         query: {
@@ -179,7 +175,7 @@ async function bind(data){
         return {code: 1, message: '工号不存在或密码验证失败'}
     }
     const objNumber = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: data.userTbl,
         operator: 'updateOne',
         query: {_id: data.userId},

@@ -111,7 +111,7 @@ const arrTblname = [
     "ly0d12student"
 ]
 
-function clear(data) {
+function clear({data}) {
     // data.id_dataunit
 
     return new Promise(function (resolve, reject) {
@@ -144,7 +144,7 @@ function clear(data) {
     })
 }
 
-function emptyTest(data) {
+function emptyTest({data}) {
     // data.id_dataunit
 
     return new Promise(function (resolve, reject) {

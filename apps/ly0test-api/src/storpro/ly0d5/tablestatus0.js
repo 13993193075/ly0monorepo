@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 获取餐位预订信息
-function getPageData (data) {
+function getPageData ({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_restaurant 当前用户信息：餐馆id
 

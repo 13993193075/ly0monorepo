@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 月报表
-function month (data) {
+function month ({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.timeFrom
     // data.timeTo

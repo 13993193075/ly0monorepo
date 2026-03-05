@@ -1,11 +1,9 @@
-import {GQuery} from '../../main/GQuery.js'
-
 // 初始化
 const navigation = 'first'
 
 // 内部模块：查询修正
 function queryRevise (data) {
-    let data0 = data ? data : {},
+    const data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
         data1._id = data0._id
@@ -22,7 +20,7 @@ function queryRevise (data) {
 }
 
 // 分页查询
-async function find (data) {
+async function find ({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.name
@@ -31,11 +29,11 @@ async function find (data) {
     // data.limit
     // data.page
 
-    let query = queryRevise(data.query) // 查询修正
+    // 查询修正
+    const query = queryRevise(data.query)
     // 排序
-    let sort
+    const sort = {}
     if(data.sort && data.sort.label && data.sort.order){
-        sort = {}
         if(data.sort.order === "ascending"){
             sort[data.sort.label] = 1
         }else if(data.sort.order === "descending"){
@@ -44,10 +42,11 @@ async function find (data) {
             sort[data.sort.label] = 1
         }
     }else{
-        sort = {route_type: 1, route: 1}
+        sort.route_type = 1
+        sort.route = 1
     }
 
-    const resultData = await GQuery({
+    const resultData = await dependencies.GQuery.GQuery({
         tblName: 'ly0d0test',
         operator: 'find',
         query,
@@ -55,7 +54,7 @@ async function find (data) {
         skip: (data.page - 1) * data.limit,
         limit: Number(data.limit) // 分页处理
     })
-    const resultTotal = await GQuery({
+    const resultTotal = await dependencies.GQuery.GQuery({
         tblName: 'ly0d0test',
         operator: 'countDocuments',
         query
@@ -75,17 +74,17 @@ function dataRule (data) {
 }
 
 // 插入一条记录
-async function insertOne (data) {
+async function insertOne ({data, dependencies}) {
     // data.name
     // data.route_type
     // data.route
 
-        let message = dataRule(data)
-        if (message.code === 1) {
-            return resolve(message)
-        }
+    const message = dataRule(data)
+    if (message.code === 1) {
+        return message
+    }
 
-    const result = await GQuery({
+    const result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d0test',
         operator: 'insertOne',
         update: {
@@ -102,18 +101,18 @@ async function insertOne (data) {
 }
 
 // 修改一条记录
-async function updateOne (data) {
+async function updateOne ({data, dependencies}) {
     // data._id
     // data.name
     // data.route_type
     // data.route
 
-    let message = dataRule(data)
+    const message = dataRule(data)
     if (message.code === 1) {
-        return resolve(message)
+        return message
     }
 
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d0test',
         operator: 'updateOne',
         query: {_id: data._id},
@@ -129,10 +128,10 @@ async function updateOne (data) {
 }
 
 // 删除一条记录
-async function deleteOne (data) {
+async function deleteOne ({data, dependencies}) {
     // data._id
 
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d0test',
         operator: 'deleteOne',
         query: {_id: data._id}

@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import code from './code/index.js'
 
 //修改：相关实验室检查
-function updateOne (data) {
+function updateOne ({data}) {
     //data.id_dataunit 当前用户信息：数据单元
     //data.id_ly0d14d0
     //data.f0

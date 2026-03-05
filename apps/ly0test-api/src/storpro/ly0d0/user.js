@@ -5,7 +5,7 @@ import {imageDomain} from '../../main/config.js'
 import ImageSave from '../../main/image-save.js'
 
 // 内部模块：查询修正
-function queryRevise(data) {
+function queryRevise({data}) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -30,7 +30,7 @@ function queryRevise(data) {
 }
 
 // 分页查询
-async function find(data) {
+async function find({data}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit
@@ -81,7 +81,7 @@ async function find(data) {
 }
 
 // 内部模块：数据约束
-async function dataRule(data) {
+function dataRule({data}) {
     if (!data.id_dataunit) {
         return {code: 1, message: '数据单元：必选项'}
     }
@@ -95,7 +95,7 @@ async function dataRule(data) {
 }
 
 // 新增一条记录
-async function insertOne(data) {
+async function insertOne({data}) {
     // data.id_group
     // data.name
     // data.icon
@@ -152,7 +152,7 @@ async function insertOne(data) {
 }
 
 // 修改一条记录
-async function updateOne(data) {
+async function updateOne({data}) {
     // data._id
     // data.id_group
     // data.name
@@ -212,7 +212,7 @@ async function updateOne(data) {
 }
 
 // 删除一条记录
-async function deleteOne(data) {
+async function deleteOne({data}) {
     // data._id
 
     let result = await GQuery({
@@ -241,7 +241,7 @@ async function deleteOne(data) {
 }
 
 // 获取页面初始化数据
-async function getPgData(data) {
+async function getPgData({data}) {
     // data.id_dataunit
 
     const q = {},

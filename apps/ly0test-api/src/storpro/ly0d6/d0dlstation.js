@@ -1,6 +1,6 @@
 import {GQuery} from '../../main/GQuery.js'
 
-function findAll(data) {
+function findAll({data}) {
     return new Promise((resolve, reject) => {
         // data.id_dataunit 当前用户信息：数据单元
 

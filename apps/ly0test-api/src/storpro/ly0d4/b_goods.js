@@ -4,7 +4,7 @@ import {GQuery} from '../../main/GQuery.js'
 import {ly0d4} from '@yoooloo42/ly0utils'
 
 // 内部模块：查询修正
-function queryRevise (data) {
+function queryRevise ({data}) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -20,7 +20,7 @@ function queryRevise (data) {
 }
 
 // 分页查询
-async function find (data) {
+async function find ({data}) {
     // data.query
     // data.query._id
     // data.query.id_business
@@ -105,7 +105,7 @@ async function dataRule (data, branch) {
 }
 
 // 插入一条记录
-async function insertOne (data) {
+async function insertOne ({data}) {
     // data.id_business
     // data.id_room
     // data.id_price 房型标价
@@ -181,7 +181,7 @@ async function insertOne (data) {
 }
 
 // 修改一条记录
-async function updateOne (data) {
+async function updateOne ({data}) {
     // data._id
     // data.id_business
     // data.id_room
@@ -255,7 +255,7 @@ async function updateOne (data) {
 }
 
 // 删除一条记录
-async function deleteOne (data) {
+async function deleteOne ({data}) {
     // data._id
 
     const result = await GQuery({
@@ -277,7 +277,7 @@ async function deleteOne (data) {
 }
 
 // 通过 id_business 获取页面初始化数据
-async function getPgData (data) {
+async function getPgData ({data}) {
     // data.id_business
 
     let result = await GQuery({
@@ -336,7 +336,7 @@ async function getPgData (data) {
 }
 
 // 插入多条记录
-async function insertMany (data) {
+async function insertMany ({data}) {
     // data.id_business
     // data.arrRoom
     // data.checkin
@@ -448,7 +448,7 @@ async function insertMany (data) {
 }
 
 // 修改多条记录：入住时间
-async function updateManyCheckin (data) {
+async function updateManyCheckin ({data}) {
     // data.id_business
     // data.checkin
     // data.arrUpdate
@@ -494,7 +494,7 @@ async function updateManyCheckin (data) {
 }
 
 // 修改多条记录：离开时间
-async function updateManyCheckout (data) {
+async function updateManyCheckout ({data}) {
     // data.id_business
     // data.checkout
     // data.arrUpdate
@@ -540,7 +540,7 @@ async function updateManyCheckout (data) {
 }
 
 // 修改多条记录：用房状态
-async function updateManyStatus (data) {
+async function updateManyStatus ({data}) {
     // data.id_business
     // data.status_code
     // data.arrUpdate
@@ -591,7 +591,7 @@ async function updateManyStatus (data) {
 }
 
 // 修改多条记录：单价
-async function updateManyPrice (data) {
+async function updateManyPrice ({data}) {
     // data.id_business
     // data.price
     // data.arrUpdate

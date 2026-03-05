@@ -2,7 +2,7 @@ import {GQuery} from '../../main/GQuery.js'
 import code from './code/index.js'
 
 // 内部模块：数据约束
-function dataRule (data) {
+function dataRule ({data}) {
     // 不能提交
     if (data.f0uncertain !== 'true' && !(/^[0-9]{0,2}$/.test(data.f0) && Number(data.f0) <= 23)) {
         return {code: 1, message: '1. 取值范围：0-23'}
@@ -21,7 +21,7 @@ function dataRule (data) {
 }
 
 // 修改：睡眠篇
-function updateOne (data) {
+function updateOne ({data}) {
     // data.id_ly0d14d0
     // data.f0uncertain,
     // data.f0

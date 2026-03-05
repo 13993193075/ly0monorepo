@@ -26,20 +26,20 @@ import {withTable} from '@yoooloo42/ly0el'
 import {request as ly0request} from '@yoooloo42/ly0browser'
 import {utils as ly0utils} from '@yoooloo42/ly0utils'
 import tableData from '../user/table-data.js'
-import tableProps from '../user/table-props.js'
+import tableProps from './table-props.js'
 import storpro from '../user/storpro.js'
 import query from '../user/query.js'
-import find from '../user/find.js'
-import insertOne from '../user/insertOne.js'
-import updateOne from '../user/updateOne.js'
-import doc from '../user/doc.js'
+import find from './find.js'
+import insertOne from './insertOne.js'
+import updateOne from './updateOne.js'
+import pgData from '../user/pgData.js'
 import newNumber from '../user/newNumber.js'
 import id_login from '../user/id_login.js'
-const ly0session = ly0request.ly0.ly0sessionLoad()
 
 const scopeThis = reactive(
     {
         routerInstance: useRouter(),
+        ly0session: null,
         tableData,
         tableProps,
         formData: {},
@@ -50,17 +50,9 @@ const scopeThis = reactive(
         find: ly0utils.deepClone.deepClone(find),
         insertOne: ly0utils.deepClone.deepClone(insertOne),
         updateOne: ly0utils.deepClone.deepClone(updateOne),
-        doc,
+        pgData: ly0utils.deepClone.deepClone(pgData),
         handles: {
             withTable
-        },
-        pgData: {
-            query: {id_dataunit: ly0session.dataunit._id},
-            data: {
-                arrDataunit: [],
-                arrGroup: [],
-                arrGroup0: [],
-            }
         },
         newNumber: JSON.parse(JSON.stringify(newNumber)),
         id_login: JSON.parse(JSON.stringify(id_login)),
@@ -68,9 +60,11 @@ const scopeThis = reactive(
 )
 
 onMounted(async ()=>{
-    scopeThis.queryInit.formData.id_dataunit = ly0session.dataunit._id
-    scopeThis.query.formData.id_dataunit = ly0session.dataunit._id
-    scopeThis.insertOne.formData.id_dataunit = ly0session.dataunit._id
+    scopeThis.ly0session = ly0request.ly0.ly0sessionLoad()
+    scopeThis.queryInit.formData.id_dataunit = scopeThis.ly0session.dataunit._id
+    scopeThis.query.formData.id_dataunit = scopeThis.ly0session.dataunit._id
+    scopeThis.insertOne.formData.id_dataunit = scopeThis.ly0session.dataunit._id
+    scopeThis.pgData.query.id_dataunit = scopeThis.ly0session.dataunit._id
     await withTable.init({scopeThis})
 })
 

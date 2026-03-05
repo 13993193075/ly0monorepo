@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 内部模块：查询修正
-function queryRevise (data) {
+function queryRevise ({data}) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -18,7 +18,7 @@ function queryRevise (data) {
 }
 
 // 分页查询
-function find (data) {
+function find ({data}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit 当前用户信息：数据单元
@@ -69,7 +69,7 @@ function find (data) {
 }
 
 // 内部模块：数据约束
-function dataRule (data) {
+function dataRule ({data}) {
     // 不能提交
     if (!data.name) {
         return {code: 1, message: '物业单位名称：必填项'}
@@ -78,7 +78,7 @@ function dataRule (data) {
 }
 
 // 插入一条记录
-function insertOne (data) {
+function insertOne ({data}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.name
     // data.smallticket
@@ -120,7 +120,7 @@ function insertOne (data) {
 }
 
 // 查询一条记录
-function findOne (data) {
+function findOne ({data}) {
     // data._id
 
     return new Promise((resolve, reject) => {
@@ -137,7 +137,7 @@ function findOne (data) {
 }
 
 // 修改一条记录
-function updateOne (data) {
+function updateOne ({data}) {
     // data._id
     // data.id_dataunit 当前用户信息：数据单元
     // data.name
@@ -179,7 +179,7 @@ function updateOne (data) {
 }
 
 // 删除一条记录
-function deleteOne (data) {
+function deleteOne ({data}) {
     let _id = data._id
 
     return new Promise(function (resolve, reject) {

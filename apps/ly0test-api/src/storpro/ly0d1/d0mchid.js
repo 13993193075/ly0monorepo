@@ -3,7 +3,7 @@ import {imageDomain, upload} from '../../main/config.js'
 import {GQuery} from '../../main/GQuery.js'
 
 // 内部模块：查询修正
-function queryRevise (data) {
+function queryRevise ({data}) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -26,7 +26,7 @@ function queryRevise (data) {
 }
 
 // 内部模块：数据约束
-function dataRule (data) {
+function dataRule ({data}) {
     // 不能提交
     if (!data.mchid) {
         return {code: 1, message: 'MCHID：必填项'}
@@ -35,7 +35,7 @@ function dataRule (data) {
 }
 
 // 分页查询
-function find (data) {
+function find ({data}) {
     // data.query
     // data.query._id
     // data.query.note
@@ -90,7 +90,7 @@ function find (data) {
 }
 
 // 插入一条记录
-function insertOne (data) {
+function insertOne ({data}) {
     // data.mchid
     // data.v2apikey
     // data.v3apikey
@@ -137,7 +137,7 @@ function insertOne (data) {
 }
 
 // 修改一条记录
-function updateOne (data) { // 修改：数据提交
+function updateOne ({data}) { // 修改：数据提交
     // data._id
     // data.mchid
     // data.v2apikey
@@ -186,7 +186,7 @@ function updateOne (data) { // 修改：数据提交
 }
 
 // 删除一条记录
-function deleteOne (data) {
+function deleteOne ({data}) {
     let _id = data._id
 
     return new Promise(function (resolve, reject) {
@@ -201,7 +201,7 @@ function deleteOne (data) {
 }
 
 // 获取更多商户应用凭据(MCHID)信息
-function getMchidMore(data){
+function getMchidMore({data}){
     let mchid = data.mchid;
 
     return new Promise(function(resolve, reject){
@@ -229,7 +229,7 @@ function getMchidMore(data){
     })
 }
 
-function withAnnual(data) { // 用于系统年费
+function withAnnual({data}) { // 用于系统年费
     // data._id
     // data.with_annual
 
@@ -258,7 +258,7 @@ function withAnnual(data) { // 用于系统年费
 }
 
 // 获取用于系统年费的商户号
-function getMchidWithAnnual(data) {
+function getMchidWithAnnual({data}) {
     // data: null
 
     return new Promise(function (resolve, reject) {
