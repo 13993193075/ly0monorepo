@@ -1,14 +1,10 @@
-import {GBT} from '@yoooloo42/ly0utils'
-
 // 获取初始代码
-function init({data}){
+async function init({data, dependencies}){
     // data: null
 
-    return new Promise(function (resolve, reject) {
-        resolve({code: 0, message: '',
-            arrCode2: GBT.gbt2260code2
-        })
-    })
+    return {code: 0, message: '',
+        arrCode2: dependencies.ly0utils.GBT.gbt2260code2
+    }
 }
 
 export default {
