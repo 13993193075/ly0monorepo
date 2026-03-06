@@ -1,10 +1,5 @@
-import utils from './utils/index.js'
-import code from './code.js'
-import {GQuery} from '../../main/GQuery.js'
-import {ly0d4} from '@yoooloo42/ly0utils'
-
 // 内部模块：查询修正
-function queryRevise ({data}) {
+function queryRevise (data) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -20,7 +15,7 @@ function queryRevise ({data}) {
 }
 
 // 分页查询
-async function find ({data}) {
+async function find ({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.id_business
@@ -37,9 +32,8 @@ async function find ({data}) {
     }
 
     // 排序
-    let sort
+    const sort = {}
     if (data.sort && data.sort.label && data.sort.order) {
-        sort = {}
         if (data.sort.order === 'ascending') {
             sort[data.sort.label] = 1
         } else if (data.sort.order === 'descending') {
@@ -48,10 +42,10 @@ async function find ({data}) {
             sort[data.sort.label] = 1
         }
     } else {
-        sort = {_id: -1}
+        sort._id = -1
     }
 
-    const result = await GQuery({
+    const resultData = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'find',
         query,
@@ -59,19 +53,19 @@ async function find ({data}) {
         skip: (data.page - 1) * data.limit,
         limit: Number(data.limit)
     })
-    const result0 = await GQuery({
+    const resultTotal = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'countDocuments',
         query
     })
     return {code: 0, message: '',
-        data: result.data,
-        total: result0.count
+        data: resultData.data,
+        total: resultTotal.count
     }
 }
 
 // 内部模块：数据约束
-async function dataRule (data, branch) {
+async function dataRule ({data, dependencies, storproRun}) {
     // 不能提交
     if (!data.id_business) {
         return {code: 1, message: '没有订单id'}
@@ -96,16 +90,19 @@ async function dataRule (data, branch) {
     }
 
     // 客房使用状态
-    return await utils.roomUsed.roomUsed({
-        id_b_goods: branch === "updateOne" ? data._id : null,
-        id_room: data.id_room,
-        checkin: data.checkin,
-        checkout: data.checkout
+    return await storproRun({
+        storproName: 'ly0d4.set-roomstatus.roomused',
+        data: {
+            id_b_goods: data._id || null,
+            id_room: data.id_room,
+            checkin: data.checkin,
+            checkout: data.checkout
+        }
     })
 }
 
 // 插入一条记录
-async function insertOne ({data}) {
+async function insertOne ({data, dependencies, storproRun}) {
     // data.id_business
     // data.id_room
     // data.id_price 房型标价
@@ -117,19 +114,21 @@ async function insertOne ({data}) {
     // data.status_code 用房状态
 
     // 数据约束
-    let result  = await dataRule(data, "insertOne")
+    const data0 = JSON.parse(JSON.stringify(data))
+    data0._id = null
+    let result  = await dataRule({data: data0, dependencies, storproRun})
     if (result.code !== 0) {
         return result
     }
 
     // 提交
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4business',
         operator: 'findOne',
         query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4room',
         operator: 'findOne',
         query: {_id: data.id_room}
@@ -138,7 +137,7 @@ async function insertOne ({data}) {
 
     const thisTime = new Date()
     const status_code = data.status_code ?? objBusiness.status_code
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'insertOne',
         update: {
@@ -151,29 +150,32 @@ async function insertOne ({data}) {
             id_business: objBusiness._id,
             id_room: objRoom._id,
             roomno: objRoom.roomno,
-            id_roomplace: objRoom.id_roomplace ? objRoom.id_roomplace : null,
-            roomplace_text: objRoom.roomplace_text ? objRoom.roomplace_text : "",
-            id_goods: objRoom.id_goods ? objRoom.id_goods : null,
-            goods_name: objRoom.goods_name ? objRoom.goods_name : '',
-            id_price: data.id_price ? data.id_price : (objRoom.id_price ? objRoom.id_price : null),
-            price_name: data.price_name ? data.price_name : (objRoom.price_name ? objRoom.price_name : ""),
+            id_roomplace: objRoom.id_roomplace ?? null,
+            roomplace_text: objRoom.roomplace_text ?? "",
+            id_goods: objRoom.id_goods ?? null,
+            goods_name: objRoom.goods_name ?? '',
+            id_price: data.id_price ?? (objRoom.id_price ?? null),
+            price_name: data.price_name ?? (objRoom.price_name ?? ""),
             method_code: data.method_code,
-            method_text: code.pricingMethod.find(i=>{
+            method_text: dependencies.ly0utils.ly0d4.busicode.pricingMethod.find(i=>{
                 return i.code === data.method_code
             }).text,
             price: data.price && data.price > 0 ? data.price : (objRoom.price && objRoom.price > 0 ? objRoom.price : 0),
             checkin: data.checkin,
             checkout: data.checkout,
             status_code,
-            status_text: code.businessStatus.find(i=>{
+            status_text: dependencies.ly0utils.ly0d4.busicode.businessStatus.find(i=>{
                 return i.code === status_code
             }).text,
         }
     })
     const objBGoodsNew = result.dataNew
     // 同步房态
-    await utils.roomStatus.setRoomStatusWithBusiness({
-        id_business: objBusiness._id
+    await storproRun({
+        storproName: 'ly0d4.set-roomstatus.setRoomstatusWithBusiness',
+        data: {
+            id_business: objBusiness._id
+        }
     })
     return {code: 0, message: '插入一条记录成功',
         _id: objBGoodsNew._id
@@ -181,7 +183,7 @@ async function insertOne ({data}) {
 }
 
 // 修改一条记录
-async function updateOne ({data}) {
+async function updateOne ({data, dependencies, storproRun}) {
     // data._id
     // data.id_business
     // data.id_room
@@ -194,19 +196,19 @@ async function updateOne ({data}) {
     // data.status_code 用房状态
 
     // 数据约束
-    let result = await dataRule(data, "updateOne")
+    let result = await dataRule({data, dependencies, storproRun})
     if (result.code === 1) {
         return result
     }
 
     // 提交
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4business',
         operator: 'findOne',
         query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4room',
         operator: 'findOne',
         query: {_id: data.id_room}
@@ -215,7 +217,7 @@ async function updateOne ({data}) {
 
     const thisTime = new Date()
     const status_code = data.status_code ?? objBusiness.status_code
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'updateOne',
         query: {_id: data._id},
@@ -228,71 +230,73 @@ async function updateOne ({data}) {
             id_business: objBusiness._id,
             id_room: objRoom._id,
             roomno: objRoom.roomno,
-            id_roomplace: objRoom.id_roomplace ? objRoom.id_roomplace : null,
-            roomplace_text: objRoom.roomplace_text ? objRoom.roomplace_text : "",
-            id_goods: objRoom.id_goods ? objRoom.id_goods : null,
-            goods_name: objRoom.goods_name ? objRoom.goods_name : '',
-            id_price: data.id_price ? data.id_price : (objRoom.id_price ? objRoom.id_price : null),
-            price_name: data.price_name ? data.price_name : (objRoom.price_name ? objRoom.price_name : ""),
+            id_roomplace: objRoom.id_roomplace ?? null,
+            roomplace_text: objRoom.roomplace_text ?? "",
+            id_goods: objRoom.id_goods ?? null,
+            goods_name: objRoom.goods_name ?? '',
+            id_price: data.id_price ?? (objRoom.id_price ?? null),
+            price_name: data.price_name ?? (objRoom.price_name ?? ""),
             method_code: data.method_code,
-            method_text: code.pricingMethod.find(i=>{
+            method_text: dependencies.ly0utils.ly0d4.busicode.pricingMethod.find(i=>{
                 return i.code === data.method_code
             }).text,
             price: data.price && data.price > 0 ? data.price : (objRoom.price && objRoom.price > 0 ? objRoom.price : 0),
             checkin: data.checkin,
             checkout: data.checkout,
             status_code,
-            status_text: code.businessStatus.find(i=>{
+            status_text: dependencies.ly0utils.ly0d4.busicode.businessStatus.find(i=>{
                 return i.code === status_code
             }).text,
         }
     })
     // 同步房态
-    await utils.roomStatus.setRoomStatusWithBusiness({
-        id_business: objBusiness._id
+    await storproRun({
+        storproName: 'ly0d4.set-roomstatus.setRoomstatusWithBusiness',
+        data: {id_business: objBusiness._id}
     })
     return {code: 0, message: '修改一条记录成功'}
 }
 
 // 删除一条记录
-async function deleteOne ({data}) {
+async function deleteOne ({data, dependencies, storproRun}) {
     // data._id
 
-    const result = await GQuery({
+    const result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'findOne',
         query: {_id: data._id}
     })
     const objBGoodsOld = result.data
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'deleteOne',
         query: {_id: data._id}
     })
     // 同步房态
-    await utils.roomStatus.setRoomStatusWithBusiness({
-        id_business: objBGoodsOld.id_business
+    await storproRun({
+        storproName: 'ly0d4.set-roomstatus.setRoomstatusWithBusiness',
+        data: {id_business: objBGoodsOld.id_business}
     })
     return {code: 0, message: '删除一条记录成功'}
 }
 
 // 通过 id_business 获取页面初始化数据
-async function getPgData ({data}) {
+async function getPgData ({data, dependencies, storproRun}) {
     // data.id_business
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4business',
         operator: 'findOne',
         query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4hotel',
         operator: 'findOne',
         query: {_id: objBusiness.id_hotel}
     })
     const objHotel = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4roomplace',
         operator: 'find',
         query: {
@@ -300,7 +304,7 @@ async function getPgData ({data}) {
         }
     })
     const arrRoomplace = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4room',
         operator: 'find',
         query: {
@@ -309,13 +313,13 @@ async function getPgData ({data}) {
         sort: {roomno: 1}
     })
     const arrRoom = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4goods',
         operator: 'find',
         query: {id_hotel: objHotel._id}
     })
     const arrGoods = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4price',
         operator: 'find',
         query: {id_hotel: objHotel._id}
@@ -328,22 +332,22 @@ async function getPgData ({data}) {
             arrRoomplace,
             arrRoom,
             arrGoods,
-            arrMethod: ly0d4.busicode.pricingMethod,
+            arrMethod: dependencies.ly0utils.ly0d4.busicode.pricingMethod,
             arrPrice,
-            arrStatus: ly0d4.busicode.businessStatus
+            arrStatus: dependencies.ly0utils.ly0d4.busicode.businessStatus
         }
     }
 }
 
 // 插入多条记录
-async function insertMany ({data}) {
+async function insertMany ({data, dependencies, storproRun}) {
     // data.id_business
     // data.arrRoom
     // data.checkin
     // data.checkout
 
     const thisTime = new Date()
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4business',
         operator: 'findOne',
         query: {_id: data.id_business}
@@ -365,7 +369,7 @@ async function insertMany ({data}) {
     }
 
     // 获取标价信息
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4price',
         operator: 'find',
         query: {id_hotel: objBusiness.id_hotel}
@@ -400,11 +404,14 @@ async function insertMany ({data}) {
     const arrInsert = []
     for (let i = 0; i < arrRoom.length; i++) {
         // 判断客房是否未被使用
-        result = await utils.roomUsed.roomUsed({
-            id_b_goods: null,
-            id_room: arrRoom[i]._id,
-            checkin: data.checkin,
-            checkout: data.checkout
+        result = await storproRun({
+            storproName: 'ly0d4.set-roomstatus.roomused',
+            data: {
+                id_b_goods: null,
+                id_room: arrRoom[i]._id,
+                checkin: data.checkin,
+                checkout: data.checkout
+            }
         })
         if(result.code === 0){
             arrInsert.push({
@@ -432,14 +439,15 @@ async function insertMany ({data}) {
         }
     }
     // 插入多条用房记录
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'insertMany',
         update: arrInsert
     })
     // 同步房态
-    await utils.roomStatus.setRoomStatusWithBusiness({
-        id_business: objBusiness._id
+    await storproRun({
+        storproName: 'ly0d4.set-roomstatus.setRoomstatusWithBusiness',
+        data: {id_business: objBusiness._id}
     })
 
     return {code: 0, message: arrInsert.length + ' 条记录插入成功',
@@ -448,7 +456,7 @@ async function insertMany ({data}) {
 }
 
 // 修改多条记录：入住时间
-async function updateManyCheckin ({data}) {
+async function updateManyCheckin ({data, dependencies, storproRun}) {
     // data.id_business
     // data.checkin
     // data.arrUpdate
@@ -464,11 +472,14 @@ async function updateManyCheckin ({data}) {
     // 等待批量修改的用房记录id
     const arrId = []
     for (let i = 0; i < data.arrUpdate.length; i++) {
-        const result = await utils.roomUsed.roomUsed({
-            id_b_goods: null,
-            id_room: data.arrUpdate[i].id_room,
-            checkin: data.checkin,
-            checkout: data.arrUpdate[i].checkout
+        const result = await storproRun({
+            storproName: 'ly0d4.set-roomstatus.roomused',
+            data: {
+                id_b_goods: null,
+                id_room: data.arrUpdate[i].id_room,
+                checkin: data.checkin,
+                checkout: data.arrUpdate[i].checkout
+            }
         })
         if(result.code === 0){
             arrId.push(data.arrUpdate[i]._id)
@@ -478,7 +489,7 @@ async function updateManyCheckin ({data}) {
         return {code: 1, message: '没有可修改的记录'}
     }
     // 批量修改
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'updateMany',
         query: {
@@ -494,7 +505,7 @@ async function updateManyCheckin ({data}) {
 }
 
 // 修改多条记录：离开时间
-async function updateManyCheckout ({data}) {
+async function updateManyCheckout ({data, dependencies, storproRun}) {
     // data.id_business
     // data.checkout
     // data.arrUpdate
@@ -510,11 +521,14 @@ async function updateManyCheckout ({data}) {
     // 等待批量修改的用房记录id
     const arrId = []
     for (let i = 0; i < data.arrUpdate.length; i++) {
-        const result = await utils.roomUsed.roomUsed({
-            id_b_goods: null,
-            id_room: data.arrUpdate[i].id_room,
-            checkin: data.arrUpdate[i].checkin,
-            checkout: data.checkout
+        const result = await storproRun({
+            storproName: 'ly0d4.set-roomstatus.roomused',
+            data: {
+                id_b_goods: null,
+                id_room: data.arrUpdate[i].id_room,
+                checkin: data.arrUpdate[i].checkin,
+                checkout: data.checkout
+            }
         })
         if(result.code === 0){
             arrId.push(data.arrUpdate[i]._id)
@@ -524,7 +538,7 @@ async function updateManyCheckout ({data}) {
         return {code: 1, message: '没有可修改的记录'}
     }
     // 批量修改
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'updateMany',
         query: {
@@ -540,7 +554,7 @@ async function updateManyCheckout ({data}) {
 }
 
 // 修改多条记录：用房状态
-async function updateManyStatus ({data}) {
+async function updateManyStatus ({data, dependencies, storproRun}) {
     // data.id_business
     // data.status_code
     // data.arrUpdate
@@ -556,11 +570,14 @@ async function updateManyStatus ({data}) {
     // 等待批量修改的用房记录id
     const arrId = []
     for (let i = 0; i < data.arrUpdate.length; i++) {
-        const result = await utils.roomUsed.roomUsed({
-            id_b_goods: null,
-            id_room: data.arrUpdate[i].id_room,
-            checkin: data.arrUpdate[i].checkin,
-            checkout: data.arrUpdate[i].checkout
+        const result = await storproRun({
+            storproName: 'ly0d4.set-roomstatus.roomused',
+            data: {
+                id_b_goods: null,
+                id_room: data.arrUpdate[i].id_room,
+                checkin: data.arrUpdate[i].checkin,
+                checkout: data.arrUpdate[i].checkout
+            }
         })
         if(result.code === 0){
             arrId.push(data.arrUpdate[i]._id)
@@ -570,7 +587,7 @@ async function updateManyStatus ({data}) {
         return {code: 1, message: '没有可修改的记录'}
     }
     // 批量修改
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'updateMany',
         query: {
@@ -579,7 +596,7 @@ async function updateManyStatus ({data}) {
         },
         update: {
             status_code: data.status_code,
-            status_text: ly0d4.busicode.businessStatus.find(i=>{
+            status_text: dependencies.ly0utils.ly0d4.busicode.businessStatus.find(i=>{
                 return i.code === data.status_code
             }).text
         }
@@ -591,7 +608,7 @@ async function updateManyStatus ({data}) {
 }
 
 // 修改多条记录：单价
-async function updateManyPrice ({data}) {
+async function updateManyPrice ({data, dependencies, storproRun}) {
     // data.id_business
     // data.price
     // data.arrUpdate
@@ -610,7 +627,7 @@ async function updateManyPrice ({data}) {
         arrId.push(data.arrUpdate[i]._id)
     }
     // 批量修改
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'updateMany',
         query: {
@@ -631,7 +648,6 @@ export default {
     updateOne,
     deleteOne,
     getPgData,
-    allocation: utils.roomUsed.allocation,
 
     insertMany,
     updateManyCheckin,

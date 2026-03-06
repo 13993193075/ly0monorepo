@@ -1,7 +1,5 @@
-import {GQuery} from '../../main/GQuery.js'
-
 // 内部模块：查询修正
-function queryRevise ({data}) {
+function queryRevise (data) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -21,7 +19,7 @@ function queryRevise ({data}) {
 }
 
 // 分页查询
-async function find ({data}) {
+async function find ({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.id_business
@@ -33,9 +31,8 @@ async function find ({data}) {
 
     const query = queryRevise(data.query) // 查询修正
     // 排序
-    let sort
+    const sort = {}
     if (data.sort && data.sort.label && data.sort.order) {
-        sort = {}
         if (data.sort.order === 'ascending') {
             sort[data.sort.label] = 1
         } else if (data.sort.order === 'descending') {
@@ -44,10 +41,10 @@ async function find ({data}) {
             sort[data.sort.label] = 1
         }
     } else {
-        sort = {_id: -1}
+        sort._id = -1
     }
 
-    const result = await GQuery({
+    const resultData = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods1',
         operator: 'find',
         query,
@@ -55,19 +52,19 @@ async function find ({data}) {
         skip: (data.page - 1) * data.limit,
         limit: Number(data.limit)
     })
-    const result0 = await GQuery({
+    const resultTotal = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods1',
         operator: 'countDocuments',
         query
     })
     return {code: 0, message: '',
-        data: result.data,
-        total: result0.count
+        data: resultData.data,
+        total: resultTotal.count
     }
 }
 
 // 内部模块：数据约束
-function dataRule ({data}) {
+function dataRule (data) {
     //不能提交
     if (!data.name) {
         return {code: 1, message: '物品名称：必填项'}
@@ -82,7 +79,7 @@ function dataRule ({data}) {
 }
 
 // 插入一条记录
-async function insertOne ({data}) {
+async function insertOne ({data, dependencies}) {
     // data.id_business
     // data.id_goods
     // data.name
@@ -98,13 +95,13 @@ async function insertOne ({data}) {
 
     // 提交
     const thisTime = new Date()
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4business',
         operator: 'findOne',
         query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods1',
         operator: 'insertOne',
         update: {
@@ -128,7 +125,7 @@ async function insertOne ({data}) {
 }
 
 // 修改一条记录
-async function updateOne ({data}) {
+async function updateOne ({data, dependencies}) {
     // data._id
     // data.id_business
     // data.id_goods
@@ -145,13 +142,13 @@ async function updateOne ({data}) {
 
     // 提交
     const thisTime = new Date()
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4business',
         operator: 'findOne',
         query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods1',
         operator: 'updateOne',
         query: {_id: data._id},
@@ -173,10 +170,10 @@ async function updateOne ({data}) {
 }
 
 // 删除一条记录
-async function deleteOne ({data}) {
+async function deleteOne ({data, dependencies}) {
     // data._id
 
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods1',
         operator: 'deleteOne',
         query: {_id: data._id}
@@ -185,16 +182,16 @@ async function deleteOne ({data}) {
 }
 
 // 获取页面初始化数据
-async function getPgData ({data}) {
+async function getPgData ({data, dependencies}) {
     // data.id_business
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4business',
         operator: 'findOne',
         query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4goods1',
         operator: 'find',
         query: {id_hotel: objBusiness.id_hotel}

@@ -1,8 +1,5 @@
-import {GQuery} from '../../main/GQuery.js'
-import {ly0d4} from '@yoooloo42/ly0utils'
-
 // 内部模块：查询修正
-async function queryRevise({data}) {
+async function queryRevise(data) {
     let data0 = data ? data : {}, data1 = {}
 
     if (data0._id) { // _id 必须置于首项查询
@@ -62,7 +59,7 @@ async function queryRevise({data}) {
 }
 
 // 分页查询
-async function find({data}) {
+async function find({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit 当前用户信息：数据单元
@@ -84,9 +81,8 @@ async function find({data}) {
     // 查询修正
     const query = await queryRevise(data.query)
     // 排序
-    let sort
+    const sort = {}
     if(data.sort && data.sort.label && data.sort.order){
-        sort = {}
         if(data.sort.order === "ascending"){
             sort[data.sort.label] = 1
         }else if(data.sort.order === "descending"){
@@ -95,10 +91,10 @@ async function find({data}) {
             sort[data.sort.label] = 1
         }
     }else{
-        sort = {_id: -1}
+        sort._id = -1
     }
 
-    const resultData = await GQuery({
+    const resultData = await dependencies.GQuery.GQuery({
         tblName: "ly0d4business",
         operator: "find",
         query,
@@ -106,7 +102,7 @@ async function find({data}) {
         skip: (data.page - 1) * data.limit,
         limit: Number(data.limit) // 分页处理
     })
-    const resultTotal = await GQuery({
+    const resultTotal = await dependencies.GQuery.GQuery({
         tblName: "ly0d4business",
         operator: "countDocuments",
         query
@@ -118,7 +114,7 @@ async function find({data}) {
 }
 
 // 内部模块：数据约束
-async function dataRule({data}) {
+async function dataRule(data) {
     // 不能提交
     if (!data.status_code) {
         return {code: 1, message: '订单状态：必选项'}
@@ -132,12 +128,11 @@ async function dataRule({data}) {
     if (new Date(data.checkin) >= new Date(data.checkout)) {
         return ({code: 1, message: "离开时间必须大于入住时间"});
     }
-
     return {code: 0, message: "可以提交"};
 }
 
 // 插入一条记录
-async function insertOne({data}) {
+async function insertOne({data, dependencies}) {
     // data.id_hotel
     // data.status_code
     // data.cellphone
@@ -159,19 +154,19 @@ async function insertOne({data}) {
 
     // 提交
     let thisTime = new Date()
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4hotel',
         operator: 'findOne',
         query: {_id: data.id_hotel}
     })
     const objHotel = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4booktype',
         operator: 'findOne',
         query: {_id: data.id_booktype || null}
     })
     const objBooktype = result.data || null
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4business",
         operator: "insertOne",
         update: {
@@ -182,30 +177,29 @@ async function insertOne({data}) {
             id_hotel: objHotel._id,
             hotel_name: objHotel.name,
             status_code: data.status_code,
-            status_text: ly0d4.busicode.businessStatus.find(i=>{
+            status_text: dependencies.ly0utils.ly0d4.busicode.businessStatus.find(i=>{
                 return i.code === data.status_code
             }).text,
-            cellphone: data.cellphone ? data.cellphone : "",
+            cellphone: data.cellphone || "",
             checkin: data.checkin,
             checkout: data.checkout,
-            peoples: data.peoples ? data.peoples : "",
+            peoples: data.peoples || "",
             rooms: data.rooms ? data.rooms : "",
             id_booktype: objBooktype ? objBooktype._id : null,
             booktype_text: objBooktype ? objBooktype.text : "",
-            booktime: data.booktime ? data.booktime : null,
-            booknote: data.booknote ? data.booknote : "",
-            client_cellphone: data.client_cellphone ? data.client_cellphone : "",
-            client_name: data.client_name ? data.client_name : ""
+            booktime: data.booktime || null,
+            booknote: data.booknote || "",
+            client_cellphone: data.client_cellphone || "",
+            client_name: data.client_name || ""
         }
     })
-    return {
-        code: 0, message: "插入一条记录成功",
+    return {code: 0, message: "插入一条记录成功",
         _id: result.dataNew._id
     }
 }
 
 // 修改一条记录
-async function updateOne({data}) {
+async function updateOne({data, dependencies}) {
     // data._id
     // data.id_hotel
     // data.status_code
@@ -228,19 +222,19 @@ async function updateOne({data}) {
 
     // 提交
     const thisTime = new Date()
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4hotel',
         operator: 'findOne',
         query: {_id: data.id_hotel}
     })
     const objHotel = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4booktype',
         operator: 'findOne',
         query: {_id: data.id_booktype ? data.id_booktype : null}
     })
     const objBooktype = result.data
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d4business",
         operator: "updateOne",
         query: {_id: data._id},
@@ -251,32 +245,32 @@ async function updateOne({data}) {
             id_hotel: objHotel._id,
             hotel_name: objHotel.name,
             status_code: data.status_code,
-            status_text: ly0d4.busicode.businessStatus.find(i=>{
+            status_text: dependencies.ly0utils.ly0d4.busicode.businessStatus.find(i=>{
                 return i.code === data.status_code
             }).text,
 
-            cellphone: data.cellphone ? data.cellphone : "",
+            cellphone: data.cellphone || "",
             checkin: data.checkin,
             checkout: data.checkout,
-            peoples: data.peoples ? data.peoples : "",
-            rooms: data.rooms ? data.rooms : "",
+            peoples: data.peoples || "",
+            rooms: data.rooms || "",
 
             id_booktype: objBooktype ? objBooktype._id : null,
             booktype_text: objBooktype ? objBooktype.text : "",
-            booktime: data.booktime ? data.booktime : null,
-            booknote: data.booknote ? data.booknote : "",
-            client_cellphone: data.client_cellphone ? data.client_cellphone : "",
-            client_name: data.client_name ? data.client_name : ""
+            booktime: data.booktime || null,
+            booknote: data.booknote || "",
+            client_cellphone: data.client_cellphone || "",
+            client_name: data.client_name || ""
         }
     })
     return {code: 0, message: "修改一条记录成功"}
 }
 
 // 删除一条记录
-async function deleteOne({data}) {
+async function deleteOne({data, dependencies}) {
     // data._id
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4b_goods",
         operator: "findOne",
         query: {id_business: data._id}
@@ -284,7 +278,7 @@ async function deleteOne({data}) {
     if (result.data) {
         return {code: 1, message: "不能删除，存在关联信息：ly0d4b_goods"}
     }
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4b_goods0",
         operator: "findOne",
         query: {id_business: data._id}
@@ -292,7 +286,7 @@ async function deleteOne({data}) {
     if (result.data) {
         return {code: 1, message: "不能删除，存在关联信息：ly0d4b_goods0"}
     }
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4b_goods1",
         operator: "findOne",
         query: {id_business: data._id}
@@ -300,7 +294,7 @@ async function deleteOne({data}) {
     if (result.data) {
         return {code: 1, message: "不能删除，存在关联信息：ly0d4b_goods1"}
     }
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4bill",
         operator: "findOne",
         query: {id_business: data._id}
@@ -308,7 +302,7 @@ async function deleteOne({data}) {
     if (result.data) {
         return {code: 1, message: "不能删除，存在关联信息：ly0d4bill"}
     }
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4memo",
         operator: "findOne",
         query: {id_business: data._id}
@@ -316,7 +310,7 @@ async function deleteOne({data}) {
     if (result.data) {
         return {code: 1, message: "不能删除，存在关联信息：ly0d4memo"}
     }
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4guest",
         operator: "findOne",
         query: {id_business: data._id}
@@ -324,7 +318,7 @@ async function deleteOne({data}) {
     if (result.data) {
         return {code: 1, message: "不能删除，存在关联信息：ly0d4guest"}
     }
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4salebook",
         operator: "findOne",
         query: {id_business: data._id}
@@ -333,7 +327,7 @@ async function deleteOne({data}) {
         return {code: 1, message: "不能删除，存在关联信息：ly0d4salebook"}
     }
 
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d4business",
         operator: "deleteOne",
         query: {_id: data._id}
@@ -342,24 +336,24 @@ async function deleteOne({data}) {
 }
 
 // 获取页面初始化数据
-async function getPgData({data}) {
+async function getPgData({data, dependencies}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_hotel 当前用户信息：旅店id
 
-    let q = {id_dataunit: data.id_dataunit};
-    let q0 = JSON.parse(JSON.stringify(q));
+    const q = {id_dataunit: data.id_dataunit};
+    const q0 = JSON.parse(JSON.stringify(q));
     if (data.id_hotel) {
         q._id = data.id_hotel;
         q0.id_hotel = data.id_hotel;
     }
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4hotel",
         operator: "find",
         query: q
     })
     const arrHotel = result.data;
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4booktype",
         operator: "find",
         query: q0
@@ -369,7 +363,7 @@ async function getPgData({data}) {
         data: {
             arrHotel,
             arrBooktype,
-            arrBusinessStatus: ly0d4.busicode.businessStatus
+            arrBusinessStatus: dependencies.ly0utils.ly0d4.busicode.businessStatus
         }
     }
 }

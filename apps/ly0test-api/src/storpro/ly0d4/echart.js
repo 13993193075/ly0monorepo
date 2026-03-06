@@ -1,8 +1,7 @@
 // 电子图表
-import {GQuery} from '../../main/GQuery.js'
 
 // 时段应收统计
-async function echart ({data}) {
+async function echart ({data, dependencies}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_hotel 当前用户信息：旅店id
 
@@ -16,7 +15,7 @@ async function echart ({data}) {
         q0.id_hotel = id_hotel
     }
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4hotel',
         operator: 'find',
         query: q
@@ -24,7 +23,7 @@ async function echart ({data}) {
     const resData = {
         hotel: result.data
     }
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4business',
         operator: 'find',
         query: q0,
@@ -47,7 +46,7 @@ async function echart ({data}) {
 
 // 资源销售比对分析
 // 销售态势分析
-async function echart0 ({data}) {
+async function echart0 ({data, dependencies}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_hotel 当前用户信息：旅店id
 
@@ -60,7 +59,7 @@ async function echart0 ({data}) {
         qHotel._id = id_hotel
     }
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4hotel',
         operator: 'find',
         query: qHotel
@@ -68,19 +67,19 @@ async function echart0 ({data}) {
     const resData = {
         hotel: result.data
     }
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4booktype',
         operator: 'find',
         query: q
     })
     resData.booktype = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4goods',
         operator: 'find',
         query: q
     })
     resData.goods = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4business',
         operator: 'find',
         query: q,
@@ -93,7 +92,7 @@ async function echart0 ({data}) {
         ]
     })
     resData.business = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4salebook',
         operator: 'find',
         query: q,
@@ -105,7 +104,7 @@ async function echart0 ({data}) {
         ]
     })
     resData.salebook = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4room',
         operator: 'find',
         query: q,
