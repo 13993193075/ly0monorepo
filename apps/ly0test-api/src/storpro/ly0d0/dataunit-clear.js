@@ -1,7 +1,3 @@
-import {FileDB} from '@yoooloo42/ly0nodejs'
-import {GQuery} from '../../main/GQuery.js'
-import {upload} from '../../main/config.js'
-
 const arrTblname = [
     "ly0d0group",
     "ly0d0user",
@@ -111,68 +107,63 @@ const arrTblname = [
     "ly0d12student"
 ]
 
-function clear({data}) {
+// 清空数据单元
+async function clear({data, dependencies}) {
     // data.id_dataunit
 
-    return new Promise(function (resolve, reject) {
-        if (!data.id_dataunit) {
-            return resolve({
-                code: 0, message: "数据单元_id 不存在"
-            })
+    if (!data.id_dataunit) {
+        return {
+            code: 0, message: "数据单元_id 不存在"
         }
+    }
 
-        let arrPromise = []
-        arrTblname.forEach(i => {
-            arrPromise.push(GQuery({
-                tblName: i,
-                operator: "deleteMany",
-                query: {id_dataunit: data.id_dataunit}
-            }))
-        })
-
-        Promise.all(arrPromise).then(() => {
-            GQuery({
-                tblName: "ly0d0dataunit",
-                operator: "deleteMany",
-                query: {_id: data.id_dataunit}
-            }).then(() => {
-                FileDB.clear.deleteFolder(upload.imageFolder + '/' + data.id_dataunit).then(() => {
-                    resolve({code: 0, message: "已清空数据单元：" + data.id_dataunit})
-                })
-            })
-        })
+    // 删除相关表数据
+    const arrPromiseTbls = []
+    arrTblname.forEach(i => {
+        arrPromiseTbls.push(dependencies.GQuery.GQuery({
+            tblName: i,
+            operator: "deleteMany",
+            query: {id_dataunit: data.id_dataunit}
+        }))
     })
+    await Promise.all(arrPromiseTbls)
+    // 删除数据单元
+    await dependencies.GQuery.GQuery({
+        tblName: "ly0d0dataunit",
+        operator: "deleteMany",
+        query: {_id: data.id_dataunit}
+    })
+    await dependencies.ly0nodejs.FileDB.clear.deleteFolder(dependencies.config.upload.imageFolder + '/' + data.id_dataunit)
+    return {code: 0, message: "已清空数据单元：" + data.id_dataunit}
 }
 
-function emptyTest({data}) {
+// 判断数据单元是否为空
+async function emptyTest({data, dependencies}) {
     // data.id_dataunit
 
-    return new Promise(function (resolve, reject) {
-        let arrPromise = []
-        arrTblname.forEach(i => {
-            arrPromise.push(new Promise((resolve0, reject0) => {
-                GQuery({
-                    tblName: i,
-                    operator: "findOne",
-                    query: {id_dataunit: data.id_dataunit}
-                }).then(result => {
-                    if (result.data) {
-                        reject0()
-                    } else {
-                        resolve0()
-                    }
-                })
-            }))
-        })
-
-        Promise.all(arrPromise)
-            .then(() => {
-                resolve({code: 0, message: "空的数据单元"})
+    const arrPromiseTbls = []
+    arrTblname.forEach(i => {
+        arrPromiseTbls.push(
+            dependencies.GQuery.GQuery({
+                tblName: i,
+                operator: "findOne",
+                query: {id_dataunit: data.id_dataunit}
             })
-            .catch(() => {
-                resolve({code: 1, message: "非空的数据单元"})
-            })
+        )
     })
+
+    const result = await Promise.all(arrPromiseTbls)
+    let empty = true
+    result.forEach(i => {
+        if(i.data){
+            empty = false
+        }
+    })
+    if(empty){
+        return {code: 0, message: "空的数据单元"}
+    }else{
+        return {code: 1, message: "非空的数据单元"}
+    }
 }
 
 export {

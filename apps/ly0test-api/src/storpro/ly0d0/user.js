@@ -1,11 +1,5 @@
-import {crypto} from '@yoooloo42/ly0nodejs'
-import {utils as ly0utils} from '@yoooloo42/ly0utils'
-import {GQuery} from '../../main/GQuery.js'
-import {imageDomain} from '../../main/config.js'
-import ImageSave from '../../main/image-save.js'
-
 // 内部模块：查询修正
-function queryRevise({data}) {
+function queryRevise(data) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -30,7 +24,7 @@ function queryRevise({data}) {
 }
 
 // 分页查询
-async function find({data}) {
+async function find({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit
@@ -40,12 +34,12 @@ async function find({data}) {
     // data.sort.order
     // data.limit
     // data.page
-
-    const query = queryRevise(data.query) // 查询修正
+    
+    // 查询修正
+    const query = queryRevise(data.query)
     // 排序
-    let sort
+    const sort = {}
     if(data.sort && data.sort.label && data.sort.order){
-        sort = {}
         if(data.sort.order === "ascending"){
             sort[data.sort.label] = 1
         }else if(data.sort.order === "descending"){
@@ -54,10 +48,10 @@ async function find({data}) {
             sort[data.sort.label] = 1
         }
     }else{
-        sort = {_id: -1}
+        sort._id = -1
     }
 
-    const resultData = await GQuery({
+    const resultData = await dependencies.GQuery.GQuery({
         tblName: 'ly0d0user',
         operator: 'find',
         query,
@@ -65,7 +59,7 @@ async function find({data}) {
         skip: (data.page - 1) * data.limit,
         limit: Number(data.limit)
     })
-    const resultTotal = await GQuery({
+    const resultTotal = await dependencies.GQuery.GQuery({
         tblName: 'ly0d0user',
         operator: 'countDocuments',
         query
@@ -73,7 +67,7 @@ async function find({data}) {
     return {code: 0, message: '',
         data: resultData.data.map(i=>{
             return Object.assign(i, {
-                icon: [i.icon && i.icon.length > 0 ? imageDomain.domain + i.icon[0] : '']
+                icon: [i.icon && i.icon.length > 0 ? dependencies.config.imageDomain.domain + i.icon[0] : '']
             })
         }),
         total: resultTotal.count
@@ -81,7 +75,7 @@ async function find({data}) {
 }
 
 // 内部模块：数据约束
-function dataRule({data}) {
+function dataRule(data) {
     if (!data.id_dataunit) {
         return {code: 1, message: '数据单元：必选项'}
     }
@@ -95,7 +89,7 @@ function dataRule({data}) {
 }
 
 // 新增一条记录
-async function insertOne({data}) {
+async function insertOne({data, dependencies}) {
     // data.id_group
     // data.name
     // data.icon
@@ -113,13 +107,13 @@ async function insertOne({data}) {
         return message
     }
     // 提交
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d0group",
         operator: "findOne",
         query: {_id: data.id_group}
     })
     const objGroup = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d0user',
         operator: 'insertOne',
         update: {
@@ -132,14 +126,14 @@ async function insertOne({data}) {
     })
     const dataNew = result.dataNew
     if(data_icon.length > 0){
-        const icon = await ImageSave.imageAppend({
+        const icon = await dependencies.imageSave.imageAppend({
             uploaded: data_icon[0],
             dataunitId: objGroup.id_dataunit,
             tblName: 'ly0d0user',
             fieldName: 'icon',
             dataId: dataNew._id
         })
-        await GQuery({
+        await dependencies.GQuery.GQuery({
             tblName: 'ly0d0user',
             operator: 'updateOne',
             query: {_id: dataNew._id},
@@ -152,7 +146,7 @@ async function insertOne({data}) {
 }
 
 // 修改一条记录
-async function updateOne({data}) {
+async function updateOne({data, dependencies}) {
     // data._id
     // data.id_group
     // data.name
@@ -171,7 +165,7 @@ async function updateOne({data}) {
         return message
     }
     // 提交
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d0group",
         operator: "findOne",
         query: {_id: data.id_group}
@@ -185,14 +179,14 @@ async function updateOne({data}) {
         name: data.name,
     }
     if(data_icon.length > 0){
-        result = await GQuery({
+        result = await dependencies.GQuery.GQuery({
             tblName: 'ly0d0user',
             operator: 'findOne',
             query: {_id: data._id}
         })
         const dataOld = result.data
         // 图片处理
-        const icon = await ImageSave.imageUpdate({
+        const icon = await dependencies.imageSave.imageUpdate({
             uploaded: data_icon[0],
             old: dataOld.icon && dataOld.icon.length > 0 ? dataOld.icon[0] : '',
             dataunitId: objGroup.id_dataunit,
@@ -202,7 +196,7 @@ async function updateOne({data}) {
         })
         upd.icon = [icon]
     }
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d0user',
         operator: 'updateOne',
         query: {_id: data._id},
@@ -212,10 +206,10 @@ async function updateOne({data}) {
 }
 
 // 删除一条记录
-async function deleteOne({data}) {
+async function deleteOne({data, dependencies}) {
     // data._id
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d0session',
         operator: 'findOne',
         query: {id_user: data._id}
@@ -223,16 +217,16 @@ async function deleteOne({data}) {
     if (result.data) {
         return {code: 1, message: '不能删除，存在关联信息：ly0d0session'}
     }
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d0user',
         operator: 'findOne',
         query: {_id: data._id}
     })
     const dataOld = result.data
     if(dataOld.icon && dataOld.icon.length > 0){
-        await ImageSave.imageDelete({url: dataOld.icon[0]})
+        await dependencies.imageSave.imageDelete({url: dataOld.icon[0]})
     }
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d0user',
         operator: 'deleteOne',
         query: {_id: dataOld._id}
@@ -241,7 +235,7 @@ async function deleteOne({data}) {
 }
 
 // 获取页面初始化数据
-async function getPgData({data}) {
+async function getPgData({data, dependencies}) {
     // data.id_dataunit
 
     const q = {},
@@ -251,14 +245,14 @@ async function getPgData({data}) {
         q0.id_dataunit = data.id_dataunit
     }
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d0dataunit',
         operator: 'find',
         query: q,
         sort: {_id: -1}
     })
     const arrDataunit = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d0group',
         operator: 'find',
         query: q0,
@@ -274,14 +268,14 @@ async function getPgData({data}) {
 }
 
 // 登录账号取关
-async function id_loginSetNull({
-    userTbl = 'ly0d0user',
-    userId
-}){
-    await GQuery({
-        tblName: userTbl,
+async function id_loginSetNull({data, dependencies}){
+    // data.userTbl
+    // data.userId
+
+    await dependencies.GQuery.GQuery({
+        tblName: data.userTbl || 'ly0d0user',
         operator: "updateOne",
-        query: {_id: userId},
+        query: {_id: data.userId},
         update: {
             id_login: null
         }

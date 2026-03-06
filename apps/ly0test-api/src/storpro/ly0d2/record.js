@@ -1,10 +1,7 @@
 // 支付记录（维护）
 
-import {GQuery} from '../../main/GQuery.js'
-import code from "./code.js"
-
 // 内部模块：查询修正
-function queryRevise({data}){
+function queryRevise(data){
     let data0 = data ? data : {} , data1 = {};
     if(data0._id){
         data1._id = data0._id;
@@ -60,7 +57,7 @@ function queryRevise({data}){
 }
 
 // 分页查询
-function find({data}){
+async function find({data, dependencies}){
     // data.query
     // data.query._id
     // data.query.id_dataunit
@@ -77,84 +74,72 @@ function find({data}){
     // data.sort.label
     // data.sort.order
 
-    return new Promise(function(resolve, reject){
-        let query = queryRevise(data.query); // 查询修正
+    const query = queryRevise(data.query); // 查询修正
 
-        // 排序
-        let sort
-        if(data.sort && data.sort.label && data.sort.order){
-            sort = {}
-            if(data.sort.order === "ascending"){
-                sort[data.sort.label] = 1
-            }else if(data.sort.order === "descending"){
-                sort[data.sort.label] = -1
-            }else{
-                sort[data.sort.label] = 1
-            }
+    // 排序
+    const sort = {}
+    if(data.sort && data.sort.label && data.sort.order){
+        if(data.sort.order === "ascending"){
+            sort[data.sort.label] = 1
+        }else if(data.sort.order === "descending"){
+            sort[data.sort.label] = -1
         }else{
-            sort = {_id: -1}
+            sort[data.sort.label] = 1
         }
-    
-        Promise.all([
-            GQuery({
-                tblName: "ly0d2payment",
-                operator: "find",
-                query,
-                sort,
-                skip: (data.page - 1) * data.limit,
-                limit: Number(data.limit)
-            }),
-            GQuery({
-                tblName: "ly0d2payment",
-                operator: "countDocuments",
-                query
-            })
-        ]).then(function(result){
-            resolve({code: 0, message: '',
-                data: result[0].data,
-                total: result[1].count
-            })
-        })
+    }else{
+        sort._id = -1
+    }
+
+    const resultData = await dependencies.GQuery.GQuery({
+        tblName: "ly0d2payment",
+        operator: "find",
+        query,
+        sort,
+        skip: (data.page - 1) * data.limit,
+        limit: Number(data.limit)
     })
+    const resultTotal = await dependencies.GQuery.GQuery({
+        tblName: "ly0d2payment",
+        operator: "countDocuments",
+        query
+    })
+    return {code: 0, message: '',
+        data: resultData.data,
+        total: resultTotal.count
+    }
 }
 
 // 删除一条记录
-function deleteOne({data}){
+async function deleteOne({data, dependencies}){
     // data._id
 
-    return new Promise(function(resolve, reject){
-        GQuery({
-            tblName: "ly0d2payment",
-            operator: "deleteOne",
-            query: {_id: data._id}
-        }).then(()=>{
-            resolve({code: 0, message: '删除一条记录成功'})
-        })
+    await dependencies.GQuery.GQuery({
+        tblName: "ly0d2payment",
+        operator: "deleteOne",
+        query: {_id: data._id}
     })
+    return {code: 0, message: '删除一条记录成功'}
 }
 
 // 获取页面初始化数据
-function getPgData({data}){
+async function getPgData({data, dependencies}){
     // data: null
 
-    return new Promise(function(resolve, reject){
-        GQuery({
-            tblName: "ly0d0dataunit",
-            operator: "find",
-            query: {},
-            sort: {_id: -1}
-        }).then(result=>{
-            resolve({code: 0, message: "",
-                data: {
-                    arrDataunit: result.data,
-                    arrBusinessType: code.businessType,
-                    arrProcess: code.paymentProcess,
-                    arrMethod: code.paymentMethod,
-                    arrStatus: code.paymentStatus
-                }
-            })
-        })
+    const result = await dependencies.GQuery.GQuery({
+        tblName: "ly0d0dataunit",
+        operator: "find",
+        query: {},
+        sort: {_id: -1}
     })
+    return {code: 0, message: "",
+        data: {
+            arrDataunit: result.data,
+            arrBusinessType: dependencies.ly0utils.ly0d2.busicode.businessType,
+            arrProcess: dependencies.ly0utils.ly0d2.busicode.paymentProcess,
+            arrMethod: dependencies.ly0utils.ly0d2.busicode.paymentMethod,
+            arrStatus: dependencies.ly0utils.ly0d2.busicode.paymentStatus
+        }
+    }
 }
 
 export default {

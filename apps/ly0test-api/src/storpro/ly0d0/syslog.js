@@ -1,7 +1,5 @@
-import {GQuery} from '../../main/GQuery.js'
-
 // 内部模块：查询修正
-function queryRevise({data}) {
+function queryRevise(data) {
     // 只查我的数据单元 - 空查询
     if(data.id_dataunit && data.id_dataunit === "myDataunitNone"){
         return {
@@ -88,7 +86,7 @@ function queryRevise({data}) {
 }
 
 // 分页查询
-function find({data}) {
+async function find({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.id_login
@@ -111,44 +109,38 @@ function find({data}) {
     // data.limit
     // data.page
 
-    return new Promise((resolve, reject) => {
-        let query = queryRevise(data.query) // 查询修正
-        // 排序
-        let sort
-        if(data.sort && data.sort.label && data.sort.order){
-            sort = {}
-            if(data.sort.order === "ascending"){
-                sort[data.sort.label] = 1
-            }else if(data.sort.order === "descending"){
-                sort[data.sort.label] = -1
-            }else{
-                sort[data.sort.label] = 1
-            }
+    const query = queryRevise(data.query) // 查询修正
+    // 排序
+    const sort = {}
+    if(data.sort && data.sort.label && data.sort.order){
+        if(data.sort.order === "ascending"){
+            sort[data.sort.label] = 1
+        }else if(data.sort.order === "descending"){
+            sort[data.sort.label] = -1
         }else{
-            sort = {_id: -1}
+            sort[data.sort.label] = 1
         }
+    }else{
+        sort._id = -1
+    }
 
-        Promise.all([
-            GQuery({
-                tblName: "ly0d0syslog",
-                operator: "find",
-                query,
-                sort,
-                skip: (data.page - 1) * data.limit,
-                limit: Number(data.limit)
-            }),
-            GQuery({
-                tblName: "ly0d0syslog",
-                operator: "countDocuments",
-                query
-            })
-        ]).then(function (result) {
-            resolve({code: 0, message: '',
-                data: result [0].data,
-                total: result [1].count
-            })
-        })
+    const resultData = await dependencies.GQuery.GQuery({
+        tblName: "ly0d0syslog",
+        operator: "find",
+        query,
+        sort,
+        skip: (data.page - 1) * data.limit,
+        limit: Number(data.limit)
     })
+    const resultTotal = await dependencies.GQuery.GQuery({
+        tblName: "ly0d0syslog",
+        operator: "countDocuments",
+        query
+    })
+    return {code: 0, message: '',
+        data: resultData.data,
+        total: resultTotal.count
+    }
 }
 
 export default {

@@ -1,8 +1,5 @@
-import {Feie} from '@yoooloo42/ly0nodejs'
-import {GQuery} from '../../main/GQuery.js'
-
 // 内部模块：查询修正
-function queryRevise({data}) {
+function queryRevise(data) {
     let data0 = data ? data : {}, data1 = {}
     if (data0._id) {
         data1._id = data0._id
@@ -68,20 +65,8 @@ function queryRevise({data}) {
     return data1
 }
 
-// 内部模块：数据约束
-function dataRule({data}) {
-    // 不能提交
-    if (!data.sn) {
-        return {code: 1, message: "打印机厂商识别编号：必填项"}
-    }
-    if (!data.key) {
-        return {code: 1, message: "打印机厂商识别密钥：必填项"}
-    }
-    return {code: 0, message: "可以提交"}
-}
-
 // 分页查询
-function find({data}) {
+async function find({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.id_ukey
@@ -103,49 +88,56 @@ function find({data}) {
     // data.limit
     // data.page
 
-    return new Promise((resolve, reject) => {
-        let query = queryRevise(data.query) // 查询修正
-        //  排序
-        let sort
-        if (data.sort && data.sort.label && data.sort.order) {
-            sort = {}
-            if (data.sort.order === 'ascending') {
-                sort[data.sort.label] = 1
-            } else if (data.sort.order === 'descending') {
-                sort[data.sort.label] = -1
-            } else {
-                sort[data.sort.label] = 1
-            }
+    // 查询修正
+    const query = queryRevise(data.query)
+    //  排序
+    const sort = {}
+    if (data.sort && data.sort.label && data.sort.order) {
+        if (data.sort.order === 'ascending') {
+            sort[data.sort.label] = 1
+        } else if (data.sort.order === 'descending') {
+            sort[data.sort.label] = -1
         } else {
-            sort = {_id: -1}
+            sort[data.sort.label] = 1
         }
+    } else {
+        sort._id = -1
+    }
 
-        Promise.all([
-            GQuery({
-                tblName: "ly0d1d1printer",
-                operator: "find",
-                query,
-                sort,
-                skip: (data.page - 1) * data.limit,
-                limit: Number(data.limit),
-                populate: ["id_ukey"] // mongoose
-            }),
-            GQuery({
-                tblName: "ly0d1d1printer",
-                operator: "countDocuments",
-                query
-            })
-        ]).then(function (result) {
-            resolve({code: 0, message: '',
-                data: result [0].data,
-                total: result [1].count
-            })
-        })
+    const resultData = await dependencies.GQuery.GQuery({
+        tblName: "ly0d1d1printer",
+        operator: "find",
+        query,
+        sort,
+        skip: (data.page - 1) * data.limit,
+        limit: Number(data.limit),
+        populate: ["id_ukey"] // mongoose
     })
+    const resultTotal = await dependencies.GQuery.GQuery({
+        tblName: "ly0d1d1printer",
+        operator: "countDocuments",
+        query
+    })
+    return {code: 0, message: '',
+        data: resultData.data,
+        total: resultTotal.count
+    }
+}
+
+// 内部模块：数据约束
+function dataRule(data) {
+    // 不能提交
+    if (!data.sn) {
+        return {code: 1, message: "打印机厂商识别编号：必填项"}
+    }
+    if (!data.key) {
+        return {code: 1, message: "打印机厂商识别密钥：必填项"}
+    }
+    return {code: 0, message: "可以提交"}
 }
 
 // 插入一条记录
-function insertOne({data}) {
+async function insertOne({data, dependencies}) {
     // data.id_ukey
     // data.ukey_note
     // data.sn
@@ -161,42 +153,39 @@ function insertOne({data}) {
     // data.scene
     // data.sceneNote
 
-    return new Promise((resolve, reject) => {
-        let message = dataRule(data) // 提交约束
-        if (message.code === 1) {
-            return resolve(message)
-        }
+    const message = dataRule(data) // 提交约束
+    if (message.code === 1) {
+        return message
+    }
 
-        GQuery({
-            tblName: "ly0d1d1printer",
-            operator: "insertOne",
-            update: {
-                id_ukey: data.id_ukey ? data.id_ukey : "",
-                ukey_note: data.ukey_note ? data.ukey_note : "",
-                sn: data.sn,
-                key: data.key,
-                note: data.note ? data.note : "",
-                carnum: data.carnum ? data.carnum : "",
-                id_dataunit: data.id_dataunit ? data.id_dataunit : "",
-                dataunit_name: data.dataunit_name ? data.dataunit_name : "",
-                busiunit_tblName: data.busiunit_tblName ? data.busiunit_tblName : "",
-                id_busiunit: data.id_busiunit ? data.id_busiunit : "",
-                busiunit_name: data.busiunit_name ? data.busiunit_name : "",
-                printername: data.printername ? data.printername : "",
-                scene: data.scene ? data.scene : "",
-                sceneNote: data.sceneNote ? data.sceneNote : ""
-            }
-        }).then(result => {
-            resolve({
-                code: 0, message: "插入一条记录成功",
-                _id: result.dataNew._id
-            })
-        })
+    const result = await dependencies.GQuery.GQuery({
+        tblName: "ly0d1d1printer",
+        operator: "insertOne",
+        update: {
+            id_ukey: data.id_ukey ? data.id_ukey : "",
+            ukey_note: data.ukey_note ? data.ukey_note : "",
+            sn: data.sn,
+            key: data.key,
+            note: data.note ? data.note : "",
+            carnum: data.carnum ? data.carnum : "",
+            id_dataunit: data.id_dataunit ? data.id_dataunit : "",
+            dataunit_name: data.dataunit_name ? data.dataunit_name : "",
+            busiunit_tblName: data.busiunit_tblName ? data.busiunit_tblName : "",
+            id_busiunit: data.id_busiunit ? data.id_busiunit : "",
+            busiunit_name: data.busiunit_name ? data.busiunit_name : "",
+            printername: data.printername ? data.printername : "",
+            scene: data.scene ? data.scene : "",
+            sceneNote: data.sceneNote ? data.sceneNote : ""
+        }
     })
+    return {
+        code: 0, message: "插入一条记录成功",
+        _id: result.dataNew._id
+    }
 }
 
 // 修改一条记录
-function updateOne({data}) {
+async function updateOne({data, dependencies}) {
     // data._id
     // data.id_ukey
     // data.ukey_note
@@ -213,84 +202,74 @@ function updateOne({data}) {
     // data.scene
     // data.sceneNote
 
-    return new Promise((resolve, reject) => {
-        let message = dataRule(data) // 提交约束
-        if (message.code === 1) {
-            return resolve(message)
-        }
+    const message = dataRule(data) // 提交约束
+    if (message.code === 1) {
+        return message
+    }
 
-        GQuery({
-            tblName: "ly0d1d1printer",
-            operator: "updateOne",
-            query: {_id: data._id},
-            update: {
-                id_ukey: data.id_ukey ? data.id_ukey : "",
-                ukey_note: data.ukey_note ? data.ukey_note : "",
-                sn: data.sn,
-                key: data.key,
-                note: data.note ? data.note : "",
-                carnum: data.carnum ? data.carnum : "",
-                id_dataunit: data.id_dataunit ? data.id_dataunit : "",
-                dataunit_name: data.dataunit_name ? data.dataunit_name : "",
-                busiunit_tblName: data.busiunit_tblName ? data.busiunit_tblName : "",
-                id_busiunit: data.id_busiunit ? data.id_busiunit : "",
-                busiunit_name: data.busiunit_name ? data.busiunit_name : "",
-                printername: data.printername ? data.printername : "",
-                scene: data.scene ? data.scene : "",
-                sceneNote: data.sceneNote ? data.sceneNote : ""
-            }
-        }).then(() => {
-            resolve({code: 0, message: "修改一条记录成功"})
-        })
+    await dependencies.GQuery.GQuery({
+        tblName: "ly0d1d1printer",
+        operator: "updateOne",
+        query: {_id: data._id},
+        update: {
+            id_ukey: data.id_ukey ? data.id_ukey : "",
+            ukey_note: data.ukey_note ? data.ukey_note : "",
+            sn: data.sn,
+            key: data.key,
+            note: data.note ? data.note : "",
+            carnum: data.carnum ? data.carnum : "",
+            id_dataunit: data.id_dataunit ? data.id_dataunit : "",
+            dataunit_name: data.dataunit_name ? data.dataunit_name : "",
+            busiunit_tblName: data.busiunit_tblName ? data.busiunit_tblName : "",
+            id_busiunit: data.id_busiunit ? data.id_busiunit : "",
+            busiunit_name: data.busiunit_name ? data.busiunit_name : "",
+            printername: data.printername ? data.printername : "",
+            scene: data.scene ? data.scene : "",
+            sceneNote: data.sceneNote ? data.sceneNote : ""
+        }
     })
+    return {code: 0, message: "修改一条记录成功"}
 }
 
 // 删除一条记录
-function deleteOne({data}) {
+async function deleteOne({data, dependencies}) {
     // data._id
 
-    return new Promise((resolve, reject) => {
-        GQuery({
-            tblName: "ly0d1d1printer",
-            operator: "deleteOne",
-            query: {_id: data._id}
-        }).then(() => {
-            resolve({code: 0, message: "删除一条记录成功"})
-        })
+    await dependencies.GQuery.GQuery({
+        tblName: "ly0d1d1printer",
+        operator: "deleteOne",
+        query: {_id: data._id}
     })
+    return {code: 0, message: "删除一条记录成功"}
 }
 
 // 注册打印机
-function register({data}) {
+async function register({data, dependencies}) {
     // data.id_ukey
     // data.sn
     // data.key
     // data.note
     // data.carnum
 
-    return new Promise((resolve, reject) => {
-        if (!data || !data.id_ukey) {
-            return resolve({code: 1, message: "请求参数错误"})
-        }
+    if (!data || !data.id_ukey) {
+        return {code: 1, message: "请求参数错误"}
+    }
 
-        GQuery({
-            tblName: "ly0d1d1ukey",
-            operator: "findOne",
-            query: {_id: data.id_ukey}
-        }).then(result => {
-            let objUkey = result.data
-            let user = objUkey.user,
-                snList = data.sn + "#"
-                    + data.key + "#"
-                    + (data.note ? data.note : "") + "#"
-                    + (data.carnum ? data.carnum : "")
-            Feie.Open_printerAddlist({user, ukey: objUkey.ukey, snList}).then(function (result) {
-                let code = result.code === 0 ? 0 : 1,
-                    message = result.code === 0 ? "注册打印机成功" : "注册打印机失败"
-                resolve({code, message})
-            })
-        })
+    let result = await dependencies.GQuery.GQuery({
+        tblName: "ly0d1d1ukey",
+        operator: "findOne",
+        query: {_id: data.id_ukey}
     })
+    const objUkey = result.data
+    const user = objUkey.user,
+        snList = data.sn + "#"
+            + data.key + "#"
+            + (data.note ? data.note : "") + "#"
+            + (data.carnum ? data.carnum : "")
+    result = await dependencies.ly0nodejs.Feie.Open_printerAddlist({user, ukey: objUkey.ukey, snList})
+    const code = result.code === 0 ? 0 : 1,
+        message = result.code === 0 ? "注册打印机成功" : "注册打印机失败"
+    return {code, message}
 }
 
 export default {
