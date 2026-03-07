@@ -1,42 +1,39 @@
-import {GQuery} from '../../main/GQuery.js'
-import {ly0d4} from '@yoooloo42/ly0utils'
-
 // 内部模块：查询修正
-async function queryRevise ({data}) {
-        let data0 = data ? data : {},
-            data1 = {}
-        if (data0._id) {
-            data1._id = data0._id
-            return data1
-        }
-        data1.id_dataunit = data0.id_dataunit
-
-        // 旅店 _id
-        if (data0.id_hotel) {
-            data1.id_hotel = data0.id_hotel
-        }
-
-        if (data0.id_roomplace) { // 客房分区
-            data1.id_roomplace = data0.id_roomplace
-        }
-
-        if (data0.roomno) { // 房号，模糊匹配
-            data1.roomno = {'$regex': `.*${data0.roomno}.*`}
-        }
-
-        if (data0.id_goods) { // 房型
-            data1.id_goods = data0.id_goods
-        }
-
-        if (data0.status_code) { // 状态
-            data1.status_code = data0.status_code
-        }
-
+function queryRevise (data) {
+    let data0 = data ? data : {},
+        data1 = {}
+    if (data0._id) {
+        data1._id = data0._id
         return data1
+    }
+    data1.id_dataunit = data0.id_dataunit
+
+    // 旅店 _id
+    if (data0.id_hotel) {
+        data1.id_hotel = data0.id_hotel
+    }
+
+    if (data0.id_roomplace) { // 客房分区
+        data1.id_roomplace = data0.id_roomplace
+    }
+
+    if (data0.roomno) { // 房号，模糊匹配
+        data1.roomno = {'$regex': `.*${data0.roomno}.*`}
+    }
+
+    if (data0.id_goods) { // 房型
+        data1.id_goods = data0.id_goods
+    }
+
+    if (data0.status_code) { // 状态
+        data1.status_code = data0.status_code
+    }
+
+    return data1
 }
 
 // 分页查询
-async function find ({data}) {
+async function find ({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit 当前用户信息：数据单元
@@ -51,11 +48,10 @@ async function find ({data}) {
     // data.page
 
     // 查询修正
-    const query = await queryRevise(data.query)
+    const query = queryRevise(data.query)
     // 排序
-    let sort
+    const sort = {}
     if(data.sort && data.sort.label && data.sort.order){
-        sort = {}
         if(data.sort.order === "ascending"){
             sort[data.sort.label] = 1
         }else if(data.sort.order === "descending"){
@@ -64,10 +60,10 @@ async function find ({data}) {
             sort[data.sort.label] = 1
         }
     }else{
-        sort = {_id: -1}
+        sort._id = -1
     }
 
-    const resultData = await GQuery({
+    const resultData = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4room',
         operator: 'find',
         query,
@@ -75,7 +71,7 @@ async function find ({data}) {
         skip: (data.page - 1) * data.limit,
         limit: Number(data.limit) // 分页处理
     })
-    const resultTotal = await GQuery({
+    const resultTotal = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4room',
         operator: 'countDocuments',
         query
@@ -87,7 +83,7 @@ async function find ({data}) {
 }
 
 // 内部模块：数据约束
-async function dataRule ({data}) {
+async function dataRule ({data, dependencies}) {
     // 不能提交
     if (!data.id_hotel) {
         return {code: 1, message: '旅店：必选项'}
@@ -102,22 +98,22 @@ async function dataRule ({data}) {
         return {code: 1, message: '房态：必选项'}
     }
 
-    const objHotel = (await GQuery({
+    const objHotel = (await dependencies.GQuery.GQuery({
         tblName: 'ly0d4hotel',
         operator: 'findOne',
         query: {_id: data.id_hotel}
     })).data
-    const objRoomplace = (await GQuery({
+    const objRoomplace = (await dependencies.GQuery.GQuery({
         tblName: 'ly0d4roomplace',
         operator: 'findOne',
         query: {_id: data.id_roomplace}
     })).data
-    const objGoods = (await GQuery({
+    const objGoods = (await dependencies.GQuery.GQuery({
         tblName: 'ly0d4goods',
         operator: 'findOne',
         query: {_id: data.id_goods}
     })).data
-    const objStatus = ly0d4.busicode.roomStatus.find(i=>{
+    const objStatus = dependencies.ly0utils.ly0d4.busicode.roomStatus.find(i=>{
         return i.code === data.status_code
     })
     return {code: 0, message: '可以提交',
@@ -131,7 +127,7 @@ async function dataRule ({data}) {
 }
 
 // 插入一条记录
-async function insertOne ({data}) {
+async function insertOne ({data, dependencies}) {
     // data.id_hotel
     // data.id_roomplace
     // data.roomno
@@ -139,13 +135,13 @@ async function insertOne ({data}) {
     // data.status_code
 
     // 数据约束
-    let resultDataRule = await dataRule(data)
+    const resultDataRule = await dataRule({data, dependencies})
     if (resultDataRule.code !== 0) {
         return resultDataRule
     }
 
     // 提交
-    const result = await GQuery({
+    const result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4room',
         operator: 'insertOne',
         update: {
@@ -168,7 +164,7 @@ async function insertOne ({data}) {
 }
 
 // 修改一条记录
-async function updateOne ({data}) {
+async function updateOne ({data, dependencies}) {
     // data._id
     // data.id_hotel
     // data.id_roomplace
@@ -177,13 +173,13 @@ async function updateOne ({data}) {
     // data.status_code
 
     // 数据约束
-    let resultDataRule = await dataRule(data)
+    const resultDataRule = await dataRule(data)
     if (resultDataRule.code !== 0) {
         return resultDataRule
     }
 
     // 提交
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4room',
         operator: 'updateOne',
         query: {_id: data._id} ,
@@ -205,10 +201,10 @@ async function updateOne ({data}) {
 }
 
 // 删除一条记录
-async function deleteOne ({data}) {
-    let _id = data._id
+async function deleteOne ({data, dependencies}) {
+    const _id = data._id
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'findOne',
         query: {id_room: _id}
@@ -216,7 +212,7 @@ async function deleteOne ({data}) {
     if (result.data) {
         return {code: 1, message: '不能删除，存在关联信息：ly0d4b_goods'}
     }
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4guest',
         operator: 'findOne',
         query: {id_room: _id}
@@ -224,12 +220,12 @@ async function deleteOne ({data}) {
     if (result.data) {
         return {code: 1, message: '不能删除，存在关联信息：ly0d4guest'}
     }
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4room',
         operator: 'findOne',
         query: {_id}
     })
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4htlock_room',
         operator: 'deleteMany',
         query: {
@@ -237,7 +233,7 @@ async function deleteOne ({data}) {
             room_name: result.data.roomno
         }
     })
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4room',
         operator: 'deleteOne',
         query: {_id}
@@ -246,31 +242,31 @@ async function deleteOne ({data}) {
 }
 
 // 获取页面初始化数据
-async function getPgData ({data}) {
+async function getPgData ({data, dependencies}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_hotel 当前用户信息：旅店id
 
-    let q = {id_dataunit: data.id_dataunit}
-    let q0 = JSON.parse(JSON.stringify(q))
+    const q = {id_dataunit: data.id_dataunit}
+    const q0 = JSON.parse(JSON.stringify(q))
     if (data.id_hotel) {
         q._id = data.id_hotel
         q0.id_hotel = data.id_hotel
     }
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4hotel',
         operator: 'find',
         query: q
     })
     const arrHotel = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4roomplace',
         operator: 'find',
         query: q0,
         sort: {text: 1}
     })
     const arrRoomplace = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4goods',
         operator: 'find',
         query: q0,
@@ -282,7 +278,7 @@ async function getPgData ({data}) {
             arrHotel,
             arrRoomplace,
             arrGoods,
-            arrStatus: ly0d4.busicode.roomStatus
+            arrStatus: dependencies.ly0utils.ly0d4.busicode.roomStatus
         }
     }
 }

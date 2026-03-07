@@ -1,7 +1,5 @@
-import {GQuery} from '../../main/GQuery.js'
-
 // 获取页面数据
-async function getPgData ({data}) {
+async function getPgData ({data, dependencies}) {
     // data.id_dataunit
     // data.id_hotel
 
@@ -17,13 +15,13 @@ async function getPgData ({data}) {
     }
     q1.status_code = '0'
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4hotel',
         operator: 'find',
         query: q
     })
     const arrHotel = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4business',
         operator: 'find',
         query: q1
@@ -34,14 +32,14 @@ async function getPgData ({data}) {
         arrBusinessId.push(i._id)
     })
     q2.id_business = {$in: arrBusinessId}
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'find',
         query: q2,
         populate: ['id_hotel', 'id_business', 'id_room'] // mongoose
     })
     const arrBGoods = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4roomplace',
         operator: 'find',
         query: q0,

@@ -1,8 +1,34 @@
-import {GQuery} from '../../main/GQuery.js'
-import {Yizoo} from '@yoooloo42/ly0nodejs'
+// 查询全部
+async function findAll ({data, dependencies}) {
+    // data.id_dataunit 当前用户信息：数据单元
+
+    const result = await dependencies.GQuery.GQuery({
+        tblName: 'ly0d4yizoo_hotel',
+        operator: 'find',
+        query: {id_dataunit: data.id_dataunit},
+        sort: {_id: -1}
+    })
+    return {code: 0, message: "",
+        data: result.data
+    }
+}
+
+// 查询一条记录
+async function findOne ({data, dependencies}) {
+    // data._id
+
+    const result = await dependencies.GQuery.GQuery({
+        tblName: 'ly0d4yizoo_hotel',
+        operator: 'findOne',
+        query: {_id: data._id}
+    })
+    return {
+        doc: result.data
+    }
+}
 
 //内部模块：数据约束
-function dataRule ({data}) {
+function dataRule (data) {
     //不能提交
     if (!data.url) {
         return {code: 1, message: '接口请求地址：必填项'}
@@ -17,37 +43,8 @@ function dataRule ({data}) {
     return {code: 0, message: '可以提交'}
 }
 
-// 查询全部
-async function findAll ({data}) {
-    // data.id_dataunit 当前用户信息：数据单元
-
-    const result = await GQuery({
-        tblName: 'ly0d4yizoo_hotel',
-        operator: 'find',
-        query: {id_dataunit: data.id_dataunit},
-        sort: {_id: -1}
-    })
-    return {code: 0, message: "",
-        data: result.data
-    }
-}
-
-// 查询一条记录
-async function findOne ({data}) {
-    // data._id
-
-    const result = await GQuery({
-        tblName: 'ly0d4yizoo_hotel',
-        operator: 'findOne',
-        query: {_id: data._id}
-    })
-    return {
-        doc: result.data
-    }
-}
-
 // 修改一条记录
-async function updateOne ({data}) {
+async function updateOne ({data, dependencies}) {
     // data._id
     // data.url
     // data.accountname
@@ -60,7 +57,7 @@ async function updateOne ({data}) {
     }
 
     // 提交
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4yizoo_hotel',
         operator: 'updateOne',
         query: {_id: data._id},
@@ -74,15 +71,15 @@ async function updateOne ({data}) {
 }
 
 // 同步旅店信息
-async function get ({data}) {
+async function get ({data, dependencies}) {
     // data.id_dataunit
 
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4yizoo_hotel',
         operator: 'deleteMany',
         query: {id_dataunit: data.id_dataunit}
     })
-    const result = await GQuery({
+    const result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4hotel',
         operator: 'find',
         query: {id_dataunit: data.id_dataunit}
@@ -97,7 +94,7 @@ async function get ({data}) {
             hotel_name: arrHotel [i].name
         })
     }
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4yizoo_hotel',
         operator: 'insertMany',
         update: arrHtlock_hotel
@@ -106,10 +103,10 @@ async function get ({data}) {
 }
 
 // 获取最新令牌
-async function req ({data}) {
+async function req ({data, dependencies}) {
     // data._id
 
-    let result = GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4yizoo_hotel',
         operator: 'findOne',
         query: {_id: data._id}
@@ -120,7 +117,7 @@ async function req ({data}) {
     if (!result.data.url || !result.data.accountname || !result.data.password) {
         return {code: 1, message: '参数错误'}
     }
-    result = await Yizoo.openSmartLogin({
+    result = await dependencies.ly0nodejs.Yizoo.openSmartLogin({
         'url': result.data.url,
         'accountName': result.data.accountname,
         'password': result.data.password
@@ -134,7 +131,7 @@ async function req ({data}) {
         // 原厂文档：获取到的tokenId，有效期为7天，建议在5天时，重新获取新的tokenId
         days = Math.max(0, Math.round(body.data.expireTime / 60 / 60 / 24) - 2)
     expire = new Date(expire.setDate(expire.getDate() + (days)))
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4yizoo_hotel',
         operator: 'updateOne',
         query: {_id: data._id},

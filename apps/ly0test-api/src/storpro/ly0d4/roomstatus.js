@@ -5,7 +5,7 @@ import ly0d4business from './business.js'
 import ly0d4b_goods from './b_goods.js'
 
 // 获取页面数据
-async function getPgData ({data}) {
+async function getPgData ({data, dependencies}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_hotel 当前用户信息：旅店id
 
@@ -16,26 +16,26 @@ async function getPgData ({data}) {
         q0.id_hotel = data.id_hotel
     }
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4hotel',
         operator: 'find',
         query: q
     })
     const arrHotel = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4booktype',
         operator: 'find',
         query: q0
     })
     const arrBooktype = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4roomplace',
         operator: 'find',
         query: q0,
         sort: {text: 1}
     })
     const arrRoomplace = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4room',
         operator: 'find',
         query: q0,
@@ -48,13 +48,13 @@ async function getPgData ({data}) {
             arrRoomplace,
             arrRoom,
             arrBooktype,
-            arrRoomStatus: ly0d4.busicode.roomStatus
+            arrRoomStatus: dependencies.ly0utils.ly0d4.busicode.roomStatus
         }
     }
 }
 
 // 入住登记 - 发生新订单
-async function newBusiness ({data}) {
+async function newBusiness ({data, dependencies, storproRun}) {
     // data.cellphone
     // data.checkin
     // data.checkout
@@ -67,7 +67,7 @@ async function newBusiness ({data}) {
     // data.client_name
     // data.arrRoom 选中的房号数组
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4hotel",
         operator: "findOne",
         query: {
@@ -75,33 +75,42 @@ async function newBusiness ({data}) {
         }
     })
     const objHotel = result.data
-    result = await ly0d4business.insertOne({
-        id_hotel: objHotel._id,
-        cellphone: data.cellphone ? data.cellphone : "",
-        status_code: "1", // 订单状态：入住
-        checkin: data.checkin,
-        checkout: data.checkout,
-        peoples: data.peoples ? data.peoples : "",
-        rooms: data.rooms ? data.rooms : "",
-        id_booktype: data.id_booktype ? data.id_booktype : null,
-        booktime: data.booktime ? data.booktime : null,
-        booknote: data.booknote ? data.booknote : "",
-        client_cellphone: data.client_cellphone ? data.client_cellphone : "",
-        client_name: data.client_name ? data.client_name : ""
+    result = await storproRun({
+        storproName: 'ly0d4.business.insertOne',
+        data: {
+            id_hotel: objHotel._id,
+            cellphone: data.cellphone ? data.cellphone : "",
+            status_code: "1", // 订单状态：入住
+            checkin: data.checkin,
+            checkout: data.checkout,
+            peoples: data.peoples ? data.peoples : "",
+            rooms: data.rooms ? data.rooms : "",
+            id_booktype: data.id_booktype ? data.id_booktype : null,
+            booktime: data.booktime ? data.booktime : null,
+            booknote: data.booknote ? data.booknote : "",
+            client_cellphone: data.client_cellphone ? data.client_cellphone : "",
+            client_name: data.client_name ? data.client_name : ""
+        }
     })
     if (result.code !== 0) {
         return result
     }
     const id_business = result.dataNew._id
 
-    result = ly0d4b_goods.insertMany({
-        id_business,
-        arrRoom: data.arrRoom,
-        checkin: data.checkin,
-        checkout: data.checkout
+    result = await storproRun({
+        storproName: 'ly0d4.b_goods.insertMany',
+        data: {
+            id_business,
+            arrRoom: data.arrRoom,
+            checkin: data.checkin,
+            checkout: data.checkout
+        }
     })
     if (result.code !== 0) {
-        await ly0d4business.deleteOne({_id: id_business})
+        await storproRun({
+            storproName: 'ly0d4.business.deleteOne',
+            data: {_id: id_business}
+        })
         return result
     } else {
         return {code: 0, message: '登记成功',
@@ -111,7 +120,7 @@ async function newBusiness ({data}) {
 }
 
 // 修改房态
-async function setStatus ({data}) {
+async function setStatus ({data, dependencies, storproRun}) {
     // data.id_room
     // data.status_code
 
@@ -120,7 +129,10 @@ async function setStatus ({data}) {
         return {code: 1, message: '未选择状态'}
     }
     // 同步房态
-    return await utils.roomStatus.setRoomStatus(data)
+    return await storproRun({
+        storproName: 'ly0d4.set-roomstatus.setRoomstatus',
+        data
+    })
 }
 
 export default {

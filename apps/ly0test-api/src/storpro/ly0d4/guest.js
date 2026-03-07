@@ -1,8 +1,5 @@
-import {GQuery} from '../../main/GQuery.js'
-import {GBT} from '@yoooloo42/ly0utils'
-
 // 内部模块：查询修正
-function queryRevise ({data}) {
+function queryRevise (data) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -31,7 +28,7 @@ function queryRevise ({data}) {
 }
 
 // 分页查询
-async function find ({data}) {
+async function find ({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.id_business
@@ -60,7 +57,7 @@ async function find ({data}) {
         sort = {_id: -1}
     }
 
-    const result = await GQuery({
+    const result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4guest',
         operator: 'find',
         query,
@@ -68,7 +65,7 @@ async function find ({data}) {
         skip: (data.page - 1) * data.limit,
         limit: Number(data.limit)
     })
-    const result0 = await GQuery({
+    const result0 = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4guest',
         operator: 'countDocuments',
         query
@@ -80,7 +77,7 @@ async function find ({data}) {
 }
 
 // 内部模块：数据约束
-function dataRule ({data}) {
+function dataRule (data) {
     // 不能提交
     if (!data.name) {
         return {code: 1, message: '姓名：必填项'}
@@ -92,7 +89,7 @@ function dataRule ({data}) {
 }
 
 // 插入一条记录
-async function insertOne ({data}) {
+async function insertOne ({data, dependencies}) {
     // data.id_business
     // data.name
     // data.sex_code
@@ -110,19 +107,19 @@ async function insertOne ({data}) {
 
     // 提交
     const thisTime = new Date()
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4business',
         operator: 'findOne',
         query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'findOne',
         query: {_id: data.id_b_goods ? data.id_b_goods : null}
     })
     const objBGoods = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4guest',
         operator: 'insertOne',
         update: {
@@ -136,7 +133,7 @@ async function insertOne ({data}) {
 
             name: data.name,
             sex_code: data.sex_code,
-            sex_text: GBT.gbt2261.find(i=>{
+            sex_text: dependencies.ly0utils.GBT.gbt2261.find(i=>{
                 return i.code === data.sex_code
             }).text,
             docno: data.docno ? data.docno : null,
@@ -154,7 +151,7 @@ async function insertOne ({data}) {
     }
 }
 
-async function updateOne ({data}) {
+async function updateOne ({data, dependencies}) {
     // data._id
     // data.id_business
     // data.name
@@ -173,19 +170,19 @@ async function updateOne ({data}) {
 
     // 提交
     const thisTime = new Date()
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4business',
         operator: 'findOne',
         query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'findOne',
         query: {_id: data.id_b_goods ? data.id_b_goods : null}
     })
     const objBGoods = result.data
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4guest',
         operator: 'updateOne',
         query: {_id: data._id},
@@ -199,7 +196,7 @@ async function updateOne ({data}) {
 
             name: data.name,
             sex_code: data.sex_code,
-            sex_text: GBT.gbt2261.find(i=>{
+            sex_text: dependencies.ly0utils.GBT.gbt2261.find(i=>{
                 return i.code === data.sex_code
             }).text,
             docno: data.docno ? data.docno : null,
@@ -215,10 +212,10 @@ async function updateOne ({data}) {
     return {code: 0, message: '修改一条记录成功'}
 }
 
-async function deleteOne ({data}) {
+async function deleteOne ({data, dependencies}) {
     // data._id
 
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4guest',
         operator: 'deleteOne',
         query: {_id: data._id}
@@ -226,10 +223,10 @@ async function deleteOne ({data}) {
     return {code: 0, message: '删除一条记录成功'}
 }
 
-async function getPgData ({data}) {
+async function getPgData ({data, dependencies}) {
     // data.id_business
 
-    const result = await GQuery({
+    const result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'find',
         query: {id_business: data.id_business},
@@ -238,7 +235,7 @@ async function getPgData ({data}) {
     return {code: 0, message: "",
         data: {
             arrBGoods: result.data,
-            arrSex: GBT.gbt2261
+            arrSex: dependencies.ly0utils.GBT.gbt2261
         }
     }
 }

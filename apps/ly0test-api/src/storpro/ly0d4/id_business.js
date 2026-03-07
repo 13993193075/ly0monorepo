@@ -1,61 +1,57 @@
-import {GQuery} from '../../main/GQuery.js'
-import {ly0d4} from '@yoooloo42/ly0utils'
-import utils from "./utils/index.js";
-
-async function id_business({data}){
+async function id_business({data, dependencies}){
     // data.id_business
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4business",
         operator: "findOne",
         query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4hotel",
         operator: "findOne",
         query: {_id: objBusiness.id_hotel}
     })
     const objHotel = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4salebook",
         operator: "find",
         query: {id_business: objBusiness._id}
     })
     const arrSalebook = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4b_goods",
         operator: "find",
         query: {id_business: objBusiness._id},
         sort: {roomno: 1}
     })
     const arrBGoods = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4b_goods0",
         operator: "find",
         query: {id_business: objBusiness._id}
     })
     const arrBGoods0 = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4b_goods1",
         operator: "find",
         query: {id_business: objBusiness._id}
     })
     const arrBGoods1 = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4bill",
         operator: "find",
         query: {id_business: objBusiness._id},
         sort: {_id: -1} // 挂账倒序
     })
     const arrBill = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4guest",
         operator: "find",
         query: {id_business: objBusiness._id}
     })
     const arrGuest = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4memo",
         operator: "find",
         query: {id_business: objBusiness._id},
@@ -71,7 +67,7 @@ async function id_business({data}){
 
     // 房租
     arrBGoods.forEach(i => {
-        amount_b_goods = amount_b_goods + ly0d4.calculator.calculator({
+        amount_b_goods = amount_b_goods + dependencies.ly0utils.ly0d4.calculator.calculator({
             price: i.price,
             checkin: new Date(i.checkin),
             checkout: new Date(i.checkout),
@@ -106,7 +102,7 @@ async function id_business({data}){
 
     // 计费合计
     amount = amount_b_goods + amount_b_goods0 + amount_b_goods1 + amount_bill
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4business",
         operator: "updateOne",
         query: {_id: objBusiness._id},
@@ -132,7 +128,7 @@ async function id_business({data}){
         })
     })
 
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d4booktype",
         operator: "find",
         query: {id_hotel: objHotel._id},
@@ -157,7 +153,7 @@ async function id_business({data}){
 }
 
 // 修改订单基本信息
-async function setBaseInfo({data}) {
+async function setBaseInfo({data, dependencies}) {
     // data._id
     // data.cellphone
     // data.checkin
@@ -177,14 +173,14 @@ async function setBaseInfo({data}) {
         booktype_text= ''
     if(data.id_booktype){
         id_booktype = data.id_booktype
-        let result = await GQuery({
+        let result = await dependencies.GQuery.GQuery({
             tblName: 'ly0d4booktype',
             operator: 'findOne',
             query: {_id: id_booktype}
         })
         booktype_text = result.data.text
     }
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d4business",
         operator: "updateOne",
         query: {_id: data._id},
@@ -207,14 +203,14 @@ async function setBaseInfo({data}) {
 }
 
 // 修改核收金额
-async function setDeal({data}) {
+async function setDeal({data, dependencies}) {
     // data._id
     // data.deal
     // data.dealnote
 
     // 提交
     const thisTime = new Date()
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d4business",
         operator: "updateOne",
         query: {_id: data._id},
@@ -230,8 +226,5 @@ async function setDeal({data}) {
 export default {
     id_business,
     setBaseInfo,
-    setDeal,
-    book: utils.roomStatus.book,
-    arrive: utils.roomStatus.arrive,
-    leave: utils.roomStatus.leave,
+    setDeal
 }

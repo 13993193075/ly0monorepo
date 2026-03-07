@@ -1,8 +1,5 @@
-import {GQuery} from '../../main/GQuery.js'
-import {ly0d4} from '@yoooloo42/ly0utils'
-
 // 月报表
-async function month ({data}) {
+async function month ({data, dependencies}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.timeFrom
     // data.timeTo
@@ -80,19 +77,19 @@ async function month ({data}) {
             + ' 月报表'
     }
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4hotel',
         operator: 'find',
         query: {id_dataunit},
     })
     const arrHotel = JSON.parse(JSON.stringify(result.data)) // 旅店
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4goods',
         operator: 'find',
         query: {id_dataunit},
     })
     const arrGoods = JSON.parse(JSON.stringify(result.data)) // 房型
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4business',
         operator: 'find',
         query: {
@@ -108,7 +105,7 @@ async function month ({data}) {
     arrBusiness.forEach(i=>{
         arrBusinessId.push(i._id)
     })
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'find',
         query: {
@@ -123,7 +120,7 @@ async function month ({data}) {
             return iHotel._id === iBGoods.id_hotel
         })
         // 逐条计费
-        iBGoods.amount = ly0d4.calculator.calculator({
+        iBGoods.amount = dependencies.ly0utils.ly0d4.calculator.calculator({
             price: iBGoods.price,
             checkin: iBGoods.checkin,
             checkout: iBGoods.checkout,

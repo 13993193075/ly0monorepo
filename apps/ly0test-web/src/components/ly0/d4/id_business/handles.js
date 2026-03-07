@@ -48,7 +48,7 @@ const businessStatus = {
                 type: 'warning',
             })
             const result = await ly0request.ly0.storpro({
-                storproName: 'ly0d4.id_business.book',
+                storproName: 'ly0d4.set-roomstatus.book',
                 data: { id_business: scopeThis.id_business },
             })
             ElMessage(result.message)
@@ -66,7 +66,7 @@ const businessStatus = {
                 type: 'warning',
             })
             const result = await ly0request.ly0.storpro({
-                storproName: 'ly0d4.id_business.arrive',
+                storproName: 'ly0d4.set-roomstatus.arrive',
                 data: { id_business: scopeThis.id_business },
             })
             ElMessage(result.message)
@@ -84,7 +84,7 @@ const businessStatus = {
                 type: 'warning',
             })
             const result = await ly0request.ly0.storpro({
-                storproName: 'ly0d4.id_business.leave',
+                storproName: 'ly0d4.set-roomstatus.leave',
                 data: { id_business: scopeThis.id_business },
             })
             ElMessage(result.message)

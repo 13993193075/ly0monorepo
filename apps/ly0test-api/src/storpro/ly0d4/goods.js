@@ -1,10 +1,5 @@
-import {GQuery} from '../../main/GQuery.js'
-import {imageDomain} from '../../main/config.js'
-import ImageSave from '../../main/image-save.js'
-import {utils as ly0utils} from '@yoooloo42/ly0utils'
-
 // 内部模块：查询修正
-async function queryRevise ({data}) {
+async function queryRevise (data) {
     let data0 = data ? data : {},
         data1 = {}
 
@@ -31,7 +26,7 @@ async function queryRevise ({data}) {
 }
 
 // 分页查询
-async function find ({data}) {
+async function find ({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit 当前用户信息：数据单元
@@ -59,7 +54,7 @@ async function find ({data}) {
         sort = {_id: -1}
     }
 
-    const resultData = await GQuery({
+    const resultData = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4goods',
         operator: 'find',
         query,
@@ -67,15 +62,15 @@ async function find ({data}) {
         skip: (data.page - 1) * data.limit,
         limit: Number(data.limit) // 分页处理
     })
-    const resultTotal = await GQuery({
+    const resultTotal = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4goods',
         operator: 'countDocuments',
         query
     })
     return {code: 0, message: '',
-        data: ly0utils.imageAddr.dataSet({
+        data: dependencies.ly0utils.utils.imageAddr.dataSet({
             data: resultData.data,
-            domain: imageDomain.domain,
+            domain: dependencies.config.imageDomain,
             fieldNames: ['thumb']
         }),
         total: resultTotal.count
@@ -83,7 +78,7 @@ async function find ({data}) {
 }
 
 // 内部模块：数据约束
-async function dataRule ({data}) {
+async function dataRule (data) {
     // 不能提交
     if (!data.id_hotel) {
         return {code: 1, message: '旅店：必选项'}
@@ -96,7 +91,7 @@ async function dataRule ({data}) {
 }
 
 // 插入一条记录
-async function insertOne ({data}) {
+async function insertOne ({data, dependencies}) {
     // data.id_hotel
     // data.name
     // data.price_name
@@ -113,14 +108,14 @@ async function insertOne ({data}) {
     }
 
     // 获取旅店信息
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4hotel',
         operator: 'findOne',
         query: {_id: data.id_hotel}
     })
     const objHotel = result.data
     // 发生新记录
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4goods',
         operator: 'insertOne',
         update: {
@@ -134,14 +129,14 @@ async function insertOne ({data}) {
     const objGoods = result.dataNew
     // 图片处理
     if(data_thumb.length > 0){
-        const thumb = [await ImageSave.imageAppend({
+        const thumb = [await dependencies.imageSave.imageAppend({
             uploaded: data_thumb[0],
             dataunitId: data.id_dataunit,
             tblName: 'ly0d4goods',
             fieldName: 'thumb',
             dataId: objGoods._id
         })]
-        await GQuery({
+        await dependencies.GQuery.GQuery({
             tblName: 'ly0d4goods',
             operator: 'updateOne',
             query: {_id: objGoods._id},
@@ -154,7 +149,7 @@ async function insertOne ({data}) {
 }
 
 // 修改一条记录
-async function updateOne ({data}) {
+async function updateOne ({data, dependencies}) {
     // data._id
     // data.id_hotel
     // data.name
@@ -172,14 +167,14 @@ async function updateOne ({data}) {
     }
 
     // 获取旅店信息
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4hotel',
         operator: 'findOne',
         query: {_id: data.id_hotel}
     })
     let objHotel = result.data
     // 获取房型信息
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4goods',
         operator: 'findOne',
         query: {_id: data._id}
@@ -195,7 +190,7 @@ async function updateOne ({data}) {
     }
     // 图片处理
     if(data_thumb.length > 0){
-        upd.thumb = [await ImageSave.imageUpdate({
+        upd.thumb = [await dependencies.imageSave.imageUpdate({
             uploaded: data_thumb[0],
             old: objGoods.thumb && objGoods.thumb.length > 0 ? objGoods.thumb[0] : '',
             dataunitId: data.id_dataunit,
@@ -205,7 +200,7 @@ async function updateOne ({data}) {
         })]
     }
     // 提交
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4goods',
         operator: 'updateOne',
         query: {_id: objGoods._id},
@@ -215,10 +210,10 @@ async function updateOne ({data}) {
 }
 
 // 删除一条记录
-async function deleteOne ({data}) {
+async function deleteOne ({data, dependencies}) {
     // data._id
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4price',
         operator: 'findOne',
         query: {id_goods: data._id}
@@ -226,7 +221,7 @@ async function deleteOne ({data}) {
     if (result.data) {
         return {code: 1, message: '不能删除，存在关联信息：ly0d4price'}
     }
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4room',
         operator: 'findOne',
         query: {id_goods: data._id}
@@ -234,7 +229,7 @@ async function deleteOne ({data}) {
     if (result.data) {
         return {code: 1, message: '不能删除，存在关联信息：ly0d4room'}
     }
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4b_goods',
         operator: 'findOne',
         query: {id_goods: data._id}
@@ -242,7 +237,7 @@ async function deleteOne ({data}) {
     if (result.data) {
         return {code: 1, message: '不能删除，存在关联信息：ly0d4b_goods'}
     }
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4salebook',
         operator: 'findOne',
         query: {id_goods: data._id}
@@ -251,17 +246,17 @@ async function deleteOne ({data}) {
         return {code: 1,message: '不能删除，存在关联信息：ly0d4salebook'}
     }
 
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4goods',
         operator: 'findOne',
         query: {_id: data._id}
     })
     const dataOld = result.data
     if(dataOld.thumb && dataOld.thumb.length > 0){
-        await ImageSave.imageDelete({url: dataOld.thumb[0]})
+        await dependencies.imageSave.imageDelete({url: dataOld.thumb[0]})
     }
 
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4goods',
         operator: 'deleteOne',
         query: {_id: dataOld._id}
@@ -270,7 +265,7 @@ async function deleteOne ({data}) {
 }
 
 // 获取页面渲染数据
-async function getPgData ({data}) {
+async function getPgData ({data, dependencies}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_hotel 当前用户信息：旅店id
 
@@ -279,7 +274,7 @@ async function getPgData ({data}) {
         q._id = data.id_hotel
     }
 
-    const result = await GQuery({
+    const result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4hotel',
         operator: 'find',
         query: q

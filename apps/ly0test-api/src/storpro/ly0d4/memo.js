@@ -1,7 +1,5 @@
-import {GQuery} from '../../main/GQuery.js'
-
 // 内部模块：查询修正
-function queryRevise ({data}) {
+function queryRevise (data) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -17,7 +15,7 @@ function queryRevise ({data}) {
     return data1
 }
 
-async function find ({data}) {
+async function find ({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.id_business
@@ -27,11 +25,11 @@ async function find ({data}) {
     // data.limit
     // data.page
 
-    const query = queryRevise(data.query) // 查询修正
+    // 查询修正
+    const query = queryRevise(data.query)
     // 排序
-    let sort
+    const sort = {}
     if (data.sort && data.sort.label && data.sort.order) {
-        sort = {}
         if (data.sort.order === 'ascending') {
             sort[data.sort.label] = 1
         } else if (data.sort.order === 'descending') {
@@ -40,10 +38,10 @@ async function find ({data}) {
             sort[data.sort.label] = 1
         }
     } else {
-        sort = {_id: -1}
+        sort._id = -1
     }
 
-    const result = await GQuery({
+    const resultData = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4memo',
         operator: 'find',
         query,
@@ -51,26 +49,26 @@ async function find ({data}) {
         skip: (data.page - 1) * data.limit,
         limit: Number(data.limit)
     })
-    const result0 = await GQuery({
+    const resultTotal = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4memo',
         operator: 'countDocuments',
         query
     })
     return {code: 0, message: '',
-        data: result.data,
-        total: result0.count
+        data: resultData.data,
+        total: resultTotal.count
     }
 }
 
 // 内部模块：数据约束
-function dataRule ({data}) {
+function dataRule (data) {
     if (!data.memo) {
         return {code: 1, message: '备忘：必填项'}
     }
     return {code: 0, message: '可以提交'}
 }
 
-async function insertOne ({data}) {
+async function insertOne ({data, dependencies}) {
     // data.id_business
     // data.memo
     // data.recorder_cellphone 当前用户信息：手机号
@@ -84,13 +82,13 @@ async function insertOne ({data}) {
 
     // 提交
     const thisTime = new Date()
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4business',
         operator: 'findOne',
         query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4memo',
         operator: 'insertOne',
         update: {
@@ -112,7 +110,7 @@ async function insertOne ({data}) {
     }
 }
 
-async function updateOne ({data}) {
+async function updateOne ({data, dependencies}) {
     // data._id
     // data.id_business
     // data.memo
@@ -127,13 +125,13 @@ async function updateOne ({data}) {
 
     // 提交
     const thisTime = new Date()
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d4business',
         operator: 'findOne',
         query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4memo',
         operator: 'updateOne',
         query: {_id: data._id},
@@ -153,10 +151,10 @@ async function updateOne ({data}) {
     return {code: 0, message: '修改一条记录成功'}
 }
 
-async function deleteOne ({data}) {
+async function deleteOne ({data, dependencies}) {
     // data._id
 
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d4memo',
         operator: 'deleteOne',
         query: {_id: data._id}
