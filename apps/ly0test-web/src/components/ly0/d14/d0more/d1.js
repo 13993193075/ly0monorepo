@@ -1,5 +1,6 @@
 import { request as ly0request } from '@yoooloo42/ly0browser'
 import {ElMessage, ElMessageBox} from 'element-plus'
+import {GBT, ly0d14} from '@yoooloo42/ly0utils'
 function get({scopeThis}) {
     const doc = {
         formData: {},
@@ -41,7 +42,7 @@ function get({scopeThis}) {
     }
 
     // 遍历疾病代码
-    scopeThis.busiCode.busiCode.d14d1disease.forEach(itemBusiCode => {
+    ly0d14.busicode.d1disease.forEach(itemBusiCode => {
         // 获取既往疾病史数据
         const itemData = scopeThis.formData.appendix.d1.find(i => {
             return i.disease_code === itemBusiCode.code
@@ -100,7 +101,7 @@ async function submit({scopeThis}) {
         data: [],
     }
     // 遍历疾病代码
-    scopeThis.busiCode.busiCode.d14d1disease.forEach(itemBusiCode => {
+    ly0d14.busicode.d1disease.forEach(itemBusiCode => {
         // 字段名前缀
         const prefix = 'd1_' + itemBusiCode.code + '_'
         if (!!scopeThis.update.formData[prefix + 'disease_code']) {

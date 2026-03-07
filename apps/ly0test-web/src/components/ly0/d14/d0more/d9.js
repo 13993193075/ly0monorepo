@@ -1,5 +1,6 @@
 import { request as ly0request } from '@yoooloo42/ly0browser'
 import {ElMessage, ElMessageBox} from 'element-plus'
+import {GBT, ly0d14} from '@yoooloo42/ly0utils'
 function get({scopeThis}) {
     const doc = {
         formData: {},
@@ -38,7 +39,7 @@ function get({scopeThis}) {
     }
 
     // 遍历环境暴露类别代码
-    scopeThis.busiCode.busiCode.d14d9environment.forEach((itemBusiCode) => {
+    ly0d14.busicode.d9environment.forEach((itemBusiCode) => {
         // 获取环境暴露数据
         const itemData = scopeThis.formData.appendix.d9.find(i => {
             return i.environment_code === itemBusiCode.code
@@ -101,7 +102,7 @@ function get({scopeThis}) {
             fieldName: prefix + 'times_code',
             item_fieldLabel: 'text',
             item_fieldValue: 'code',
-            items: scopeThis.busiCode.busiCode.d14d9times,
+            items: ly0d14.busicode.d9times,
             hdlVisible({scopeThis, formData}) {
                 return !!formData[prefix + 'environment_code']
             },
@@ -113,7 +114,7 @@ function get({scopeThis}) {
             fieldName: prefix + 'smoke_code',
             item_fieldLabel: 'text',
             item_fieldValue: 'code',
-            items: scopeThis.busiCode.busiCode.d14d9smoke,
+            items: ly0d14.busicode.d9smoke,
             hdlVisible({scopeThis, formData}) {
                 return !!formData[prefix + 'environment_code']
             },
@@ -136,7 +137,7 @@ async function submit({scopeThis}) {
         data: [],
     }
     // 遍历环境暴露类别代码
-    scopeThis.busiCode.busiCode.d14d9environment.forEach((itemBusiCode) => {
+    ly0d14.busicode.d9environment.forEach((itemBusiCode) => {
         // 字段名前缀
         const prefix = 'd9_' + itemBusiCode.code + '_'
         if (!!scopeThis.update.formData[prefix + 'environment_code']) {

@@ -1,5 +1,6 @@
 import { request as ly0request } from '@yoooloo42/ly0browser'
 import {ElMessage, ElMessageBox} from 'element-plus'
+import {GBT, ly0d14} from '@yoooloo42/ly0utils'
 export default {
     update: {
         getFormData({scopeThis}) {
@@ -33,7 +34,7 @@ export default {
                     item_fieldLabel: 'text',
                     item_fieldValue: 'code',
                     hdlGetItems({scopeThis}) {
-                        return scopeThis.busiCode.gbt.gbt4658
+                        return GBT.gbt4658
                     },
                 },
                 {
@@ -43,7 +44,7 @@ export default {
                     item_fieldLabel: 'text',
                     item_fieldValue: 'code',
                     hdlGetItems({scopeThis}) {
-                        return scopeThis.busiCode.busiCode.d14d0f0occupation
+                        return ly0d14.busicode.d0f0occupation
                     },
                 },
                 {
@@ -62,16 +63,14 @@ export default {
                     f1birthdate: scopeThis.update.formData.f1birthdate,
                     f1education_code: scopeThis.update.formData.f1education_code,
                     f1education: scopeThis.update.formData.f1education_code
-                        ? scopeThis.busiCode.gbt.gbt4658.find(i => {
+                        ? GBT.gbt4658.find(i => {
                             return i.code === scopeThis.update.formData.f1education_code
-                        }).text
-                        : '',
+                        }).text : '',
                     f1occupation_code: scopeThis.update.formData.f1occupation_code,
                     f1occupation: scopeThis.update.formData.f1occupation_code
-                        ? scopeThis.busiCode.busiCode.d14d0f0occupation.find(i => {
+                        ? ly0d14.busicode.d0f0occupation.find(i => {
                             return i.code === scopeThis.update.formData.f1occupation_code
-                        }).text
-                        : '',
+                        }).text : '',
                     f1cellphone: scopeThis.update.formData.f1cellphone,
                 },
             }).then(async () => {

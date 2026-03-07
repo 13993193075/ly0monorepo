@@ -1,5 +1,6 @@
 import { request as ly0request } from '@yoooloo42/ly0browser'
 import {ElMessage, ElMessageBox} from 'element-plus'
+import {GBT, ly0d14} from '@yoooloo42/ly0utils'
 function get({scopeThis}) {
     const doc = {
         formData: {},
@@ -38,7 +39,7 @@ function get({scopeThis}) {
     }
 
     // 遍历心理状态代码
-    scopeThis.busiCode.busiCode.d14d6psychology.forEach(itemBusiCode => {
+    ly0d14.busicode.d6psychology.forEach(itemBusiCode => {
         // 获取心理篇数据
         const itemData = scopeThis.formData.appendix.d6.find(i => {
             return i.psychology_code === itemBusiCode.code
@@ -89,7 +90,7 @@ function get({scopeThis}) {
             fieldName: prefix + 'times_code',
             item_fieldLabel: 'text',
             item_fieldValue: 'code',
-            items: scopeThis.busiCode.busiCode.d14d6times,
+            items: ly0d14.busicode.d6times,
             hdlVisible({scopeThis, formData}) {
                 return !!formData[prefix + 'psychology_code']
             },
@@ -109,7 +110,7 @@ async function submit({scopeThis}) {
         data: [],
     }
     // 遍历心理状态代码
-    scopeThis.busiCode.busiCode.d14d6psychology.forEach(itemBusiCode => {
+    ly0d14.busicode.d6psychology.forEach(itemBusiCode => {
         // 字段名前缀
         const prefix = 'd6_' + itemBusiCode.code + '_'
         if (!!scopeThis.update.formData[prefix + 'psychology_code']) {

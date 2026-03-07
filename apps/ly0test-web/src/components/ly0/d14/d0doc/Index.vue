@@ -6,7 +6,6 @@ import {utils as ly0utils} from '@yoooloo42/ly0utils'
 import menu from './menu.js'
 import formData from './form-data.js'
 import formProps from './form-props.js'
-import busiCode from './busi-code.js'
 import more from '../d0more/index.js'
 
 const props = defineProps({
@@ -23,7 +22,6 @@ const scopeThis = reactive({
     menu,
     formData,
     formProps: {},
-    busiCode,
     update: {
         formData: {},
         formProps: {
@@ -49,11 +47,6 @@ const scopeThis = reactive({
                 data: { id_ly0d14d0: scopeThis.root.id_d0 },
             })
             ly0utils.deepClone.replaceObject(scopeThis.formData, result.doc)
-            const result0 = await ly0request.ly0.storpro({
-                storproName: 'ly0d14.d0.getPgData',
-                data: null,
-            })
-            ly0utils.deepClone.replaceObject(scopeThis.busiCode, result0.data)
             ElMessage('数据已刷新')
             scopeThis.formProps = ly0utils.deepClone.deepMerge(
                 scopeThis.formProps,

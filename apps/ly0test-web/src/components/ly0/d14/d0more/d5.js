@@ -1,5 +1,6 @@
 import { request as ly0request } from '@yoooloo42/ly0browser'
 import {ElMessage, ElMessageBox} from 'element-plus'
+import {GBT, ly0d14} from '@yoooloo42/ly0utils'
 function get({scopeThis}) {
     const doc = {
         formData: {},
@@ -487,7 +488,7 @@ function get({scopeThis}) {
             fieldName: 'd5f4f0code',
             item_fieldLabel: 'text',
             item_fieldValue: 'code',
-            items: scopeThis.busiCode.busiCode.d14d5f4f0,
+            items: ly0d14.busicode.d5f4f0,
             hdlVisible({scopeThis, formData}) {
                 return !formData.d5f4uncertain
             },
@@ -508,7 +509,7 @@ function get({scopeThis}) {
             fieldName: 'd5f4f2code',
             item_fieldLabel: 'text',
             item_fieldValue: 'code',
-            items: scopeThis.busiCode.busiCode.d14d5f4f2,
+            items: ly0d14.busicode.d5f4f2,
             hdlVisible({scopeThis, formData}) {
                 return !formData.d5f4uncertain
             },
@@ -544,7 +545,7 @@ function get({scopeThis}) {
             fieldName: 'd5f5code',
             item_fieldLabel: 'text',
             item_fieldValue: 'code',
-            items: scopeThis.busiCode.busiCode.d14d5f5,
+            items: ly0d14.busicode.d5f5,
             hdlVisible({scopeThis, formData}) {
                 return !formData.d5f5uncertain
             },

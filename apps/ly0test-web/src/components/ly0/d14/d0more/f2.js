@@ -1,5 +1,6 @@
 import { request as ly0request } from '@yoooloo42/ly0browser'
 import {ElMessage, ElMessageBox} from 'element-plus'
+import {GBT, ly0d14} from '@yoooloo42/ly0utils'
 export default {
     update: {
         getFormData({scopeThis}) {
@@ -64,7 +65,7 @@ export default {
                     item_fieldValue: 'code',
                     style: {width: '200px'},
                     hdlGetItems({scopeThis}) {
-                        return scopeThis.busiCode.busiCode.d14d0f2menstruation_cycle
+                        return ly0d14.busicode.d0f2menstruation_cycle
                     },
                 },
 
@@ -128,10 +129,9 @@ export default {
                     f2menstruation_first: scopeThis.update.formData.f2menstruation_first,
                     f2menstruation_cycle_code: scopeThis.update.formData.f2menstruation_cycle_code,
                     f2menstruation_cycle: scopeThis.update.formData.f2menstruation_cycle_code
-                        ? scopeThis.busiCode.busiCode.d14d0f2menstruation_cycle.find(i => {
+                        ? ly0d14.busicode.d0f2menstruation_cycle.find(i => {
                             return i.code === scopeThis.update.formData.f2menstruation_cycle_code
-                        }).text
-                        : '',
+                        }).text : '',
                     f2abnormal: scopeThis.update.formData.f2abnormal,
                     f2abnormal0: scopeThis.update.formData.f2abnormal0,
                     f2abnormal1: scopeThis.update.formData.f2abnormal1,

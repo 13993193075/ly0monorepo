@@ -1,5 +1,6 @@
 import { request as ly0request } from '@yoooloo42/ly0browser'
 import {ElMessage, ElMessageBox} from 'element-plus'
+import {GBT, ly0d14} from '@yoooloo42/ly0utils'
 function get({scopeThis}) {
     const doc = {
         formData: {},
@@ -41,7 +42,7 @@ function get({scopeThis}) {
     }
 
     // 遍历食物名称代码
-    scopeThis.busiCode.busiCode.d14d2food.forEach(itemBusiCode => {
+    ly0d14.busicode.d2food.forEach(itemBusiCode => {
         // 非叶节点处理
         if (itemBusiCode.type !== 'leaf') {
             let item = {
@@ -120,7 +121,7 @@ function get({scopeThis}) {
             fieldName: prefix + 'times_code',
             item_fieldLabel: 'text',
             item_fieldValue: 'code',
-            items: scopeThis.busiCode.busiCode.d14d2times,
+            items: ly0d14.busicode.d2times,
             hdlVisible({scopeThis, formData}) {
                 return !!formData[prefix + 'food_code']
             },
@@ -131,7 +132,7 @@ function get({scopeThis}) {
             fieldName: prefix + 'weight_code',
             item_fieldLabel: 'text',
             item_fieldValue: 'code',
-            items: scopeThis.busiCode.busiCode.d14d2weight,
+            items: ly0d14.busicode.d2weight,
             hdlVisible({scopeThis, formData}) {
                 return !!formData[prefix + 'food_code']
             },
@@ -153,7 +154,7 @@ async function submit({scopeThis}) {
         data: [],
     }
     // 遍历食物名称代码
-    scopeThis.busiCode.busiCode.d14d2food.forEach(itemBusiCode => {
+    ly0d14.busicode.d2food.forEach(itemBusiCode => {
         // 字段名前缀
         const prefix = 'd2_' + itemBusiCode.code + '_'
         if (!!scopeThis.update.formData[prefix + 'food_code']) {

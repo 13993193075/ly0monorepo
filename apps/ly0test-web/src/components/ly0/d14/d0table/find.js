@@ -1,4 +1,5 @@
 import {withTable} from '@yoooloo42/ly0el'
+import {GBT, ly0d14} from '@yoooloo42/ly0utils'
 export default {
     formProps: {
         popup: {
@@ -54,7 +55,7 @@ export default {
                         item_fieldLabel: 'text',
                         item_fieldValue: 'code',
                         hdlGetItems({scopeThis}) {
-                            return scopeThis.pgData.data.gbt.gbt3304
+                            return GBT.gbt3304
                         },
                         style: {width: '200px'},
                     },
@@ -71,7 +72,7 @@ export default {
                         item_fieldLabel: 'text',
                         item_fieldValue: 'code',
                         hdlGetItems({scopeThis}) {
-                            return scopeThis.pgData.data.gbt.gbt4658
+                            return GBT.gbt4658
                         },
                         style: {width: '200px'},
                     },
@@ -82,7 +83,7 @@ export default {
                         item_fieldLabel: 'text',
                         item_fieldValue: 'code',
                         hdlGetItems({scopeThis}) {
-                            return scopeThis.pgData.data.busiCode.d14d0f0occupation
+                            return ly0d14.busicode.d0f0occupation
                         },
                         style: {width: '200px'},
                     },
@@ -93,7 +94,7 @@ export default {
                         item_fieldLabel: 'text',
                         item_fieldValue: 'code',
                         hdlGetItems({scopeThis}) {
-                            return scopeThis.pgData.data.busiCode.d14d0f0insurance
+                            return ly0d14.busicode.d0f0insurance
                         },
                         style: {width: '200px'},
                     },
@@ -104,7 +105,7 @@ export default {
                         item_fieldLabel: 'text',
                         item_fieldValue: 'code',
                         hdlGetItems({scopeThis}) {
-                            return scopeThis.pgData.data.busiCode.d14d0f0income
+                            return ly0d14.busicode.d0f0income
                         },
                         style: {width: '200px'},
                     },

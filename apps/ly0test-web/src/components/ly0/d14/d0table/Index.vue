@@ -51,17 +51,6 @@ const scopeThis = reactive({
     find,
     insertOne,
     updateOne,
-    pgData: {
-        query: null,
-        data: {
-            gbt: {
-                gbt2261: [],
-                gbt3304: [],
-                gbt4658: []
-            },
-            busiCode: {}
-        }
-    },
 })
 
 onMounted(async ()=>{
