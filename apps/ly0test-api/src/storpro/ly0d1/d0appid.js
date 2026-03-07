@@ -1,5 +1,3 @@
-import {GQuery} from '../../main/GQuery.js'
-
 // 内部模块：查询修正
 function queryRevise(data) {
     let data0 = data ? data : {}, data1 = {}
@@ -239,10 +237,10 @@ async function getAppidWithThiswebsiteLogin ({data, dependencies}) {
 }
 
 // 获取用于系统年费的appid凭据信息
-async function getAppidWithAnnual ({data}) {
+async function getAppidWithAnnual ({data, dependencies}) {
     // data: null
 
-    const result = GQuery({
+    const result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d1d0appid',
         operator: 'findOne',
         query: {with_annual: 'true'}

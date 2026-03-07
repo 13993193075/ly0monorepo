@@ -1,7 +1,3 @@
-import {GQuery} from '../../main/GQuery.js'
-import {imageDomain} from "../../main/config.js"
-import ImageSave from '../../main/image-save.js'
-
 // 插入一条记录
 async function insertOne({data, dependencies}) {
     // data.id_ly0d14d0
@@ -99,7 +95,7 @@ async function find({data, dependencies}){
     return {code: 0, message: '',
         data: result.data.map(i=>{
             return Object.assign(i, {
-                image: [i.image && i.image.length > 0 ? imageDomain.domain + i.image[0] : '']
+                image: [i.image && i.image.length > 0 ? dependencies.config.imageDomain + i.image[0] : '']
             })
         })
     }

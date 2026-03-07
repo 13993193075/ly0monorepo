@@ -1,9 +1,3 @@
-import {GQuery} from '../../main/GQuery.js'
-import {ly0d4} from '@yoooloo42/ly0utils'
-import utils from "./utils/index.js"
-import ly0d4business from './business.js'
-import ly0d4b_goods from './b_goods.js'
-
 // 获取页面数据
 async function getPgData ({data, dependencies}) {
     // data.id_dataunit 当前用户信息：数据单元

@@ -1,5 +1,3 @@
-import {GQuery} from '../../main/GQuery.js'
-
 // 内部模块：查询修正
 function queryRevise (data) {
     let data0 = data ? data : {},
