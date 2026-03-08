@@ -1,4 +1,4 @@
-import {exec as storproExec} from '../storpro/index.js'
+import {exec as storproExec} from '../storpro/exec.js'
 function WechatLoginRedirect (request, response) {
     // request.query.code
 

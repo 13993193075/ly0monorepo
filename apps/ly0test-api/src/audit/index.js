@@ -1,4 +1,4 @@
-import {exec as storproExec} from "../storpro/index.js"
+import {exec as storproExec} from "../storpro/exec.js"
 import {utils as ly0utils} from '@yoooloo42/ly0utils'
 import {GQuery} from '../main/GQuery.js'
 

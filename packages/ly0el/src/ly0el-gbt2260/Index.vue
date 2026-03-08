@@ -116,6 +116,7 @@
 <script setup>
 import {reactive, ref, watch, computed} from "vue";
 import { request as ly0request } from '@yoooloo42/ly0browser'
+import {GBT} from '@yoooloo42/ly0utils'
 
 // 遵循 Vue 3 v-model 规范，使用 modelValue
 const props = defineProps({
@@ -161,11 +162,7 @@ const popup = reactive({
 
 watch(() => props.modelValue,
     async (valNew, valOld) => {
-        const result2 = await ly0request.ly0.storpro({
-            noSession: true,
-            storproName: 'ly0d3.gbt2260code2.init',
-        })
-        popup.formData.arrCode2 = result2.arrCode2.filter(item => item.code2)
+        popup.formData.arrCode2 = GBT.gbt2260code2.filter(item => item.code2)
         
         const result6 = await ly0request.ly0.storpro({
             noSession: true,

@@ -176,7 +176,7 @@ async function submit({scopeThis}){
 }
 
 function cancel({scopeThis}){
-    scopeThis.showPg = "password"
+    scopeThis.showPg = "Password"
 }
 
 export default {

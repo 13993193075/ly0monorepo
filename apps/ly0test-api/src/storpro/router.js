@@ -1,5 +1,5 @@
 import express from 'express'
-import {exec} from './index.js'
+import {exec} from './exec.js'
 import {audit} from '../audit/index.js'
 const router = express.Router()
 
