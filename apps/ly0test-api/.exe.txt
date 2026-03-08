@@ -1,10 +1,12 @@
 第一步：在windows中安装 Bun
-  使用管理员身份打开PowerShell
-  运行以下命令：
-    powershell -c "irm bun.sh/install.ps1 | iex"
-  安装完成后，关闭并重新打开PowerShell，运行以下命令验证：
-    bun -v
+    使用管理员身份打开PowerShell
+    运行以下命令：
+        powershell -c "irm bun.sh/install.ps1 | iex"
+    安装完成后，关闭并重新打开PowerShell，运行以下命令验证：
+        bun -v
 第二步：使用 Bun 将项目打包为 .exe
-  Bun 的打包速度极快，且不需要像 SEA 那样手动注入资源或处理“保险丝”
-  在项目根目录运行以下命令：
-    bun build ./src/index.js --compile --outfile ly0.exe
+    Bun 的打包速度极快，且不需要像 SEA 那样手动注入资源或处理“保险丝”
+    在项目根目录运行以下命令：
+        bun build ./src/index.js --compile --outfile ly0.exe
+第三步：使用“虫洞”部署到服务器上
+    https://wormhole.app/
