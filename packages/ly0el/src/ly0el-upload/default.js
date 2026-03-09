@@ -13,7 +13,7 @@ export default {
         }
     },
     carplate: { // 车牌识别
-        uploadUrl: ly0request.ly0.domain + ly0request.ly0.upload_carplate,
+        uploadUrl: ly0request.ly0.domain + ly0request.ly0.upload,
         width: "400px",
         height: "300px"
     }

@@ -1,8 +1,8 @@
 import axios from 'axios'
-const domainPara = window.APP_CONFIG?.REQUEST_DOMAIN || 'http://127.0.0.1:443'
-const upload = '/ly0/upload-req/file'
-const upload_image = '/ly0/upload-req/image'
-const upload_carplate = '/ly0/upload-req/carplate'
+const domainPara = window.APP_CONFIG?.REQUEST_DOMAIN
+const upload = window.APP_CONFIG?.UPLOAD
+const upload_image = window.APP_CONFIG?.UPLOAD_IMAGE
+const upload_carplate = window.APP_CONFIG?.UPLOAD_CARPLATE
 
 // 后端请求
 async function request({

@@ -10,7 +10,7 @@ function uploadFile (request, response) {
         }).then(result=>{
             if(result.code === 0) {
                 resolve({code: 0, message: '文件上传成功',
-                    data: {src: imageDomain.domain + configUpload.uploadUrl + '/' + result.file.filename}
+                    data: {src: imageDomain + configUpload.uploadUrl + '/' + result.file.filename}
                 })
             }else {
                 resolve({code: 1, message: '文件上传失败'})
@@ -37,7 +37,7 @@ function uploadImage (request, response) {
         }).then(result=>{
             if(result.code === 0) {
                 resolve({code: 0, message: '图片上传成功',
-                    data: {src: imageDomain.domain + configUpload.uploadUrl + '/' + result.file.filename}
+                    data: {src: imageDomain + configUpload.uploadUrl + '/' + result.file.filename}
                 })
             }else {
                 resolve({code: 1, message: '图片上传失败'})

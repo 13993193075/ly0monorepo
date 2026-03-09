@@ -27,8 +27,8 @@ export default {
             },
             upload: {
                 uploadUrl: ly0request.ly0.domain + ly0request.ly0.upload,
-                uploadUrl_image: ly0request.ly0.domain + ly0request.ly0.upload_image,
-                uploadUrl_carplate: ly0request.ly0.domain + ly0request.ly0.upload_carplate,
+                uploadUrl_image: ly0request.ly0.domain + ly0request.ly0.upload,
+                uploadUrl_carplate: ly0request.ly0.domain + ly0request.ly0.upload,
             },
             download: { // 行内下载
                 fileName: 'new-file', // 下载文件名

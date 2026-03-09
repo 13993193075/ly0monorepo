@@ -66,7 +66,10 @@ export default {
             }
         ],
         submit: {
-            handle: withTable.submitUpdateOne
+            // handle: withTable.submitUpdateOne
+            async handle({formData, scopeThis}) {
+                await withTable.submitUpdateOne({formData, scopeThis})
+            }
         }
     }
 }

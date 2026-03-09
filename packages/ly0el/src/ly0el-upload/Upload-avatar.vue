@@ -56,6 +56,7 @@ const myProps_box = reactive(ly0utils.deepClone.deepMerge(
     ly0utils.deepClone.deepClone(ly0default.myProps),
     props.myProps
 ))
+
 let fileList_box = ref([])
 props.modelValue.forEach((item, index) => {
     fileList_box.value.push({
