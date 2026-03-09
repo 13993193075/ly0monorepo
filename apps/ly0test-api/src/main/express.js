@@ -6,6 +6,7 @@ import {mongodb, gsfy, upload} from './config.js'
 import routerUploadReq from '../upload-req/router.js'
 import routerStorpro from '../storpro/router.js'
 import routerWechatLoginRedirect from '../wechat-login-redirect/router.js'
+// 解决生产环境下使用浏览器自带的页面刷新功能就会报错的问题
 // [PATCH] 引入 history 插件
 import history from 'connect-history-api-fallback'
 
@@ -56,6 +57,7 @@ async function run() {
         res.header('Access-Control-Allow-Headers', 'Content-Type,Content-Length,Authorization,Accept,X-Requested-With');
         res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
 
+        // 解决生产环境下使用浏览器自带的页面刷新功能就会报错的问题
         // [PATCH] 修复 CSP 拦截问题
         // 这里放宽了策略，允许加载来自 self 和 cloudflare 的脚本。
         // 如果你的 404 错误依然存在，浏览器可能会降级执行 default-src 'none' 策略。
@@ -69,17 +71,6 @@ async function run() {
     });
     /*
     app.all('*', function (req, res, next) {
-        res.header('Access-Control-Allow-Origin', '*')
-        res.header('Access-Control-Allow-Headers', 'Content-Type,Content-Length,Authorization,Accept,X-Requested-With')
-        res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS')
-        if (req.method == 'OPTIONS') {
-            undefined
-            // res.send ( 200 ) ;
-            res.sendStatus(200)
-        } else {
-            undefined
-            next()
-        }
     })
      */
 
