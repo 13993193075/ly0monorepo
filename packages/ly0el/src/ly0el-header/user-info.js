@@ -4,7 +4,7 @@ function get({scopeThis}){
         formData: {
             id_login: scopeThis.ly0session.user.id_login,
             name: scopeThis.ly0session.user.name,
-            icon: [ly0request.ly0.domain + scopeThis.ly0session.user.icon]
+            icon: [ly0request.ly0.domain() + scopeThis.ly0session.user.icon]
         },
         formProps: {
             popup: {

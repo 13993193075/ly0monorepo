@@ -23,7 +23,7 @@ function messageHdl({scopeThis}){
         console.log(event.origin)
         // 安全校验：只接受来自特定源的消息
         // 假设消息来自你自己的域名或微信特定的 redirect_uri 所在域
-        if (!event.origin.includes(ly0request.ly0.domain.split('//')[1])) return;
+        if (!event.origin.includes(ly0request.ly0.domain().split('//')[1])) return;
 
         const { appid, wx_openid, code, wx_nickname, wx_headimgurl } = event.data || {};
         if (!appid || !wx_openid) return;
@@ -90,7 +90,7 @@ async function show({scopeThis}){
     // 生成微信二维码图片，监听用户操作
     WeChat.WxLogin({
         elementId: "elIdLoginWxCode",
-        redirect_uri: ly0request.ly0.domain + "/ly0/wechat-login-redirect",
+        redirect_uri: ly0request.ly0.domain() + "/ly0/wechat-login-redirect",
         appid
     })
 

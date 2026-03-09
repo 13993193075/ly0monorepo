@@ -166,7 +166,7 @@ async function handleSelect(key) {
 
 function hdlGetGroupIcon({scopeThis}) {
     return scopeThis.ly0session && scopeThis.ly0session.group && scopeThis.ly0session.group.icon
-        ? ly0request.ly0.domain + scopeThis.ly0session.group.icon
+        ? ly0request.ly0.domain() + scopeThis.ly0session.group.icon
         : ''
 }
 
@@ -196,7 +196,7 @@ function hdlGetUserIcon({scopeThis}) {
     ) {
         userIcon =
             scopeThis.ly0session && scopeThis.ly0session.user && scopeThis.ly0session.user.icon
-                ? ly0request.ly0.domain + scopeThis.ly0session.user.icon
+                ? ly0request.ly0.domain() + scopeThis.ly0session.user.icon
                 : ''
     }
     return userIcon

@@ -1,19 +1,20 @@
 import axios from 'axios'
-const domainPara = window.APP_CONFIG?.REQUEST_DOMAIN
-const upload = window.APP_CONFIG?.UPLOAD
-const upload_image = window.APP_CONFIG?.UPLOAD_IMAGE
-const upload_carplate = window.APP_CONFIG?.UPLOAD_CARPLATE
+// JS顶层代码不能直接获取静态配置文件的内容，可以使用函数进行动态加载
+const domainFun = () => window.APP_CONFIG?.REQUEST_DOMAIN
+const upload = () => window.APP_CONFIG?.UPLOAD
+const upload_image = () => window.APP_CONFIG?.UPLOAD_IMAGE
+const upload_carplate = () => window.APP_CONFIG?.UPLOAD_CARPLATE
 
 // 后端请求
 async function request({
-    domain = domainPara,
+    domain,
     url = '', // 路由
     data = null // 请求数据
 }) {
     let t0 = new Date() // 计时
     try {
         const response = await axios({
-            url: (domain || '') + (url || ''),
+            url: (domain || domainFun()) + (url || ''),
             method: 'post',
             dataType: 'json',
             data: data ?? null
@@ -27,13 +28,13 @@ async function request({
 
 // ly0后端请求，需要处理session异常
 async function ly0request({
-    domain = domainPara,
+    domain,
     url = '', // 路由
     data = null, // 请求数据
     routerInstance = null // 路由实例
 }){
     try {
-        const response = await request({domain, url, data})
+        const response = await request({domain: domain || domainFun(), url, data})
 
         // session 异常
         if (response.data.session && response.data.session.code !== 0) {
@@ -65,7 +66,7 @@ async function ly0request({
 async function storpro({
     storproName = '', // 存储过程名称
     data = null,
-    domain = domainPara,
+    domain,
     noSession = false, // 不进行session验证
     routerInstance = null // 路由实例
 }) {
@@ -74,7 +75,7 @@ async function storpro({
             return null
         }
         const result = await ly0request({
-            domain,
+            domain: domain || domainFun(),
             url: '/ly0/storpro/exec',
             data: {
                 storproBody: {
@@ -187,7 +188,7 @@ function navigate({
     }
 }
 
-const domain = domainPara
+const domain = domainFun
 export {
     domain,
     upload,

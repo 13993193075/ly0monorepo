@@ -61,7 +61,24 @@ async function run() {
         // [PATCH] 修复 CSP 拦截问题
         // 这里放宽了策略，允许加载来自 self 和 cloudflare 的脚本。
         // 如果你的 404 错误依然存在，浏览器可能会降级执行 default-src 'none' 策略。
-        res.setHeader("Content-Security-Policy", "default-src 'self' *; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline';");
+        res.setHeader(
+            "Content-Security-Policy",
+            "default-src 'self'; " +
+            // 允许：本地脚本、内联脚本、Eval(Vue3开发或部分插件需要)
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' " +
+            // 允许：Cloudflare统计
+            "https://static.cloudflareinsights.com; " +
+            // 允许：本地接口
+            "connect-src 'self' " +
+            // 允许：我的api地址
+            "https://api.stellarium.ink; " +
+            // 允许：本地样式、内联样式（Vue 动态绑定样式必填）
+            "style-src 'self' 'unsafe-inline'; " +
+            // 允许：本地图片、base64图片
+            "img-src 'self' data:;" +
+            // 屏蔽：所有插件/框架嵌入（防止被恶意嵌套）
+            "frame-ancestors 'none';"
+        );
 
         if (req.method === 'OPTIONS') {
             res.sendStatus(200);
@@ -69,10 +86,6 @@ async function run() {
             next();
         }
     });
-    /*
-    app.all('*', function (req, res, next) {
-    })
-     */
 
     app.use(express.urlencoded({extended: true}))
     // 设置请求体大小上限：50mb，参数个数上限：10000
