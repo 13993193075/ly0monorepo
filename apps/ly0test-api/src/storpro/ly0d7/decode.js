@@ -1,7 +1,5 @@
-import {GQuery} from '../../main/GQuery.js'
-
 // 内部模块：查询修正
-function queryRevise({data}) {
+function queryRevise(data) {
     let data0 = data ? data : {}, data1 = {}
     if (data0._id) {
         data1._id = data0._id
@@ -13,8 +11,8 @@ function queryRevise({data}) {
     if (data0.id_shop) {
         data1.id_shop = data0.id_shop
     }
-
-    if (data0.name) { // 解码名称，模糊匹配
+    // 解码名称，模糊匹配
+    if (data0.name) {
         data1.name = {'$regex': `.*${data0.name}.*`}
     }
 
@@ -22,7 +20,7 @@ function queryRevise({data}) {
 }
 
 // 分页查询
-async function find({data}) {
+async function find({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit 当前用户信息：数据单元
@@ -48,7 +46,7 @@ async function find({data}) {
     }
 
     const query = queryRevise(data.query) // 查询修正
-    const resultData = await GQuery({
+    const resultData = await dependencies.GQuery.GQuery({
         tblName: "ly0d7decode",
         operator: "find",
         query,
@@ -56,7 +54,7 @@ async function find({data}) {
         skip: (data.page - 1) * data.limit,
         limit: Number(data.limit) // 分页处理
     })
-    const resultTotal = await GQuery({
+    const resultTotal = await dependencies.GQuery.GQuery({
         tblName: "ly0d7decode",
         operator: "countDocuments",
         query
@@ -68,7 +66,7 @@ async function find({data}) {
 }
 
 // 内部模块：数据约束
-function dataRule({data}) {
+function dataRule(data) {
     // 不能提交
     if (!data.id_shop) {
         return {code: 1, message: "商店：必选项"};
@@ -80,7 +78,7 @@ function dataRule({data}) {
 }
 
 // 插入一条记录
-async function insertOne({data}) {
+async function insertOne({data, dependencies}) {
     // data.id_shop
     // data.name
     // data.decode
@@ -92,7 +90,7 @@ async function insertOne({data}) {
     }
 
     // 提交
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7shop",
         operator: "findOne",
         query: {
@@ -100,7 +98,7 @@ async function insertOne({data}) {
         }
     })
     const objShop = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7decode",
         operator: "insertOne",
         update: {
@@ -118,7 +116,7 @@ async function insertOne({data}) {
 }
 
 // 修改一条记录
-async function updateOne({data}) {
+async function updateOne({data, dependencies}) {
     // data._id
     // data.id_shop
     // data.name
@@ -131,7 +129,7 @@ async function updateOne({data}) {
     }
 
     // 提交
-    const result = await GQuery({
+    const result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7shop",
         operator: "findOne",
         query: {
@@ -139,7 +137,7 @@ async function updateOne({data}) {
         }
     })
     const objShop = result.data
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d7decode",
         operator: "updateOne",
         query: {_id: data._id},
@@ -156,17 +154,18 @@ async function updateOne({data}) {
 }
 
 // 删除一条记录
-async function deleteOne({_id}) {
-    await GQuery({
+async function deleteOne({data, dependencies}) {
+    // data._id
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d7decode",
         operator: "deleteOne",
-        query: {_id}
+        query: {_id: data._id}
     })
     return {code: 0, message: "删除一条记录成功"}
 }
 
 // 获取页面初始化数据
-async function getPgData({data}) {
+async function getPgData({data, dependencies}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_shop 当前用户信息：商店id
 
@@ -175,7 +174,7 @@ async function getPgData({data}) {
         q._id = data.id_shop
     }
 
-    const result = await GQuery({
+    const result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7shop",
         operator: "find",
         query: q

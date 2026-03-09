@@ -65,10 +65,10 @@ async function find({data, dependencies}) {
         query
     })
     return {code: 0, message: '',
-        data: resultData.data.map(i=>{
-            return Object.assign(i, {
-                icon: [i.icon && i.icon.length > 0 ? dependencies.config.imageDomain.domain + i.icon[0] : '']
-            })
+        data: dependencies.ly0utils.utils.imageAddr.dataSet({
+            data: resultData.data,
+            domain: dependencies.config.imageDomain,
+            fieldNames: ['icon']
         }),
         total: resultTotal.count
     }

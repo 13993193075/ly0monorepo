@@ -61,10 +61,10 @@ async function find ({data, dependencies}) {
         query
     })
     return {code: 0, message: '',
-        data: resultData.data.map(i=>{
-            return Object.assign(i, {
-                private_key_url: [i.private_key_url && i.private_key_url.length > 0 ? dependencies.config.imageDomain.domain + i.private_key_url[0] : '']
-            })
+        data: dependencies.ly0utils.utils.imageAddr.dataSet({
+            data: resultData.data,
+            domain: dependencies.config.imageDomain,
+            fieldNames: ['private_key_url']
         }),
         total: resultTotal.count
     }

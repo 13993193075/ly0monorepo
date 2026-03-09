@@ -1,8 +1,5 @@
-import {GQuery} from '../../main/GQuery.js'
-import {GBT} from 'packages/ly0utils/src/index.js'
-
 // 内部模块：查询修正
-function queryRevise({data}) {
+function queryRevise(data) {
     const data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -42,7 +39,7 @@ function queryRevise({data}) {
 }
 
 // 分页查询
-async function find({data}) {
+async function find({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit
@@ -70,7 +67,7 @@ async function find({data}) {
         sort['_id'] = -1
     }
 
-    const resultData = await GQuery({
+    const resultData = await dependencies.GQuery.GQuery({
         tblName: 'ly0d7guest',
         operator: 'find',
         query,
@@ -78,7 +75,7 @@ async function find({data}) {
         skip: (data.page - 1) * data.limit,
         limit: Number(data.limit)
     })
-    const resultTotal = await GQuery({
+    const resultTotal = await dependencies.GQuery.GQuery({
         tblName: 'ly0d7guest',
         operator: 'countDocuments',
         query
@@ -90,7 +87,7 @@ async function find({data}) {
 }
 
 // 内部模块：数据约束
-function dataRule({data}) {
+function dataRule(data) {
     if (!data.id_dataunit) {
         return {code: 1, message: '数据单元：必选项'}
     }
@@ -110,7 +107,7 @@ function dataRule({data}) {
 }
 
 // 新增一条记录
-async function insertOne({data}) {
+async function insertOne({data, dependencies}) {
     // data.id_dataunit
     // data.name
     // data.gbt2260code
@@ -124,16 +121,16 @@ async function insertOne({data}) {
         return message
     }
     // 提交
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d0dataunit",
         operator: "findOne",
         query: {_id: data.id_dataunit}
     })
     const objDataunit = result.data
-    const gbt2260 = GBT.gbt2260code6.find(i=>{
+    const gbt2260 = dependencies.ly0unit.GBT.gbt2260code6.find(i=>{
         return i.code6 === data.gbt2260code
     })
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d7guest',
         operator: 'insertOne',
         update: {
@@ -153,7 +150,7 @@ async function insertOne({data}) {
 }
 
 // 修改一条记录
-async function updateOne({data}) {
+async function updateOne({data, dependencies}) {
     // data._id
     // data.id_dataunit
     // data.name
@@ -168,16 +165,16 @@ async function updateOne({data}) {
         return message
     }
     // 提交
-    const result= await GQuery({
+    const result= await dependencies.GQuery.GQuery({
         tblName: "ly0d0dataunit",
         operator: "findOne",
         query: {_id: data.id_dataunit}
     })
     const objDataunit = result.data
-    const gbt2260 = GBT.gbt2260code6.find(i=>{
+    const gbt2260 = dependencies.ly0unit.GBT.gbt2260code6.find(i=>{
         return i.code6 === data.gbt2260code
     })
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d7guest',
         operator: 'updateOne',
         query: {_id: data._id},
@@ -196,20 +193,21 @@ async function updateOne({data}) {
 }
 
 // 删除一条记录
-async function deleteOne({_id}) {
-    const result = await GQuery({
+async function deleteOne({data, dependencies}) {
+    // data._id
+    const result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d0session',
         operator: 'findOne',
-        query: {id_user: _id}
+        query: {id_user: data._id}
     })
     if (result.data) {
         return {code: 1, message: '不能删除，存在关联信息：ly0d0session'}
     }
 
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d7guest',
         operator: 'deleteOne',
-        query: {_id}
+        query: {_id: data._id}
     })
     return {code: 0, message: '删除一条记录成功'}
 }

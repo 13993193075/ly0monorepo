@@ -1,7 +1,5 @@
-import {GQuery} from '../../main/GQuery.js'
-
 // 内部模块：查询修正
-function queryRevise({data}) {
+function queryRevise(data) {
     let data0 = data ? data : {}, data1 = {}
     if (data0._id) {
         data1._id = data0._id
@@ -20,7 +18,7 @@ function queryRevise({data}) {
 }
 
 // 分页查询
-async function find({data}) {
+async function find({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.id_business
@@ -46,7 +44,7 @@ async function find({data}) {
         sort['_id'] = -1
     }
 
-    const resultData = await GQuery({
+    const resultData = await dependencies.GQuery.GQuery({
         tblName: "ly0d7b_goods",
         operator: "find",
         query,
@@ -54,7 +52,7 @@ async function find({data}) {
         skip: (data.page - 1) * data.limit,
         limit: Number(data.limit)
     })
-    const resultTotal = await GQuery({
+    const resultTotal = await dependencies.GQuery.GQuery({
         tblName: "ly0d7b_goods",
         operator: "countDocuments",
         query
@@ -66,7 +64,7 @@ async function find({data}) {
 }
 
 // 内部模块：数据约束
-function dataRule({data}) {
+function dataRule(data) {
     // 不能提交
     if (!data.number) {
         return {code: 1, message: "商品编号：必填项"};
@@ -85,7 +83,7 @@ function dataRule({data}) {
 }
 
 // 插入一条记录
-async function insertOne({data}) {
+async function insertOne({data, dependencies}) {
     // data.id_business
     // data.id_goods
     // data.number
@@ -102,13 +100,13 @@ async function insertOne({data}) {
 
     // 提交
     const thisTime = new Date()
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7business",
         operator: "findOne",
         query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7b_goods",
         operator: "insertOne",
         update: {
@@ -119,10 +117,10 @@ async function insertOne({data}) {
             id_shop: objBusiness.id_shop,
             shop_name: objBusiness.shop_name,
             id_business: objBusiness._id,
-            id_goods: data.id_goods ? data.id_goods : null,
+            id_goods: data.id_goods || null,
             number: data.number,
             name: data.name,
-            price_name: data.price_name ? data.price_name : "",
+            price_name: data.price_name || "",
             price: data.price,
             count: data.count
         }
@@ -133,7 +131,7 @@ async function insertOne({data}) {
 }
 
 // 修改一条记录
-async function updateOne({data}) {
+async function updateOne({data, dependencies}) {
     // data._id
     // data.id_business
     // data.id_goods
@@ -151,13 +149,13 @@ async function updateOne({data}) {
 
     // 提交
     const thisTime = new Date()
-    const result = await GQuery({
+    const result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7business",
         operator: "findOne",
         query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d7b_goods",
         operator: "updateOne",
         query: {_id: data._id},
@@ -168,10 +166,10 @@ async function updateOne({data}) {
             id_shop: objBusiness.id_shop,
             shop_name: objBusiness.shop_name,
             id_business: objBusiness._id,
-            id_goods: data.id_goods ? data.id_goods : null,
+            id_goods: data.id_goods || null,
             number: data.number,
             name: data.name,
-            price_name: data.price_name ? data.price_name : "",
+            price_name: data.price_name || "",
             price: data.price,
             count: data.count
         }
@@ -180,24 +178,28 @@ async function updateOne({data}) {
 }
 
 // 删除一条记录
-async function deleteOne({_id}) {
-    await GQuery({
+async function deleteOne({data, dependencies}) {
+    // data._id
+
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d7b_goods",
         operator: "deleteOne",
-        query: {_id}
+        query: {_id: data._id}
     })
     return {code: 0, message: "删除一条记录成功"}
 }
 
 // 获取页面初始化数据
-async function getPgData({id_business}) {
-    let result = await Query({
+async function getPgData({data, dependencies}) {
+    // data.id_business
+
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7business",
         operator: "findOne",
-        query: {_id: id_business}
+        query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7shop",
         operator: "findOne",
         query: {_id: objBusiness.id_shop}
@@ -212,14 +214,14 @@ async function getPgData({id_business}) {
 }
 
 // 商品扫码
-async function findNumber({data}) {
+async function findNumber({data, dependencies}) {
     // data.id_business
     // data.number
 
     if (!data.id_business || !data.number) {
         return {code: 1, message: "请求参数错误"}
     }
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7business",
         operator: "findOne",
         query: {_id: data.id_business}
@@ -228,7 +230,7 @@ async function findNumber({data}) {
         return {code: 1, message: "订单编号错误"}
     }
     const objBusiness = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7goods",
         operator: "findOne",
         query: {
@@ -246,12 +248,12 @@ async function findNumber({data}) {
 }
 
 // 商品扫码 - 批量写入
-async function insertMany({data}) {
+async function insertMany({data, dependencies}) {
     const id_business = data.id_business,
         arrGoods = JSON.parse(JSON.stringify(data.arrGoods)),
         thisTime = new Date()
 
-    const result = await GQuery({
+    const result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7business",
         operator: "findOne",
         query: {_id: id_business}
@@ -266,7 +268,7 @@ async function insertMany({data}) {
         i.shop_name = objBusiness.shop_name
         i.id_business = id_business
     })
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d7b_goods",
         operator: "insertMany",
         update: arrGoods

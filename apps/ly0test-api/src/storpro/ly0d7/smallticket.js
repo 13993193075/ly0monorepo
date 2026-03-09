@@ -1,21 +1,20 @@
-import {GQuery} from '../../main/GQuery.js'
-import {Feie} from '@yoooloo42/ly0nodejs'
-
 // 获取当前业务单位小票机列表，以供前端人工选择要使用的打印机
-async function getPrinters({id_business}) {
-    let result = await GQuery({
+async function getPrinters({data, dependencies}) {
+    // data.id_business
+    
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7business",
         operator: "findOne",
-        query: {_id: id_business}
+        query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7shop",
         operator: "findOne",
         query: {_id: objBusiness.id_shop}
     })
     const objShop = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d1d1printer",
         operator: "find",
         query: {id_dataunit: objShop.id_dataunit, id_busiunit: objShop._id},
@@ -34,7 +33,7 @@ async function getPrinters({id_business}) {
 }
 
 // 飞鹅云打印
-async function feie({data}) {
+async function feie({data, dependencies}) {
     const objShop = data.objShop,
         scene = data.scene,
         arrPrinter = data.arrPrinter,
@@ -78,7 +77,7 @@ async function feie({data}) {
 
     // 使用 map 触发所有打印请求
     const arrPromises = arrPrinter.map(printer =>
-        Feie.Open_printMsg({
+        dependencies.ly0nodejs.Feie.Open_printMsg({
             user: printer.id_ukey.user,
             ukey: printer.id_ukey.ukeyText,
             sn: printer.sn,
@@ -97,18 +96,18 @@ async function feie({data}) {
     return { code: 0, message: "打印成功" };
 }
 
-async function print({data}) {
+async function print({data, dependencies}) {
     let scene = "前台总账", // 使用场景,
         id_business = data.id_business, // 订单 ID
         arrPrinter = data.arrPrinter // 前端人工选择要使用的打印机
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7business",
         operator: "findOne",
         query: {_id: id_business}
     })
     const objBusiness = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7shop",
         operator: "findOne",
         query: {_id: objBusiness.id_shop}
@@ -118,7 +117,7 @@ async function print({data}) {
         return {code: 1, message: "小票机型号未设置或错误"}
     }
 
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7b_goods",
         operator: "find",
         query: {id_business: objBusiness._id}

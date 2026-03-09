@@ -1,8 +1,5 @@
-import {GQuery} from '../../main/GQuery.js'
-import code from './code.js'
-
 // 内部模块：查询修正
-function queryRevise({data}) {
+function queryRevise(data) {
     const data0 = data ? data : {}, data1 = {}
     if (data0._id) {
         data1._id = data0._id
@@ -92,7 +89,7 @@ function queryRevise({data}) {
 }
 
 // 分页查询
-async function find({data}) {
+async function find({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.number
@@ -128,7 +125,7 @@ async function find({data}) {
         sort['postal_time'] = -1
     }
 
-    const resultData = await GQuery({
+    const resultData = await dependencies.GQuery.GQuery({
         tblName: "ly0d7b_goods",
         operator: "find",
         query,
@@ -136,7 +133,7 @@ async function find({data}) {
         skip: (data.page - 1) * data.limit,
         limit: Number(data.limit)
     })
-    const resultTotal = await GQuery({
+    const resultTotal = await dependencies.GQuery.GQuery({
         tblName: "ly0d7b_goods",
         operator: "countDocuments",
         query
@@ -148,7 +145,7 @@ async function find({data}) {
 }
 
 // 修改邮寄状态
-async function setPostalStatus({data}) {
+async function setPostalStatus({data, dependencies}) {
     // data._id
     // data.postal_status_code
 
@@ -156,7 +153,7 @@ async function setPostalStatus({data}) {
     const thisTime = new Date()
     const update = {
         postal_status_code: data.postal_status_code,
-        postal_status_text: code.postalStatus.find(i=>{
+        postal_status_text: dependencies.ly0d7.busicode.postalStatus.find(i=>{
             return i.code === data.postal_status_code
         }).text
     }
@@ -166,7 +163,7 @@ async function setPostalStatus({data}) {
     if(data.postal_status_code === "3"){
         update.postal_received_time = thisTime
     }
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d7b_goods",
         operator: "updateOne",
         query: {_id: data._id},
@@ -176,10 +173,10 @@ async function setPostalStatus({data}) {
 }
 
 // 获取页面初始化数据
-function getPgData() {
+function getPgData({data, dependencies}) {
     return {code: 0, message: "",
         data: {
-            codePostalStatus: code.postalStatus
+            codePostalStatus: dependencies.ly0d7.busicode.postalStatus
         }
     }
 }

@@ -1,8 +1,7 @@
 // 电子图表
-import {GQuery} from '../../main/GQuery.js'
 
 // 时段应收统计
-async function echart({data}) {
+async function echart({data, dependencies}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.id_shop 当前用户信息：商店id
 
@@ -18,13 +17,13 @@ async function echart({data}) {
     q0.amount = {$exists: true, $ne: null, $gt: 0}
     q0.deal = {$exists: true, $ne: null, $gt: 0}
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7shop",
         operator: "find",
         query: q
     })
     const dataResponse = {shop: result.data}
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7business",
         operator: "find",
         query: q0,

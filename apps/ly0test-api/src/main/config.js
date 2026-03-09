@@ -22,7 +22,7 @@ const mongodb = JSON.parse(mongodb_str)
 const upload = JSON.parse(upload_str)
 
 const export_gsfy = gsfy[gsfy.branch],
-    export_imageDomain = imageDomain[imageDomain.branch],
+    export_imageDomain = imageDomain[imageDomain.branch].domain,
     export_mongodb = mongodb[mongodb.branch],
     export_upload = upload[upload.branch]
 export {

@@ -1,7 +1,5 @@
-import {GQuery} from '../../main/GQuery.js'
-
 // 内部模块：查询修正
-function queryRevise({data}) {
+function queryRevise(data) {
     let data0 = data ? data : {}, data1 = {}
     if (data0._id) {
         data1._id = data0._id
@@ -17,7 +15,7 @@ function queryRevise({data}) {
 }
 
 // 分页查询
-async function find({data}) {
+async function find({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.id_business
@@ -42,7 +40,7 @@ async function find({data}) {
         sort['_id'] = -1
     }
 
-    const resultData = await GQuery({
+    const resultData = await dependencies.GQuery.GQuery({
         tblName: "ly0d7memo",
         operator: "find",
         query,
@@ -50,7 +48,7 @@ async function find({data}) {
         skip: (data.page - 1) * data.limit,
         limit: Number(data.limit)
     })
-    const resultTotal = await GQuery({
+    const resultTotal = await dependencies.GQuery.GQuery({
         tblName: "ly0d7memo",
         operator: "countDocuments",
         query
@@ -62,7 +60,7 @@ async function find({data}) {
 }
 
 // 内部模块：数据约束
-function dataRule({data}) {
+function dataRule(data) {
     // 不能提交
     if (!data.memo) {
         return {code: 1, message: "备忘：必填项"}
@@ -71,7 +69,7 @@ function dataRule({data}) {
 }
 
 // 插入一条记录
-async function insertOne({data}) {
+async function insertOne({data, dependencies}) {
     // data.id_business
     // data.memo
     // data.recorder_cellphone 当前用户信息：手机号
@@ -85,13 +83,13 @@ async function insertOne({data}) {
 
     // 提交
     const thisTime = new Date();
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7business",
         operator: "findOne",
         query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7memo",
         operator: "insertOne",
         update: {
@@ -114,7 +112,7 @@ async function insertOne({data}) {
 }
 
 // 修改一条记录
-async function updateOne({data}) {
+async function updateOne({data, dependencies}) {
     // data._id
     // data.id_business
     // data.memo
@@ -129,13 +127,13 @@ async function updateOne({data}) {
 
     // 提交
     const thisTime = new Date()
-    const result = await GQuery({
+    const result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7business",
         operator: "findOne",
         query: {_id: data.id_business}
     })
     const objBusiness = result.data
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d7memo",
         operator: "updateOne",
         query: {_id: data._id},
@@ -156,8 +154,10 @@ async function updateOne({data}) {
 }
 
 // 删除一条记录
-async function deleteOne({_id}) {
-    await GQuery({
+async function deleteOne({data, dependencies}) {
+    // data._id
+
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d7memo",
         operator: "deleteOne",
         query: {_id: data._id}

@@ -1,7 +1,7 @@
 import {GQuery} from '../../main/GQuery.js'
 
 // 内部模块：查询修正
-function queryRevise ({data}) {
+function queryRevise (data) {
     let data0 = data ? data : {},
         data1 = {}
     if (data0._id) {
@@ -18,7 +18,7 @@ function queryRevise ({data}) {
 }
 
 // 分页查询
-async function find ({data}) {
+async function find ({data, dependencies}) {
     // data.query
     // data.query._id
     // data.query.id_dataunit 当前用户信息：数据单元
@@ -43,7 +43,7 @@ async function find ({data}) {
         sort['_id'] = -1
     }
 
-    const resultData = await GQuery({
+    const resultData = await dependencies.GQuery.GQuery({
         tblName: 'ly0d7group',
         operator: 'find',
         query,
@@ -51,7 +51,7 @@ async function find ({data}) {
         skip: (data.page - 1) * data.limit,
         limit: Number(data.limit) // 分页处理
     })
-    const resultTotal = await GQuery({
+    const resultTotal = await dependencies.GQuery.GQuery({
         tblName: 'ly0d7group',
         operator: 'countDocuments',
         query
@@ -63,7 +63,7 @@ async function find ({data}) {
 }
 
 // 内部模块：数据约束
-function dataRule ({data}) {
+function dataRule (data) {
     // 不能提交
     if (!data.name) {
         return {code: 1, message: '商店名称：必填项'}
@@ -72,7 +72,7 @@ function dataRule ({data}) {
 }
 
 // 插入一条记录
-async function insertOne ({data}) {
+async function insertOne ({data, dependencies}) {
     // data.id_dataunit 当前用户信息：数据单元
     // data.name
 
@@ -81,7 +81,7 @@ async function insertOne ({data}) {
         return message
     }
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d0dataunit",
         operator: "findOne",
         query: {
@@ -89,7 +89,7 @@ async function insertOne ({data}) {
         }
     })
     const objDataunit = result.data
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: 'ly0d7group',
         operator: 'insertOne',
         update: {
@@ -104,7 +104,7 @@ async function insertOne ({data}) {
 }
 
 // 修改一条记录
-async function updateOne ({data}) {
+async function updateOne ({data, dependencies}) {
     // data._id
     // data.id_dataunit 当前用户信息：数据单元
     // data.name
@@ -114,7 +114,7 @@ async function updateOne ({data}) {
         return message // 不能提交
     }
 
-    const result = await GQuery({
+    const result = await dependencies.GQuery.GQuery({
         tblName: "ly0d0dataunit",
         operator: "findOne",
         query: {
@@ -122,7 +122,7 @@ async function updateOne ({data}) {
         }
     })
     const objDataunit = result.data
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d7group',
         operator: 'updateOne',
         query: {_id: data._id},
@@ -136,11 +136,13 @@ async function updateOne ({data}) {
 }
 
 // 删除一条记录
-async function deleteOne ({_id}) {
-    await GQuery({
+async function deleteOne ({data, dependencies}) {
+    // data._id
+
+    await dependencies.GQuery.GQuery({
         tblName: 'ly0d7group',
         operator: 'deleteOne',
-        query: {_id}
+        query: {_id: data._id}
     })
     return {code: 0, message: '删除成功'}
 }

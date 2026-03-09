@@ -64,8 +64,8 @@ function getMenuProps(scopeThis){
                             }).then(()=>{
                                 dataRequest.storpro({
                                     scopeThis,
-                                    storproName: "ly0d7.business.trading",
-                                    data: {_id: scopeThis.business.objBusiness._id}
+                                    storproName: "ly0d7.id_business.trading",
+                                    data: {id_business: scopeThis.business.objBusiness._id}
                                 }).then(result=>{
                                     scopeThis.$message(result.message)
                                     scopeThis.init().then(()=>{
@@ -87,8 +87,8 @@ function getMenuProps(scopeThis){
                             }).then(()=>{
                                 dataRequest.storpro({
                                     scopeThis,
-                                    storproName: "ly0d7.business.traded",
-                                    data: {_id: scopeThis.business.objBusiness._id}
+                                    storproName: "ly0d7.id_business.traded",
+                                    data: {id_business: scopeThis.business.objBusiness._id}
                                 }).then(result=>{
                                     scopeThis.$message(result.message)
                                     scopeThis.init().then(()=>{

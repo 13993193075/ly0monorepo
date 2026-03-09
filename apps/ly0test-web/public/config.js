@@ -1,3 +1,3 @@
 window.APP_CONFIG = {
-    REQUEST_DOMAIN: 'https://api.stellarium.ink',
+    REQUEST_DOMAIN: 'http://localhost:443',
 }

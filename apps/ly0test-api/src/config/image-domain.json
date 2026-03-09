@@ -4,6 +4,6 @@
         "domain": "http://127.0.0.1:443"
     },
     "stellarium": {
-        "domain": "http://192.168.0.200:443"
+        "domain": "https://api.stellarium.ink"
     }
 }
