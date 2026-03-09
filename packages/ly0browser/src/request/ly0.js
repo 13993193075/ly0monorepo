@@ -1,5 +1,5 @@
 import axios from 'axios'
-const domainPara = 'http://127.0.0.1:443'
+const domainPara = window.APP_CONFIG?.REQUEST_DOMAIN || 'http://127.0.0.1:443'
 const upload = '/ly0/upload-req/file'
 const upload_image = '/ly0/upload-req/image'
 const upload_carplate = '/ly0/upload-req/carplate'

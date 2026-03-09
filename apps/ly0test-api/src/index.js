@@ -22,7 +22,7 @@ main.run().then(result => {
         return
     }
     // 本地调试
-    if(listen.type === "local-port") {
+    if(listen.type === "localhost") {
         result.app.listen(listen.port)
     }
 })
