@@ -20,6 +20,9 @@ importers:
       '@yoooloo42/ly0utils':
         specifier: workspace:*
         version: link:../../packages/ly0utils
+      connect-history-api-fallback:
+        specifier: ^2.0.0
+        version: 2.0.0
       express:
         specifier: ^5.2.1
         version: 5.2.1
@@ -904,6 +907,10 @@ packages:
 
   confbox@0.2.4:
     resolution: {integrity: sha512-ysOGlgTFbN2/Y6Cg3Iye8YKulHw+R2fNXHrgSmXISQdMnomY6eNDprVdW9R5xBguEqI954+S6709UyiO7B+6OQ==}
+
+  connect-history-api-fallback@2.0.0:
+    resolution: {integrity: sha512-U73+6lQFmfiNPrYbXqr6kZ1i1wiRqXnp2nhMsINseWXO8lDau0LGEffJ8kQi4EjLZympVgRdvqjAgiZ1tgzDDA==}
+    engines: {node: '>=0.8'}
 
   content-disposition@1.0.1:
     resolution: {integrity: sha512-oIXISMynqSqm241k6kcQ5UwttDILMK4BiurCfGEREw6+X9jkkpEe5T9FZaApyLGGOnFuyMWZpdolTXMtvEJ08Q==}
@@ -2709,6 +2716,8 @@ snapshots:
   confbox@0.1.8: {}
 
   confbox@0.2.4: {}
+
+  connect-history-api-fallback@2.0.0: {}
 
   content-disposition@1.0.1: {}
 

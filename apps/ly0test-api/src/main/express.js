@@ -6,6 +6,8 @@ import {mongodb, gsfy, upload} from './config.js'
 import routerUploadReq from '../upload-req/router.js'
 import routerStorpro from '../storpro/router.js'
 import routerWechatLoginRedirect from '../wechat-login-redirect/router.js'
+// [PATCH] 引入 history 插件
+import history from 'connect-history-api-fallback'
 
 const app = express()
 
@@ -54,6 +56,11 @@ async function run() {
         res.header('Access-Control-Allow-Headers', 'Content-Type,Content-Length,Authorization,Accept,X-Requested-With');
         res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
 
+        // [PATCH] 修复 CSP 拦截问题
+        // 这里放宽了策略，允许加载来自 self 和 cloudflare 的脚本。
+        // 如果你的 404 错误依然存在，浏览器可能会降级执行 default-src 'none' 策略。
+        res.setHeader("Content-Security-Policy", "default-src 'self' *; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline';");
+
         if (req.method === 'OPTIONS') {
             res.sendStatus(200);
         } else {
@@ -87,6 +94,7 @@ async function run() {
     app.set('view engine', 'ejs') // ejs 模板引擎
     app.set('views', '../') // 模板文件夹
 
+    // 所有的 API 路由必须放在 History 插件之前
     // 静态资源
     app.use('/ly0/static', express.static(path.join(dirRoot, 'src/static')))
     // 文件上传与存储
@@ -96,14 +104,23 @@ async function run() {
     app.use(gsfy.uploadUrl, express.static(gsfy.uploadFolder))
     app.use(gsfy.imageUrl, express.static(gsfy.imageFolder))
 
+    // 业务 API 路由
     // 文件上传请求
     app.use('/ly0/upload-req', routerUploadReq)
-
     // 存储过程
     app.use('/ly0/storpro', routerStorpro)
-
     // 微信登录重定向
     app.use('/ly0/wechat-login-redirect', routerWechatLoginRedirect)
+
+    // [PATCH] 核心补丁：处理前端路由刷新 404
+    // 它的作用是：如果请求不是 API，且在静态文件夹找不到文件，就强制返回 index.html
+    app.use(history({
+        verbose: false, // 生产环境建议 false，调试可改 true 查看跳转日志
+        index: '/', // 默认跳转到根路径
+        rewrites: [
+            { from: /^\/ly0\/.*$/, to: (context) => context.parsedUrl.pathname } // 保护以 /ly0 开头的 API 不被重写
+        ]
+    }));
 
     // 响应根路由 '/' 的请求
     // 静态资源方式
