@@ -1,6 +1,7 @@
 import path from 'path'
 import {dirRoot} from './dirroot.js'
 import {FileDB} from '@yoooloo42/ly0nodejs'
+import { pathToFileURL } from 'url'
 
 // 拼接出绝对路径，无论你在哪里运行命令，这个路径永远指向正确的位置
 const gsfy_path = path.join(dirRoot, 'src/config/gsfy.json');
@@ -8,12 +9,15 @@ const imageDomain_path = path.join(dirRoot, 'src/config/image-domain.json');
 const listen_path = path.join(dirRoot, 'src/config/listen.json');
 const mongodb_path = path.join(dirRoot, 'src/config/mongodb.json');
 const upload_path = path.join(dirRoot, 'src/config/upload.json');
+const CORS_path = path.join(dirRoot, 'src/config/CORS.js');
 
 const gsfy_str = FileDB.utf8.readFileSync(gsfy_path).data
 const imageDomain_str = FileDB.utf8.readFileSync(imageDomain_path).data
 const listen_str = FileDB.utf8.readFileSync(listen_path).data
 const mongodb_str = FileDB.utf8.readFileSync(mongodb_path).data
 const upload_str = FileDB.utf8.readFileSync(upload_path).data
+// 跨源（跨域）资源共享 CORS(Cross-Origin Resource Sharing)
+const CORS = await import(pathToFileURL(CORS_path).href)
 
 const gsfy = JSON.parse(gsfy_str)
 const imageDomain = JSON.parse(imageDomain_str)
@@ -26,6 +30,7 @@ const export_gsfy = gsfy[gsfy.branch],
     export_mongodb = mongodb[mongodb.branch],
     export_upload = upload[upload.branch]
 export {
+    CORS,
     export_gsfy as gsfy,
     export_imageDomain as imageDomain,
     listen,
@@ -33,9 +38,10 @@ export {
     export_upload as upload
 }
 export default {
+    CORS,
     gsfy: export_gsfy,
     imageDomain: export_imageDomain,
     listen,
     mongodb: export_mongodb,
-    upload: export_upload
+    upload: export_upload,
 }

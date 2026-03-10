@@ -1,14 +1,13 @@
 import path from 'path'
 import {dirRoot} from './dirroot.js'
 import express from 'express'
+// 解决浏览器刷新报错的问题
+import history from 'connect-history-api-fallback'
 import {DB_Bridge} from '@yoooloo42/ly0nodejs'
-import {mongodb, gsfy, upload} from './config.js'
+import {mongodb, gsfy, upload, CORS} from './config.js'
 import routerUploadReq from '../upload-req/router.js'
 import routerStorpro from '../storpro/router.js'
 import routerWechatLoginRedirect from '../wechat-login-redirect/router.js'
-// 解决生产环境下使用浏览器自带的页面刷新功能就会报错的问题
-// [PATCH] 引入 history 插件
-import history from 'connect-history-api-fallback'
 
 const app = express()
 
@@ -51,35 +50,9 @@ async function run() {
         DB_Bridge.MongoDB.closeConnection(MongoDB_clientInstance);
     });
 
-    // 解决跨域问题
+    // 跨源（跨域）资源共享 CORS(Cross-Origin Resource Sharing)
     app.use(function (req, res, next) {
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Headers', 'Content-Type,Content-Length,Authorization,Accept,X-Requested-With');
-        res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
-
-        // 解决生产环境下使用浏览器自带的页面刷新功能就会报错的问题
-        // [PATCH] 修复 CSP 拦截问题
-        // 这里放宽了策略，允许加载来自 self 和 cloudflare 的脚本。
-        // 如果你的 404 错误依然存在，浏览器可能会降级执行 default-src 'none' 策略。
-        res.setHeader(
-            "Content-Security-Policy",
-            "default-src 'self'; " +
-            // 允许：本地脚本、内联脚本、Eval(Vue3开发或部分插件需要)
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' " +
-            // 允许：Cloudflare统计
-            "https://static.cloudflareinsights.com; " +
-            // 允许：本地接口
-            "connect-src 'self' " +
-            // 允许：我的api地址
-            "https://api.stellarium.ink; " +
-            // 允许：本地样式、内联样式（Vue 动态绑定样式必填）
-            "style-src 'self' 'unsafe-inline'; " +
-            // 允许：本地图片、base64图片
-            "img-src 'self' data:;" +
-            // 屏蔽：所有插件/框架嵌入（防止被恶意嵌套）
-            "frame-ancestors 'none';"
-        );
-
+        res.header(CORS.CORS);
         if (req.method === 'OPTIONS') {
             res.sendStatus(200);
         } else {
@@ -98,6 +71,9 @@ async function run() {
     app.set('view engine', 'ejs') // ejs 模板引擎
     app.set('views', '../') // 模板文件夹
 
+    // 解决浏览器刷新报错的问题
+    app.use(history());
+
     // 所有的 API 路由必须放在 History 插件之前
     // 静态资源
     app.use('/ly0/static', express.static(path.join(dirRoot, 'src/static')))
@@ -115,16 +91,6 @@ async function run() {
     app.use('/ly0/storpro', routerStorpro)
     // 微信登录重定向
     app.use('/ly0/wechat-login-redirect', routerWechatLoginRedirect)
-
-    // [PATCH] 核心补丁：处理前端路由刷新 404
-    // 它的作用是：如果请求不是 API，且在静态文件夹找不到文件，就强制返回 index.html
-    app.use(history({
-        verbose: false, // 生产环境建议 false，调试可改 true 查看跳转日志
-        index: '/', // 默认跳转到根路径
-        rewrites: [
-            { from: /^\/ly0\/.*$/, to: (context) => context.parsedUrl.pathname } // 保护以 /ly0 开头的 API 不被重写
-        ]
-    }));
 
     // 响应根路由 '/' 的请求
     // 静态资源方式
