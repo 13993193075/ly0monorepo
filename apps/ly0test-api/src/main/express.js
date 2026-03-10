@@ -71,10 +71,26 @@ async function run() {
     app.set('view engine', 'ejs') // ejs 模板引擎
     app.set('views', '../') // 模板文件夹
 
-    // 解决浏览器刷新报错的问题
-    app.use(history());
+    // 业务 API 路由
+    // 文件上传请求
+    app.use('/ly0/upload-req', routerUploadReq)
+    // 存储过程
+    app.use('/ly0/storpro', routerStorpro)
+    // 微信登录重定向
+    app.use('/ly0/wechat-login-redirect', routerWechatLoginRedirect)
 
+    // 如果请求不是 API，且在静态文件夹找不到文件，就强制返回 index.html
     // 所有的 API 路由必须放在 History 插件之前
+    // 解决浏览器刷新报错的问题
+    app.use(history({
+        verbose: false, // 生产环境建议 false，调试可改 true 查看跳转日志
+        index: '/', // 默认跳转到根路径
+        rewrites: [
+            // 保护以 /ly0 开头的 API 不被重写
+            { from: /^\/ly0\/.*$/, to: (context) => context.parsedUrl.pathname }
+        ]
+    }));
+
     // 静态资源
     app.use('/ly0/static', express.static(path.join(dirRoot, 'src/static')))
     // 文件上传与存储
@@ -84,16 +100,7 @@ async function run() {
     app.use(gsfy.uploadUrl, express.static(gsfy.uploadFolder))
     app.use(gsfy.imageUrl, express.static(gsfy.imageFolder))
 
-    // 业务 API 路由
-    // 文件上传请求
-    app.use('/ly0/upload-req', routerUploadReq)
-    // 存储过程
-    app.use('/ly0/storpro', routerStorpro)
-    // 微信登录重定向
-    app.use('/ly0/wechat-login-redirect', routerWechatLoginRedirect)
-
     // 响应根路由 '/' 的请求
-    // 静态资源方式
     app.use('/', express.static(path.join(dirRoot, 'src/static/dist')))
     /* 重定向方式
     app.use('/', (request, response) => {

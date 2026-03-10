@@ -44,24 +44,24 @@ export default {
             title: '订单状态',
             menu: [
                 {
-                    title: '预订',
+                    title: '交易中',
                     handle({scopeThis, index}) {
-                        scopeThis.handles.businessStatus.book({scopeThis})
+                        scopeThis.handles.businessStatus.trading({scopeThis})
                     },
                 },
                 {
-                    title: '入住',
+                    title: '交易完成',
                     handle({scopeThis, index}) {
-                        scopeThis.handles.businessStatus.arrive({scopeThis})
-                    },
-                },
-                {
-                    title: '离开',
-                    handle({scopeThis, index}) {
-                        scopeThis.handles.businessStatus.leave({scopeThis})
+                        scopeThis.handles.businessStatus.traded({scopeThis})
                     },
                 },
             ],
+        },
+        {
+            title: '商品扫码',
+            handle({scopeThis, index}){
+                scopeThis.scan.popup.visible = true
+            }
         },
         {
             title: '修改',
@@ -75,39 +75,9 @@ export default {
                     },
                 },
                 {
-                    title: '房型预订',
-                    handle({scopeThis, index}) {
-                        scopeThis.set_salebook.id_business = scopeThis.id_business
-                    }
-                },
-                {
-                    title: '用房记录',
+                    title: '交易记录',
                     handle({scopeThis, index}) {
                         scopeThis.set_b_goods.id_business = scopeThis.id_business
-                    }
-                },
-                {
-                    title: '配售商品',
-                    handle({scopeThis, index}) {
-                        scopeThis.set_b_goods0.id_business = scopeThis.id_business
-                    }
-                },
-                {
-                    title: '损赔物品',
-                    handle({scopeThis, index}) {
-                        scopeThis.set_b_goods1.id_business = scopeThis.id_business
-                    }
-                },
-                {
-                    title: '挂账记录',
-                    handle({scopeThis, index}) {
-                        scopeThis.set_bill.id_business = scopeThis.id_business
-                    }
-                },
-                {
-                    title: '旅客信息',
-                    handle({scopeThis, index}) {
-                        scopeThis.set_guest.id_business = scopeThis.id_business
                     }
                 },
                 {
@@ -144,21 +114,15 @@ export default {
             title: '打印',
             menu: [
                 {
-                    title: '抵店登记单(22cm*9.5cm)',
-                    handle({scopeThis, index}) {
-                        scopeThis.print.print1.popup.visible = true
-                    },
-                },
-                {
-                    title: '离店结算单(22cm*9.5cm)',
-                    handle({scopeThis, index}) {
-                        scopeThis.print.print0.popup.visible = true
-                    },
-                },
-                {
                     title: '订单详细(29.7cm*21cm)(A4)',
                     handle({scopeThis, index}) {
                         scopeThis.print.print.popup.visible = true
+                    },
+                },
+                {
+                    title: '小票',
+                    handle({scopeThis, index}) {
+                        scopeThis.print.smallticket.popup.visible = true
                     },
                 },
             ],

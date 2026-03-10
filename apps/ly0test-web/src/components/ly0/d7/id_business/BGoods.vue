@@ -1,4 +1,5 @@
 <script setup>
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
 const props = defineProps(['scopeThis'])
 </script>
 
@@ -9,15 +10,16 @@ const props = defineProps(['scopeThis'])
     <div v-else>
         <template v-for="(item, index) in scopeThis.business.arrBGoods" :key="index">
             <div>
-                <table>
-                    <tr>
-                        <th>商品编号/名称</th>
-                        <th>标价名称/单价</th>
-                        <th>数量/金额合计</th>
-                    </tr>
-                </table>
-                <span class="value-name">{{'[' + item.number + ']' + item.name}}</span>
-                <span class="value-price-count">[{{(Math.floor(item.price) / 100) + '/' + item.count}}]</span>
+                <span class="value-roomno">{{
+                    item.roomno + "/" + item.goods_name + "/" + item.price_name + ': ' + Math.floor(item.price) / 100
+                }}</span>
+                <span class="value-status">&nbsp;&nbsp;{{item.status_text}}</span>
+            </div>
+            <div>
+                <span class="value-status">{{
+                    ly0utils.dateFormat.dateFormat(item.checkin) + " - " +
+                    ly0utils.dateFormat.dateFormat(item.checkout)
+                }}</span>
             </div>
         </template>
     </div>
@@ -30,10 +32,10 @@ const props = defineProps(['scopeThis'])
 .null-value {
     color: #666666;
 }
-.value-name {
+.value-roomno {
     color: #0000ff;
 }
-.value-price-count {
+.value-status {
     color: #666666;
 }
 </style>
