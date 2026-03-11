@@ -53,7 +53,7 @@ const businessStatus = {
                 type: 'warning',
             })
             const result = await ly0request.ly0.storpro({
-                storproName: 'ly0d4.id_business.traded',
+                storproName: 'ly0d7.id_business.traded',
                 data: { id_business: scopeThis.id_business },
             })
             ElMessage(result.message)

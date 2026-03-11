@@ -126,7 +126,6 @@ const getPgData = async ({scopeThis}) => {
 const init = async ({scopeThis}) => {
     scopeThis.tableProps.table.hdlPageSizeChange = pageSizeChange
     scopeThis.tableProps.table.hdlCurrentPageChange = currentPageChange
-
     if(scopeThis.pgData) {
         await getPgData({scopeThis})
     }

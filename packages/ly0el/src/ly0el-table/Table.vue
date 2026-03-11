@@ -17,7 +17,7 @@
 
         <!-- 置顶快捷按钮组 -->
         <div
-            v-if="myProps.topButtonGroups.length > 0"
+            v-if="myProps.topButtonGroups && myProps.topButtonGroups.length > 0"
             :style="style.topButtonGroups.rootBox"
         >
             <el-button-group v-for="(item, index) in myProps.topButtonGroups" :key="index">
@@ -216,9 +216,9 @@
         <!-- 分页 -->
         <el-pagination
             :total="modelValue.total"
-            :page-size="modelValue.pageSize"
+            v-model:page-size="modelValue.pageSize"
             :page-sizes="modelValue.pageSizes"
-            :current-page="modelValue.currentPage"
+            v-model:current-page="modelValue.currentPage"
             :style="style.pagination"
             @size-change="hdl.pageSizeChange"
             @current-change="hdl.currentPageChange"

@@ -116,13 +116,13 @@ export default {
                 {
                     title: '订单详细(29.7cm*21cm)(A4)',
                     handle({scopeThis, index}) {
-                        scopeThis.print.print.popup.visible = true
+                        scopeThis.print.popup.visible = true
                     },
                 },
                 {
                     title: '小票',
                     handle({scopeThis, index}) {
-                        scopeThis.print.smallticket.popup.visible = true
+                        scopeThis.smallticket.popup.visible = true
                     },
                 },
             ],

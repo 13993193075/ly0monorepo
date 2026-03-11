@@ -216,7 +216,7 @@ onMounted(async () => {
                         <el-splitter-panel :collapsible="elSplitterPanel_collapsible" :min="elSplitterPanel_min_height">
                             <div :style="style.panelBox"><!-- 恢复块级 -->
                                 <el-collapse v-model="scopeThis.panel.open.memo">
-                                    <el-collapse-item title="备忘信息" name="0">
+                                    <el-collapse-item title="备忘记录" name="0">
                                         <comp-memo :scopeThis="scopeThis"></comp-memo>
                                     </el-collapse-item>
                                 </el-collapse>

@@ -153,7 +153,7 @@ async function setPostalStatus({data, dependencies}) {
     const thisTime = new Date()
     const update = {
         postal_status_code: data.postal_status_code,
-        postal_status_text: dependencies.ly0d7.busicode.postalStatus.find(i=>{
+        postal_status_text: dependencies.ly0utils.ly0d7.busicode.postalStatus.find(i=>{
             return i.code === data.postal_status_code
         }).text
     }
@@ -176,7 +176,7 @@ async function setPostalStatus({data, dependencies}) {
 function getPgData({data, dependencies}) {
     return {code: 0, message: "",
         data: {
-            codePostalStatus: dependencies.ly0d7.busicode.postalStatus
+            codePostalStatus: dependencies.ly0utils.ly0d7.busicode.postalStatus
         }
     }
 }

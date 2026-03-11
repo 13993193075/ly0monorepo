@@ -33,8 +33,8 @@ export default {
             })
             ElMessage(result.message)
             scopeThis.formProps.popup.visible = false
-            scopeThis.handles.init({scopeThis})
-            scopeThis.panel.open.amount = ['0']
+            await scopeThis.handles.init({scopeThis})
+            scopeThis.panel.open.baseInfo = ['0']
         }
     }
 }

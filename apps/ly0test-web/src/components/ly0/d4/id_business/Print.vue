@@ -21,7 +21,7 @@
         </div>
 
         <div id="printContent">
-            <div style="font-size: large; margin-left: 60px">
+            <div style="font-size: large; margin-left: 60px;">
                 {{ '【' + scopeThis.business.objBusiness.hotel_name + ' - 订单详细】' }}
             </div>
             <br />

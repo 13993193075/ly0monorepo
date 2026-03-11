@@ -125,7 +125,7 @@ async function trading({data, dependencies}) {
         query: {_id: data.id_business},
         update: {
             status_code: "1",
-            status_text: dependencies.ly0d7.busicode.businessStatus.find(i=>{
+            status_text: dependencies.ly0utils.ly0d7.busicode.businessStatus.find(i=>{
                 return i.code === "1"
             }).text
         }
@@ -155,7 +155,7 @@ async function traded({data, dependencies}) {
         query: {_id: data.id_business},
         update: {
             status_code: "2",
-            status_text: dependencies.ly0d7.busicode.businessStatus.find(i=>{
+            status_text: dependencies.ly0utils.ly0d7.busicode.businessStatus.find(i=>{
                 return i.code === "2"
             }).text
         }
@@ -166,6 +166,7 @@ async function traded({data, dependencies}) {
 export default {
     id_business,
     setBaseInfo,
+    setDeal,
     trading,
     traded
 }

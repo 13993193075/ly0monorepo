@@ -21,7 +21,9 @@
         </div>
         
         <div id="printContent">
-            <div style="text-align:center; font-size:large;">{{scopeThis.business.objBusiness.shop_name}}</div>
+            <div style="font-size:large; margin-left: 60px;">【{{
+                scopeThis.business.objBusiness.shop_name
+            }}】</div>
             <br />
             
             <div>{{"-".repeat(148)}}</div>

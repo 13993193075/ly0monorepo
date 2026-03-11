@@ -55,7 +55,7 @@ async function find({data, dependencies}) {
     })
     return {code: 0, message: '',
         data: resultData.data,
-        count: resultTotal.count
+        total: resultTotal.count
     }
 }
 
