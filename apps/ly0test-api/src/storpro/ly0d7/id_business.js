@@ -59,7 +59,7 @@ async function id_business({data, dependencies}) {
             deal: objBusiness.deal > 0 ? objBusiness.deal : amount
         }
     })
-    const objBusinessNew = result.dataNew [0]
+    const objBusinessNew = result.dataNew
     return {code: 0, message: "已计费",
         business: {
             objBusiness: objBusinessNew,
@@ -69,6 +69,50 @@ async function id_business({data, dependencies}) {
             arrMemo
         }
     }
+}
+
+// 修改订单基本信息
+async function setBaseInfo({data, dependencies}) {
+    // data._id
+    // data.time
+    // data.client_cellphone
+    // data.client_name
+
+    //  提交
+    const thisTime = new Date()
+    await dependencies.GQuery.GQuery({
+        tblName: "ly0d7business",
+        operator: "updateOne",
+        query: {_id: data._id},
+        update: {
+            time_update: thisTime,
+            time: data.time,
+            client_cellphone: data.client_cellphone || null,
+            client_name: data.client_name || null
+        }
+    })
+    return {code: 0, message: "修改订单基本信息成功"}
+}
+
+// 修改核收金额
+async function setDeal({data, dependencies}) {
+    // data._id
+    // data.deal
+    // data.dealnote
+
+    // 提交
+    const thisTime = new Date()
+    await dependencies.GQuery.GQuery({
+        tblName: "ly0d7business",
+        operator: "updateOne",
+        query: {_id: data._id},
+        update: {
+            time_update: thisTime,
+            deal: data.deal || 0,
+            dealnote: data.dealnote || '',
+        }
+    })
+    return {code: 0, message: "修改核收金额成功"}
 }
 
 // 交易中
@@ -121,6 +165,7 @@ async function traded({data, dependencies}) {
 
 export default {
     id_business,
+    setBaseInfo,
     trading,
     traded
 }

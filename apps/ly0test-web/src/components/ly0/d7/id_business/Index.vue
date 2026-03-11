@@ -2,14 +2,17 @@
 import { reactive, onMounted } from 'vue'
 import menu from './menu.js'
 import handles from './handles.js'
+import compBaseInfo from './BaseInfo.vue'
+import compBGoods from './BGoods.vue'
+import compMemo from './Memo.vue'
 import compScan from "./Scan.vue"
-import comp_set_b_goods from '../b_goods/Index.vue'
-import comp_set_memo from '../memo/Index.vue'
+import ly0d2busiside_props from "./ly0d2busiside.js"
 import compPrint from './Print.vue'
 import compSmallticket from "./Smallticket.vue"
-import set_baseInfo_formProps from "./set_baseInfo_formProps.js";
-import set_deal_formProps from "./set_deal_formProps.js";
-import ly0d2busiside_props from "./ly0d2busiside.js";
+import set_deal_formProps from "./set_deal_formProps.js"
+import set_baseInfo_formProps from "./set_baseInfo_formProps.js"
+// import comp_set_b_goods from '../b_goods/Index.vue'
+import comp_set_memo from '../memo/Index.vue'
 
 const props = defineProps(['modelValue'])
 // 遵循 Vue 3 v-model 规范，使用 update:modelValue 事件
@@ -28,19 +31,13 @@ const scopeThis= reactive({
     id_business: props.modelValue,
     business: null,
     handles,
-
     formData: null,
     formProps: null,
+
     // 弹出窗口
     set_baseInfo_formProps,
     set_deal_formProps,
     ly0d2busiside_props, // 支付记录
-    set_b_goods: {
-        id_business: null,
-    },
-    set_memo: {
-        id_business: null,
-    },
     scan: {
         popup: {
             visible: false,
@@ -57,6 +54,12 @@ const scopeThis= reactive({
         popup: {
             visible: false,
         },
+    },
+    set_b_goods: {
+        id_business: null,
+    },
+    set_memo: {
+        id_business: null,
     },
 })
 
@@ -125,7 +128,7 @@ onMounted(async () => {
             </el-splitter>
         </div>
     </div>
-
+    
     <ly0el-form
         v-if="scopeThis.formData
                 && scopeThis.formProps
@@ -140,13 +143,13 @@ onMounted(async () => {
         v-if="!!scopeThis.ly0d2busiside_props.popup.visible"
         :myProps="scopeThis.ly0d2busiside_props"
     ></ly0el-d2busiside>
-
-    <comp_set_b_goods
+    
+    <!--comp_set_b_goods
         v-if="!!scopeThis.set_b_goods.id_business"
         :myProps="scopeThis.set_b_goods"
         @close="scopeThis.handles.setClosed.b_goods({scopeThis})"
-    ></comp_set_b_goods>
-
+    ></comp_set_b_goods-->
+    
     <comp_set_memo
         v-if="!!scopeThis.set_memo.id_business"
         :myProps="scopeThis.set_memo"

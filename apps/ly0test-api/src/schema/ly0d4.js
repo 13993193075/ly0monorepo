@@ -245,7 +245,6 @@ export default {
         "id_hotel": {"note": "", "type": "mongodb.id", "ref_tblName": "ly0d4hotel", "ref_fldName": "_id", "required": "true"},
         "hotel_name": {"note": "旅店名称", "type": "string", "required": "true"},
         "id_business": {"note": "订单号", "type": "mongodb.id", "ref_tblName": "ly0d4business", "ref_fldName": "_id", "required": "true"},
-
         "memo": {"note": "备忘", "type": "string", "required": "true"},
         "time": {"note": "记录时间", "type": "date", "required": "true"},
         "recorder_cellphone": {"note": "记录员手机号", "type": "string", "required": "true"},

@@ -1,80 +1,66 @@
-// with-table标准句柄
-import handles from '../../../common/table/with-table/handles.js'
-
-function getTableProps (scopeThis) {
-    // 置顶按钮组
-    let topButtonGroups = [
-        {
-            text: '全部',
-            hdlClick: handles.reloadAll
-        },
-        {
-            text: '刷新',
-            hdlClick: handles.reload
-        },
-        {
-            text: '查询',
-            hdlClick: handles.findPopup
-        }
-    ]
-    // 订单状态：交易中，允许新增
-    if(scopeThis.scopeThis.business.objBusiness.status_code === "1"){
-        topButtonGroups = topButtonGroups.concat([
+import {withTable} from '@yoooloo42/ly0el'
+export default {
+    popup: {
+        switch: true,
+        visible: true,
+    },
+    titleLine: { // 标题线
+        text: "备忘记录"
+    },
+    topButtonGroups: [ // 置顶快捷按钮组
+        [
             {
-                text: '新增',
-                hdlClick: handles.insertOnePopup
-            }
-        ])
-    }
-
-    // 行内按钮组
-    let rowButtonGroup = [
-        {
-            text: '详细',
-            hdlClick: handles.docPopup,
-        }
-    ]
-    // 订单状态：交易中，允许修改或删除
-    if(scopeThis.scopeThis.business.objBusiness.status_code === "1"){
-        rowButtonGroup = rowButtonGroup.concat([
-            {
-                text: '修改',
-                hdlClick: handles.updateOnePopup,
+                text: "全部",
+                hdlClick: withTable.reload
             },
             {
-                text: '删除',
-                hdlClick: handles.deleteOneSubmit,
-                style: 'background-color:#ff640a; color:#ffffff;'
+                text: "刷新",
+                hdlClick: withTable.refresh
+            },
+            {
+                text: "查询",
+                hdlClick: withTable.popupFind
+            },
+            {
+                text: "新增",
+                hdlClick: withTable.popupInsertOne
             }
-        ])
+        ]
+    ],
+    table: {
+        hdlPageSizeChange: withTable.pageSizeChange,
+        hdlCurrentPageChange: withTable.currentPageChange,
+        cols: [
+            {
+                label: '备忘',
+                show: 'text',
+                fieldName: 'memo',
+            },
+            {
+                label: '操作',
+                show: 'button-group',
+                buttonGroup: [
+                    {
+                        text: "详细",
+                        size: "small",
+                        hdlClick: withTable.popupDoc
+                    },
+                    {
+                        text: "修改",
+                        size: "small",
+                        hdlClick: withTable.popupUpdateOne
+                    },
+                    {
+                        text: "删除",
+                        size: "small",
+                        hdlClick: withTable.submitDeleteOne,
+                        style: {
+                            'background-color': '#ff640a',
+                            'color': '#ffffff'
+                        }
+                    }
+                ]
+            }
+        ]
     }
-
-    return {
-        topButtonGroups: {
-            buttonSize: "small",
-            box: [
-                {
-                    box: topButtonGroups
-                }
-            ]
-        },
-        table: {
-            cols: [
-                {
-                    label: '备忘',
-                    show: 'text',
-                    fieldName: 'memo'
-                },
-                {
-                    label: '操作',
-                    show: 'button-group',
-                    buttonGroup: rowButtonGroup
-                }
-            ]
-        }
-    }
-}
-
-export default {
-    getTableProps
 }

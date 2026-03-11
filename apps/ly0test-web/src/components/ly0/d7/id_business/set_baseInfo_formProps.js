@@ -10,46 +10,9 @@ export default {
         {
             items: [
                 {
-                    inputType: 'input',
-                    label: '订单手机号',
-                    fieldName: 'cellphone',
-                },
-                {
                     inputType: 'date-picker',
-                    label: '入住时间',
-                    fieldName: 'checkin',
-                    type: 'datetime',
-                },
-                {
-                    inputType: 'date-picker',
-                    label: '离开时间',
-                    fieldName: 'checkout',
-                    type: 'datetime',
-                },
-                {
-                    inputType: 'input',
-                    label: '入住人数',
-                    fieldName: 'peoples',
-                },
-                {
-                    inputType: 'input',
-                    label: '所需客房数',
-                    fieldName: 'rooms',
-                },
-                {
-                    inputType: 'select',
-                    label: '预订类型',
-                    fieldName: 'id_booktype',
-                    item_fieldLabel: 'text',
-                    item_fieldValue: '_id',
-                    hdlGetItems({scopeThis}) {
-                        return scopeThis.pgData.arrBooktype
-                    },
-                },
-                {
-                    inputType: 'date-picker',
-                    label: '预订时间',
-                    fieldName: 'booktime',
+                    label: '交易时间',
+                    fieldName: 'time',
                     type: 'datetime',
                 },
                 {
@@ -62,19 +25,13 @@ export default {
                     label: '客户名称',
                     fieldName: 'client_name',
                 },
-                {
-                    inputType: 'input',
-                    label: '预订说明',
-                    fieldName: 'booknote',
-                    inputWidth: '350px',
-                },
             ]
         }
     ],
     submit: {
         async handle({scopeThis, formData}){
             const result = await ly0request.ly0.storpro({
-                storproName: 'ly0d4.id_business.setBaseInfo',
+                storproName: 'ly0d7.id_business.setBaseInfo',
                 data: formData
             })
             ElMessage(result.message)

@@ -257,34 +257,10 @@ async function getPgData({data, dependencies}) {
     }
 }
 
-// 核收
-async function deal({data, dependencies}) {
-    // data._id
-    // data.deal
-    // data.dealnote
-
-    //  不能提交
-    if (!/^[0-9]+$/.test(data.deal)) {
-        return {code: 1, message: "校验错误：金额必须 >= 0"}
-    }
-
-    await dependencies.GQuery.GQuery({
-        tblName: "ly0d7business",
-        operator: "updateOne",
-        query: {_id: data._id},
-        update: {
-            deal: data.deal,
-            dealnote: data.dealnote || null
-        }
-    })
-    return {code: 0, message: "修改成功"}
-}
-
 export default {
     find,
     insertOne,
     updateOne,
     deleteOne,
     getPgData,
-    deal
 }

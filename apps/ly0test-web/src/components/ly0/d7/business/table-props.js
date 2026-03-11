@@ -67,8 +67,8 @@ export default {
                     {
                         text: "订单详细",
                         size: "small",
-                        hdlClick: withTable.popupDoc
-                        // hdlClick({scopeThis, row}) {scopeThis.id_business = row._id}
+                        // hdlClick: withTable.popupDoc
+                        hdlClick({scopeThis, row}) {scopeThis.id_business = row._id}
                     },
                     {
                         text: "修改",

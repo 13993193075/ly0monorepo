@@ -15,56 +15,38 @@ const para = reactive({
 
     <span class="label">&nbsp;&nbsp;订单状态：</span>
     <span class="value">{{scopeThis.business.objBusiness.status_text}}</span>
-
-    <span class="label">&nbsp;&nbsp;订单手机号：</span>
-    <span class="value">{{scopeThis.business.objBusiness.cellphone}}</span>
-
-    <span class="label">&nbsp;&nbsp;入住时间：</span>
-    <span class="value">{{para.dateFormat(scopeThis.business.objBusiness.checkin)}}</span>
-
-    <span class="label">&nbsp;&nbsp;离开时间：</span>
-    <span class="value">{{para.dateFormat(scopeThis.business.objBusiness.checkout)}}</span>
-
-    <span class="label">&nbsp;&nbsp;入住人数：</span>
-    <span v-if="scopeThis.business.objBusiness.peoples" class="value">
-        {{scopeThis.business.objBusiness.peoples}}
-    </span>
-    <span v-else class="null-value">{{para.nullValue}}</span>
-
-    <span class="label">&nbsp;&nbsp;所需客房数：</span>
-    <span v-if="scopeThis.business.objBusiness.rooms" class="value">
-        {{scopeThis.business.objBusiness.rooms}}
-    </span>
-    <span v-else class="null-value">{{para.nullValue}}</span>
-
-    <span class="label">&nbsp;&nbsp;预订类型：</span>
-    <span v-if="scopeThis.business.objBusiness.booktype_text" class="value">
-        {{scopeThis.business.objBusiness.booktype_text}}
-    </span>
-    <span v-else class="null-value">{{para.nullValue}}</span>
-
-    <span class="label">&nbsp;&nbsp;预订时间：</span>
-    <span v-if="scopeThis.business.objBusiness.booktime" class="value">
-        {{para.dateFormat(scopeThis.business.objBusiness.booktime) || '[无信息]'}}
-    </span>
-    <span v-else class="null-value">{{para.nullValue}}</span>
-
+    
     <span class="label">&nbsp;&nbsp;客户名称：</span>
     <span v-if="scopeThis.business.objBusiness.client_name" class="value">
         {{scopeThis.business.objBusiness.client_name}}
     </span>
     <span v-else class="null-value">{{para.nullValue}}</span>
-
+    
     <span class="label">&nbsp;&nbsp;客户手机号：</span>
     <span v-if="scopeThis.business.objBusiness.client_cellphone" class="value">
         {{scopeThis.business.objBusiness.client_cellphone}}
     </span>
     <span v-else class="null-value">{{para.nullValue}}</span>
 
-    <span class="label">&nbsp;&nbsp;预订说明：</span>
-    <span v-if="scopeThis.business.objBusiness.booknote" class="value">
-        {{scopeThis.business.objBusiness.booknote}}
+    <span class="label">&nbsp;&nbsp;交易时间：</span>
+    <span class="value">{{para.dateFormat(scopeThis.business.objBusiness.time)}}</span>
+
+    <span class="label">&nbsp;&nbsp;商品计数：</span>
+    <span v-if="scopeThis.business.objBusiness.count" class="value">
+        {{scopeThis.business.objBusiness.peoples}}
     </span>
+    <span v-else class="null-value">{{para.nullValue}}</span>
+    
+    <span class="label">&nbsp;&nbsp;计费：</span>
+    <span class="value">{{Math.floor(scopeThis.business.objBusiness.amount) / 100}}</span>
+    
+    <span class="label">&nbsp;&nbsp;核收：</span>
+    <span class="value">{{Math.floor(scopeThis.business.objBusiness.deal) / 100}}</span>
+    
+    <span class="label">&nbsp;&nbsp;备注：</span>
+    <span v-if="scopeThis.business.objBusiness.dealnote" class="value">
+            {{scopeThis.business.objBusiness.dealnote}}
+        </span>
     <span v-else class="null-value">{{para.nullValue}}</span>
 </template>
 

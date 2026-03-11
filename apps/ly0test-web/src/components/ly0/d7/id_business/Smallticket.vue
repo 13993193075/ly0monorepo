@@ -42,70 +42,58 @@
     }
 </style>
 
-<script>
-    import dataRequest from "../../../../utils/data-request.js"
-    export default {
-        props: ["scopeThis"],
-        data() {
-            return {
-                arrPrinter: []
-            }
-        },
-        methods: {
-            print() {
-                this.$confirm('打印?', '警告', {
-                    confirmButtonText: '确认',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    let arrPrinter = this.arrPrinter.filter(i => {
-                        return i.checked
-                    })
-                    if (arrPrinter.length === 0) {
-                        return this.$message({
-                            type: 'info',
-                            message: '未选择打印机'
-                        })
-                    }
-                    dataRequest.storpro({
-                        scopeThis: this,
-                        storproName: "ly0d7.smallticket.print",
-                        data: {
-                            id_business: this.scopeThis.business.objBusiness._id, // 订单 ID
-                            arrPrinter
-                        }
-                    }).then(result => {
-                        this.$message(result.message)
-                        this.scopeThis.smallticket.popup.visible = false
-                    })
-                }).catch(() => {
-                    this.$message({type: 'info', message: '取消打印'})
+<script setup>
+    import {request as ly0request} from "@yoooloo42/ly0browser"
+    import {ref, watch} from "vue";
+    import {ElMessage, ElMessageBox} from "element-plus";
+    
+    const props = defineProps(["scopeThis"])
+    
+    let arrPrinter = ref([])
+    
+    async function print(){
+        try{
+            await ElMessageBox.confirm('打印?', '警告', {
+                confirmButtonText: '确认',
+                cancelButtonText: '取消',
+                type: 'warning'
+            })
+            const arrPrinter0 = arrPrinter.value.filter(i => {
+                return i.checked
+            })
+            if (arrPrinter0.length === 0) {
+                return this.ElMessage({
+                    type: 'info',
+                    message: '未选择打印机'
                 })
             }
-        },
-        computed: {
-            popup() {
-                return this.scopeThis.smallticket.popup.visible
-            }
-        },
-        watch: {
-            popup(valNew, valOld) {
-                if (valNew) {
-                    dataRequest.storpro({
-                        scopeThis: this,
-                        storproName: "ly0d7.smallticket.getPrinters",
-                        data: {
-                            id_business: this.scopeThis.business.objBusiness._id
-                        }
-                    }).then(result => {
-                        let arrPrinter = result.arrPrinter;
-                        arrPrinter.forEach((item, index, arrThis) => {
-                            item.checked = false
-                        })
-                        this.arrPrinter = arrPrinter
-                    })
+            const result = await ly0request.ly0.storpro({
+                storproName: "ly0d7.smallticket.print",
+                data: {
+                    id_business: this.scopeThis.business.objBusiness._id, // 订单 ID
+                    arrPrinter0
                 }
-            }
+            })
+            ElMessage(result.message)
+            props.scopeThis.smallticket.popup.visible = false
+        }catch(err){
+            ElMessage({type: 'info', message: '取消打印'})
         }
     }
+    watch (()=>props.scopeThis.smallticket.popup.visible, async (valNew, oldVal) => {
+        if (valNew) {
+            const result = await ly0request.ly0.storpro({
+                scopeThis: this,
+                storproName: "ly0d7.smallticket.getPrinters",
+                data: {
+                    id_business: this.scopeThis.business.objBusiness._id
+                }
+            })
+            const arrPrinter0 = result.arrPrinter;
+            arrPrinter0.forEach(i => {
+                i.checked = false
+            })
+            arrPrinter.value = arrPrinter0
+        }
+    })
 </script>

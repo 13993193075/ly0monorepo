@@ -1,6 +1,6 @@
 <template>
     <template v-if="!!scopeThis.id_business">
-        <!-- compIdBusiness v-model="scopeThis.id_business" :key="key_id_business" @reload="key_id_business++"></compIdBusiness -->
+        <compIdBusiness v-model="scopeThis.id_business" :key="key_id_business" @reload="key_id_business++"></compIdBusiness>
     </template>
     <template v-else>
         <ly0el-table
@@ -35,7 +35,7 @@ import updateOne from './updateOne.js'
 import doc from './doc.js'
 import pgData from './pgData.js'
 import handles from './handles.js'
-// import compIdBusiness from '../id_business/Index.vue'
+import compIdBusiness from '../id_business/Index.vue'
 import {withTable} from '@yoooloo42/ly0el'
 
 // 用于 订单详细 组件的内部刷新

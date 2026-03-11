@@ -1,68 +1,66 @@
 <template>
-    <div style="padding:10px;">
-        <compTable :scopeThis="scopeThis0" :tableProps="tableProps" :dataBox="tableDataBox"></compTable>
-        <compFormFind
-                :scopeThis="scopeThis0"
-                :formProps="formProps.find"
-                :dataBox="formDataBox.find"></compFormFind>
-        <compFormInsertOne
-                :scopeThis="scopeThis0"
-                :formProps="formProps.insertOne"
-                :dataBox="formDataBox.insertOne"></compFormInsertOne>
-        <compFormDoc
-                :scopeThis="scopeThis0"
-                :formProps="formProps.doc"
-                :dataBox="formDataBox.doc"></compFormDoc>
-        <compFormUpdateOne
-                :scopeThis="scopeThis0"
-                :formProps="formProps.updateOne"
-                :dataBox="formDataBox.updateOne"></compFormUpdateOne>
-    </div>
+    <ly0el-table
+        v-model="scopeThis.tableData"
+        :myProps="scopeThis.tableProps"
+        :scopeThis="scopeThis"
+    ></ly0el-table>
+    <ly0el-form
+        v-if="scopeThis.formData
+            && scopeThis.formProps
+            && scopeThis.formProps.popup
+            && scopeThis.formProps.popup.visible"
+        v-model="scopeThis.formData"
+        :myProps="scopeThis.formProps"
+        :scopeThis="scopeThis"
+    ></ly0el-form>
 </template>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
 
-<script>
-    // 组件
-    import compTable from "../../../common/table/Index.vue"
-    import compForm from '../../../common/form/Index.vue'
-    // 数据表属性
-    import tableProps from "./table-props.js"
-    // 数据盒子
-    import tableDataBox from "../../../common/table/with-table/table-databox.js"
-    // 表单属性
-    import formProps from "./form-props.js"
-    // 数据盒子
-    import formDataBox from "../../../common/table/with-table/form-databox.js"
-    // 表单字段初始值
-    import fieldsValue_init from "./fields-value-init.js"
-    // with-table标准句柄
-    import handles from "../../../common/table/with-table/handles.js"
-    // 存储过程
-    import storpro from "./storpro.js"
+<script setup>
+import { reactive, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router';
+import {withTable} from '@yoooloo42/ly0el'
+import tableData from './table-data.js'
+import tableProps from './table-props.js'
+import storpro from './storpro.js'
+import query from './query.js'
+import find from './find.js'
+import insertOne from './insertOne.js'
+import updateOne from './updateOne.js'
+import doc from './doc.js'
 
-    export default{
-        props: ["scopeThis"],
-        components: {
-            compTable,
-            compFormFind: compForm,
-            compFormInsertOne: compForm,
-            compFormDoc: compForm,
-            compFormUpdateOne: compForm
-        },
-        data: function(){return {
-            scopeThis0: this,
-            tableProps: tableProps.getTableProps(this),
-            tableDataBox: tableDataBox.getTableDataBox(this),
-            formProps: formProps.getFormProps(this),
-            formDataBox: formDataBox.getFormDataBox(this),
-            fieldsValue_init: fieldsValue_init.getFieldsValue_init(this),
-            handles,
-            storpro: storpro.getStorpro(this)
-        }},
-        mounted(){
-            this.handles.init(this) // 初始化
-        }
+const props = defineProps(['myProps'])
+const emit = defineEmits(['close'])
+
+const scopeThis = reactive(
+    {
+        routerInstance: useRouter(),
+        tableData,
+        tableProps,
+        formData: {},
+        formProps: {},
+        queryInit: query,
+        query: JSON.parse(JSON.stringify(query)),
+        storpro,
+        find,
+        insertOne,
+        updateOne,
+        doc,
+        props_myProps: props.myProps,
     }
+)
+
+onMounted(async ()=>{
+    scopeThis.queryInit.formData.id_business = props.myProps.id_business
+    scopeThis.insertOne.formData.id_business = props.myProps.id_business
+    await withTable.init({scopeThis})
+})
+
+watch(()=>scopeThis.tableProps.popup.visible, (newVal, oldVal) => {
+    if(!newVal) { // 监听table弹窗关闭
+        emit('close')
+        scopeThis.tableProps.popup.visible = true
+    }
+})
 </script>
