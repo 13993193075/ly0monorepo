@@ -7,8 +7,8 @@ function anotherShow({state}) {
         elSum = state.winScanAnother.document.getElementById('elIdSum'),
         sum = 0
     elTable.innerHTML = '<tr><td>商品编号</td><td>名称</td><td>单价</td><td>数量</td></tr>'
-    this.arrGoods.forEach((i) => {
-        let elTr = this.winScanAnother.document.createElement('tr')
+    state.arrGoods.forEach((i) => {
+        let elTr = state.winScanAnother.document.createElement('tr')
         elTr.innerHTML =
             '<td>' +
             i.number +
@@ -75,7 +75,7 @@ async function scan({state, scopeThis}) {
     const result = await ly0request.ly0.storpro({
         storproName: 'ly0d7.b_goods.findNumber',
         data: {
-            id_business: scopeThis.myProps.id_business,
+            id_business: scopeThis.id_business,
             number: state.scan.number,
         },
     })
@@ -89,7 +89,7 @@ async function scan({state, scopeThis}) {
         let objPrice = state.scan.arrPrice.length > 0 ? state.scan.arrPrice[0] : null
         state.scan.price_name = objPrice ? objPrice.name : ''
         state.scan.price = objPrice ? objPrice.price : 0
-        state.scan.price0 = Math.floor(this.scan.price) / 100
+        state.scan.price0 = Math.floor(state.scan.price) / 100
     }
     return{code: result.code}
 }
@@ -105,15 +105,15 @@ async function submit({state, scopeThis}) {
     const result = await ly0request.ly0.storpro({
         storproName: 'ly0d7.b_goods.insertMany',
         data: {
-            id_business: scopeThis.myProps.id_business,
+            id_business: scopeThis.id_business,
             arrGoods: state.arrGoods,
         },
     })
     ElMessage(result.message)
     scopeThis.scan.popup.visible = false
-    scopeThis.init().then(() => {
-        scopeThis.forceRefresh.all++ // 强制重载子组件
-    })
+    await scopeThis.handles.init({scopeThis})
+    scopeThis.panel.open.baseInfo = ['0']
+    scopeThis.panel.open.bGoods = ['0']
 }
 
 export default {

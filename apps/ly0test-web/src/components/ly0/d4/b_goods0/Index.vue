@@ -49,7 +49,6 @@ const scopeThis = reactive(
         updateOne,
         doc,
         pgData,
-        props_myProps: props.myProps,
     }
 )
 

@@ -125,6 +125,9 @@ async function find({data, dependencies}) {
     } else {
         sort['_id'] = -1
     }
+    // 分页
+    data.limit = data.limit || 1
+    data.page = data.page || 1
 
     const resultData = await dependencies.GQuery.GQuery({
         tblName: "ly0d7goods",

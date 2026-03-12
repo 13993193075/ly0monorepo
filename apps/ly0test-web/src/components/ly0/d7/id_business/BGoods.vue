@@ -9,7 +9,8 @@ const props = defineProps(['scopeThis'])
     <div v-else>
         <template v-for="(item, index) in scopeThis.business.arrBGoods" :key="index">
             <div>
-                <span class="value-name-price">{{item.name + '[' + (item.price_name || '单价') + ': ' + (Math.floor(item.price) / 100) + ']'}}</span>
+                <span class="value-name">{{item.name}}</span>
+                <span class="value-price">{{' [' + (item.price_name || '单价') + ': ' + (Math.floor(item.price) / 100) + '] '}}</span>
                 <span class="value-count">{{item.count}}</span>
             </div>
         </template>
@@ -23,10 +24,13 @@ const props = defineProps(['scopeThis'])
 .null-value {
     color: #666666;
 }
-.value-name-price {
-    color: #0000ff;
+.value-name {
+    color: #2f0101;
+}
+.value-price {
+    color: #666666;
 }
 .value-count {
-    color: #666666;
+    color: #0000ff;
 }
 </style>

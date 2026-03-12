@@ -1,108 +1,78 @@
 <template>
-  <div style="padding: 10px">
-    <compTable :scopeThis="scopeThis0" :tableProps="tableProps" :dataBox="tableDataBox"></compTable>
-    <compFormFind
-      :scopeThis="scopeThis0"
-      :formProps="formProps.find"
-      :dataBox="formDataBox.find"
-    ></compFormFind>
-    <compFormInsertOne
-      :scopeThis="scopeThis0"
-      :formProps="formProps.insertOne"
-      :dataBox="formDataBox.insertOne"
-    ></compFormInsertOne>
-    <compFormDoc
-      :scopeThis="scopeThis0"
-      :formProps="formProps.doc"
-      :dataBox="formDataBox.doc"
-    ></compFormDoc>
-    <compFormUpdateOne
-      :scopeThis="scopeThis0"
-      :formProps="formProps.updateOne"
-      :dataBox="formDataBox.updateOne"
-    ></compFormUpdateOne>
-    <compWithArrGoods
-      :scopeThis="scopeThis0"
-      :formProps="withArrGoods.formProps"
-      :dataBox="withArrGoods.dataBox"
-    ></compWithArrGoods>
-  </div>
+    <ly0el-table
+        v-model="scopeThis.tableData"
+        :myProps="scopeThis.tableProps"
+        :scopeThis="scopeThis"
+    ></ly0el-table>
+    <ly0el-form
+        v-if="scopeThis.formData
+            && scopeThis.formProps
+            && scopeThis.formProps.popup
+            && scopeThis.formProps.popup.visible"
+        v-model="scopeThis.formData"
+        :myProps="scopeThis.formProps"
+        :scopeThis="scopeThis"
+    ></ly0el-form>
+    <ly0el-form
+        v-if="scopeThis.withArrGoods.formProps.popup.visible"
+        v-model="scopeThis.withArrGoods.formData"
+        :myProps="scopeThis.withArrGoods.formProps"
+        :scopeThis="scopeThis"
+    ></ly0el-form>
 </template>
 
 <style lang="scss" scoped></style>
 
-<script>
-// 组件
-import compTable from '../../../common/table/Index.vue'
-import compForm from '../../../common/form/Index.vue'
-// 数据表属性
+<script setup>
+import { reactive, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router';
+import {withTable} from '@yoooloo42/ly0el'
+import tableData from './table-data.js'
 import tableProps from './table-props.js'
-// 数据盒子
-import tableDataBox from '../../../common/table/with-table/table-databox.js'
-// 表单属性
-import formProps from './form-props.js'
-// 数据盒子
-import formDataBox from '../../../common/table/with-table/form-databox.js'
-// 表单字段初始值
-import fieldsValue_init from './fields-value-init.js'
-// with-table标准句柄
-import handles from '../../../common/table/with-table/handles.js'
-// with-table补充句柄
-import hdlsSupplement from './handles.js'
-// 级联处理
-import hdlsCascade from './cascade.js'
-// 存储过程
 import storpro from './storpro.js'
-// withArrGoods
+import query from './query.js'
+import find from './find.js'
+import insertOne from './insertOne.js'
+import updateOne from './updateOne.js'
+import doc from './doc.js'
+import pgData from './pgData.js'
+import cascade from './cascade.js'
 import withArrGoods from './with-arrgoods.js'
 
-export default {
-  props: ['scopeThis'],
-  components: {
-    compTable,
-    compFormFind: compForm,
-    compFormInsertOne: compForm,
-    compFormDoc: compForm,
-    compFormUpdateOne: compForm,
-    compWithArrGoods: compForm,
-  },
-  data: function () {
-    return {
-      scopeThis0: this,
-      tableProps: tableProps.getTableProps(this),
-      tableDataBox: tableDataBox.getTableDataBox(this),
-      formProps: formProps.getFormProps(this),
-      formDataBox: formDataBox.getFormDataBox(this),
-      fieldsValue_init: fieldsValue_init.getFieldsValue_init(this),
-      handles,
-      hdlsSupplement,
-      hdlsCascade,
-      storpro: storpro.getStorpro(this),
-      pageData: {
-        queryBody: {
-          id_business: null,
-        },
-        data: {
-          objBusiness: {},
-          objShop: {},
-          arrGoods: [],
-          arrPrice: [],
-        },
-      },
-      withArrGoods: {
-        formProps: withArrGoods.formProps,
-        dataBox: withArrGoods.dataBox,
-        branch: '',
-      },
+const props = defineProps(['myProps'])
+const emit = defineEmits(['close'])
+
+const scopeThis = reactive(
+    {
+        routerInstance: useRouter(),
+        tableData,
+        tableProps,
+        formData: {},
+        formProps: {},
+        queryInit: query,
+        query: JSON.parse(JSON.stringify(query)),
+        storpro,
+        find,
+        insertOne,
+        updateOne,
+        doc,
+        pgData,
+        cascade,
+        withArrGoods,
     }
-  },
-  mounted() {
-    this.pageData.queryBody.id_business = this.scopeThis.business.objBusiness._id
-    // 初始化
-    this.handles.init(this).then(() => {
-      // 获取更多已上架商品
-      withArrGoods.dataBox.hdlSubmit(this)
-    })
-  },
-}
+)
+
+onMounted(async ()=>{
+    scopeThis.queryInit.formData.id_business = props.myProps.id_business
+    scopeThis.insertOne.formData.id_business = props.myProps.id_business
+    scopeThis.pgData.query.id_business = props.myProps.id_business
+    await withTable.init({scopeThis})
+})
+
+watch(()=>scopeThis.tableProps.popup.visible, (newVal, oldVal) => {
+    if(!newVal) { // 监听table弹窗关闭
+        emit('close')
+        scopeThis.tableProps.popup.visible = true
+    }
+})
 </script>

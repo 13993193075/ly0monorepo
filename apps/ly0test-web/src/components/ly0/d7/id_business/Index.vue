@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onMounted } from 'vue'
+import {reactive, onMounted, watch} from 'vue'
 import menu from './menu.js'
 import handles from './handles.js'
 import compBaseInfo from './BaseInfo.vue'
@@ -11,7 +11,7 @@ import compPrint from './Print.vue'
 import compSmallticket from "./Smallticket.vue"
 import set_deal_formProps from "./set_deal_formProps.js"
 import set_baseInfo_formProps from "./set_baseInfo_formProps.js"
-// import comp_set_b_goods from '../b_goods/Index.vue'
+import comp_set_b_goods from '../b_goods/Index.vue'
 import comp_set_memo from '../memo/Index.vue'
 
 const props = defineProps(['modelValue'])
@@ -144,11 +144,11 @@ onMounted(async () => {
         :myProps="scopeThis.ly0d2busiside_props"
     ></ly0el-d2busiside>
     
-    <!--comp_set_b_goods
+    <comp_set_b_goods
         v-if="!!scopeThis.set_b_goods.id_business"
         :myProps="scopeThis.set_b_goods"
         @close="scopeThis.handles.setClosed.b_goods({scopeThis})"
-    ></comp_set_b_goods-->
+    ></comp_set_b_goods>
     
     <comp_set_memo
         v-if="!!scopeThis.set_memo.id_business"

@@ -1,44 +1,44 @@
 // 级联 商品
-function id_goodsClear(scopeThis, branch){
+function id_goodsClear({scopeThis, formData}){
     // 置空商品
-    scopeThis.formDataBox[branch].fieldsValue.number = ""
-    scopeThis.formDataBox[branch].fieldsValue.name = ""
+    formData.number = ""
+    formData.name = ""
     // 置空标价数组
-    scopeThis.pageData.data.arrPrice = []
+    scopeThis.pgData.data.arrPrice = []
     // 置空标价
-    scopeThis.formDataBox[branch].fieldsValue.price_name = ""
-    scopeThis.formDataBox[branch].fieldsValue.price_yuan = 0
+    formData.price_name = ""
+    formData.price_yuan = 0
 }
-function id_goodsChanged(scopeThis, value, branch){
-    let objGoods = scopeThis.pageData.data.arrGoods.find(i=>{
+function id_goodsChanged({scopeThis, formData, value}){
+    let objGoods = scopeThis.pgData.data.arrGoods.find(i=>{
         return i._id === value
     })
     if(objGoods){
         // 重置商品
-        scopeThis.formDataBox[branch].fieldsValue.number = objGoods.number
-        scopeThis.formDataBox[branch].fieldsValue.name = objGoods.name
+        formData.number = objGoods.number
+        formData.name = objGoods.name
         // 重置标价数组
-        scopeThis.pageData.data.arrPrice = objGoods.price ? objGoods.price : []
+        scopeThis.pgData.data.arrPrice = objGoods.price ? objGoods.price : []
         // 重置标价
-        scopeThis.formDataBox[branch].fieldsValue.price_name = scopeThis.pageData.data.arrPrice.length > 0 ? scopeThis.pageData.data.arrPrice[0].name : ""
-        scopeThis.formDataBox[branch].fieldsValue.price_yuan  = scopeThis.pageData.data.arrPrice.length > 0 ? Math.floor(scopeThis.pageData.data.arrPrice[0].price) / 100 : 0
+        formData.price_name = scopeThis.pgData.data.arrPrice.length > 0 ? scopeThis.pgData.data.arrPrice[0].name : ""
+        formData.price_yuan = scopeThis.pgData.data.arrPrice.length > 0 ? Math.floor(scopeThis.pgData.data.arrPrice[0].price) / 100 : 0
     }
 }
 
 // 级联：标价
-function priceClear(scopeThis, branch){
+function priceClear({scopeThis, formData}){
     // 置空标价
-    scopeThis.formDataBox[branch].fieldsValue.price_name = ""
-    scopeThis.formDataBox[branch].fieldsValue.price_yuan = 0
+    formData.price_name = ""
+    formData.price_yuan = 0
 }
-function priceChanged(scopeThis, value, branch){
-    let objPrice = scopeThis.pageData.data.arrPrice.find(i=>{
+function priceChanged({scopeThis, formData, value}){
+    let objPrice = scopeThis.pgData.data.arrPrice.find(i=>{
         return i.name === value
     })
     if(objPrice){
         // 重置标价
-        scopeThis.formDataBox[branch].fieldsValue.price_name = objPrice.name ? objPrice.name : ""
-        scopeThis.formDataBox[branch].fieldsValue.price_yuan = objPrice.price && objPrice.price > 0 ? Math.floor(objPrice.price) / 100 : 0
+        formData.price_name = objPrice.name || ""
+        formData.price_yuan = objPrice.price && objPrice.price > 0 ? Math.floor(objPrice.price) / 100 : 0
     }
 }
 

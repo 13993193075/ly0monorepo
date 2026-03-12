@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-dialog
-            v-model="popup"
+            v-model="scopeThis.scan.popup.visible"
             :custom-class="'code-template-dialog'"
             :close-on-press-escape="true"
             append-to-body
@@ -174,7 +174,7 @@
 </style>
 
 <script setup>
-import {reactive, watch, nextTick} from "vue"
+import {ref, reactive, watch, nextTick} from "vue"
 import hdls from './scan.js'
 
 const props = defineProps(['scopeThis'])
@@ -203,55 +203,59 @@ const state = reactive({
     winScanAnother: null, // 客户浏览窗口
 })
 
-watch(()=>props.scopeThis.scan.popup.visible, async (valNew, valOld)=>{
-    if (valNew) {
-        await nextTick(() => {
-            // 客户浏览窗口
-            // 获取第二块屏幕的位置
-            let secondScreen = window.screen,
-                secondScreenLeft = 0,
-                secondScreenTop = 0,
-                secondScreenWidth = 600,
-                secondScreenHeight = 800
-            if (window.screen.width > window.innerWidth) {
-                secondScreenLeft = secondScreen.availLeft
-                secondScreenTop = secondScreen.availTop
-                secondScreenWidth = Math.min(600, secondScreen.availWidth)
-                secondScreenHeight = Math.min(800, secondScreen.availHeight)
-            }
-            state.winScanAnother = window.open(
-                '',
-                '_blank',
-                'screenX=' +
-                secondScreenLeft +
-                ',' +
-                'screenY=' +
-                secondScreenTop +
-                ',' +
-                'width=' +
-                secondScreenWidth +
-                ',' +
-                'height=' +
-                secondScreenHeight +
-                ',' +
-                'location=no,' +
-                'menubar=no,' +
-                'resizable=no,' +
-                'scrollbars=no,' +
-                'status=no,' +
-                'titlebar=no,' +
-                'toolbar=no',
-            )
-            state.winScanAnother.document.write(
-                '<div style="text-align:center; margin-top:20px; margin-bottom:20px;">正在扫码加入您的购物车 ...</div>' +
-                '<div style="font-size:large; text-align:center;"><span>合计金额：¥</span>' +
-                "<span id='elIdSum' style='color:red;font-size:x-large;font-weight:bold;margin-left:10px;'>0</span></div>" +
-                '<div style="text-align:center;">----------------------------------------</div>' +
-                "<table id='elIdTable' style='width:100%; text-align:center'>" +
-                '<tr><td>商品编号</td><td>名称</td><td>单价</td><td>数量</td></tr>' +
-                '</table>',
-            )
-        })
-    }
-})
+watch(
+    ()=>props.scopeThis.scan.popup.visible,
+    (valNew, valOld)=>{
+        if (valNew) {
+            nextTick(() => {
+                // 客户浏览窗口
+                // 获取第二块屏幕的位置
+                let secondScreen = window.screen,
+                    secondScreenLeft = 0,
+                    secondScreenTop = 0,
+                    secondScreenWidth = 600,
+                    secondScreenHeight = 800
+                if (window.screen.width > window.innerWidth) {
+                    secondScreenLeft = secondScreen.availLeft
+                    secondScreenTop = secondScreen.availTop
+                    secondScreenWidth = Math.min(600, secondScreen.availWidth)
+                    secondScreenHeight = Math.min(800, secondScreen.availHeight)
+                }
+                state.winScanAnother = window.open(
+                    '',
+                    '_blank',
+                    'screenX=' +
+                    secondScreenLeft +
+                    ',' +
+                    'screenY=' +
+                    secondScreenTop +
+                    ',' +
+                    'width=' +
+                    secondScreenWidth +
+                    ',' +
+                    'height=' +
+                    secondScreenHeight +
+                    ',' +
+                    'location=no,' +
+                    'menubar=no,' +
+                    'resizable=no,' +
+                    'scrollbars=no,' +
+                    'status=no,' +
+                    'titlebar=no,' +
+                    'toolbar=no',
+                )
+                state.winScanAnother.document.write(
+                    '<div style="text-align:center; margin-top:20px; margin-bottom:20px;">正在扫码加入您的购物车 ...</div>' +
+                    '<div style="font-size:large; text-align:center;"><span>合计金额：¥</span>' +
+                    "<span id='elIdSum' style='color:red;font-size:x-large;font-weight:bold;margin-left:10px;'>0</span></div>" +
+                    '<div style="text-align:center;">----------------------------------------</div>' +
+                    "<table id='elIdTable' style='width:100%; text-align:center'>" +
+                    '<tr><td>商品编号</td><td>名称</td><td>单价</td><td>数量</td></tr>' +
+                    '</table>',
+                )
+            })
+        }
+    },
+    { immediate: true }
+    )
 </script>

@@ -75,7 +75,7 @@ export default {
                     },
                 },
                 {
-                    title: '交易记录',
+                    title: '交易明细',
                     handle({scopeThis, index}) {
                         scopeThis.set_b_goods.id_business = scopeThis.id_business
                     }

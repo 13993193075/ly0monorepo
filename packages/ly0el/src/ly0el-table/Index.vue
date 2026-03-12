@@ -10,9 +10,9 @@
         :top="tableProps_box.popup.top"
         :destroy-on-close="true"
     >
-        <compTable v-model="tableData_box" :myProps="tableProps_box" :scopeThis="scopeThis_box"></compTable>
+        <compTable v-model="tableData_box" :myProps="tableProps_box" :scopeThis="scopeThis"></compTable>
     </el-dialog>
-    <compTable v-else v-model="tableData_box" :myProps="tableProps_box" :scopeThis="scopeThis_box"></compTable>
+    <compTable v-else v-model="tableData_box" :myProps="tableProps_box" :scopeThis="scopeThis"></compTable>
 </template>
 
 <style lang="scss" scoped></style>
@@ -41,5 +41,5 @@ const props = defineProps({
 // 顶层组件的props属性需做响应性包装，页面和js可以使用相同的命名
 let tableData_box = reactive(ly0utils.deepClone.deepDefaults(props.modelValue, ly0default.modelValue))
 const tableProps_box = reactive(ly0utils.deepClone.deepDefaults(props.myProps, ly0default.myProps))
-const scopeThis_box = reactive(Object.assign(props.scopeThis, {keyTbl: 0}))
+Object.assign(props.scopeThis, {keyTbl: 0})
 </script>
