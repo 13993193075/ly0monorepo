@@ -1,62 +1,55 @@
-import dataRequest from "../../../../utils/data-request.js"
-import dateFormat from "../../../../utils/date-format.js"
-const ly0session = dataRequest.ly0sessionLoad()
-import * as echarts from "echarts"
+import { request as ly0request } from '@yoooloo42/ly0browser'
+import {utils as ly0utils} from '@yoooloo42/ly0utils'
+import * as echarts from 'echarts'
+import {ElMessage} from 'element-plus'
+const ly0session = ly0request.ly0.ly0sessionLoad()
+const dateFormat = ly0utils.dateFormat.dateFormat
 
 // 时段重置：统计当月
-function dateReset (scopeThis) {
-    let thisDate = new Date()
-    let dateTo = new Date(thisDate);
-    let dateFrom = new Date(thisDate.setDate(1))
-    scopeThis.arrDate = [{
-        dateFrom,
-        dateTo
-    }]
+function dateReset({scopeThis}) {
+    const thisDate = new Date()
+    const dateTo = new Date(thisDate)
+    dateTo.setHours(23, 59, 59, 999)
+    const dateFrom = new Date(thisDate.setDate(1))
+    dateFrom.setHours(0,0,0,0)
+    scopeThis.arrDate = [
+        {
+            dateFrom,
+            dateTo,
+        },
+    ]
 }
 
 // 重置
-function reset (scopeThis) {
-    return new Promise((resolve, reject)=>{
-        getData(scopeThis).then(function (result) {
-            scopeThis.data = result.data
-            dateReset(scopeThis)
-            showEcharts(scopeThis)
-            scopeThis.$message('已重置')
-            resolve()
-        })
-    })
+async function reset({scopeThis}) {
+    const result = await getData({scopeThis})
+    scopeThis.data = result.data
+    dateReset({scopeThis})
+    showEcharts({scopeThis})
+    ElMessage('已重置')
 }
 
 // 刷新
-function reload (scopeThis) {
-    return new Promise((resolve, reject)=>{
-        getData(scopeThis).then(function (result) {
-            scopeThis.data = result.data
-            showEcharts(scopeThis)
-            scopeThis.$message('已刷新')
-            resolve()
-        })
-    })
+async function reload({scopeThis}) {
+    const result = await getData({scopeThis})
+    scopeThis.data = result.data
+    showEcharts({scopeThis})
+    ElMessage('已刷新')
 }
 
 // 获取数据
-function getData (scopeThis) {
-    return new Promise(function (resolve, reject) {
-        dataRequest.storpro({
-            scopeThis,
-            storproName: 'ly0d7.echart.echart',
-            data: {
-                id_dataunit: ly0session.dataunit._id,
-                id_shop: ly0session.user.id_shop ? ly0session.user.id_shop : null
-            }
-        }).then(result => {
-            resolve(result)
-        })
+async function getData({scopeThis}) {
+    return await ly0request.ly0.storpro({
+        storproName: 'ly0d7.echart.echart',
+        data: {
+            id_dataunit: ly0session.dataunit._id,
+            id_shop: ly0session.user.id_shop || null,
+        },
     })
 }
 
 // 视图
-function showEcharts (scopeThis) {
+function showEcharts ({scopeThis}) {
     // 初始化 ECharts 渲染参数
     let option_legend_data = [ // 顶部色标示意
             '应收',
@@ -91,22 +84,24 @@ function showEcharts (scopeThis) {
                 deal = 0
 
             option_xAxis_data.push(
-                (scopeThis.arrDate [iDate].dateFrom ? dateFormat.dateFormat(scopeThis.arrDate [iDate].dateFrom, 'yyyy/M/d') : '-') +
+                (scopeThis.arrDate [iDate].dateFrom ? dateFormat(scopeThis.arrDate [iDate].dateFrom, 'yyyy/M/d') : '-') +
                 ' ' + '至' + ' ' +
-                (scopeThis.arrDate [iDate].dateTo ? dateFormat.dateFormat(scopeThis.arrDate [iDate].dateTo, 'yyyy/M/d') : '-')
+                (scopeThis.arrDate [iDate].dateTo ? dateFormat(scopeThis.arrDate [iDate].dateTo, 'yyyy/M/d') : '-')
             )
 
-            let dataFilter = scopeThis.data.business.filter(function (i) {
+            const fromTime = scopeThis.arrDate [iDate].dateFrom ? new Date(scopeThis.arrDate [iDate].dateFrom).getTime() : -Infinity;
+            const toTime = scopeThis.arrDate [iDate].dateTo ? new Date(scopeThis.arrDate [iDate].dateTo).getTime() : Infinity;
+            let dataFilter = scopeThis.data.business.filter(i=>{
                 // 时段排除
-                if (scopeThis.arrDate [iDate].dateFrom && new Date(scopeThis.arrDate [iDate].dateFrom) > new Date(i.checkin)) {
+                if (fromTime > new Date(i.time).getTime()) {
                     return false
                 }
-                if (scopeThis.arrDate [iDate].dateTo && new Date(scopeThis.arrDate [iDate].dateTo) < new Date(i.checkin)) {
+                if (toTime < new Date(i.time).getTime()) {
                     return false
                 }
 
-                // 餐馆排除
-                if (scopeThis.data.shop [iShop]._id !== i.id_shop) {
+                // 商店排除
+                if (String(scopeThis.data.shop [iShop]._id) !== String(i.id_shop)) {
                     return false
                 }
 
@@ -182,13 +177,20 @@ function showEcharts (scopeThis) {
             }],
             series: option_series
         }
+
         setTimeout(function () {
-            let app = echarts.init(document.getElementById('echarts-show' + iShop))
-            app.setOption(option)
+            // 确保 DOM 已挂载
+            const chartDom = document.getElementById('echarts-show' + iShop);
+            if (chartDom) {
+                // 建议：如果已经 init 过，应该：
+                let myChart = echarts.getInstanceByDom(chartDom)
+                if(!myChart) {
+                    myChart = echarts.init(chartDom);
+                }
+                myChart.setOption(option);
+            }
         }, 200)
     }
-
-    scopeThis.$forceUpdate()
 }
 
 export default (function () {
@@ -198,6 +200,6 @@ export default (function () {
         reload,
         getData,
         showEcharts,
-        dateFormat: dateFormat.dateFormat
+        dateFormat
     }
 })()

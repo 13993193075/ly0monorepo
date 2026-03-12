@@ -13,8 +13,8 @@ import compDecode from './decode/Index.vue'
 import compGoods from './goods/Index.vue'
 import compGroup from './group/Index.vue'
 import compBusiness from './business/Index.vue'
-/*
 import compEchart from './echart/Index.vue'
+/*
 import compGuest from './guest/Index.vue'
 import compPostalCenter from './postal-center/Index.vue'
 
@@ -55,18 +55,13 @@ const frameProps = reactive({
                     title: '订单维护',
                     component: compBusiness,
                 },
-            ],
-        },
-        /*
-        {
-            title: '电子图表',
-            menu: [
                 {
                     title: '时段应收',
                     component: compEchart,
                 },
             ],
         },
+        /*
         {
             title: '商城后台',
             menu: [

@@ -7,28 +7,18 @@
         title="时段应收统计 - 查询"
         width="800px"
     >
-        <el-row v-for="(item, index) in scopeThis.arrDate" :key="index" style="margin-bottom: 10px">
-            <el-date-picker
-                v-model="item.dateFrom"
-                type="date"
-                placeholder="选择日期"
-                format="YYYY-M-D"
-            ></el-date-picker>
+        <el-row v-for="(item, index) in scopeThis.arrDate" :key="index" style="margin-bottom: 10px;">
+            <el-date-picker v-model="item.dateFrom" type="date" placeholder="选择日期" format="YYYY-M-D"></el-date-picker>
             <span>&nbsp;&nbsp;至&nbsp;&nbsp;</span>
-            <el-date-picker
-                v-model="item.dateTo"
-                type="date"
-                placeholder="选择日期"
-                format="YYYY-M-D"
-            ></el-date-picker>
+            <el-date-picker v-model="item.dateTo" type="date" placeholder="选择日期" format="YYYY-M-D"></el-date-picker>
         </el-row>
         <el-button-group>
-            <el-button size="small" style="background-color: #009f95; color: #ffffff" @click="dateAppend">增加</el-button>
-            <el-button size="small" style="background-color: #009f95; color: #ffffff" @click="dateReset">重置</el-button>
+            <el-button size="small" style="background-color: #009f95; color: #ffffff;" @click="dateAppend">增加</el-button>
+            <el-button size="small" style="background-color: #009f95; color: #ffffff;" @click="dateReset">重置</el-button>
         </el-button-group>
 
         <div style="height: 1px; background-color: #cecece; margin-top: 20px; margin-bottom: 10px;"></div>
-        <div style="text-align: right">
+        <div style="text-align: right;">
             <el-button type="danger" plain @click="submit">提交</el-button>
         </div>
     </el-dialog>

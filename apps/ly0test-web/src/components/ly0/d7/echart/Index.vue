@@ -1,68 +1,63 @@
 <template>
-  <div style="padding-left: 10px; padding-right: 10px">
-    <h2 style="text-align: center">时段应收</h2>
-    <el-button-group class="top-button-box">
-      <el-button class="top-button" @click="handles.reset(scopeThis)">重置</el-button>
-      <el-button class="top-button" @click="handles.reload(scopeThis)">刷新</el-button>
-      <el-button class="top-button" @click="scopeThis.find.popup.visible = true">查询</el-button>
-    </el-button-group>
-    <el-collapse v-model="collapseOpen">
-      <el-collapse-item
-        v-for="(shop, index) in data.shop"
-        :title="shop.name"
-        :name="index"
-        :key="index"
-      >
-        <div class="echarts-show-box" :id="'echarts-show' + index"></div>
-      </el-collapse-item>
-    </el-collapse>
-
-    <comp-find :scopeThis="scopeThis"></comp-find>
-  </div>
+    <div style="padding-left: 10px; padding-right: 10px">
+        <h2 style="text-align: center">时段应收统计</h2>
+        <el-button-group class="top-button-box">
+            <el-button class="top-button" @click="handles.reset({scopeThis})">重置</el-button>
+            <el-button class="top-button" @click="handles.reload({scopeThis})">刷新</el-button>
+            <el-button class="top-button" @click="scopeThis.find.popup.visible = true">查询</el-button>
+        </el-button-group>
+        <el-collapse v-model="scopeThis.collapseOpen">
+            <el-collapse-item
+                v-for="(shop, index) in scopeThis.data.shop"
+                :title="shop.name"
+                :name="index"
+                :key="index"
+            >
+                <div class="echarts-show-box" :id="'echarts-show' + index"></div>
+            </el-collapse-item>
+        </el-collapse>
+        
+        <comp-find :scopeThis="scopeThis"></comp-find>
+    </div>
 </template>
 
 <style scoped lang="scss">
 @use 'index';
 </style>
 
-<script>
+<script setup>
 import compFind from './Find.vue'
 import handles from './handles.js'
+import { reactive, onMounted } from 'vue'
 
-export default {
-  components: { compFind },
-  data() {
-    return {
-      scopeThis: this,
-      collapseOpen: [],
-      data: {
+const scopeThis = reactive({
+    collapseOpen: [],
+    data: {
         // 后台获取的数据源
         shop: [],
         business: [],
-      },
-      arrDate: [
+    },
+    arrDate: [
         {
-          // 时间段
-          dateFrom: null,
-          dateTo: null,
+            // 时间段
+            dateFrom: null,
+            dateTo: null,
         },
-      ],
-      find: {
+    ],
+    find: {
         // 查询
         popup: {
-          visible: false,
+            visible: false,
         },
-      },
-      handles,
-    }
-  },
-  mounted() {
-    this.handles.reset(this).then(() => {
-      // 展开全部面板
-      this.data.shop.forEach((item, index) => {
-        this.collapseOpen.push(index)
-      })
+    },
+    handles,
+})
+
+onMounted(async () => {
+    await scopeThis.handles.reset({scopeThis})
+    // 展开全部面板
+    scopeThis.data.shop.forEach((item, index) => {
+        scopeThis.collapseOpen.push(index)
     })
-  },
-}
+})
 </script>

@@ -6,7 +6,7 @@ async function echart ({data, dependencies}) {
     // data.id_hotel 当前用户信息：旅店id
 
     const id_dataunit = data.id_dataunit,
-        id_hotel = data.id_hotel ? data.id_hotel : null
+        id_hotel = data.id_hotel || null
 
     const q = {id_dataunit}
     const q0 = JSON.parse(JSON.stringify(q))

@@ -10,12 +10,7 @@ async function echart({data, dependencies}) {
     if (data.id_shop) {
         q._id = data.id_shop
         q0.id_shop = data.id_shop
-    } else {
-        q0.id_shop = {$exists: true, $ne: null}
     }
-    q0.time = {$exists: true, $ne: null}
-    q0.amount = {$exists: true, $ne: null, $gt: 0}
-    q0.deal = {$exists: true, $ne: null, $gt: 0}
 
     let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7shop",
@@ -27,7 +22,7 @@ async function echart({data, dependencies}) {
         tblName: "ly0d7business",
         operator: "find",
         query: q0,
-        field: ["id_shop", "time", "amount", "deal"]
+        showFields: ["id_shop", "time", "amount", "deal"]
     })
     dataResponse.business = result.data
     return {code: 0, message: "",
