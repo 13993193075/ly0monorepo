@@ -1,97 +1,90 @@
-// with-table标准句柄
-import handles from "../../../common/table/with-table/handles.js"
+import {withTable} from '@yoooloo42/ly0el'
+import {request as ly0request} from '@yoooloo42/ly0browser'
 
-function getTableProps(scopeThis){
-    return {
-        titleLine: {
-            text: "商城访客信息"
-        },
-        topButtonGroups: {
-            box: [
-                {
-                    box: [
-                        {
-                            text: "全部",
-                            hdlClick: handles.reloadAll
-                        },
-                        {
-                            text: "刷新",
-                            hdlClick: handles.reload
-                        },
-                        {
-                            text: "查询",
-                            hdlClick: handles.findPopup
-                        },
-                        {
-                            text: "新增",
-                            hdlClick: handles.insertOnePopup
+export default {
+    titleLine: { // 标题线
+        text: "商店名称及参数设置"
+    },
+    topButtonGroups: [ // 置顶快捷按钮组
+        [
+            {
+                text: "全部",
+                hdlClick: withTable.reload
+            },
+            {
+                text: "刷新",
+                hdlClick: withTable.refresh
+            },
+            {
+                text: "查询",
+                hdlClick: withTable.popupFind
+            },
+            {
+                text: "新增",
+                hdlClick: withTable.popupInsertOne
+            }
+        ]
+    ],
+    table: {
+        hdlPageSizeChange: withTable.pageSizeChange,
+        hdlCurrentPageChange: withTable.currentPageChange,
+        cols: [
+            {
+                label: '商店编号',
+                show: 'text',
+                fieldName: '_id'
+            },
+            {
+                label: '商店名称',
+                show: 'text',
+                fieldName: 'name'
+            },
+            {
+                label: "商城代收",
+                show: "switch",
+                fieldName: "mall",
+                activeValue: true,
+                inactiveValue: false,
+                activeText: "是",
+                inactiveText: "否",
+                activeColor: "#ff640a",
+                hdlChange({scopeThis, row, inherit}){
+                    ly0request.ly0.storpro({
+                        storproName: "ly0d7.shop.mall",
+                        data: {
+                            _id: row._id,
+                            mall: inherit.valNew
                         }
-                    ]
+                    }).then(result=>{
+                        withTable.refresh({scopeThis})
+                    })
                 }
-            ]
-        },
-        table: {
-            cols: [
-                {
-                    label: '用户名称',
-                    show: 'text',
-                    fieldName: "name"
-                },
-                {
-                    label: '国内行政区划',
-                    show: 'text',
-                    fieldName: "gbt2260text"
-                },
-                {
-                    label: '联系电话',
-                    show: 'text',
-                    fieldName: "tel"
-                },
-                {
-                    label: "登录账号",
-                    show: "button-group",
-                    buttonGroup: [
-                        {
-                            hdlText(scopeThis, row){
-                                return !!row.id_login ? "账号id：" + row.id_login : "注册"
-                            },
-                            hdlStyle(row){
-                                return !!row.id_login ? " ": ""
-                            },
-                            hdlType(row){
-                                return !!row.id_login ? "text" : ""
-                            },
-                            round: true,
-                            hdlClick(scopeThis, row){
-                                scopeThis.hdlLogin.newLogin(scopeThis, row)
-                            }
+            },
+            {
+                label: '操作',
+                show: 'button-group',
+                buttonGroup: [
+                    {
+                        text: "详细",
+                        size: "small",
+                        hdlClick: withTable.popupDoc
+                    },
+                    {
+                        text: "修改",
+                        size: "small",
+                        hdlClick: withTable.popupUpdateOne
+                    },
+                    {
+                        text: "删除",
+                        size: "small",
+                        hdlClick: withTable.submitDeleteOne,
+                        style: {
+                            'background-color': '#ff640a',
+                            'color': '#ffffff'
                         }
-                    ]
-                },
-                {
-                    label: '',
-                    show: 'button-group',
-                    buttonGroup: [
-                        {
-                            text: "详细",
-                            hdlClick: handles.docPopup
-                        },
-                        {
-                            text: "修改",
-                            hdlClick: handles.updateOnePopup,
-                        },
-                        {
-                            text: "删除",
-                            hdlClick: handles.deleteOneSubmit,
-                            style: "background-color:#ff640a; color:#ffffff;"
-                        }
-                    ]
-                }
-            ]
-        }
+                    }
+                ]
+            }
+        ]
     }
-}
-
-export default{
-    getTableProps
 }
