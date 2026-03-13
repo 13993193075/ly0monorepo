@@ -12,7 +12,7 @@ import {reactive, onMounted} from "vue"
 import { useRouter } from 'vue-router'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {request as ly0request} from '@yoooloo42/ly0browser'
-import branch from './login/branch.js'
+import branch from './branch.js'
 import jump from './jump.js'
 
 const scopeThis = reactive({
