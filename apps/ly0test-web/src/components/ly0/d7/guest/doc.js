@@ -9,47 +9,32 @@ export default {
             {
                 items: [
                     {
-                        inputType: "text",
-                        label: "商店编号",
-                        fieldName: "_id",
-                    },
-                    {
                         inputType: 'text',
-                        label: '商店名称',
+                        label: '用户名称',
                         fieldName: 'name',
                     },
                     {
+                        inputType: "ly0gbt2260",
+                        label: "国内行政区划",
+                        fieldName: "gbt2260code",
+                        readOnly: true,
+                    },
+                    {
                         inputType: "text",
-                        label: "小票机型号",
-                        fieldName: "smallticket",
+                        label: "详细地址",
+                        fieldName: "address"
                     },
                     {
-                        inputType: "expression",
-                        label: "商城代收",
-                        hdlExpression({scopeThis, formData}){
-                            return "mall" in formData && (formData.mall === true || formData.mall ==="true") ? "是" : "否"
-                        },
+                        inputType: "text",
+                        label: "联系电话",
+                        fieldName: "tel"
                     },
                     {
-                        inputType: 'collapse',
-                        items: [
-                            {
-                                title: '微信支付',
-                                items: [
-                                    {
-                                        inputType: 'text',
-                                        label: 'APPID',
-                                        fieldName: 'wx_appid',
-                                    },
-                                    {
-                                        inputType: 'text',
-                                        label: 'MCHID',
-                                        fieldName: 'wx_mchid',
-                                    },
-                                ],
-                            },
-                        ],
-                    },
+                        inputType: "ly0d7postal",
+                        label: "更多邮寄地址",
+                        fieldName: "postal",
+                        readOnly: true
+                    }
                 ]
             }
         ],

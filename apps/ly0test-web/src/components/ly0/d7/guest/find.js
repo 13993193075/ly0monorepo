@@ -11,26 +11,25 @@ export default {
                 items: [
                     {
                         inputType: "input",
-                        label: "商店编号",
-                        fieldName: "_id",
+                        label: "用户名称",
+                        fieldName: "name"
                     },
                     {
-                        inputType: 'input',
-                        label: '商店名称',
-                        fieldName: 'name',
+                        inputType: "ly0gbt2260",
+                        label: "国内行政区划",
+                        fieldName: "gbt2260code"
                     },
                     {
-                        inputType: "select",
-                        label: "商城代收",
-                        fieldName: "mall",
-                        item_fieldLabel: "text",
-                        item_fieldValue: "code",
-                        items: [
-                            {code: null, text: "不查询"},
-                            {code: true, text: "是"},
-                            {code: false, text: "否"}
-                        ],
+                        inputType: "input",
+                        label: "详细地址",
+                        fieldName: "address",
+                        inputWidth: "300px"
                     },
+                    {
+                        inputType: "input",
+                        label: "联系电话",
+                        fieldName: "tel"
+                    }
                 ]
             }
         ],

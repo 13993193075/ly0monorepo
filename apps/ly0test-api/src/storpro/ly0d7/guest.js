@@ -127,7 +127,7 @@ async function insertOne({data, dependencies}) {
         query: {_id: data.id_dataunit}
     })
     const objDataunit = result.data
-    const gbt2260 = dependencies.ly0unit.GBT.gbt2260code6.find(i=>{
+    const gbt2260 = dependencies.ly0utils.GBT.gbt2260code6.find(i=>{
         return i.code6 === data.gbt2260code
     })
     result = await dependencies.GQuery.GQuery({
@@ -171,7 +171,7 @@ async function updateOne({data, dependencies}) {
         query: {_id: data.id_dataunit}
     })
     const objDataunit = result.data
-    const gbt2260 = dependencies.ly0unit.GBT.gbt2260code6.find(i=>{
+    const gbt2260 = dependencies.ly0utils.GBT.gbt2260code6.find(i=>{
         return i.code6 === data.gbt2260code
     })
     await dependencies.GQuery.GQuery({

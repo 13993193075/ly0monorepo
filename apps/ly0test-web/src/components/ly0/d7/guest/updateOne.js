@@ -10,46 +10,30 @@ export default {
             {
                 items: [
                     {
-                        inputType: 'input',
-                        label: '商店名称',
-                        fieldName: 'name',
+                        inputType: "input",
+                        label: "用户名称",
+                        fieldName: "name"
                     },
                     {
-                        inputType: 'input',
-                        label: '小票机型号',
-                        fieldName: 'doorlock_sys',
+                        inputType: "ly0gbt2260",
+                        label: "国内行政区划",
+                        fieldName: "gbt2260code"
                     },
                     {
-                        inputType: "switch",
-                        label: "商城代收",
-                        fieldName: "mall",
-                        activeText: "是",
-                        inactiveText: "否",
-                        activeValue: true,
-                        inactiveValue: false,
-                        activeColor: "#ee7405",
-                        disabled: true // 排他性处理
+                        inputType: "input",
+                        label: "详细地址",
+                        fieldName: "address"
                     },
                     {
-                        inputType: 'collapse',
-                        items: [
-                            {
-                                title: '微信支付',
-                                items: [
-                                    {
-                                        inputType: 'input',
-                                        label: 'APPID',
-                                        fieldName: 'wx_appid',
-                                    },
-                                    {
-                                        inputType: 'input',
-                                        label: 'MCHID',
-                                        fieldName: 'wx_mchid',
-                                    },
-                                ],
-                            },
-                        ],
+                        inputType: "input",
+                        label: "联系电话",
+                        fieldName: "tel"
                     },
+                    {
+                        inputType: "ly0d7postal",
+                        label: "更多邮寄地址",
+                        fieldName: "postal"
+                    }
                 ]
             }
         ],

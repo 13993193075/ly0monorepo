@@ -1,5 +1,5 @@
-function getFieldsValue_init(scopeThis){
-    let find = {
+export default {
+    formData: {
         _id: null,
         id_dataunit: null,
         number: "",
@@ -15,12 +15,8 @@ function getFieldsValue_init(scopeThis){
         postal_gbt2260code: "",
         postal_tel: "",
         postal_name: ""
-    }
-    return {
-        find
-    }
-}
-
-export default{
-    getFieldsValue_init
+    },
+    sort: null,
+    pageSize: 10,
+    currentPage: 1,
 }

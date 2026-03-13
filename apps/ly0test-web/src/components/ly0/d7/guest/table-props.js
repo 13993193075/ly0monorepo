@@ -1,9 +1,10 @@
 import {withTable} from '@yoooloo42/ly0el'
 import {request as ly0request} from '@yoooloo42/ly0browser'
+import {ElMessage, ElMessageBox} from "element-plus";
 
 export default {
     titleLine: { // 标题线
-        text: "商店名称及参数设置"
+        text: "商城访客信息"
     },
     topButtonGroups: [ // 置顶快捷按钮组
         [
@@ -30,35 +31,92 @@ export default {
         hdlCurrentPageChange: withTable.currentPageChange,
         cols: [
             {
-                label: '商店编号',
+                label: '用户名称',
                 show: 'text',
-                fieldName: '_id'
+                fieldName: "name"
             },
             {
-                label: '商店名称',
+                label: '国内行政区划',
                 show: 'text',
-                fieldName: 'name'
+                fieldName: "gbt2260text"
             },
             {
-                label: "商城代收",
-                show: "switch",
-                fieldName: "mall",
-                activeValue: true,
-                inactiveValue: false,
-                activeText: "是",
-                inactiveText: "否",
-                activeColor: "#ff640a",
-                hdlChange({scopeThis, row, inherit}){
-                    ly0request.ly0.storpro({
-                        storproName: "ly0d7.shop.mall",
-                        data: {
-                            _id: row._id,
-                            mall: inherit.valNew
+                label: '联系电话',
+                show: 'text',
+                fieldName: "tel"
+            },
+            {
+                label: '操作',
+                show: 'button-group',
+                buttonGroup: [
+                    {
+                        text: "注册新工号",
+                        size: "small",
+                        async hdlClick({scopeThis, row}){
+                            scopeThis.newNumber.branch = 'newNumber'
+                            scopeThis.newNumber.userId = row._id;
+                            scopeThis.newNumber.popup.visible = true;
+                        },
+                        hdlVisible({scopeThis, row}){
+                            return !row.id_login
                         }
-                    }).then(result=>{
-                        withTable.refresh({scopeThis})
-                    })
-                }
+                    },
+                    {
+                        text: "绑定已有工号",
+                        size: "small",
+                        async hdlClick({scopeThis, row}){
+                            scopeThis.newNumber.branch = 'bind'
+                            scopeThis.newNumber.popup.title = '绑定已有工号'
+                            scopeThis.newNumber.userId = row._id;
+                            scopeThis.newNumber.popup.visible = true;
+                        },
+                        hdlVisible({scopeThis, row}){
+                            return !row.id_login
+                        }
+                    },
+                    {
+                        text: "登录账号信息",
+                        size: "small",
+                        async hdlClick({scopeThis, row}){
+                            scopeThis.id_login.id_login = row.id_login;
+                            scopeThis.id_login.popup.visible = true;
+                        },
+                        hdlVisible({scopeThis, row}){
+                            return row.id_login
+                        }
+                    },
+                    {
+                        text: "登录账号取关",
+                        size: "small",
+                        async hdlClick({scopeThis, row}){
+                            try{
+                                await ElMessageBox.confirm(
+                                    '登录账号取关后，用户将无法正常登录', // 正文
+                                    '警告', // 标题
+                                    {
+                                        confirmButtonText: '确定',
+                                        cancelButtonText: '取消',
+                                        type: 'warning', // 图标类型：success/info/warning/error
+                                    }
+                                )
+                                const result = await ly0request.ly0.storpro({
+                                    storproName: 'ly0d0.user.id_loginSetNull',
+                                    data: {
+                                        userId: row._id
+                                    }
+                                })
+                                ElMessage(result.message)
+                                withTable.refresh({scopeThis})
+                            }catch(err){
+                                console.log(err)
+                                ElMessage('取消操作')
+                            }
+                        },
+                        hdlVisible({scopeThis, row}){
+                            return row.id_login
+                        }
+                    },
+                ]
             },
             {
                 label: '操作',

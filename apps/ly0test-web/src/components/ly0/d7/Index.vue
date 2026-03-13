@@ -14,11 +14,8 @@ import compGoods from './goods/Index.vue'
 import compGroup from './group/Index.vue'
 import compBusiness from './business/Index.vue'
 import compEchart from './echart/Index.vue'
-/*
 import compGuest from './guest/Index.vue'
 import compPostalCenter from './postal-center/Index.vue'
-
- */
 
 const frameProps = reactive({
     title: 'ly0 - 企业应用集成平台@商店',
@@ -61,7 +58,6 @@ const frameProps = reactive({
                 },
             ],
         },
-        /*
         {
             title: '商城后台',
             menu: [
@@ -75,8 +71,6 @@ const frameProps = reactive({
                 },
             ],
         },
-        
-         */
     ],
 })
 </script>

@@ -109,6 +109,7 @@
 <script setup>
 import {reactive} from "vue";
 import { request as ly0request } from '@yoooloo42/ly0browser'
+import ly0gbt2260 from '../ly0el-gbt2260/Index.vue'
 // 遵循 Vue 3 v-model 规范，使用 modelValue
 const props = defineProps({
     // modelValue: 外部 v-model 绑定的值

@@ -138,7 +138,7 @@ async function find({data, dependencies}) {
         operator: "countDocuments",
         query
     })
-    return {
+    return {code: 0, message: '',
         data: resultData.data,
         total: resultTotal.count
     }
