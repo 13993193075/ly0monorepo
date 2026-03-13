@@ -41,6 +41,9 @@ importers:
       '@yoooloo42/ly0el':
         specifier: workspace:*
         version: link:../../packages/ly0el
+      '@yoooloo42/ly0scss':
+        specifier: workspace:*
+        version: link:../../packages/ly0scss
       '@yoooloo42/ly0utils':
         specifier: workspace:*
         version: link:../../packages/ly0utils
@@ -153,6 +156,8 @@ importers:
       xml2js:
         specifier: ^0.6.2
         version: 0.6.2
+
+  packages/ly0scss: {}
 
   packages/ly0utils: {}
 

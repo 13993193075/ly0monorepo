@@ -1,0 +1,9 @@
+{
+  "name": "@yoooloo42/ly0scss",
+  "version": "1.0.0",
+  "description": "公共样式库",
+  "exports": {
+    "./el-input__inner": "./src/el-input__inner.scss",
+    "./truncate-2-lines": "./src/truncate-2-lines.scss"
+  }
+}
