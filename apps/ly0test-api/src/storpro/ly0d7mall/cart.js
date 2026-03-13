@@ -1,12 +1,8 @@
-import {GQuery} from '../../main/GQuery.js'
-import id_business from "../ly0d7/id_business.js"
-import {GBT} from '@yoooloo42/ly0utils'
-
 // 获取购物车信息
-async function getCart({data}){
+async function getCart({data, dependencies, storproRun}){
     // data.id_guest
 
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7business",
         operator: "findOne",
         query: {
@@ -17,11 +13,14 @@ async function getCart({data}){
     if(!result.data){
         return {code: 1, message: "购物车空"}
     }
-
-    result = await id_business.id_business({id_business: result.data})
+    const objBusiness = result.data
+    result = await storproRun({
+        storproName: 'ly0d7.id_business.id_business',
+        data: {id_business: objBusiness._id}
+    })
     const business = result.business
     // 获取商城代收商户号
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7shop",
         operator: "findOne",
         query: {
@@ -39,12 +38,12 @@ async function getCart({data}){
 }
 
 // 加入购物车
-async function addOne({data}){
+async function addOne({data, dependencies, storproRun}){
     // data.id_goods
     // data.id_guest
 
     // 获取商品信息
-    let result = await GQuery({
+    let result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7goods",
         operator: "findOne",
         query: {_id: data.id_goods}
@@ -55,7 +54,7 @@ async function addOne({data}){
     }
 
     // 获取购物车信息（交易中的订单信息）
-    result = await GQuery({
+    result = await dependencies.GQuery.GQuery({
         tblName: "ly0d7business",
         operator: "findOne",
         query: {
@@ -67,7 +66,7 @@ async function addOne({data}){
     const thisTime = new Date()
     if(!objBusiness){
         // 购物车为空，发生新订单
-        result = await GQuery({
+        result = await dependencies.GQuery.GQuery({
             tblName: "ly0d7business",
             operator: "insertOne",
             update: {
@@ -81,7 +80,7 @@ async function addOne({data}){
                 // shop_name: objGoods.shop_name,
 
                 status_code: "1", // 交易中
-                status_text: code.businessStatus.find(i=>{
+                status_text: dependencies.ly0utils.ly0d7.busicode.businessStatus.find(i=>{
                     return i.code === "1"
                 }).text,
                 time: thisTime,
@@ -92,7 +91,7 @@ async function addOne({data}){
     }
 
     // 获取购物车中该商品的数量
-    result= await GQuery({
+    result= await dependencies.GQuery.GQuery({
         tblName: "ly0d7b_goods",
         operator: "findOne",
         query: {
@@ -104,7 +103,7 @@ async function addOne({data}){
     // 加入购物车
     if(!objBGoods){
         // 购物车中没有该商品
-        result = await GQuery({
+        result = await dependencies.GQuery.GQuery({
             tblName: "ly0d7b_goods",
             operator: "insertOne",
             update: {
@@ -118,16 +117,16 @@ async function addOne({data}){
                 id_goods: objGoods._id,
                 number: objGoods.number,
                 name: objGoods.name,
-                price_name: objGoods.price[0].name ? objGoods.price[0].name : "",
+                price_name: objGoods.price[0].name || "",
                 price: objGoods.price[0].price,
-                thumb: objGoods.thumb ? objGoods.thumb : "",
+                thumb: objGoods.thumb || "",
                 count: 1, // 数量
                 id_guest: data.id_guest
             }
         })
     }else{
         // 购物车中已有该商品
-        result = await GQuery({
+        result = await dependencies.GQuery.GQuery({
             tblName: "ly0d7b_goods",
             operator: "updateOne",
             query:{_id: objBGoods._id},
@@ -138,28 +137,32 @@ async function addOne({data}){
     }
 
     // 重新计费
-    result = await id_business.id_business({id_business: objBusiness._id})
+    result = await storproRun({
+        storproName: 'ly0d7.id_business.id_business',
+        data: {id_business: objBusiness._id}
+    })
     return {code: 0, message: "加入购物车成功",
         business: result.business // 返回购物车信息（交易中的订单信息）
     }
 }
 
 // 删除一条记录
-async function deleteOne({id_bGoods}){
-    await GQuery({
+async function deleteOne({data, dependencies}){
+    // data.id_bGoods
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d7b_goods",
         operator: "deleteOne",
-        query: {_id: id_bGoods}
+        query: {_id: data.id_bGoods}
     })
     return {code: 0, message: "删除一条记录成功"}
 }
 
 // 修改数量
-async function setCount({data}){
+async function setCount({data, dependencies}){
     // data.id_bGoods
     // data.count
 
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d7b_goods",
         operator: "updateOne",
         query: {_id: data.id_bGoods},
@@ -171,30 +174,30 @@ async function setCount({data}){
 }
 
 // 成交
-async function deal({data}){
+async function deal({data, dependencies}){
     // data.id_business
     // data.postal.code6
     // data.postal.address
     // data.postal.tel
     // data.postal.name
 
-    const objPostalCode6 = GBT.gbt2260code6.find(i=>{
+    const objPostalCode6 = dependencies.ly0utils.GBT.gbt2260code6.find(i=>{
         return i.code6 === data.postal.code6
     })
     const thisTime = new Date()
-    const result = GQuery({
+    const result = dependencies.GQuery.GQuery({
         tblName: "ly0d7business",
         operator: "findOne",
         query: {_id: data.id_business},
     })
     const objBusiness = result.data
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d7business",
         operator: "updateOne",
         query: {_id: data.id_business},
         update: {
             status_code: "2",
-            status_text: code.businessStatus.find(i=>{
+            status_text: dependencies.ly0utils.ly0d7.busicode.businessStatus.find(i=>{
                 return i.code === "2"
             }).text,
             time: thisTime,
@@ -208,13 +211,13 @@ async function deal({data}){
         }
     })
     // 已售出商品注入邮寄信息
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d7b_goods",
         operator: "updateMany",
         query: {id_business: data.id_business},
         update: {
             postal_status_code: "1", // 分拣中
-            postal_status_text: code.postalStatus.find(i=>{
+            postal_status_text: dependencies.ly0utils.ly0d7.busicode.postalStatus.find(i=>{
                 return i.code === "1"
             }).text,
             postal_time: thisTime,

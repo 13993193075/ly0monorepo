@@ -1,7 +1,5 @@
-import {GQuery} from '../../main/GQuery.js'
-
 // 获取商城用户采购记录
-async function getBusiness({data}){
+async function getBusiness({data, dependencies}){
     // data.id_guest
     // data.limit
     // data.page
@@ -10,7 +8,7 @@ async function getBusiness({data}){
         id_guest: data.id_guest,
         status_code: "2"
     }
-    const resultData = await GQuery({
+    const resultData = await dependencies.GQuery.GQuery({
         tblName: "ly0d7business",
         operator: "find",
         query,
@@ -18,7 +16,7 @@ async function getBusiness({data}){
         skip: (data.page - 1) * data.limit,
         limit: Number(data.limit) // 分页处理
     })
-    const resultTotal = await GQuery({
+    const resultTotal = await dependencies.GQuery.GQuery({
         tblName: "ly0d7business",
         operator: "countDocuments",
         query
@@ -33,7 +31,7 @@ async function getBusiness({data}){
 
 // 获取某一采购记录的商品清单
 async function getBGoods({id_business}){
-    const result= await GQuery({
+    const result= await dependencies.GQuery.GQuery({
         tblName: "ly0d7b_goods",
         operator: "find",
         query: {id_business: id_business}

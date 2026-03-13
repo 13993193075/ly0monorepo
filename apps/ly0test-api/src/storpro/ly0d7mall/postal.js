@@ -1,15 +1,12 @@
-import {GQuery} from '../../main/GQuery.js'
-import {GBT} from '@yoooloo42/ly0utils'
-
 // 增加1个新的邮寄地址
-async function addOne({data}){
+async function addOne({data, dependencies}){
     // data.id_guest
     // data.postal.code6
     // data.postal.address
     // data.postal.tel
     // data.postal.name
 
-    const objCode6 = GBT.gbt2260code6.find(i=>{
+    const objCode6 = dependencies.ly0utils.GBT.gbt2260code6.find(i=>{
         return i.code6 === data.postal.code6
     })
     const postal = {
@@ -19,7 +16,7 @@ async function addOne({data}){
         tel: data.postal.tel,
         name: data.postal.name
     }
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d7guest",
         operator: "updateOne",
         query: {_id: data.id_guest},
@@ -31,11 +28,11 @@ async function addOne({data}){
 }
 
 // 删除1个邮寄地址
-async function deleteOne({data}){
+async function deleteOne({data, dependencies}){
     // data.id_guest
     // data.index
 
-    const result= await GQuery({
+    const result= await dependencies.GQuery.GQuery({
         tblName: "ly0d7guest",
         operator: "findOne",
         query: {_id: data.id_guest}
@@ -48,7 +45,7 @@ async function deleteOne({data}){
         return {code: 1, message: "数据不存在"}
     }
 
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d7guest",
         operator: "updateOne",
         query: {_id: data.id_guest},
@@ -60,7 +57,7 @@ async function deleteOne({data}){
 }
 
 // 修改1个邮寄地址
-async function updateOne({data}){
+async function updateOne({data, dependencies}){
     // data.id_guest
     // data.index
     // data.postal.code6
@@ -68,7 +65,7 @@ async function updateOne({data}){
     // data.postal.tel
     // data.postal.name
 
-    const result= await GQuery({
+    const result= await dependencies.GQuery.GQuery({
         tblName: "ly0d7guest",
         operator: "findOne",
         query: {_id: data.id_guest}
@@ -82,7 +79,7 @@ async function updateOne({data}){
         return {code: 1, message: "数据不存在"}
     }
 
-    const objCode6 = GBT.gbt2260code6.find(i=>{
+    const objCode6 = dependencies.ly0utils.GBT.gbt2260code6.find(i=>{
         return i.code6 === data.postal.code6
     })
     const postalNew = {
@@ -93,7 +90,7 @@ async function updateOne({data}){
         name: data.postal.name
     }
 
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d7guest",
         operator: "updateOne",
         query: {_id: data.id_guest},
@@ -107,14 +104,14 @@ async function updateOne({data}){
 }
 
 // 修改默认邮寄地址
-async function updateGuest({data}){
+async function updateGuest({data, dependencies}){
     // data.id_guest
     // data.postal.code6
     // data.postal.address
     // data.postal.tel
     // data.postal.name
 
-    const objCode6 = GBT.gbt2260code6.find(i=>{
+    const objCode6 = dependencies.ly0utils.GBT.gbt2260code6.find(i=>{
         return i.code6 === data.postal.code6
     })
     const postal = {
@@ -124,7 +121,7 @@ async function updateGuest({data}){
         tel: data.postal.tel,
         name: data.postal.name
     }
-    await GQuery({
+    await dependencies.GQuery.GQuery({
         tblName: "ly0d7guest",
         operator: "updateOne",
         query: {_id: data.id_guest},
