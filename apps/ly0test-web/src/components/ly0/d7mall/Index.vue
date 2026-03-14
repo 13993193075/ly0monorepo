@@ -1,6 +1,6 @@
 <template>
-    <compRowLogin v-if="scopeThis.ly0session && scopeThis.ly0session.mall" :scopeThis="scopeThis"></compRowLogin>
-    <compGoodses v-if="scopeThis.ly0session && scopeThis.ly0session.mall" :scopeThis="scopeThis"></compGoodses>
+    <compRowLogin v-if="scopeThis.branch" :scopeThis="scopeThis"></compRowLogin>
+    <!--compGoodses v-if="scopeThis.branch" :scopeThis="scopeThis"></compGoodses-->
 </template>
 
 <style scoped></style>
@@ -18,6 +18,7 @@ import jump from './jump.js'
 const scopeThis = reactive({
     ly0session: null,
     routerInstance: useRouter(),
+    branch: null,
     ly0request,
     ElMessage,
     ElMessageBox,
@@ -25,31 +26,11 @@ const scopeThis = reactive({
 })
 
 onMounted(() => {
-    let ly0session = ly0request.ly0.ly0sessionLoad()
-    if (
-        !ly0session ||
-        !ly0session.session ||
-        !ly0session.session.usertbl ||
-        ly0session.session.usertbl !== 'ly0d7guest'
-    ) {
-        ly0session = {
-            session: {
-                usertbl: 'ly0d7guest',
-            },
-        }
-    }
-    const branch0 = JSON.parse(JSON.stringify(branch))
     const route_branch = scopeThis.routerInstance.params.branch
-    if (route_branch in branch0.branch) {
-        branch0.switch = route_branch
+    if (route_branch in branch) {
+        scopeThis.branch = branch[route_branch]
+    }else{
+        scopeThis.branch = null
     }
-    ly0request.ly0.ly0sessionSave(
-        Object.assign(ly0session, {
-            mall: {
-                branch: branch0,
-            },
-        }),
-    )
-    scopeThis.ly0session = ly0request.ly0.ly0sessionLoad()
 })
 </script>

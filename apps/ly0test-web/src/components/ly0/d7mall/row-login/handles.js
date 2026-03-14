@@ -12,18 +12,18 @@ async function loginMenu({scopeThis, state, label}){
     }
 }
 
-async function logout({scopeThis}){
+async function logout({scopeThis, state}){
     await scopeThis.ly0request.ly0.storpro({
         noSession: true,
         storproName: 'ly0d0login.session.logout',
-        data: { ly0session: this.ly0session },
+        data: { ly0session: scopeThis.ly0session },
     })
     scopeThis.ly0request.ly0.ly0sessionClear()
     scopeThis.ly0session = {
         session: {
             usertbl: 'ly0d7guest',
         },
-        mall: scopeThis.ly0session.mall || null,
+        ly0d7mall: state.login.ly0d7mall
     }
     scopeThis.ly0request.ly0.ly0sessionSave(scopeThis.ly0session)
     location.reload()

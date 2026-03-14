@@ -1,39 +1,41 @@
 <template>
     <div class="root">
         <div class="main">
+            <!-- 商城名称 -->
             <div class="mall-name-box" @click="scopeThis.jump.goHome({scopeThis})">
                 <span class="mall-name"
-                >★&nbsp;{{
-                    scopeThis.ly0session && scopeThis.ly0session.mall
-                        ? scopeThis.ly0session.mall.branch[scopeThis.ly0session.mall.switch].name
-                        : '未命名的商城'
-                }}&nbsp;★</span>
+                >★&nbsp;{{scopeThis.branch.name}}&nbsp;★</span>
             </div>
+            <!-- 我的（账户相关信息） -->
             <div class="login-box">
+                <!-- 用户logo（有下拉菜单） -->
                 <el-dropdown @command="hdlLoginMenu">
                     <!-- 微信登录 -->
                     <span
-                        class="el-dropdown-link"
                         v-if="scopeThis.ly0session && scopeThis.ly0session.session &&
                             scopeThis.ly0session.session.type === 'wx'"
+                        class="el-dropdown-link"
                     >
-                    <el-image
-                        :src="scopeThis.ly0session.session.wx_headimgurl"
-                        style="width: 20px; height: 20px; border-radius: 50%"
-                    ></el-image>
-                    <span>&nbsp;{{ scopeThis.ly0session.session.wx_nickname }}</span>
-                    <i class="el-icon-arrow-down el-icon--right"></i>
+                        <el-image
+                            :src="scopeThis.ly0session.session.wx_headimgurl"
+                            style="width: 20px; height: 20px; border-radius: 50%"
+                        ></el-image>
+                        <span>&nbsp;{{ scopeThis.ly0session.session.wx_nickname }}</span>
+                        <el-icon class="el-icon--right"><ArrowDown /></el-icon>
                     </span>
+                    
                     <!-- 其它方式或匿名登录 -->
-                    <span class="el-dropdown-link" v-else>
-                        <i class="el-icon-user-solid"></i>
+                    <span v-else class="el-dropdown-link">
+                        <el-icon><user-filled /></el-icon>
                         <span>&nbsp;{{handles.myInfo({scopeThis, state}).info}}</span>
-                        <i class="el-icon-arrow-down el-icon--right"></i>
+                        <el-icon class="el-icon--right"><ArrowDown /></el-icon>
                     </span>
+                    
+                    <!-- 下拉菜单 -->
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item
-                            command="login-info"
                             v-if="!handles.myInfo({scopeThis, state}).none"
+                            command="login-info"
                         >我的账号</el-dropdown-item>
                         <el-dropdown-item command="login">{{
                             !handles.myInfo({scopeThis, state}).none ? '重新登录' : '登录'
@@ -42,18 +44,23 @@
                         <el-dropdown-item command="new">注册新用户</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
+                
                 <span>&nbsp;|&nbsp;</span>
+                
+                <!-- 我的购物车 -->
                 <span @click="scopeThis.jump.toCart({scopeThis})">
-                    <i class="el-icon-shopping-cart-2"></i>
+                    <el-icon :size="20"><ShoppingCart /></el-icon>
                     <span>&nbsp;我的购物车</span>
                 </span>
+                
                 <span>&nbsp;|&nbsp;</span>
+                
+                <!-- 我的订单记录 -->
                 <span @click="scopeThis.jump.toRecord({scopeThis})">
-                    <i class="el-icon-document-copy"></i>
+                    <el-icon :size="20"><CopyDocument /></el-icon>
                     <span>&nbsp;我的订单记录</span>
                 </span>
             </div>
-            <div></div>
         </div>
         
         <ly0el-idlogin
@@ -85,15 +92,28 @@ function hdlLoginMenu(label) {
 }
 
 onMounted(() => {
-    state.loginInfo.id_login = props.scopeThis.ly0session.session.id_login
-    const branch = props.scopeThis.ly0session.mall.branch
-    state.login.ly0d7mall.id_dataunit = branch.branch[branch.switch].id_dataunit
-})
-
-watch(()=>state.login.popup.visible, (valNew, valOld) => {
-    if(!valNew) {
-        props.scopeThis.ly0session = ly0request.ly0.ly0sessionLoad()
+    state.login.ly0d7mall.name = props.scopeThis.branch.name
+    state.login.ly0d7mall.id_dataunit = props.scopeThis.branch.id_dataunit
+    let ly0session = ly0request.ly0.ly0sessionLoad()
+    if (
+        !ly0session ||
+        !ly0session.session ||
+        !ly0session.session.usertbl ||
+        ly0session.session.usertbl !== 'ly0d7guest'
+    ) {
+        ly0session = {
+            session: {
+                usertbl: 'ly0d7guest',
+            },
+        }
     }
+    ly0request.ly0.ly0sessionSave(
+        Object.assign(ly0session, {
+            ly0d7mall: state.login.ly0d7mall
+        }),
+    )
+    props.scopeThis.ly0session = ly0request.ly0.ly0sessionLoad()
+    state.loginInfo.id_login = props.scopeThis.ly0session.session.id_login
 })
 </script>
 
