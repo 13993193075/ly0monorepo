@@ -4,7 +4,7 @@ import loggedin from "./loggedin.vue"
 import bind from "./bind.vue"
 
 const props = defineProps({
-    Props: {
+    myProps: {
         type: Object,
         default: () => ({
             branch: '',
@@ -22,9 +22,9 @@ const props = defineProps({
 </script>
 
 <template>
-    <newNumber v-if="Props.branch === 'newNumber'" :Props="Props"></newNumber>
-    <loggedin v-else-if="Props.branch === 'loggedin'" :Props="Props"></loggedin>
-    <bind v-if="Props.branch === 'bind'" :Props="Props"></bind>
+    <newNumber v-if="myProps.branch === 'newNumber'" :myProps="myProps"></newNumber>
+    <loggedin v-else-if="myProps.branch === 'loggedin'" :myProps="myProps"></loggedin>
+    <bind v-if="myProps.branch === 'bind'" :myProps="myProps"></bind>
 </template>
 
 <style scoped lang="scss">

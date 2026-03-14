@@ -4,7 +4,7 @@ import {ElMessage} from "element-plus";
 import {request as ly0request} from "@yoooloo42/ly0browser";
 
 const props = defineProps({
-    Props: {
+    myProps: {
         type: Object,
         default: () => ({
             userTbl: 'ly0d0user',
@@ -19,15 +19,15 @@ const props = defineProps({
 })
 
 const formData = reactive({
-    userTbl: props.Props.userTbl,
-    userId: props.Props.userId,
+    userTbl: props.myProps.userTbl,
+    userId: props.myProps.userId,
     number: '',
     password: '',
     enterAgain: '',
 })
 
 const formProps = reactive({
-    popup: props.Props.popup,
+    popup: props.myProps.popup,
     cols: [
         {
             items: [

@@ -1,19 +1,19 @@
 <template>
-    <template v-if="Props.id_login">
+    <template v-if="myProps.id_login">
         <el-dialog
-            v-if="Props.popup.switch"
-            v-model="Props.popup.visible"
+            v-if="myProps.popup.switch"
+            v-model="myProps.popup.visible"
             :custom-class="'code-template-dialog'"
             :close-on-press-escape="true"
             append-to-body
             title="登录账号信息"
             width="1000px"
-            :top="Props.popup.top"
+            :top="myProps.popup.top"
             :destroy-on-close="true"
         >
-            <compInfo :Props="Props"></compInfo>
+            <compInfo :myProps="myProps"></compInfo>
         </el-dialog>
-        <compInfo v-else :Props="Props"></compInfo>
+        <compInfo v-else :myProps="myProps"></compInfo>
     </template>
 </template>
 
@@ -22,7 +22,7 @@
 <script setup>
 import compInfo from './Info.vue'
 const props = defineProps({
-    Props: {
+    myProps: {
         type: Object,
         default: () => ({
             id_login: null,

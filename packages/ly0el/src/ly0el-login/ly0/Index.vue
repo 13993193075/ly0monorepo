@@ -9,21 +9,21 @@
         
         <table class="input-box">
             <tbody>
-            <tr class="field-row" v-if="scopeThis.loginData.ly0.arrDataunit.length > 0">
+            <tr class="field-row" v-if="scopeThis.loginData.branch.ly0.arrDataunit.length > 0">
                 <td class="label-col">
                     <label class="label">数据单元</label>
                 </td>
                 <td class="input-col">
                     <el-select
                         class="input"
-                        v-model="scopeThis.loginData.ly0.id_dataunit"
+                        v-model="scopeThis.loginData.branch.ly0.id_dataunit"
                         @change="scopeThis.handlers.ly0.id_dataunitChange({scopeThis})"
                         filterable
                     >
                         <el-option value="''" :label="'未选择'" :key="''"></el-option>
-                        <template v-if="scopeThis.loginData.ly0.arrDataunit.length > 0">
+                        <template v-if="scopeThis.loginData.branch.ly0.arrDataunit.length > 0">
                             <el-option
-                                v-for="(item, index) in scopeThis.loginData.ly0.arrDataunit"
+                                v-for="(item, index) in scopeThis.loginData.branch.ly0.arrDataunit"
                                 :value="item._id"
                                 :label="item.name"
                                 :key="item._id + '-' + index"
@@ -33,20 +33,20 @@
                 </td>
             </tr>
             
-            <tr class="field-row" v-if="scopeThis.loginData.ly0.arrGroup.length > 0">
+            <tr class="field-row" v-if="scopeThis.loginData.branch.ly0.arrGroup.length > 0">
                 <td class="label-col">
                     <label class="label">用户组</label>
                 </td>
                 <td class="input-col">
                     <el-select
                         class="input"
-                        v-model="scopeThis.loginData.ly0.id_group"
+                        v-model="scopeThis.loginData.branch.ly0.id_group"
                         @change="scopeThis.handlers.ly0.setArrUser0({scopeThis})"
                         filterable
                     >
                         <el-option value="''" :label="'未选择'" :key="''"></el-option>
                         <el-option
-                            v-for="(item, index) in scopeThis.loginData.ly0.arrGroup0"
+                            v-for="(item, index) in scopeThis.loginData.branch.ly0.arrGroup0"
                             :value="item._id"
                             :label="item.name"
                             :key="item._id + '-' + index"

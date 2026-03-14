@@ -19,47 +19,22 @@
 <style lang="scss" scoped></style>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { useRouter } from 'vue-router';
 import compMain from './main.vue'
 import handlers from './handlers.js'
+import branch from './branch.js'
 
-const props = defineProps({
-    // modelValue: 外部 v-model 绑定的值
-    modelValue: {
-        type: Object,
-        default: () => ({})
-    },
-    myProps: {
-        type: Object,
-        default: () => ({
-            popup: {
-                switch: false,
-                visible: false,
-                title: 'ly0 - 通用登录组件',
-                width: '1000px',
-                top: '15vh',
-            },
-            sessionOnly: false, // 仅刷新session，不做应用跳转
-            route_type: '1',
-            route: '',
-            app: 'ly0',
-            ly0: {
-                id_dataunit: null, // 数据单元预置
-                id_group: null, // 用户组预置
-                usertbl: 'ly0d0user', // 用户数据表名
-                id_user: null, // 用户预置
-            }
-        })
-    }
-})
-// 遵循 Vue 3 v-model 规范，使用 update:modelValue 事件
-const emit = defineEmits(['update:modelValue', 'change'])
-
+const props = defineProps(['myProps'])
 const scopeThis = reactive({
     routerInstance: useRouter(), // Vue路由实例
-    modelValue: props.modelValue,
-    popup: props.myProps.popup,
+    popup: {
+        switch: false,
+        visible: false,
+        title: 'ly0 - 通用登录组件',
+        width: '1000px',
+        top: '15vh',
+    },
     showPg: 'Password', // 初始页面：密码登录
     handlers,
     loginData: {
@@ -72,23 +47,11 @@ const scopeThis = reactive({
         wx_openid: "",
         wx_nickname: "",
         wx_headimgurl: "",
-        sessionOnly: props.myProps.sessionOnly,
-        route_type: '', // 登录账号验证成功后的路由跳转类型：'0' - Web地址, '1' - Vue路由
+        sessionOnly: false,
+        route_type: '1', // 登录账号验证成功后的路由跳转类型：'0' - Web地址, '1' - Vue路由
         route: '', // 登录账号验证成功后的路由跳转地址
-        app: props.myProps.app, // 应用入口
-        
-        // 应用系统：ly0
-        ly0: {
-            arrDataunit: [],
-            id_dataunit: props.myProps.ly0.id_dataunit,
-            arrGroup: [],
-            arrGroup0: [],
-            id_group: props.myProps.ly0.id_group,
-            arrUser: [],
-            arrUser0: [],
-            usertbl: props.myProps.ly0.usertbl,
-            id_user: props.myProps.ly0.id_user,
-        },
+        app: 'ly0', // 应用入口
+        branch: JSON.parse(JSON.stringify(branch)),
     },
     passwordData: {
         type: 'number', // 密码登录类型：'number', 'cellphone', 'email'
@@ -108,5 +71,39 @@ const scopeThis = reactive({
         lastTime: null,
         thisTime: null
     },
+})
+
+onMounted(() => {
+    // 没有传入参数
+    if(!props.myProps){
+        return
+    }
+    
+    // 是否传入弹窗状态
+    if(props.myProps.popup){
+        Object.assign(scopeThis.popup, props.myProps.popup)
+    }
+    // 是否传入sessionOnly
+    if('sessionOnly' in props.myProps){
+        scopeThis.loginData.sessionOnly = props.myProps.sessionOnly
+    }
+    // 是否传入路由跳转
+    if(props.myProps.route_type){
+        scopeThis.loginData.route_type = props.myProps.route_type
+    }
+    if(props.myProps.route){
+        scopeThis.loginData.route = props.myProps.route
+    }
+    // 是否传入应用入口
+    if(props.myProps.app){
+        scopeThis.loginData.app = props.myProps.app
+    }
+    // 是否传入业务参数
+    if(props.myProps[scopeThis.loginData.app]){
+        Object.assign(
+            scopeThis.loginData.branch[scopeThis.loginData.app],
+            props.myProps[scopeThis.loginData.app]
+        )
+    }
 })
 </script>

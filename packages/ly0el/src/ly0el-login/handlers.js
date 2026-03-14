@@ -4,17 +4,11 @@ import sms from "./sms.js"
 import email from "./email.js"
 import wx from "./wx.js"
 import ly0 from "./ly0/handlers.js"
-import {ElMessage} from "element-plus";
+import {ElMessage} from "element-plus"
+import branchApp from "./branch-app.js"
 
 // 发生新session
 async function newSession({scopeThis}){
-    let usertbl = '',
-        id_user = null
-    if(scopeThis.loginData.app === 'ly0'){
-        usertbl = scopeThis.loginData.ly0.usertbl
-        id_user = scopeThis.loginData.ly0.arrUser0[0]._id
-    }
-
     const result = await ly0request.ly0.storpro({
         storproName: "ly0d0login.session.newSession",
         data: {
@@ -26,8 +20,8 @@ async function newSession({scopeThis}){
             wx_appid: scopeThis.loginData.wx_appid,
             wx_openid: scopeThis.loginData.wx_openid,
             app: scopeThis.loginData.app,
-            usertbl,
-            id_user,
+            usertbl: scopeThis.loginData.branch[scopeThis.loginData.app].usertbl,
+            id_user: scopeThis.loginData.branch[scopeThis.loginData.app].id_user,
         },
         noSession: true,
     })
@@ -43,9 +37,8 @@ async function newSession({scopeThis}){
 
 // 登录账号验证完成
 async function loggedin({scopeThis}){
-    // 应用入口：ly0，选择用户组
-    if(scopeThis.loginData.app && scopeThis.loginData.app === 'ly0' && scopeThis.loginData.ly0){
-        scopeThis.showPg = "ly0"
+    const result = await branchApp.go({scopeThis})
+    if(result === 'go'){ // 页面转移
         return
     }
 
@@ -58,8 +51,6 @@ async function loggedin({scopeThis}){
         if(scopeThis.popup.switch){
             scopeThis.popup.visible = false
         }
-        // 触发 update:modelValue 事件更新父组件的 v-model 绑定的值
-        emit("update:modelValue", scopeThis.loginData.id_login)
         return
     }
 

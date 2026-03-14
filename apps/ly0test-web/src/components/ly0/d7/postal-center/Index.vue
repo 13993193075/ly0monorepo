@@ -13,8 +13,8 @@
         :myProps="scopeThis.formProps"
         :scopeThis="scopeThis"
     ></ly0el-form>
-    <ly0el-newnumber v-if="scopeThis.newNumber.popup.visible" :Props="scopeThis.newNumber"></ly0el-newnumber>
-    <ly0el-idlogin v-if="scopeThis.id_login.popup.visible" :Props="scopeThis.id_login"></ly0el-idlogin>
+    <ly0el-newnumber v-if="scopeThis.newNumber.popup.visible" :myProps="scopeThis.newNumber"></ly0el-newnumber>
+    <ly0el-idlogin v-if="scopeThis.id_login.popup.visible" :myProps="scopeThis.id_login"></ly0el-idlogin>
 </template>
 
 <style lang="scss" scoped></style>

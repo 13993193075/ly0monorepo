@@ -56,69 +56,45 @@
             <div></div>
         </div>
         
-        <compLoginInfo
-            v-if="!!loginInfo.popup.visible"
-            :id_login="ly0session.session.id_login"
-            :myProps="loginInfo"
-        ></compLoginInfo>
-        <compLogin v-if="!!login.popup.visible" :myProps="login"></compLogin>
+        <ly0el-idlogin
+            v-if="state.loginInfo && state.loginInfo.popup.visible"
+            :myProps="state.loginInfo"
+        ></ly0el-idlogin>
+        <ly0el-login
+            v-if="state.login && state.login.popup.visible"
+            :myProps="state.login"
+        ></ly0el-login>
     </div>
 </template>
 
 <script setup>
-import dataRequest from '../../../../utils/data-request.js'
-import compLoginInfo from '../../frame/header/id_login/Index.vue'
-import loginInfo from '../../frame/header/login-info.js'
-import compLogin from '../../d0login/Index.vue'
+import {reactive, onMounted, watch} from "vue";
 import handles from './handles.js'
-import {reactive} from "vue";
+import loginInfo from './login-info.js'
+import login from './login.js'
+import {request as ly0request} from "@yoooloo42/ly0browser";
 
 const props = defineProps(['scopeThis'])
 const state = reactive({
-
+    loginInfo,
+    login
 })
 
 function hdlLoginMenu(label) {
     handles.loginMenu({scopeThis: props.scopeThis, state, label})
 }
-export default {
-    data() {
-        return {
-            loginInfo,
-            login: {
-                usertbl: 'ly0d7guest',
-                popup: {
-                    visible: false,
-                    title: 'ly0 - 企业应用集成平台@第三方登录',
-                },
-                sessionOnly: true,
-                result: false,
-            },
-        }
-    },
-    computed: {
-        popupLogin() {
-            return this.login.popup.visible
-        },
-    },
-    watch: {
-        popupLogin(valNew, valOld) {
-            if (!valNew && !!this.login.result) {
-                // 重置session
-                dataRequest.ly0sessionSave(
-                    Object.assign(dataRequest.ly0sessionLoad(), {
-                        mall: this.ly0session.mall,
-                    }),
-                )
-                this.ly0session = dataRequest.ly0sessionLoad()
-                location.reload()
-            }
-        },
-    },
-    mounted() {
-        this.ly0session = dataRequest.ly0sessionLoad()
-    },
-}
+
+onMounted(() => {
+    state.loginInfo.id_login = props.scopeThis.ly0session.session.id_login
+    const branch = props.scopeThis.ly0session.mall.branch
+    state.login.ly0d7mall.id_dataunit = branch.branch[branch.switch].id_dataunit
+})
+
+watch(()=>state.login.popup.visible, (valNew, valOld) => {
+    if(!valNew) {
+        props.scopeThis.ly0session = ly0request.ly0.ly0sessionLoad()
+    }
+})
 </script>
 
 <style scoped lang="scss">

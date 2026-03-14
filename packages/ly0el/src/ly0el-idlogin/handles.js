@@ -6,7 +6,7 @@ async function getData({scopeThis}){
     const result = await ly0request.ly0.storpro({
         noSession: true,
         storproName: "ly0d0login.destroy.id_login",
-        data: {id_login: scopeThis.Props.id_login}
+        data: {id_login: scopeThis.myProps.id_login}
     })
     scopeThis.loginData.objLogin = result.data.objLogin
     scopeThis.loginData.arrNumber = result.data.arrNumber
@@ -78,7 +78,7 @@ async function destroy({scopeThis, type}){
         })
         ElMessage(result.message)
         if(type.type === "destroy"){
-            scopeThis.Props.popup.visible = false
+            scopeThis.myProps.popup.visible = false
         }else{
             await getData({scopeThis})
         }

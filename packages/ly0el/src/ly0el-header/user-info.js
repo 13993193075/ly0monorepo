@@ -1,10 +1,9 @@
-import {request as ly0request} from '@yoooloo42/ly0browser'
 function get({scopeThis}){
     return {
         formData: {
             id_login: scopeThis.ly0session.user.id_login,
             name: scopeThis.ly0session.user.name,
-            icon: [ly0request.ly0.domain() + scopeThis.ly0session.user.icon]
+            icon: [scopeThis.ly0request.ly0.domain() + scopeThis.ly0session.user.icon]
         },
         formProps: {
             popup: {

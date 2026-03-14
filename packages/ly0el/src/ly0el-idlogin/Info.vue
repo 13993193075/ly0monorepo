@@ -1,18 +1,18 @@
 <template>
     <div style="font-size: large">
         <span>账号id - </span>
-        <span style="color: #770000">{{ scopeThis.Props.id_login }}</span>
+        <span style="color: #770000">{{ scopeThis.myProps.id_login }}</span>
         <el-button
             size="small"
             type="danger"
             plain
             round
-            :disabled="!scopeThis.Props.destroy || scopeThis.Props.readonly"
+            :disabled="!scopeThis.myProps.destroy || scopeThis.myProps.readonly"
             style="margin-left: 20px;"
             @click="scopeThis.handles.destroy({
                 scopeThis,
                 type: {
-                    id_login: scopeThis.Props.id_login,
+                    id_login: scopeThis.myProps.id_login,
                     type: 'destroy'
                 }
             })"
@@ -46,7 +46,7 @@
                             number: item.number,
                             type: 'number'
                         })"
-                        :disabled="scopeThis.Props.readonly"
+                        :disabled="scopeThis.myProps.readonly"
                     >设置登录密码</el-button>
                     <el-button
                         link
@@ -58,7 +58,7 @@
                                 type: 'number'
                             }
                         })"
-                        :disabled="index === 0 || !scopeThis.Props.destroy || scopeThis.Props.readonly"
+                        :disabled="index === 0 || !scopeThis.myProps.destroy || scopeThis.myProps.readonly"
                     >注销</el-button>
                 </td>
             </tr>
@@ -82,7 +82,7 @@
                             number: item.cellphone,
                             type: 'cellphone'
                         })"
-                        :disabled="scopeThis.Props.readonly"
+                        :disabled="scopeThis.myProps.readonly"
                     >设置登录密码</el-button>
                     <el-button
                         link
@@ -94,7 +94,7 @@
                                 type: 'cellphone',
                             }
                         })"
-                        :disabled="scopeThis.Props.readonly"
+                        :disabled="scopeThis.myProps.readonly"
                     >注销</el-button>
                 </td>
             </tr>
@@ -118,7 +118,7 @@
                             number: item.email,
                             type: 'email'
                         })"
-                        :disabled="scopeThis.Props.readonly"
+                        :disabled="scopeThis.myProps.readonly"
                     >设置登录密码</el-button>
                     <el-button
                         link
@@ -130,7 +130,7 @@
                                  type: 'email'
                             }
                         })"
-                        :disabled="scopeThis.Props.readonly"
+                        :disabled="scopeThis.myProps.readonly"
                     >注销</el-button>
                 </td>
             </tr>
@@ -167,7 +167,7 @@
                                         type: 'wx'
                                     }
                                 })"
-                            :disabled="scopeThis.Props.readonly"
+                            :disabled="scopeThis.myProps.readonly"
                         >注销</el-button>
                     </div>
                 </td>
@@ -190,10 +190,10 @@ import handles from './handles.js'
 import setPassword from './set-password.js'
 import {onMounted, reactive} from "vue";
 
-const props = defineProps(['Props'])
+const props = defineProps(['myProps'])
 
 const scopeThis = reactive({
-    Props: props.Props,
+    myProps: props.myProps,
     loginData: {
         objLogin: {},
         arrNumber: [],

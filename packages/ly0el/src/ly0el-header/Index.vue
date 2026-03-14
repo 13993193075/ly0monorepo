@@ -48,13 +48,13 @@
         v-model="scopeThis.userInfo.formData"
         :myProps="scopeThis.userInfo.formProps"
     ></ly0el-form>
-    <ly0el-idlogin v-if="scopeThis.loginInfo && scopeThis.loginInfo.popup.visible" :Props="scopeThis.loginInfo"></ly0el-idlogin>
+    <ly0el-idlogin v-if="scopeThis.loginInfo && scopeThis.loginInfo.popup.visible" :myProps="scopeThis.loginInfo"></ly0el-idlogin>
     <ly0el-form
         v-if="scopeThis.sessionInfo && scopeThis.sessionInfo.formProps.popup.visible"
         v-model="scopeThis.sessionInfo.formData"
         :myProps="scopeThis.sessionInfo.formProps"
     ></ly0el-form>
-    <ly0el-newnumber v-if="scopeThis.newNumber && scopeThis.newNumber.popup.visible" :Props="scopeThis.newNumber"></ly0el-newnumber>
+    <ly0el-newnumber v-if="scopeThis.newNumber && scopeThis.newNumber.popup.visible" :myProps="scopeThis.newNumber"></ly0el-newnumber>
     <ly0el-form
         v-if="scopeThis.cellphoneBind && scopeThis.cellphoneBind.formProps.popup.visible"
         v-model="scopeThis.cellphoneBind.formData"
@@ -89,6 +89,7 @@ import wxBind from './bind/wx-bind.js'
 
 const routerInstance = useRouter()
 const scopeThis = reactive({
+    ly0request,
     routerInstance,
     ly0session: null,
     activeIndex: '0',
