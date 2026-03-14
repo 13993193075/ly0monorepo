@@ -20,13 +20,13 @@ export const ROUTES_PORTALS = [
         component: () => import('../../portals/sfy/Index.vue'),
     },
 
-    /*
     // 博汇商城
     {
         path: '/mall/:branch',
         name: 'mall',
         component: () => import('../../components/ly0/d7mall/Index.vue'),
     },
+    /*
     {
         path: '/mall-goods/:id_goods',
         name: 'mall-goods',

@@ -30,10 +30,6 @@ async function logout({scopeThis, state}){
 }
 
 function myInfo({scopeThis, state}) {
-    state.myInfo = {
-        info: '匿名/未登录',
-        none: false,
-    }
     if (
         !scopeThis.ly0session ||
         !scopeThis.ly0session.session ||

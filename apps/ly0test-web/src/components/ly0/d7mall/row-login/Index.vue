@@ -27,29 +27,31 @@
                     <!-- 其它方式或匿名登录 -->
                     <span v-else class="el-dropdown-link">
                         <el-icon><user-filled /></el-icon>
-                        <span>&nbsp;{{handles.myInfo({scopeThis, state}).info}}</span>
+                        <span>&nbsp;{{state.myInfo.info}}</span>
                         <el-icon class="el-icon--right"><ArrowDown /></el-icon>
                     </span>
                     
                     <!-- 下拉菜单 -->
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item
-                            v-if="!handles.myInfo({scopeThis, state}).none"
-                            command="login-info"
-                        >我的账号</el-dropdown-item>
-                        <el-dropdown-item command="login">{{
-                            !handles.myInfo({scopeThis, state}).none ? '重新登录' : '登录'
-                        }}</el-dropdown-item>
-                        <el-dropdown-item command="logout" v-if="!handles.myInfo({scopeThis, state}).none">退出</el-dropdown-item>
-                        <el-dropdown-item command="new">注册新用户</el-dropdown-item>
-                    </el-dropdown-menu>
+                    <template #dropdown>
+                        <el-dropdown-menu>
+                            <el-dropdown-item
+                                v-if="!state.myInfo.none"
+                                command="login-info"
+                            >我的账号</el-dropdown-item>
+                            <el-dropdown-item command="login">{{
+                                !state.myInfo.none ? '重新登录' : '登录'
+                            }}</el-dropdown-item>
+                            <el-dropdown-item command="logout" v-if="!state.myInfo.none">退出</el-dropdown-item>
+                            <el-dropdown-item command="new">注册新用户</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </template>
                 </el-dropdown>
                 
                 <span>&nbsp;|&nbsp;</span>
                 
                 <!-- 我的购物车 -->
                 <span @click="scopeThis.jump.toCart({scopeThis})">
-                    <el-icon :size="20"><ShoppingCart /></el-icon>
+                    <el-icon><ShoppingCart /></el-icon>
                     <span>&nbsp;我的购物车</span>
                 </span>
                 
@@ -57,7 +59,7 @@
                 
                 <!-- 我的订单记录 -->
                 <span @click="scopeThis.jump.toRecord({scopeThis})">
-                    <el-icon :size="20"><CopyDocument /></el-icon>
+                    <el-icon><CopyDocument /></el-icon>
                     <span>&nbsp;我的订单记录</span>
                 </span>
             </div>
@@ -84,7 +86,11 @@ import {request as ly0request} from "@yoooloo42/ly0browser";
 const props = defineProps(['scopeThis'])
 const state = reactive({
     loginInfo,
-    login
+    login,
+    myInfo: {
+        info: '匿名/未登录',
+        none: false,
+    }
 })
 
 function hdlLoginMenu(label) {
@@ -114,6 +120,7 @@ onMounted(() => {
     )
     props.scopeThis.ly0session = ly0request.ly0.ly0sessionLoad()
     state.loginInfo.id_login = props.scopeThis.ly0session.session.id_login
+    handles.myInfo({scopeThis: props.scopeThis, state})
 })
 </script>
 
@@ -123,12 +130,11 @@ onMounted(() => {
     .main {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         background-color: #cecece;
         color: #6a6a6a;
-        font-size: x-small;
+        font-size: 13px;
         height: 40px;
-        line-height: 40px;
-        margin-bottom: 20px;
         .mall-name-box {
             .mall-name {
                 padding-left: 10px;
@@ -138,7 +144,15 @@ onMounted(() => {
             }
         }
         .login-box {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            font-size: 13px;
         }
     }
+}
+// 强制去掉 el-dropdown 触发时的黑色边框
+:deep(.el-tooltip__trigger:focus-visible) {
+    outline: none !important;
 }
 </style>
