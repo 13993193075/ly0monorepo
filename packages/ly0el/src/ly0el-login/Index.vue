@@ -3,7 +3,7 @@
     <el-dialog
         v-if="scopeThis.popup.switch"
         v-model="scopeThis.popup.visible"
-        :custom-class="'code-template-dialog'"
+        :class="'code-template-dialog'"
         :close-on-press-escape="true"
         append-to-body
         :title="scopeThis.popup.title"
@@ -19,22 +19,30 @@
 <style lang="scss" scoped></style>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, watch } from "vue";
 import { useRouter } from 'vue-router';
 import compMain from './main.vue'
 import handlers from './handlers.js'
 import branch from './branch.js'
 
-const props = defineProps(['myProps'])
+const props = defineProps({
+    myProps: {
+        type: Object,
+        default: () => ({
+            popup: {
+                switch: false,
+                visible: false,
+                title: 'ly0 - 通用登录组件',
+                width: '1000px',
+                top: '15vh',
+            }
+        })
+    }
+})
+
 const scopeThis = reactive({
     routerInstance: useRouter(), // Vue路由实例
-    popup: {
-        switch: false,
-        visible: false,
-        title: 'ly0 - 通用登录组件',
-        width: '1000px',
-        top: '15vh',
-    },
+    popup: props.myProps.popup,
     showPg: 'Password', // 初始页面：密码登录
     handlers,
     loginData: {
@@ -74,15 +82,10 @@ const scopeThis = reactive({
 })
 
 onMounted(() => {
-    // 没有传入参数
     if(!props.myProps){
         return
     }
     
-    // 是否传入弹窗状态
-    if(props.myProps.popup){
-        Object.assign(scopeThis.popup, props.myProps.popup)
-    }
     // 是否传入sessionOnly
     if('sessionOnly' in props.myProps){
         scopeThis.loginData.sessionOnly = props.myProps.sessionOnly

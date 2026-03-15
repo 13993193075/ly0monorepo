@@ -90,10 +90,10 @@ const state = reactive({
     myInfo: {
         info: '匿名/未登录',
         none: false,
-    }
+    },
 })
 
-function hdlLoginMenu(label) {
+async function hdlLoginMenu(label) {
     handles.loginMenu({scopeThis: props.scopeThis, state, label})
 }
 

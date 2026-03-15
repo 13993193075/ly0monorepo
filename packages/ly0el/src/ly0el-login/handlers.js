@@ -70,8 +70,8 @@ async function loggedin({scopeThis}){
 }
 
 export default {
-    loggedin,
     newSession,
+    loggedin,
     password,
     sms,
     email,
