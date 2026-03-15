@@ -19,12 +19,7 @@ async function logout({scopeThis, state}){
         data: { ly0session: scopeThis.ly0session },
     })
     scopeThis.ly0request.ly0.ly0sessionClear()
-    scopeThis.ly0session = {
-        session: {
-            usertbl: 'ly0d7guest',
-        },
-        ly0d7mall: state.login.ly0d7mall
-    }
+    scopeThis.ly0session = null
     scopeThis.ly0request.ly0.ly0sessionSave(scopeThis.ly0session)
     location.reload()
 }

@@ -45,22 +45,20 @@ async function loggedin({scopeThis}){
     // 发生新session
     await newSession({scopeThis})
 
+    // 通知父组件，已登录成功
+    scopeThis.emit('loggedin', true)
+    // 关闭登录窗口
+    if(scopeThis.popup.switch){
+        scopeThis.popup.visible = false
+    }
+
     // 仅刷新session，不做路由跳转
     if(scopeThis.loginData.sessionOnly){
-        // 关闭登录窗口
-        if(scopeThis.popup.switch){
-            scopeThis.popup.visible = false
-        }
         return
     }
 
     // 路由跳转
     if(scopeThis.loginData.route_type && scopeThis.loginData.route){
-        // 关闭登录窗口
-        if(scopeThis.popup.switch){
-            scopeThis.popup.visible = false
-        }
-        // 路由跳转
         ly0request.ly0.navigate({
             code: scopeThis.loginData.route_type,
             path: scopeThis.loginData.route,

@@ -163,6 +163,8 @@ async function submit({scopeThis}){
     const route_type = objGroup.route_type || "1",
         route = objGroup.route
 
+    // 通知父组件，已登录成功
+    scopeThis.emit('loggedin', true)
     // 关闭登录窗口
     if(scopeThis.popup.switch){
         scopeThis.popup.visible = false

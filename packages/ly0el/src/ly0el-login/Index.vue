@@ -24,6 +24,7 @@ import { useRouter } from 'vue-router';
 import compMain from './main.vue'
 import handlers from './handlers.js'
 import branch from './branch.js'
+const emit = defineEmits(['loggedin'])
 
 const props = defineProps({
     myProps: {
@@ -41,8 +42,9 @@ const props = defineProps({
 })
 
 const scopeThis = reactive({
-    routerInstance: useRouter(), // Vue路由实例
+    emit,
     popup: props.myProps.popup,
+    routerInstance: useRouter(), // Vue路由实例
     showPg: 'Password', // 初始页面：密码登录
     handlers,
     loginData: {

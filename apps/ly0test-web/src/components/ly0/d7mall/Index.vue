@@ -1,13 +1,13 @@
 <template>
     <compRowLogin v-if="scopeThis.branch" :scopeThis="scopeThis"></compRowLogin>
-    <!--compGoodses v-if="scopeThis.branch" :scopeThis="scopeThis"></compGoodses-->
+    <compGoodses v-if="scopeThis.branch" :scopeThis="scopeThis"></compGoodses>
 </template>
 
 <style scoped></style>
 
 <script setup>
 import compRowLogin from './row-login/Index.vue'
-// import compGoodses from './goodses/Index.vue'
+import compGoodses from './goodses/Index.vue'
 import {reactive, onMounted} from "vue"
 import { useRoute } from 'vue-router'
 import {ElMessage, ElMessageBox} from 'element-plus'

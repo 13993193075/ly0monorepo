@@ -72,6 +72,7 @@
         <ly0el-login
             v-if="state.login && state.login.popup.visible"
             :myProps="state.login"
+            @loggedin="hdlLoggedin"
         ></ly0el-login>
     </div>
 </template>
@@ -122,6 +123,13 @@ onMounted(() => {
     state.loginInfo.id_login = props.scopeThis.ly0session.session.id_login
     handles.myInfo({scopeThis: props.scopeThis, state})
 })
+
+// 登录成功
+function hdlLoggedin(val){
+    if(val){
+        location.reload()
+    }
+}
 </script>
 
 <style scoped lang="scss">
